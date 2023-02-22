@@ -5,9 +5,17 @@ BONUS 	= miniRT_bonus
 
 SRCS_FILES 		=	miniRT.c
 
-INCLUDE_FILES	= 	so_long.h
+INCLUDE_FILES	= 	include/miniRT.h \
+					include/MLX42/include/MLX42/MLX42.h \
+					
+LIBS =	include/libft/libft.a \
+		include/MLX42/build/libmlx42.a \
+		-Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+#		-I./include	\
+#		-lglfw -L /Users/$(USER)/.brew/opt/glfw/lib \
+#		-ldl  -pthread -lm \
 
-LIBS = include/libft/libft.a
+MLX_FLAG		= -lglfw -L /Users/$(USER)/.brew/opt/glfw/lib
 
 ### Repertoires ###
 SRCS_DIR 	= srcs/
@@ -50,10 +58,26 @@ MLXFLAGS	= -lmlx -framework OpenGL -framework AppKit
 NORMINETTE 	= norminette
 ###------------------------## LEAK CHECK ##------------------------###
 LEAK =  #working if exits
-VALGRING = valgrind --track-fds=yes --track-origins=yes  --leak-check=full ./so_long maps/map.ber
+VALGRING = valgrind --track-fds=yes --track-origins=yes  --leak-check=full ./$(NAME)
 ###--------------------------## REGLES ##--------------------------###
 
-all: $(NAME)
+
+
+# if (!lib)
+# 	cd MLX42
+# 	cmake -B build
+# 	cd build
+# 	make
+
+mlx_glfw:
+	brew install glfw
+ifeq ("$(wildcard include/MLX42/build/libmlx42.a)","")
+	cd include/MLX42/ && cmake -B build
+	cd include/MLX42/build && make
+endif
+
+
+all: mlx_glfw $(N AME)
 
 $(NAME) : $(OBJS_IN_DIR)
 	@$(MAKE) -C include/libft
@@ -83,6 +107,8 @@ clean:
 fclean:	clean
 	@$(MAKE) -C include/libft fclean
 	@rm -rf $(NAME) $(BONUS)
+	@echo "$(GREEN)${BOLD}🚮 MLX42 build deleted 🚮${END}"
+	@rm -rf include/MLX42/build
 	@echo "$(GREEN)${BOLD}🚮 Exectuable deleted 🚮${END}"
 
 leak:
@@ -100,3 +126,8 @@ rew:
 help:
 	@echo "Rules: all clean fclean re"
 
+# if glfw is not installed 
+# 1. mkdir build
+# 2. cd build 
+# 3. cmake .. -DCMAKE_INSTALL_PREFIX=/path/to/installation
+# 4. make

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   MiniRT.h                                           :+:      :+:    :+:   */
+/*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:58:16 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/02/17 16:59:28 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/02/21 12:53:38 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@
 # include <stdlib.h>
 # include <limits.h>
 # include  <fcntl.h>
-# include "mlx.h"
-# include "libft/libft.h"
 # include  <math.h>
+# include "MLX42/include/MLX42/MLX42.h"
+# include "MLX42/include/MLX42/MLX42.h"
+
+# include "libft/libft.h"
 
 
 

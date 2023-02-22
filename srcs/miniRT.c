@@ -1,29 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   MiniRT.c                                           :+:      :+:    :+:   */
+/*   miniRT.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:38:26 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/02/17 17:00:24 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/02/20 14:15:18 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/miniRT.h"
 
-int	main(int argc, char **argv)
+#define WIDTH 512
+#define HEIGHT 512
+
+static mlx_image_t* img;
+
+void hook(void* param)
 {
-	(void)argv;
-	(void)argc;
+	mlx_t* mlx = param;
 
-	t_vars	vars;
+	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(mlx);
+	if (mlx_is_key_down(mlx, MLX_KEY_UP))
+		img->instances[0].y -= 5;
+	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
+		img->instances[0].y += 5;
+	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
+		img->instances[0].x -= 5;
+	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
+		img->instances[0].x += 5;
+}
 
-	vars.mlx = mlx_init();
-	vars.mlx_win = mlx_new_window(vars.mlx, 1920, 1080, "MiniRT");
-	// mlx_hook(vars.mlx_win, 2, 0, &event_manager, &vars);
-	// mlx_hook(vars.mlx_win, 17, 0, &exit_game, &vars);
-	// mlx_loop_hook(vars.mlx, &animation, &vars);
-	mlx_loop(vars.mlx);
-	return (0);
+int32_t	main(void)
+{
+	mlx_t* mlx;
+
+	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
+		return(EXIT_FAILURE);
+
+	img = mlx_new_image(mlx, 128, 128);
+	ft_memset(img->pixels, 255, img->width * img->height * sizeof(int));
+	mlx_image_to_window(mlx, img, 0, 0);
+
+	mlx_loop_hook(mlx, &hook, mlx);
+	mlx_loop(mlx);
+
+	mlx_terminate(mlx);
+	return (EXIT_SUCCESS);
 }
