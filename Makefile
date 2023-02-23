@@ -108,7 +108,7 @@ fclean:	clean
 	@$(MAKE) -C include/libft fclean
 	@rm -rf $(NAME) $(BONUS)
 	@echo "$(GREEN)${BOLD}🚮 MLX42 build deleted 🚮${END}"
-	@rm -rf include/MLX42/build
+# @rm -rf include/MLX42/build
 	@echo "$(GREEN)${BOLD}🚮 Exectuable deleted 🚮${END}"
 
 leak:
