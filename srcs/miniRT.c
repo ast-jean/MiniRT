@@ -6,14 +6,14 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:38:26 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/02/20 14:15:18 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/02/23 16:57:35 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/miniRT.h"
 
-#define WIDTH 512
-#define HEIGHT 512
+#define WIDTH 1920
+#define HEIGHT 1080
 
 static mlx_image_t* img;
 
@@ -33,11 +33,10 @@ void hook(void* param)
 		img->instances[0].x += 5;
 }
 
-int32_t	main(void)
+int	main(void)
 {
 	mlx_t* mlx;
-
-	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
+	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true)))
 		return(EXIT_FAILURE);
 
 	img = mlx_new_image(mlx, 128, 128);
@@ -46,7 +45,6 @@ int32_t	main(void)
 
 	mlx_loop_hook(mlx, &hook, mlx);
 	mlx_loop(mlx);
-
 	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);
 }

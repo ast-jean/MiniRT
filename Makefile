@@ -76,8 +76,7 @@ ifeq ("$(wildcard include/MLX42/build/libmlx42.a)","")
 	cd include/MLX42/build && make
 endif
 
-
-all: mlx_glfw $(N AME)
+all: mlx_glfw $(NAME)
 
 $(NAME) : $(OBJS_IN_DIR)
 	@$(MAKE) -C include/libft
