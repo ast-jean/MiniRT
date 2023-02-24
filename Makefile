@@ -61,16 +61,10 @@ LEAK =  #working if exits
 VALGRING = valgrind --track-fds=yes --track-origins=yes  --leak-check=full ./$(NAME)
 ###--------------------------## REGLES ##--------------------------###
 
-
-
-# if (!lib)
-# 	cd MLX42
-# 	cmake -B build
-# 	cd build
-# 	make
-
 mlx_glfw:
+ifeq (,$(shell brew list | grep glfw))
 	brew install glfw
+endif
 ifeq ("$(wildcard include/MLX42/build/libmlx42.a)","")
 	cd include/MLX42/ && cmake -B build
 	cd include/MLX42/build && make
