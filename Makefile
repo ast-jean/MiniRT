@@ -55,8 +55,10 @@ NORMINETTE 	= norminette
 LEAK =  #working if exits
 VALGRING = valgrind --track-fds=yes --track-origins=yes  --leak-check=full ./$(NAME)
 ###--------------------------## REGLES ##--------------------------###
+all: mlx_glfw $(NAME)
 
 mlx_glfw:
+	@echo "Checking libs.."
 ifeq (,$(shell brew list | grep glfw))
 	brew install glfw
 endif
@@ -65,7 +67,6 @@ ifeq ("$(wildcard include/MLX42/build/libmlx42.a)","")
 	cd include/MLX42/build && make
 endif
 
-all: mlx_glfw $(NAME)
 
 $(NAME) : $(OBJS_IN_DIR)
 	@$(MAKE) -C include/libft
