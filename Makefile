@@ -3,8 +3,8 @@
 NAME 	= miniRT
 BONUS 	= miniRT_bonus
 
-SRCS_FILES 		=	miniRT.c
-
+SRCS_FILES 		=	miniRT.c \
+					parsing/parsing.c 
 INCLUDE_FILES	= 	include/miniRT.h \
 					include/MLX42/include/MLX42/MLX42.h \
 					

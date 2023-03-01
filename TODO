@@ -1,7 +1,7 @@
 /*
 TODO: 
-Parsing:
-	[ ] Read only .rt file
+Parsing: 
+	[ ] Read only .rt file (mtrembla)
 		↳[ ] Error handling
 	[ ] Parse objects in file
 		↳[ ] Error handling
@@ -13,7 +13,7 @@ Parsing:
 		[ ] pl plane
 		[ ] cy cylinder
 		([ ] co Cone - for bonus)
-Ray Tracing and math:
+Ray Tracing and math: (ast-jean) (slavoie)
 	[ ] Do the thing
 
  GOAL 
@@ -101,7 +101,7 @@ RaT yracing
 		{
 			"text": "(ast-jean)",
 			"color": "white",
-			"backgroundColor": "#800000",
+			"backgroundColor": "grey",
 			"border": "1px",
 			"borderRadius": "1px",
 			"textDecoration": "none",
