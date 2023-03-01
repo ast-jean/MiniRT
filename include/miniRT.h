@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:58:16 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/02/23 16:40:43 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:49:00 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,23 @@
 
 
 
+#define BLACK	0x00000000
+#define WHITE	0xFFFFFFFF
+#define GRAY	0x00000088
+#define RED		0xFF0000FF
+#define GREEN	0x00FF00FF
+#define BLUE	0x0000FFFF
+
 typedef struct s_vars
 {
 	void	*mlx;
 	void	*mlx_win;
 }			t_vars;
 
-
+typedef struct s_point{
+    float x;
+	float y;
+} t_Point;
 
 
 #endif

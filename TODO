@@ -1,13 +1,35 @@
+/*
+TODO: 
+Parsing:
+	[ ] Read only .rt file
+		↳[ ] Error handling
+	[ ] Parse objects in file
+		↳[ ] Error handling
+	[ ] Create objects
+		[ ] A Ambient lightning - a least and only one
+		[ ] C Camera - a least and only one
+		[ ] L Light - a least and only one (or more for bonus) 
+		[ ] sp sphere
+		[ ] pl plane
+		[ ] cy cylinder
+		([ ] co Cone - for bonus)
+Ray Tracing and math:
+	[ ] Do the thing
 
  GOAL 
- .rt file -> A 0.2 0XFFFFFFFF -> Parsing of file -> Creation of object (structs) \
- -> Place object in a 3D environnement -> Trace rays from 3D env to the 2D img -> putpixel each.
- 
- 
- 
- 
- TODO: 
- 
+Parsing:
+ Read .rt file
+	↳ Parsing of file
+ 		↳ A 0.2 0XFFFFFFFF -> to objects
+			↳ Creation of object (structs)
+RaT yracing
+	↳ Place object in a 3D environnement
+		↳ Trace rays from 3D env to the 2D img
+			↳ putpixel each ray.
+
+
+
+
  FIXME:
  
  TOKNOW: 
@@ -129,3 +151,5 @@
             "borderColor": "white",
         },
 	],
+
+	*/
