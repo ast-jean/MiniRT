@@ -19,12 +19,12 @@ Ray Tracing and math:
 	[ ] Function to place object in the 3D env
 	[ ] Function to create the "screen" (using pov)
 	[ ] Function to shoot rays from camera to screen and catching objects behind 
-				   _
-	              | |           OO
-	OO            |O|          OOOO
-	[]<    -->    OOO -->     OOOOOO
-		          |O|          OOOO
-                  |_|           OO
+			    _
+	    	   | |  →      OO
+	OO     ➚   |O|  →     OOOO
+	[]< →  →   OOO  →    OOOOOO
+		   ➘   |O|  →     OOOO
+               |_|  →      OO
  GOAL 
 Parsing:
  Read .rt file
