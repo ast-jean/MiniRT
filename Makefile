@@ -104,6 +104,9 @@ fclean:	clean
 leak:
 	leaks --atExit -- ./$(NAME)
 
+valgrind:
+	valgrind ./$(NAME)
+
 re: fclean all
 
 rew: 

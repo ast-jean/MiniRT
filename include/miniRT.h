@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:58:16 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/03/02 15:19:41 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/03/02 15:53:35 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ typedef struct s_3dPoint{
 typedef struct s_Vars	// all of our values needed throught the program
 {
 	t_3dPoint	*env3D;
-	mlx_image_t	*img;
-	mlx_t		*mlx;
+	mlx_image_t* img;
+	// mlx_t		*mlx;
 	void		*objs;
 } t_Vars;
 
