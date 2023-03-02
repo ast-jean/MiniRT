@@ -1,26 +1,31 @@
-/*
 TODO: 
 Parsing: 
 	[ ] Read only .rt file (mtrembla)
 		↳[ ] Error handling
 	[ ] Parse objects in file
 		↳[ ] Error handling
-	[ ] Create objects
+	[ ] Create objects in chained list
 		[ ] A Ambient lightning - a least and only one
 		[ ] C Camera - a least and only one
 		[ ] L Light - a least and only one (or more for bonus) 
 		[ ] sp sphere
 		[ ] pl plane
 		[ ] cy cylinder
-		([ ] co Cone - for bonus)
+		[ ]( co Cone - for bonus)
 Ray Tracing and math:
 	[ ] Implement Fixed number (slavoie)
-	[ ] Implement 3d Env [x , y, z] (ast-jean)
+	[ ] Implement the 3d Env [x , y, z] (ast-jean)
 	[ ] Function to place object in the 3D env
 	[ ] Function to create the "screen" (using pov)
-	[ ] Function to shoot rays from camera to screen and catching objects behind 
-			    _
-	    	   | |  →      OO
+	[ ] Function to shoot rays from camera to screen and catching objects behind
+	[ ] Add reflections
+Controls:
+	[ ] Add feature of clicking on objects
+		↳[ ] Change their values when clicked with +/-
+
+			 screen(2D)
+			    _        object(3D)
+  camera 	   | |  →      OO
 	OO     ➚   |O|  →     OOOO
 	[]< →  →   OOO  →    OOOOOO
 		   ➘   |O|  →     OOOO
@@ -31,134 +36,8 @@ Parsing:
 	↳ Parsing of file
  		↳ A 0.2 0XFFFFFFFF -> to objects
 			↳ Creation of object (structs)
-RaT y racing
+RaTyracing 
 	↳ Place object in a 3D environnement
 		↳ Trace rays from 3D env to the 2D img
 			↳ putpixel each ray.
 
-
-
-
- FIXME:
- 
- TOKNOW: 
- 
-  TOFIX 
- 
- (ast-jean)
- (slavoie)
- (mtrembla)
- 
-  [ ] 
-  [X] fdsafdsa
-
-
-
-
-
-"todohighlight.keywords": [
-		{
-			"text": "WTF:",
-			"color": "pink",
-			"backgroundColor": "blue",
-			"textDecoration": "none",
-		},
-		{
-			"text": "TODO:",
-			"color": "black",
-			"backgroundColor": "yellow",
-			"textDecoration": "none",
-		},
-		{
-			"text": "TOKNOW:",
-			"color": "black",
-			"backgroundColor": "white",
-			"textDecoration": "none",
-		},
-		{
-			"text": " TOFIX ",
-			"color": "white",
-			"backgroundColor": "red",
-			"border": "1px",
-			"borderRadius": "1px",
-			"textDecoration": "none",
-			"borderStyle": "solid",
-			"borderColor": "white",
-		},
-		{
-			"text": "[X]",
-			"color": "none",
-			"backgroundColor": "none",
-			"overviewRulerColor": "none",
-			"backgroundColor": "none",
-			"textDecoration": "line-through",
-			"border": "none",
-			"borderRadius": "none",
-			"isWholeLine": true,
-		},
-		
-		{
-			"text": " GOAL ",
-			"color": "white",
-			"backgroundColor": "teal",
-			"border": "1px",
-			"borderRadius": "1px",
-			"textDecoration": "none",
-			"borderStyle": "solid",
-			"borderColor": "white",
-		},
-		{
-			"text": "(ast-jean)",
-			"color": "white",
-			"backgroundColor": "grey",
-			"border": "1px",
-			"borderRadius": "1px",
-			"textDecoration": "none",
-			"borderStyle": "solid",
-			"borderColor": "white",
-			"isWholeLine": true,
-		},
-		{
-			"text": "(slavoie)",
-			"color": "black",
-			"backgroundColor": "#2e8b57",
-			"border": "1px",
-			"borderRadius": "1px",
-			"textDecoration": "none",
-			"borderStyle": "solid",
-			"borderColor": "white",
-			"isWholeLine": true,
-		},
-		{
-			"text": "(mtrembla)",
-			"color": "black",
-			"backgroundColor": "#D88FD8",
-			"border": "1px",
-			"borderRadius": "1px",
-			"textDecoration": "none",
-			"borderStyle": "solid",
-			"borderColor": "white",
-			"isWholeLine": true,
-		},
-		{
-            "text": "NOTE:",
-            "color": "black",
-            "backgroundColor": "#778899",
-            "border": "1px",
-            "borderRadius": "1px",
-            "textDecoration": "none",
-            "borderStyle": "solid",
-            "isWholeLine": true,
-        },
-        {
-            "text": "LOG:",
-            "color": "white",
-            "backgroundColor": "#191970",
-            "border": "1px",
-            "borderRadius": "1px",
-            "borderStyle": "solid",
-            "borderColor": "white",
-        },
-	],
-
-	*/

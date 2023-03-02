@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:58:16 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/03/02 13:08:58 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/03/02 15:19:41 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@
 # include <stdlib.h>
 # include <stdint.h>
 # include <limits.h>
-# include  <fcntl.h>
-# include  <math.h>
+# include <fcntl.h>
+# include <math.h>
 # include "MLX42/include/MLX42/MLX42.h"
 # include "libft/libft.h"
 
-#define BLACK	0x00000000
+#define BLACK	0x000000FF
 #define WHITE	0xFFFFFFFF
 #define GRAY	0x888888FF
 #define RED		0xFF0000FF
@@ -47,11 +47,13 @@ typedef struct s_3dPoint{
 	int32_t		color;
 } t_3dPoint;
 
-typedef struct s_Vars
+typedef struct s_Vars	// all of our values needed throught the program
 {
-	void	*objs;
-	// all of our values needed throught the program
-}			t_Vars;
+	t_3dPoint	*env3D;
+	mlx_image_t	*img;
+	mlx_t		*mlx;
+	void		*objs;
+} t_Vars;
 
 typedef struct s_AmbientLight
 {
@@ -72,7 +74,7 @@ typedef struct s_Light
 	char	*id; // always 'L'
 	t_Fixed	light_ratio; //from 0.0 to 1.0
 	int	color; //RGB from 0 to 255
-}	t_Camera;
+}	t_Light;
 
 typedef struct s_Sphere
 {

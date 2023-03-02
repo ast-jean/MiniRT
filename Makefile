@@ -4,7 +4,9 @@ NAME 	= miniRT
 BONUS 	= miniRT_bonus
 
 SRCS_FILES 		=	miniRT.c \
-					parsing/parsing.c 
+					rayTracing/rayTracing.c \
+					parsing/parsing.c
+
 INCLUDE_FILES	= 	include/miniRT.h \
 					include/MLX42/include/MLX42/MLX42.h \
 					
@@ -22,6 +24,7 @@ SRCS 		= $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 INCLUDE 	= $(addprefix $(INCLUDE_DIR), $(INCLUDE_FILES))
 OBJS 		= $(SRCS_FILES:.c=.o)
 OBJS_IN_DIR	= $(addprefix $(OBJS_DIR), $(OBJS))
+
 
 ### Colour var ###
 CLEAR_LINE	= \033[2K
@@ -82,7 +85,7 @@ $(BONUS): $(OBJS)
 	@echo "${GREEN}${BOLD}Compilation done:${END}\n"
 
 $(OBJS_DIR)%.o : $(SRCS_DIR)%.c
-	@mkdir -p $(OBJS_DIR)
+	@mkdir -p $(OBJS_DIR)parsing $(OBJS_DIR)rayTracing
 	@echo "$(BLUE)Compiling object $@ ..$(END)"
 	@$(CC) $(CFLAGS) -Imlx -c $< -o $@
 
