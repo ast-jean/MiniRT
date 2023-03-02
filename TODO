@@ -13,16 +13,25 @@ Parsing:
 		[ ] pl plane
 		[ ] cy cylinder
 		([ ] co Cone - for bonus)
-Ray Tracing and math: (ast-jean) (slavoie)
-	[ ] Do the thing
-
+Ray Tracing and math:
+	[ ] Implement Fixed number (slavoie)
+	[ ] Implement 3d Env [x , y, z] (ast-jean)
+	[ ] Function to place object in the 3D env
+	[ ] Function to create the "screen" (using pov)
+	[ ] Function to shoot rays from camera to screen and catching objects behind 
+				   _
+	              | |           OO
+	OO            |O|          OOOO
+	[]<    -->    OOO -->     OOOOOO
+		          |O|          OOOO
+                  |_|           OO
  GOAL 
 Parsing:
  Read .rt file
 	↳ Parsing of file
  		↳ A 0.2 0XFFFFFFFF -> to objects
 			↳ Creation of object (structs)
-RaT yracing
+RaT y racing
 	↳ Place object in a 3D environnement
 		↳ Trace rays from 3D env to the 2D img
 			↳ putpixel each ray.
