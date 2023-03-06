@@ -34,6 +34,7 @@ void hook(void* param)
 
 int	main(void)
 {
+	t_Vars vars;
 	mlx_t* mlx;
 	
 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true)))

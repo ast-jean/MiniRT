@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:58:16 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/03/02 15:53:35 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/03/06 09:57:50 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 #define BLUE	0x0000FFFF
 
 typedef struct s_Fixed{
+	int	value;
 	//slavoie
 }	t_Fixed;
 
@@ -51,7 +52,7 @@ typedef struct s_Vars	// all of our values needed throught the program
 {
 	t_3dPoint	*env3D;
 	mlx_image_t* img;
-	// mlx_t		*mlx;
+	mlx_t		*mlx;
 	void		*objs;
 } t_Vars;
 
@@ -59,21 +60,21 @@ typedef struct s_AmbientLight
 {
 	char	*id; // always 'A'
 	t_Fixed	light_ratio; //from 0.0 to 1.0
-	uint8_t	color; //RGB from 0 to 255
+	uint32_t	color; //RGB from 0 to 255
 }	t_AmbientLight;
 
 typedef struct s_Camera
 {
 	char		*id;		 // always 'C'
 	t_3dPoint	orientation; //from -1 to 1 for each xyz
-	uint8_t		FOV;		 //FOV from 0 to 180
+	uint32_t		FOV;		 //FOV from 0 to 180
 }	t_Camera;
 
 typedef struct s_Light
 {
-	char	*id; // always 'L'
-	t_Fixed	light_ratio; //from 0.0 to 1.0
-	int	color; //RGB from 0 to 255
+	char		*id; // always 'L'
+	t_Fixed		light_ratio; //from 0.0 to 1.0
+	uint32_t	color; //RGB from 0 to 255
 }	t_Light;
 
 typedef struct s_Sphere
@@ -81,7 +82,7 @@ typedef struct s_Sphere
 	char		*id; // always 'sp'
 	t_3dPoint	center; //coords for center xyz
 	t_Fixed		diameter; //size of sphere
-	uint8_t		color; //RGB from 0 to 255
+	uint32_t		color; //RGB from 0 to 255
 }	t_Sphere;
 
 typedef struct s_Plane
@@ -89,7 +90,7 @@ typedef struct s_Plane
 	char		*id; // always 'pl'
 	t_3dPoint	coords; //coords for center xyz
 	t_3dPoint	orientation; //from -1 to 1 for each xyz
-	uint8_t		color; //RGB from 0 to 255
+	uint32_t		color; //RGB from 0 to 255
 }	t_Plane;
 
 typedef struct s_Cylinder
@@ -99,7 +100,7 @@ typedef struct s_Cylinder
 	t_3dPoint	orientation; //from -1 to 1 for each xyz
 	t_Fixed		dia; //diameter of cercles
 	t_Fixed		height; // height of cylinder
-	uint8_t		color; //RGB from 0 to 255
+	uint32_t		color; //RGB from 0 to 255
 }	t_Cylinder;
 
 typedef struct s_Cone
@@ -109,7 +110,7 @@ typedef struct s_Cone
 	t_3dPoint	orientation; //from -1 to 1 for each xyz
 	t_Fixed		dia; //diameter of cercle
 	t_Fixed		height; // height of cylinder
-	uint8_t		color; //RGB from 0 to 255
+	uint32_t	color; //RGB from 0 to 255 for each 
 }	t_Cone;
 
 #endif
