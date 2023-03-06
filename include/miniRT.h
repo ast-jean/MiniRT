@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:58:16 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/03/06 09:57:50 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/03/06 11:19:01 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ typedef struct s_AmbientLight
 {
 	char	*id; // always 'A'
 	t_Fixed	light_ratio; //from 0.0 to 1.0
-	uint32_t	color; //RGB from 0 to 255
+	uint32_t	color; //RGB from 0 to 255    
+	//ex: 182,60,60 -> 0xB63C3CFF 
+	//ex: 45,45,200 -> 0x2D2DC8FF
 }	t_AmbientLight;
 
 typedef struct s_Camera
