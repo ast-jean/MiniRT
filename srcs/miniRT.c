@@ -38,16 +38,16 @@ int	main(int argc, char **argv)
 	mlx_t* mlx;
 	
 	parse(argc, argv);
-	// if (!(mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true)))
-	// 	return(EXIT_FAILURE);
-	// img = mlx_new_image(mlx, 1000, 1000);
-	// ft_memset(img->pixels, 255, img->width * img->height * sizeof(int));
+	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true)))
+		return(EXIT_FAILURE);
+	img = mlx_new_image(mlx, 1000, 1000);
+	ft_memset(img->pixels, 255, img->width * img->height * sizeof(int));
 
-	// mlx_image_to_window(mlx, img, 0, 0);
+	mlx_image_to_window(mlx, img, 0, 0);
 
-	// mlx_loop_hook(mlx, &hook, mlx);
-	// mlx_loop(mlx);
-	// mlx_terminate(mlx);
+	mlx_loop_hook(mlx, &hook, mlx);
+	mlx_loop(mlx);
+	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);
 }
 
