@@ -1,4 +1,6 @@
 #include "../include/miniRT.h"
+#include <time.h> //remove
+
 
 #define WIDTH 1920
 #define HEIGHT 1080
@@ -36,13 +38,25 @@ int	main(void)
 {
 	t_Vars vars;
 	mlx_t* mlx;
-	
+
+	clock_t start_time = clock(); //illegal: used to see optimisation
+	//init
+	vars.env3D = malloc(INT_MAX * INT_MAX * INT_MAX * sizeof(t_3dPoint)); //allocation of the 3D environnement (TODO: env3D to be put in t_Vars) Range xyz = -2147483647 , 2147483647
+
+
+
 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true)))
 		return(EXIT_FAILURE);
-	img = mlx_new_image(mlx, 1000, 1000);
-	ft_memset(img->pixels, 255, img->width * img->height * sizeof(int));
+	vars.img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	// ft_memset(vars.img->pixels, 255, vars.img->width * vars.img->height * sizeof(int));
 
-	mlx_image_to_window(mlx, img, 0, 0);
+	mlx_image_to_window(mlx, vars.img, 0, 0);
+
+
+	clock_t end_time = clock();												// illegal maybe using timer from philo
+	double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC; //
+	printf("Render time: %f seconds\n", elapsed_time);						//
+
 
 	mlx_loop_hook(mlx, &hook, mlx);
 	mlx_loop(mlx);
