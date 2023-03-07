@@ -1,7 +1,7 @@
 TODO: 
-Parsing: 
-	[ ] Read only .rt file (mtrembla)
-		↳[ ] Error handling
+Parsing: (mtrembla)
+	[X] Read only .rt file
+		↳[X] Error handling
 	[ ] Parse objects in file
 		↳[ ] Error handling
 	[ ] Create objects in chained list
