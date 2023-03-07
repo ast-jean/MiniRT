@@ -50,13 +50,13 @@ WHITE		= \033[37m
 
 ### Compilations et archivage ###
 CC 			= gcc
-CFLAGS 		= -g -Wall -Wextra -Werror 
+CFLAGS 		= -g 
 MLXFLAGS	= -lmlx -framework OpenGL -framework AppKit
 ### Autres Fonctions ###
 NORMINETTE 	= norminette
 ###------------------------## LEAK CHECK ##------------------------###
 LEAK =  #working if exits
-VALGRING = valgrind --track-fds=yes --track-origins=yes  --leak-check=full ./$(NAME)
+VALGRING = valgrind --track-fds=yes --track-origins=yes  --leak-check=full --show-leak-kinds=all ./$(NAME)
 ###--------------------------## REGLES ##--------------------------###
 all: mlx_glfw $(NAME)
 
@@ -105,7 +105,7 @@ leak:
 	leaks --atExit -- ./$(NAME)
 
 valgrind:
-	valgrind ./$(NAME)
+	valgrind --track-fds=yes --track-origins=yes  --leak-check=full --show-leak-kinds=all ./$(NAME)
 
 re: fclean all
 
