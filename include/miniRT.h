@@ -115,4 +115,9 @@ typedef struct s_Cone
 	uint32_t	color; //RGB from 0 to 255 for each 
 }	t_Cone;
 
+//parsing
+void	parse(int argc, char **argv);
+void	error_exit(char *str);
+void	valid_file(char *file);
+void	something(char *file);
 #endif
