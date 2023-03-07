@@ -49,3 +49,5 @@ int	main(void)
 	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);
 }
+
+//trying forks
