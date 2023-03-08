@@ -48,8 +48,8 @@ void	split(char *file, t_dlist *l)
 void	valid_element(char **elem, t_dlist *l)
 {
 	if (ft_strcmp(elem[0], "A"))
-		printf("Ambiant light\n");
-	else if (ft_strcmp(elem[0], "C"))
+		dlist_add_back(l, object_A(elem));
+	if (ft_strcmp(elem[0], "C"))
 		printf("Camera\n");
 	else if (ft_strcmp(elem[0], "L"))
 		printf("Light\n");
@@ -63,5 +63,6 @@ void	valid_element(char **elem, t_dlist *l)
 		error_exit("Invalid element");
 	(void)l;
 }
+
 
 //A, C, L, sp, pl, cy

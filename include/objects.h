@@ -4,18 +4,22 @@
 
 #include "miniRT.h"
 
-typedef struct s_objects
-{
-	t_AmbientLight A;
-	t_Camera C;
-	t_Light L;
-	t_Sphere sp;
-	t_Plane pl;
-	t_Cylinder cy;
-	t_Cone co;
-	t_dlist list;
-	
-}	t_objects;
+typedef struct s_Fixed{
+	int	value;
+	//slavoie
+}	t_Fixed;
+
+typedef struct s_2dPoint{
+    t_Fixed x;
+	t_Fixed y;
+} t_2dPoint;
+
+typedef struct s_3dPoint{
+    t_Fixed x;
+	t_Fixed y;
+	t_Fixed z;
+	int32_t		color;
+} t_3dPoint;
 
 typedef struct s_AmbientLight
 {
