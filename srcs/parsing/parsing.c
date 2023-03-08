@@ -5,12 +5,12 @@ void	error_exit(char *str)
 	printf("%s\n", str);
 	exit(0);
 }
-void	parse(int argc, char **argv)
+void	parse(int argc, char **argv, t_dlist *l)
 {
 	if (argc != 2)
 		error_exit("Bad number of arguments");
 	valid_file(argv[1]);
-	something(argv[1]);
+	split(argv[1], l);
 }
 
 void	valid_file(char *file)
@@ -30,19 +30,39 @@ void	valid_file(char *file)
 	close(fd);
 }
 
-void	something(char *file)
+void	split(char *file, t_dlist *l)
 {
 	int	fd = open(file, O_RDONLY);
 	char *str = ft_gnl(fd);
-	int i = 0;
+	char **args;
 
 	while (str)
 	{
-		printf("%s\n", str);
+		args = ft_split(str, ' ');
+		valid_element(args, l);
 		str = ft_gnl(fd);
-		i++;
 	}
-	printf("i = %d\n", i);
+	close(fd);
 }
+
+void	valid_element(char **elem, t_dlist *l)
+{
+	if (ft_strcmp(elem[0], "A"))
+		dlist_add_back(l, object_A(elem));
+	if (ft_strcmp(elem[0], "C"))
+		printf("Camera\n");
+	else if (ft_strcmp(elem[0], "L"))
+		printf("Light\n");
+	else if (ft_strcmp(elem[0], "sp"))
+		printf("Sphere\n");
+	else if (ft_strcmp(elem[0], "pl"))
+		printf("Plan\n");
+	else if (ft_strcmp(elem[0], "cy"))
+		printf("Cylindre\n");
+	else
+		error_exit("Invalid element");
+	(void)l;
+}
+
 
 //A, C, L, sp, pl, cy

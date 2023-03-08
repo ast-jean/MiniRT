@@ -32,12 +32,14 @@ void hook(void* param)
 
 
 
-int	main(int argc, char **argv)
+int	main()
 {
-	t_Vars vars;
+	// t_Vars vars;
 	mlx_t* mlx;
+	// t_dlist *objects = malloc(sizeof(t_dlist));
+
 	
-	parse(argc, argv);
+	// parse(argc, argv, objects);
 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true)))
 		return(EXIT_FAILURE);
 	img = mlx_new_image(mlx, 1000, 1000);
@@ -48,6 +50,7 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(mlx, &hook, mlx);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
+	// free(objects);
 	return (EXIT_SUCCESS);
 }
 
