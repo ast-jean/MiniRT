@@ -56,6 +56,7 @@ SRC = ft_atoi.c	\
 	  ft_lstiter.c \
 	  ft_lstmap.c \
 	  ft_gnl.c \
+	  ft_strcmp.c \
 
 NAME = libft.a
 CC = gcc

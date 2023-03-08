@@ -5,12 +5,14 @@ BONUS 	= miniRT_bonus
 
 SRCS_FILES 		=	miniRT.c \
 					rayTracing/rayTracing.c \
-					parsing/parsing.c
+					parsing/parsing.c \
+					parsing/objects.c \
 
 INCLUDE_FILES	= 	include/miniRT.h \
 					include/MLX42/include/MLX42/MLX42.h \
 					
 LIBS =	include/libft/libft.a \
+		include/libft_dlist/dlist.a \
 		include/MLX42/build/libmlx42.a \
 		-Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 
@@ -73,6 +75,7 @@ endif
 
 $(NAME) : $(OBJS_IN_DIR)
 	@$(MAKE) -C include/libft
+	@$(MAKE) -C include/libft_dlist
 	@echo "$(CLEAR_LINE)$(BLUE)Compiling $(NAME)...$(END)"
 	@$(CC) $(CFLAGS) $(OBJS_IN_DIR) $(LIBS) $(MLXFLAGS) -o $(NAME)
 	@echo "$(CLEAR_LINE)${GREEN}${BOLD}Compilation done:${END}\n"
@@ -98,6 +101,7 @@ clean:
 
 fclean:	clean
 	@$(MAKE) -C include/libft fclean
+	@$(MAKE) -C include/libft_dlist fclean
 	@rm -rf $(NAME) $(BONUS)
 	@echo "$(GREEN)${BOLD}🚮 Exectuable deleted 🚮${END}"
 
