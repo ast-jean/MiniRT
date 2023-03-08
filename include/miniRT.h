@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   miniRT.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/21 15:58:16 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/03/08 15:10:07 by ast-jean         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #pragma once
 #ifndef _MINI_RT_H_
@@ -32,6 +21,24 @@
 #define RED		0xFF0000FF
 #define GREEN	0x00FF00FF
 #define BLUE	0x0000FFFF
+
+typedef struct s_Fixed{
+	int	entier;
+	int decimal;
+	//slavoie
+}	t_Fixed;
+
+typedef struct s_2dPoint{
+    t_Fixed x;
+	t_Fixed y;
+} t_2dPoint;
+
+typedef struct s_3dPoint{
+    t_Fixed x;
+	t_Fixed y;
+	t_Fixed z;
+	int32_t		color;
+} t_3dPoint;
 
 typedef struct s_Vars	// all of our values needed throught the program
 {
