@@ -61,6 +61,7 @@ void	valid_element(char **elem, t_dlist *l)
 		printf("Cylindre\n");
 	else
 		error_exit("Invalid element");
+	(void)l;
 }
 
 //A, C, L, sp, pl, cy
