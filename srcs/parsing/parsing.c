@@ -5,12 +5,12 @@ void	error_exit(char *str)
 	printf("%s\n", str);
 	exit(0);
 }
-void	parse(int argc, char **argv)
+void	parse(int argc, char **argv, t_dlist *l)
 {
 	if (argc != 2)
 		error_exit("Bad number of arguments");
 	valid_file(argv[1]);
-	split(argv[1]);
+	split(argv[1], l);
 }
 
 void	valid_file(char *file)
@@ -30,7 +30,7 @@ void	valid_file(char *file)
 	close(fd);
 }
 
-void	split(char *file)
+void	split(char *file, t_dlist *l)
 {
 	int	fd = open(file, O_RDONLY);
 	char *str = ft_gnl(fd);
@@ -39,13 +39,13 @@ void	split(char *file)
 	while (str)
 	{
 		args = ft_split(str, ' ');
-		valid_element(args);
+		valid_element(args, l);
 		str = ft_gnl(fd);
 	}
 	close(fd);
 }
 
-void	valid_element(char **elem)
+void	valid_element(char **elem, t_dlist *l)
 {
 	if (ft_strcmp(elem[0], "A"))
 		printf("Ambiant light\n");

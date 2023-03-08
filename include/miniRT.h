@@ -23,6 +23,7 @@
 # include <math.h>
 # include "MLX42/include/MLX42/MLX42.h"
 # include "libft/libft.h"
+# include "libft_dlist/dlist.h"
 
 #define BLACK	0x000000FF
 #define WHITE	0xFFFFFFFF
@@ -118,10 +119,12 @@ typedef struct s_Cone
 }	t_Cone;
 
 //parsing
-void	parse(int argc, char **argv);
+void	parse(int argc, char **argv, t_dlist *l);
 void	error_exit(char *str);
 void	valid_file(char *file);
-void	split(char *file);
-void	valid_element(char **elem);
-void	elem_A(char **elem);
+void	split(char *file, t_dlist *l);
+void	valid_element(char **elem, t_dlist *l);
+//objects
+
+
 #endif
