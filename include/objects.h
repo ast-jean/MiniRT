@@ -6,8 +6,8 @@
 #include "miniRT.h"
 
 typedef struct s_Fixed{
-	int	value;
-	//slavoie
+	int	entier;
+	int decimal;
 }	t_Fixed;
 
 typedef struct s_2dPoint{

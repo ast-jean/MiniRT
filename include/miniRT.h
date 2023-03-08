@@ -12,7 +12,6 @@
 # include "MLX42/include/MLX42/MLX42.h"
 # include "libft/libft.h"
 # include "libft_dlist/dlist.h"
-# include "Math_structs.h"
 # include "objects.h"
 
 #define BLACK	0x000000FF
@@ -21,24 +20,6 @@
 #define RED		0xFF0000FF
 #define GREEN	0x00FF00FF
 #define BLUE	0x0000FFFF
-
-typedef struct s_Fixed{
-	int	entier;
-	int decimal;
-	//slavoie
-}	t_Fixed;
-
-typedef struct s_2dPoint{
-    t_Fixed x;
-	t_Fixed y;
-} t_2dPoint;
-
-typedef struct s_3dPoint{
-    t_Fixed x;
-	t_Fixed y;
-	t_Fixed z;
-	int32_t		color;
-} t_3dPoint;
 
 typedef struct s_Vars	// all of our values needed throught the program
 {
