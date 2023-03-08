@@ -56,6 +56,6 @@ void	valid_file(char *file);
 void	split(char *file, t_dlist *l);
 void	valid_element(char **elem, t_dlist *l);
 //objects
-t_AmbientLight    *object_A(char **elem);
+t_shape   *object_A(char **elem);
 
 #endif

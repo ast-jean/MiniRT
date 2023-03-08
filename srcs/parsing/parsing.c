@@ -49,7 +49,7 @@ void	valid_element(char **elem, t_dlist *l)
 {
 	if (ft_strcmp(elem[0], "A"))
 		dlist_add_back(l, object_A(elem));
-	if (ft_strcmp(elem[0], "C"))
+	else if (ft_strcmp(elem[0], "C"))
 		printf("Camera\n");
 	else if (ft_strcmp(elem[0], "L"))
 		printf("Light\n");
