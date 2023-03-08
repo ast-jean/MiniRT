@@ -59,10 +59,12 @@ typedef struct s_Vars	// all of our values needed throught the program
 typedef struct s_AmbientLight
 {
 	char	*id; // always 'A'
-	t_Fixed	light_ratio; //from 0.0 to 1.0
-	uint32_t	color; //RGB from 0 to 255    
-	//ex: 182,60,60 -> 0xB63C3CFF 
-	//ex: 45,45,200 -> 0x2D2DC8FF
+	// t_Fixed	light_ratio; //from 0.0 to 1.0
+	// uint32_t	color; //RGB from 0 to 255    
+	// //ex: 182,60,60 -> 0xB63C3CFF 
+	// //ex: 45,45,200 -> 0x2D2DC8FF
+	char *light_ratio;
+	char *color;
 }	t_AmbientLight;
 
 typedef struct s_Camera
@@ -119,5 +121,7 @@ typedef struct s_Cone
 void	parse(int argc, char **argv);
 void	error_exit(char *str);
 void	valid_file(char *file);
-void	something(char *file);
+void	split(char *file);
+void	valid_element(char **elem);
+void	elem_A(char **elem);
 #endif
