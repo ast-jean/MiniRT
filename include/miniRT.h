@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:58:16 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/03/06 11:19:01 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/03/08 15:10:07 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@
 # include <stdint.h>
 # include <limits.h>
 # include <fcntl.h>
-# include <math.h>
 # include "MLX42/include/MLX42/MLX42.h"
 # include "libft/libft.h"
 # include "libft_dlist/dlist.h"
+# include "Math_structs.h"
 # include "objects.h"
 
 #define BLACK	0x000000FF
