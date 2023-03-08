@@ -11,6 +11,8 @@ void	parse(int argc, char **argv, t_dlist *l)
 		error_exit("Bad number of arguments");
 	valid_file(argv[1]);
 	split(argv[1], l);
+	// t_shape *a = l->first->content;
+	// printf("%s\n", a->id);
 }
 
 void	valid_file(char *file)

@@ -32,25 +32,25 @@ void hook(void* param)
 
 
 
-int	main()
+int	main(int argc, char **argv)
 {
 	// t_Vars vars;
-	mlx_t* mlx;
-	// t_dlist *objects = malloc(sizeof(t_dlist));
+	// mlx_t* mlx;
+	t_dlist *objects = malloc(sizeof(t_dlist));
 
 	
-	// parse(argc, argv, objects);
-	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true)))
-		return(EXIT_FAILURE);
-	img = mlx_new_image(mlx, 1000, 1000);
-	ft_memset(img->pixels, 255, img->width * img->height * sizeof(int));
+	parse(argc, argv, objects);
+	// if (!(mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true)))
+	// 	return(EXIT_FAILURE);
+	// img = mlx_new_image(mlx, 1000, 1000);
+	// ft_memset(img->pixels, 255, img->width * img->height * sizeof(int));
 
-	mlx_image_to_window(mlx, img, 0, 0);
+	// mlx_image_to_window(mlx, img, 0, 0);
 
-	mlx_loop_hook(mlx, &hook, mlx);
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
-	// free(objects);
+	// mlx_loop_hook(mlx, &hook, mlx);
+	// mlx_loop(mlx);
+	// mlx_terminate(mlx);
+	free(objects);
 	return (EXIT_SUCCESS);
 }
 
