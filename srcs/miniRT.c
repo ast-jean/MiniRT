@@ -1,20 +1,11 @@
 #include "../include/miniRT.h"
-#include <time.h> //remove
+#include <time.h> //remove before sending project
 
 
 #define WIDTH 1920
 #define HEIGHT 1080
 
 static mlx_image_t* img;
-
-// void    my_mlx_pixel_put(mlx_image_t *img, int x, int y, uint32_t color)
-// {
-// 	img->pixels[((y * (img->width + 1)) + x) * sizeof(int32_t)] = color;
-// 	// *(img->pixels++) = (uint32_t)(color >> 24);
-// 	// *(img->pixels++) = (uint32_t)(color >> 16);
-// 	// *(img->pixels++) = (uint32_t)(color >> 8);
-// 	// *(img->pixels++) = (uint32_t)(color & 0xFF);
-// }
 
 void hook(void* param)
 {
@@ -34,7 +25,7 @@ void hook(void* param)
 
 
 
-int	main(void)
+int	main()
 {
 	t_Vars vars;
 	mlx_t* mlx;
@@ -48,7 +39,7 @@ int	main(void)
 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true)))
 		return(EXIT_FAILURE);
 	vars.img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	// ft_memset(vars.img->pixels, 255, vars.img->width * vars.img->height * sizeof(int));
+	ft_memset(vars.img->pixels, 255, vars.img->width * vars.img->height * sizeof(int));
 
 	mlx_image_to_window(mlx, vars.img, 0, 0);
 
@@ -61,5 +52,6 @@ int	main(void)
 	mlx_loop_hook(mlx, &hook, mlx);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
+	// free(objects);
 	return (EXIT_SUCCESS);
 }
