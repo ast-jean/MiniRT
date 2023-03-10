@@ -7,6 +7,7 @@ SRCS_FILES 		=	miniRT.c \
 					rayTracing/rayTracing.c \
 					parsing/parsing.c \
 					parsing/objects.c \
+					parsing/colors.c \
 
 INCLUDE_FILES	= 	include/miniRT.h \
 					include/MLX42/include/MLX42/MLX42.h \

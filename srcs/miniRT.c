@@ -30,8 +30,6 @@ void hook(void* param)
 		img->instances[0].x += 5;
 }
 
-
-
 int	main(int argc, char **argv)
 {
 	// t_Vars vars;

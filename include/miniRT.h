@@ -37,6 +37,12 @@ void	valid_file(char *file);
 void	split(char *file, t_dlist *l);
 void	valid_element(char **elem, t_dlist *l);
 //objects
-t_shape   *object_A(char **elem);
-
+t_shape	*object_A(char **elem);
+t_shape *object_C(char **elem);
+t_shape *object_L(char **elem);
+t_shape *object_sp(char **elem);
+t_shape *object_pl(char **elem);
+t_shape *object_cy(char **elem);
+uint32_t RGB_to_hex(char *elem);
+void	print_objects(t_dlist *l);
 #endif
