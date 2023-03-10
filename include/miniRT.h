@@ -46,4 +46,5 @@ t_shape *object_cy(char **elem);
 uint32_t RGB_to_hex(char *elem);
 void	print_objects(t_dlist *l);
 t_Fixed	str_to_fixed(char *elem);
+t_3dPoint str_to_3D(char *elem);
 #endif
