@@ -7,8 +7,8 @@
 
 
 typedef struct s_Fixed{
-	int	value;
-	int scale;
+	int	entier;
+	int decimal;
 }	t_Fixed;
 
 typedef struct s_2dPoint{
@@ -20,7 +20,6 @@ typedef struct s_3dPoint{
     t_Fixed x;
 	t_Fixed y;
 	t_Fixed z;
-	int32_t		color;
 } t_3dPoint;
 
 typedef struct s_shape
@@ -30,7 +29,7 @@ typedef struct s_shape
 	uint32_t	color; //RGB from 0 to 255
 	t_3dPoint	orientation; //from -1 to 1 for each xyz
 	uint32_t	FOV;		 //FOV from 0 to 180
-	t_3dPoint	center; //coords for center xyz
+	t_3dPoint	coord; //coords for center xyz
 	t_Fixed		diameter; //size of sphere
 	t_Fixed		height; // height of cylinder
 }	t_shape;

@@ -4,14 +4,16 @@ Parsing: (mtrembla)
 		↳[X] Error handling
 	[ ] Parse objects in file
 		↳[ ] Error handling
-	[ ] Create objects in chained list
-		[ ] A Ambient lightning - a least and only one
-		[ ] C Camera - a least and only one
-		[ ] L Light - a least and only one (or more for bonus) 
-		[ ] sp sphere
-		[ ] pl plane
-		[ ] cy cylinder
+	[X] Create objects in chained list
+		[X] A Ambient lightning
+		[X] C Camera
+		[X] L Light
+		[X] sp sphere
+		[X] pl plane
+		[X] cy cylinder
 		[ ]( co Cone - for bonus)
+[X] Handle t_Fixed
+[] handle t_3dPoint
 Ray Tracing and math:
 	[ ] Implement Fixed number (slavoie)
 	[ ] Implement the 3d Env [x , y, z] (ast-jean)
