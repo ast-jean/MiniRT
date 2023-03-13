@@ -13,12 +13,13 @@ uint32_t RGB_to_hex(char *elem)
 t_Fixed	str_to_fixed(char *elem)
 {
 	t_Fixed f;
-	char **part = ft_split(elem, '.');
-	f.entier = ft_atoi(part[0]);
-	if (part[1])
-		f.decimal = ft_atoi(part[1]);
-	else
-		f.decimal = 0;
+	// char **part = ft_split(elem, '.');
+	// f.entier = ft_atoi(part[0]);
+	// if (part[1])
+	// 	f.decimal = ft_atoi(part[1]);
+	// else
+	// 	f.decimal = 0;
+	set_value(&f, atof(elem));
 	return (f);
 }
 
