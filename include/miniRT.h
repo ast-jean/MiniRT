@@ -42,13 +42,14 @@ void	valid_file(char *file);
 void	split(char *file, t_dlist *l);
 void	valid_element(char **elem, t_dlist *l);
 //objects
-t_shape   *object_A(char **elem);
-
-//fixed.c
-void	set_value(t_Fixed *fp, double value);
-int	to_int(t_Fixed fp);
-double	to_double(t_Fixed fp);
-double	fp_cal(char operand, int num_args, ...);
-
-
+t_shape	*object_A(char **elem);
+t_shape *object_C(char **elem);
+t_shape *object_L(char **elem);
+t_shape *object_sp(char **elem);
+t_shape *object_pl(char **elem);
+t_shape *object_cy(char **elem);
+uint32_t RGB_to_hex(char *elem);
+void	print_objects(t_dlist *l);
+t_Fixed	str_to_fixed(char *elem);
+t_3dPoint str_to_3D(char *elem);
 #endif
