@@ -23,15 +23,6 @@ void hook(void* param)
 		img->instances[0].x += 5;
 }
 
-char *str;
-double *d;
-
-d = atof(str);
-
-double -> fixed
-set_value(light_ratio, d);
-
-
 int	main()
 {
 	t_Vars vars;
@@ -39,7 +30,9 @@ int	main()
 
 	clock_t start_time = clock(); //illegal: used to see optimisation
 	//init
-	vars.env3D = malloc(INT_MAX * INT_MAX * INT_MAX * sizeof(t_3dPoint)); //allocation of the 3D environnement (TODO: env3D to be put in t_Vars) Range xyz = -2147483647 , 2147483647
+
+
+ //allocation of the 3D environnement (TODO: env3D to be put in t_Vars) Range xyz = -2147483647 , 2147483647
 
 
 

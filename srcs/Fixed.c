@@ -18,18 +18,14 @@
 
 	slavoie
 */
-void	init_fp(t_Fixed *fp, double start_value)
-{
-	fp->scale = 256;
-	fp->value = start_value * fp->scale;
-}
+// void	init_fp(t_Fixed *fp, double start_value) // TOFIX 
+// {
+// 	fp->value = start_value * fixed_scale;
+// }
 
 void	set_value(t_Fixed *fp, double value)
 {
-	if(!fp->scale)
-		init_fp(fp, value);
-	else
-		fp->value = value * fp->scale;
+		fp->value = value * fixed_scale;
 }
 
 int	to_int(t_Fixed fp)
