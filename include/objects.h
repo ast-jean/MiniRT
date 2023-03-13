@@ -7,8 +7,8 @@
 
 
 typedef struct s_Fixed{
-	int	entier;
-	int decimal;
+	int	value;
+	int scale;
 }	t_Fixed;
 
 typedef struct s_2dPoint{

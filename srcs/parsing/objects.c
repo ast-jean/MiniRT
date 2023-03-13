@@ -62,6 +62,7 @@ t_shape *object_cy(char **elem)
 	return (S);
 }
 
+
 void	print_objects(t_dlist *l)
 {
 	t_node *aff = l->first;
@@ -72,59 +73,109 @@ void	print_objects(t_dlist *l)
 
 		if (ft_strcmp(s->id, "A")){
 			printf("ID:\t%s\n", s->id);
-			printf("LRatio:\t%d,%d\n", s->light_ratio.entier, s->light_ratio.decimal);
+			printf("LRatio:\n");
 			printf("Color:\t%X\n", s->color);
 		}
 		else if (ft_strcmp(s->id, "C")){
 			printf("ID:\t%s\n", s->id);
-            printf("Coord:\t%d.%d,", s->coord.x.entier, s->coord.x.decimal);
-            printf("%d.%d,", s->coord.y.entier, s->coord.y.decimal);
-            printf("%d.%d\n", s->coord.z.entier, s->coord.z.decimal);
-            printf("Ori.:\t%d.%d,", s->orientation.x.entier, s->orientation.x.decimal);
-            printf("%d.%d,", s->orientation.y.entier, s->orientation.y.decimal);
-            printf("%d.%d\n", s->orientation.z.entier, s->orientation.z.decimal);
+			printf("Coord:\n");
+            printf("Ori.:\n");
             printf("FOV:\t%d\n", s->FOV);
 		}
 		else if (ft_strcmp(s->id, "L")){
 			printf("ID:\t%s\n", s->id);
-            printf("Coord:\t%d.%d,", s->coord.x.entier, s->coord.x.decimal);
-            printf("%d.%d,", s->coord.y.entier, s->coord.y.decimal);
-            printf("%d.%d\n", s->coord.z.entier, s->coord.z.decimal);
-			printf("LRatio:\t%d,%d\n", s->light_ratio.entier, s->light_ratio.decimal);
+			printf("Coord:\n");
+			printf("LRatio:\n");
 			printf("Color:\t%X\n", s->color);
 		}
 		else if (ft_strcmp(s->id, "sp")){
 			printf("ID:\t%s\n", s->id);
-            printf("Coord:\t%d.%d,", s->coord.x.entier, s->coord.x.decimal);
-            printf("%d.%d,", s->coord.y.entier, s->coord.y.decimal);
-            printf("%d.%d\n", s->coord.z.entier, s->coord.z.decimal);
-			printf("Dia.:\t%d,%d\n", s->diameter.entier, s->diameter.decimal);
+			printf("Coord:\n");
+			printf("Dia.:\n");
 			printf("Color:\t%X\n", s->color);
 		}
 		else if (ft_strcmp(s->id, "pl")){
 			printf("ID:\t%s\n", s->id);
-            printf("Coord:\t%d.%d,", s->coord.x.entier, s->coord.x.decimal);
-            printf("%d.%d,", s->coord.y.entier, s->coord.y.decimal);
-            printf("%d.%d\n", s->coord.z.entier, s->coord.z.decimal);
-            printf("Ori.:\t%d.%d,", s->orientation.x.entier, s->orientation.x.decimal);
-            printf("%d.%d,", s->orientation.y.entier, s->orientation.y.decimal);
-            printf("%d.%d\n", s->orientation.z.entier, s->orientation.z.decimal);
+            printf("Coord:\n");
+            printf("Ori.:\n");
 			printf("Color:\t%X\n", s->color);
 		}
 		else if (ft_strcmp(s->id, "cy")){
 			printf("ID:\t%s\n", s->id);
-            printf("Coord:\t%d.%d,", s->coord.x.entier, s->coord.x.decimal);
-            printf("%d.%d,", s->coord.y.entier, s->coord.y.decimal);
-            printf("%d.%d\n", s->coord.z.entier, s->coord.z.decimal);
-            printf("Ori.:\t%d.%d,", s->orientation.x.entier, s->orientation.x.decimal);
-            printf("%d.%d,", s->orientation.y.entier, s->orientation.y.decimal);
-            printf("%d.%d\n", s->orientation.z.entier, s->orientation.z.decimal);
-			printf("Dia.:\t%d,%d\n", s->diameter.entier, s->diameter.decimal);
-			printf("Height:\t%d,%d\n", s->height.entier, s->height.decimal);
+            printf("Coord:\n");
+            printf("Ori.:\n");
+			printf("Dia.:\n");
+			printf("Height:\n");
 			printf("Color:\t%X\n", s->color);
 		}
 		printf("------------------------------\n");
 		aff = aff->next;
 	}
-
 }
+
+// void	print_objects(t_dlist *l)
+// {
+// 	t_node *aff = l->first;
+
+// 	while(aff)
+// 	{
+// 		t_shape *s = aff->content;
+
+// 		if (ft_strcmp(s->id, "A")){
+// 			printf("ID:\t%s\n", s->id);
+// 			printf("LRatio:\t%d,%d\n", s->light_ratio.entier, s->light_ratio.decimal);
+// 			printf("Color:\t%X\n", s->color);
+// 		}
+// 		else if (ft_strcmp(s->id, "C")){
+// 			printf("ID:\t%s\n", s->id);
+//             printf("Coord:\t%d.%d,", s->coord.x.entier, s->coord.x.decimal);
+//             printf("%d.%d,", s->coord.y.entier, s->coord.y.decimal);
+//             printf("%d.%d\n", s->coord.z.entier, s->coord.z.decimal);
+//             printf("Ori.:\t%d.%d,", s->orientation.x.entier, s->orientation.x.decimal);
+//             printf("%d.%d,", s->orientation.y.entier, s->orientation.y.decimal);
+//             printf("%d.%d\n", s->orientation.z.entier, s->orientation.z.decimal);
+//             printf("FOV:\t%d\n", s->FOV);
+// 		}
+// 		else if (ft_strcmp(s->id, "L")){
+// 			printf("ID:\t%s\n", s->id);
+//             printf("Coord:\t%d.%d,", s->coord.x.entier, s->coord.x.decimal);
+//             printf("%d.%d,", s->coord.y.entier, s->coord.y.decimal);
+//             printf("%d.%d\n", s->coord.z.entier, s->coord.z.decimal);
+// 			printf("LRatio:\t%d,%d\n", s->light_ratio.entier, s->light_ratio.decimal);
+// 			printf("Color:\t%X\n", s->color);
+// 		}
+// 		else if (ft_strcmp(s->id, "sp")){
+// 			printf("ID:\t%s\n", s->id);
+//             printf("Coord:\t%d.%d,", s->coord.x.entier, s->coord.x.decimal);
+//             printf("%d.%d,", s->coord.y.entier, s->coord.y.decimal);
+//             printf("%d.%d\n", s->coord.z.entier, s->coord.z.decimal);
+// 			printf("Dia.:\t%d,%d\n", s->diameter.entier, s->diameter.decimal);
+// 			printf("Color:\t%X\n", s->color);
+// 		}
+// 		else if (ft_strcmp(s->id, "pl")){
+// 			printf("ID:\t%s\n", s->id);
+//             printf("Coord:\t%d.%d,", s->coord.x.entier, s->coord.x.decimal);
+//             printf("%d.%d,", s->coord.y.entier, s->coord.y.decimal);
+//             printf("%d.%d\n", s->coord.z.entier, s->coord.z.decimal);
+//             printf("Ori.:\t%d.%d,", s->orientation.x.entier, s->orientation.x.decimal);
+//             printf("%d.%d,", s->orientation.y.entier, s->orientation.y.decimal);
+//             printf("%d.%d\n", s->orientation.z.entier, s->orientation.z.decimal);
+// 			printf("Color:\t%X\n", s->color);
+// 		}
+// 		else if (ft_strcmp(s->id, "cy")){
+// 			printf("ID:\t%s\n", s->id);
+//             printf("Coord:\t%d.%d,", s->coord.x.entier, s->coord.x.decimal);
+//             printf("%d.%d,", s->coord.y.entier, s->coord.y.decimal);
+//             printf("%d.%d\n", s->coord.z.entier, s->coord.z.decimal);
+//             printf("Ori.:\t%d.%d,", s->orientation.x.entier, s->orientation.x.decimal);
+//             printf("%d.%d,", s->orientation.y.entier, s->orientation.y.decimal);
+//             printf("%d.%d\n", s->orientation.z.entier, s->orientation.z.decimal);
+// 			printf("Dia.:\t%d,%d\n", s->diameter.entier, s->diameter.decimal);
+// 			printf("Height:\t%d,%d\n", s->height.entier, s->height.decimal);
+// 			printf("Color:\t%X\n", s->color);
+// 		}
+// 		printf("------------------------------\n");
+// 		aff = aff->next;
+// 	}
+
+// }
