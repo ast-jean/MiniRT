@@ -24,11 +24,9 @@
 
 #define fixed_scale 256
 
-
-
 typedef struct s_Vars	// all of our values needed throught the program
 {
-	int32_t env3D[100000][100000][100000];
+	int32_t env3D[1][1][1];
 	mlx_image_t* img;
 	mlx_t		*mlx;
 	void		*objs;
