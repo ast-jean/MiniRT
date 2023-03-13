@@ -19,7 +19,6 @@ typedef struct s_3dPoint{
     t_Fixed x;
 	t_Fixed y;
 	t_Fixed z;
-	int32_t		color;
 } t_3dPoint;
 
 typedef struct s_shape
