@@ -25,8 +25,8 @@ void hook(void* param)
 
 int	main(int argc, char **argv)
 {
-	t_Vars vars;
-	mlx_t* mlx;
+	// t_Vars vars;
+	// mlx_t* mlx;
 	t_dlist *objects = malloc(sizeof(t_dlist));
 
 	
