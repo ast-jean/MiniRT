@@ -23,6 +23,13 @@ void hook(void* param)
 		img->instances[0].x += 5;
 }
 
+char *str;
+double *d;
+
+d = atof(str);
+
+double -> fixed
+set_value(light_ratio, d);
 
 
 int	main()
