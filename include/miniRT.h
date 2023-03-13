@@ -7,6 +7,7 @@
 # include <signal.h>
 # include <stdlib.h>
 # include <stdint.h>
+# include <stdarg.h>
 # include <limits.h>
 # include <fcntl.h>
 # include "MLX42/include/MLX42/MLX42.h"
