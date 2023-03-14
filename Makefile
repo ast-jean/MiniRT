@@ -122,7 +122,6 @@ rew:
 	@rm -f *.o
 	@rm -rf $(OBJS_DIR)
 	@$(MAKE) -s $(NAME)
-	./$(NAME)
 
 help:
 	@echo "Rules: all clean fclean re"

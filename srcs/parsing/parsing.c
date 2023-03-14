@@ -7,7 +7,6 @@ void	parse(int argc, char **argv, t_dlist *l)
 	valid_file(argv[1]);
 	split(argv[1], l);
 	print_objects(l);
-	dlist_free_content(l);
 }
 
 void	valid_file(char *file)
@@ -41,6 +40,15 @@ void	split(char *file, t_dlist *l)
 	}
 	close(fd);
 }
+void	free_split(char **args)
+{
+	int	i = 0;
+
+	while (args[i])
+		free(args[i++]);
+	if (args)
+		free(args);
+}
 
 void	valid_element(char **elem, t_dlist *l)
 {
@@ -58,6 +66,7 @@ void	valid_element(char **elem, t_dlist *l)
 		dlist_add_back(l, object_cy(elem));
 	else
 		error_exit("Invalid element");
+	free_split(elem);
 }
 
 t_Fixed	str_to_fixed(char *elem)
@@ -80,5 +89,6 @@ t_3dPoint str_to_3D(char *elem)
 	p.x = str_to_fixed(coord[0]);
 	p.y = str_to_fixed(coord[1]);
 	p.z = str_to_fixed(coord[2]);
+	free_split(coord);
 	return (p);
 }

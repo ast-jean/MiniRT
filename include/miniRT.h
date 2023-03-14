@@ -58,6 +58,8 @@ uint32_t	RGB_to_hex(char *elem);
 //debug.c
 void		print_objects(t_dlist *l);
 void		error_exit(char *str);
+
+void	free_split(char **args);
 /*---------------------------------------------------------------*/
 
 void	set_value(t_Fixed *fp, double value);

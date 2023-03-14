@@ -26,5 +26,6 @@ uint32_t RGB_to_hex(char *elem)
 	uint8_t g = valid_RGB(colors[1]);
 	uint8_t b = valid_RGB(colors[2]);
 	uint8_t t = 255;
+	free_split(colors);
 	return(r << 24 | g << 16 | b << 8 | t);
 }

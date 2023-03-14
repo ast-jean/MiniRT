@@ -3,7 +3,7 @@
 t_shape *object_sp(char **elem)
 {
     t_shape *S = malloc(sizeof(t_shape));
-	S->id = elem[0];
+	S->id = "sp";
 	S->coord = str_to_3D(elem[1]);
 	S->diameter = str_to_fixed(elem[2]);
 	S->color = RGB_to_hex(elem[3]);
@@ -13,7 +13,7 @@ t_shape *object_sp(char **elem)
 t_shape *object_pl(char **elem)
 {
     t_shape *S = malloc(sizeof(t_shape));
-	S->id = elem[0];
+	S->id = "pl";
 	S->coord = str_to_3D(elem[1]);
 	S->orientation = str_to_3D(elem[2]);
 	S->color = RGB_to_hex(elem[3]);
@@ -23,7 +23,7 @@ t_shape *object_pl(char **elem)
 t_shape *object_cy(char **elem)
 {
     t_shape *S = malloc(sizeof(t_shape));
-	S->id = elem[0];
+	S->id = "cy";
     S->coord = str_to_3D(elem[1]);
 	S->orientation = str_to_3D(elem[2]);
 	S->diameter = str_to_fixed(elem[3]);
