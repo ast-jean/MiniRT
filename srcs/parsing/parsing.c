@@ -62,7 +62,6 @@ void	valid_element(char **elem, t_dlist *l)
 		dlist_add_back(l, object_cy(elem));
 	else
 		error_exit("Invalid element");
-	(void)l;
 }
 
 

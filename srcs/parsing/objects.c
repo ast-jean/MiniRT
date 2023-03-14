@@ -73,39 +73,39 @@ void	print_objects(t_dlist *l)
 
 		if (ft_strcmp(s->id, "A")){
 			printf("ID:\t%s\n", s->id);
-			printf("LRatio:\n");
+			printf("LRatio:\t%f\n", to_double(s->light_ratio));
 			printf("Color:\t%X\n", s->color);
 		}
 		else if (ft_strcmp(s->id, "C")){
 			printf("ID:\t%s\n", s->id);
-			printf("Coord:\n");
-            printf("Ori.:\n");
+			printf("Coord:\t(%f),(%f),(%f)\n", to_double(s->coord.x), to_double(s->coord.y), to_double(s->coord.z));
+            printf("Ori.:\t(%f),(%f),(%f)\n", to_double(s->orientation.x), to_double(s->orientation.y), to_double(s->orientation.z));
             printf("FOV:\t%d\n", s->FOV);
 		}
 		else if (ft_strcmp(s->id, "L")){
 			printf("ID:\t%s\n", s->id);
-			printf("Coord:\n");
-			printf("LRatio:\n");
+			printf("Coord:\t(%f),(%f),(%f)\n", to_double(s->coord.x), to_double(s->coord.y), to_double(s->coord.z));
+			printf("LRatio:\t%f\n", to_double(s->light_ratio));
 			printf("Color:\t%X\n", s->color);
 		}
 		else if (ft_strcmp(s->id, "sp")){
 			printf("ID:\t%s\n", s->id);
-			printf("Coord:\n");
-			printf("Dia.:\n");
+			printf("Coord:\t(%f),(%f),(%f)\n", to_double(s->coord.x), to_double(s->coord.y), to_double(s->coord.z));
+			printf("Dia.:\t%f\n", to_double(s->diameter));
 			printf("Color:\t%X\n", s->color);
 		}
 		else if (ft_strcmp(s->id, "pl")){
 			printf("ID:\t%s\n", s->id);
-            printf("Coord:\n");
-            printf("Ori.:\n");
+            printf("Coord:\t(%f),(%f),(%f)\n", to_double(s->coord.x), to_double(s->coord.y), to_double(s->coord.z));
+            printf("Ori.:\t(%f),(%f),(%f)\n", to_double(s->orientation.x), to_double(s->orientation.y), to_double(s->orientation.z));
 			printf("Color:\t%X\n", s->color);
 		}
 		else if (ft_strcmp(s->id, "cy")){
 			printf("ID:\t%s\n", s->id);
-            printf("Coord:\n");
-            printf("Ori.:\n");
-			printf("Dia.:\n");
-			printf("Height:\n");
+            printf("Coord:\t(%f),(%f),(%f)\n", to_double(s->coord.x), to_double(s->coord.y), to_double(s->coord.z));
+            printf("Ori.:\t(%f),(%f),(%f)\n", to_double(s->orientation.x), to_double(s->orientation.y), to_double(s->orientation.z));
+			printf("Dia.:\t%f\n", to_double(s->diameter));
+			printf("Height:\t%f\n", to_double(s->height));
 			printf("Color:\t%X\n", s->color);
 		}
 		printf("------------------------------\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Fixed.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: mtrembla <mtrembla@student.42quebec>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:25:43 by slavoie           #+#    #+#             */
-/*   Updated: 2023/03/09 15:51:57 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:43:55 by mtrembla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	to_int(t_Fixed fp)
 
 double	to_double(t_Fixed fp)
 {
-	return ((double) fp.value / (double) fp.scale);
+	return ((double) fp.value / fixed_scale);
 }
 
 /*

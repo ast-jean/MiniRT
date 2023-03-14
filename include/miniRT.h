@@ -53,4 +53,6 @@ void	print_objects(t_dlist *l);
 t_Fixed	str_to_fixed(char *elem);
 t_3dPoint str_to_3D(char *elem);
 void	set_value(t_Fixed *fp, double value);
+double	to_double(t_Fixed fp);
+int	to_int(t_Fixed fp);
 #endif
