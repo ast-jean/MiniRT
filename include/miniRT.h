@@ -35,23 +35,33 @@ typedef struct s_Vars	// all of our values needed throught the program
 } t_Vars;
 
 
-//parsing
-void	parse(int argc, char **argv, t_dlist *l);
-void	error_exit(char *str);
-void	valid_file(char *file);
-void	split(char *file, t_dlist *l);
-void	valid_element(char **elem, t_dlist *l);
-//objects
-t_shape	*object_A(char **elem);
-t_shape *object_C(char **elem);
-t_shape *object_L(char **elem);
-t_shape *object_sp(char **elem);
-t_shape *object_pl(char **elem);
-t_shape *object_cy(char **elem);
-uint32_t RGB_to_hex(char *elem);
-void	print_objects(t_dlist *l);
-t_Fixed	str_to_fixed(char *elem);
-t_3dPoint str_to_3D(char *elem);
+/*----------------------------parsing----------------------------*/
+//parsing.c
+void		parse(int argc, char **argv, t_dlist *l);
+void		valid_file(char *file);
+void		split(char *file, t_dlist *l);
+void		free_split(char **args);
+void		valid_element(char **elem, t_dlist *l);
+t_Fixed		str_to_fixed(char *elem);
+t_3dPoint	str_to_3D(char *elem);
+//scene.c
+t_shape		*object_A(char **elem);
+t_shape		*object_C(char **elem);
+t_shape 	*object_L(char **elem);
+//objects.c
+t_shape 	*object_sp(char **elem);
+t_shape 	*object_pl(char **elem);
+t_shape 	*object_cy(char **elem);
+//colors.c
+int			RGB_digit(char *color);
+uint8_t		valid_RGB(char *color);
+uint32_t	RGB_to_hex(char *elem);
+//debug.c
+void		print_objects(t_dlist *l);
+void		error_exit(char *str);
+
+/*---------------------------------------------------------------*/
+
 void	set_value(t_Fixed *fp, double value);
 double	to_double(t_Fixed fp);
 int	to_int(t_Fixed fp);

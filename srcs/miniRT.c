@@ -47,6 +47,7 @@ int	main(int argc, char **argv)
 	// mlx_loop_hook(mlx, &hook, mlx);
 	// mlx_loop(mlx);
 	// mlx_terminate(mlx);
+	dlist_free_content(objects);
 	free(objects);
 	return (EXIT_SUCCESS);
 }

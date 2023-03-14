@@ -8,7 +8,6 @@
 
 typedef struct s_Fixed{
 	int	value;
-	int scale;
 }	t_Fixed;
 
 typedef struct s_2dPoint{

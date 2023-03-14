@@ -8,6 +8,8 @@ SRCS_FILES 		=	miniRT.c \
 					parsing/parsing.c \
 					parsing/objects.c \
 					parsing/colors.c \
+					parsing/scene.c \
+					parsing/debug.c \
 					Fixed.c \
 
 INCLUDE_FILES	= 	include/miniRT.h \
@@ -120,7 +122,6 @@ rew:
 	@rm -f *.o
 	@rm -rf $(OBJS_DIR)
 	@$(MAKE) -s $(NAME)
-	./$(NAME)
 
 help:
 	@echo "Rules: all clean fclean re"
