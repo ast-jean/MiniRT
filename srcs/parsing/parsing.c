@@ -1,10 +1,5 @@
 #include "../../include/miniRT.h"
 
-void	error_exit(char *str)
-{
-	printf("%s\n", str);
-	exit(0);
-}
 void	parse(int argc, char **argv, t_dlist *l)
 {
 	if (argc != 2)
@@ -12,6 +7,7 @@ void	parse(int argc, char **argv, t_dlist *l)
 	valid_file(argv[1]);
 	split(argv[1], l);
 	print_objects(l);
+	dlist_free_content(l);
 }
 
 void	valid_file(char *file)
@@ -64,7 +60,25 @@ void	valid_element(char **elem, t_dlist *l)
 		error_exit("Invalid element");
 }
 
+t_Fixed	str_to_fixed(char *elem)
+{
+	t_Fixed f;
+	// char **part = ft_split(elem, '.');
+	// f.entier = ft_atoi(part[0]);
+	// if (part[1])
+	// 	f.decimal = ft_atoi(part[1]);
+	// else
+	// 	f.decimal = 0;
+	set_value(&f, atof(elem));
+	return (f);
+}
 
-
-
-//A, C, L, sp, pl, cy
+t_3dPoint str_to_3D(char *elem)
+{
+	t_3dPoint p;
+	char **coord = ft_split(elem, ',');
+	p.x = str_to_fixed(coord[0]);
+	p.y = str_to_fixed(coord[1]);
+	p.z = str_to_fixed(coord[2]);
+	return (p);
+}

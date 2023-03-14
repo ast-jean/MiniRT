@@ -8,6 +8,8 @@ SRCS_FILES 		=	miniRT.c \
 					parsing/parsing.c \
 					parsing/objects.c \
 					parsing/colors.c \
+					parsing/scene.c \
+					parsing/debug.c \
 					Fixed.c \
 
 INCLUDE_FILES	= 	include/miniRT.h \
