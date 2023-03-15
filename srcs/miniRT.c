@@ -2,8 +2,8 @@
 #include <time.h> //remove before sending project
 
 
-#define WIDTH 1920
-#define HEIGHT 1080
+#define WIDTH 500
+#define HEIGHT 480
 
 static mlx_image_t* img;
 
@@ -25,28 +25,29 @@ void hook(void* param)
 
 int	main(int argc, char **argv)
 {
-	// t_Vars vars;
-	// mlx_t* mlx;
 	t_dlist *objects = malloc(sizeof(t_dlist));
-
-	
 	parse(argc, argv, objects);
-	// if (!(mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true)))
-	// 	return(EXIT_FAILURE);
-	// vars.img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	// ft_memset(vars.img->pixels, 255, vars.img->width * vars.img->height * sizeof(int));
 
-	// mlx_image_to_window(mlx, vars.img, 0, 0);
+	t_Vars vars;
+	mlx_t* mlx;
+	clock_t start_time = clock();
+	
+	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true)))
+		return(EXIT_FAILURE);
+	vars.img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	ft_memset(vars.img->pixels, 255, vars.img->width * vars.img->height * sizeof(int));
+
+	mlx_image_to_window(mlx, vars.img, 0, 0);
 
 
-	// clock_t end_time = clock();												// illegal maybe using timer from philo
-	// double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC; //
-	// printf("Render time: %f seconds\n", elapsed_time);						//
+	clock_t end_time = clock();												// illegal maybe using timer from philo
+	double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC; //
+	printf("Render time: %f seconds\n", elapsed_time);						//
 
 
-	// mlx_loop_hook(mlx, &hook, mlx);
-	// mlx_loop(mlx);
-	// mlx_terminate(mlx);
+	mlx_loop_hook(mlx, &hook, mlx);
+	mlx_loop(mlx);
+	mlx_terminate(mlx);
 	dlist_free_content(objects);
 	free(objects);
 	return (EXIT_SUCCESS);

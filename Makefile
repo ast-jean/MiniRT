@@ -10,7 +10,7 @@ SRCS_FILES 		=	miniRT.c \
 					parsing/colors.c \
 					parsing/scene.c \
 					parsing/debug.c \
-					Fixed.c \
+					fixed/Fixed.c \
 
 INCLUDE_FILES	= 	include/miniRT.h \
 					include/MLX42/include/MLX42/MLX42.h \
@@ -56,7 +56,7 @@ WHITE		= \033[37m
 
 ### Compilations et archivage ###
 CC 			= gcc
-CFLAGS 		= -Wall -Wextra -Werror -g
+CFLAGS 		= -Wall -Wextra -Werror -g -fsanitize=address
 MLXFLAGS	= -framework OpenGL -framework AppKit
 ### Autres Fonctions ###
 NORMINETTE 	= norminette
@@ -92,7 +92,7 @@ $(BONUS): $(OBJS)
 	@echo "${GREEN}${BOLD}Compilation done:${END}\n"
 
 $(OBJS_DIR)%.o : $(SRCS_DIR)%.c
-	@mkdir -p $(OBJS_DIR)parsing $(OBJS_DIR)rayTracing
+	@mkdir -p $(OBJS_DIR)parsing $(OBJS_DIR)rayTracing $(OBJS_DIR)fixed
 	@echo "$(BLUE)Compiling object $@ ..$(END)"
 	@$(CC) $(CFLAGS) -Imlx -c $< -o $@
 
@@ -113,7 +113,7 @@ leak:
 	leaks --atExit -- ./$(NAME)
 
 valgrind:
-	valgrind --track-fds=yes --track-origins=yes  --leak-check=full --show-leak-kinds=all ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
 
 re: fclean all
 
@@ -122,6 +122,7 @@ rew:
 	@rm -f *.o
 	@rm -rf $(OBJS_DIR)
 	@$(MAKE) -s $(NAME)
+	@./$(NAME) test.rt
 
 help:
 	@echo "Rules: all clean fclean re"

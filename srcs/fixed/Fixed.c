@@ -6,11 +6,11 @@
 /*   By: mtrembla <mtrembla@student.42quebec>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:25:43 by slavoie           #+#    #+#             */
-/*   Updated: 2023/03/14 13:51:53 by mtrembla         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:43:55 by mtrembla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/miniRT.h"
+#include "../../include/miniRT.h"
 
 /*
 	Initialise le fixed_point à la valeur du "double" passées en paramètre et
@@ -25,17 +25,17 @@
 
 void	set_value(t_Fixed *fp, double value)
 {
-		fp->value = value * fixed_scale;
+		fp->value = value * fp_scale;
 }
 
 int	to_int(t_Fixed fp)
 {
-	return (fp.value / fixed_scale);
+	return (fp.value / fp_scale);
 }
 
 double	to_double(t_Fixed fp)
 {
-	return ((double) fp.value / fixed_scale);
+	return ((double) fp.value / fp_scale);
 }
 
 /*
