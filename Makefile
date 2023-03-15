@@ -56,7 +56,7 @@ WHITE		= \033[37m
 
 ### Compilations et archivage ###
 CC 			= gcc
-CFLAGS 		= -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS 		= -Wall -Wextra -Werror -g
 MLXFLAGS	= -framework OpenGL -framework AppKit
 ### Autres Fonctions ###
 NORMINETTE 	= norminette

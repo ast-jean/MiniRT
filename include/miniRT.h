@@ -26,9 +26,10 @@
 
 typedef struct s_Vars	// all of our values needed throught the program
 {
-	mlx_image_t* img;
+	mlx_image_t *img;
 	mlx_t		*mlx;
-	void		*objs;
+	t_dlist		*objs;
+	t_shape		*camera;
 } t_Vars;
 
 
@@ -56,10 +57,14 @@ uint32_t	RGB_to_hex(char *elem);
 //debug.c
 void		print_objects(t_dlist *l);
 void		error_exit(char *str);
-
 /*---------------------------------------------------------------*/
-
+/*----------------------------fixed------------------------------*/
 void	set_value(t_Fixed *fp, double value);
 double	to_double(t_Fixed fp);
-int	to_int(t_Fixed fp);
+int		to_int(t_Fixed fp);
+/*---------------------------------------------------------------*/
+/*---------------------------ray_tracing-------------------------*/
+void	save_camera(t_dlist *l, t_Vars *vars);
+
+
 #endif

@@ -6,7 +6,7 @@ void	parse(int argc, char **argv, t_dlist *l)
 		error_exit("Bad number of arguments");
 	valid_file(argv[1]);
 	split(argv[1], l);
-	print_objects(l);
+	// print_objects(l);
 }
 
 void	valid_file(char *file)
@@ -64,6 +64,8 @@ void	valid_element(char **elem, t_dlist *l)
 		dlist_add_back(l, object_pl(elem));
 	else if (ft_strcmp(elem[0], "cy"))
 		dlist_add_back(l, object_cy(elem));
+	else if (ft_strcmp(elem[0], "#"))
+		return ;
 	else
 		error_exit("Invalid element");
 	free_split(elem);

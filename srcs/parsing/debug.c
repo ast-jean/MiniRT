@@ -9,7 +9,7 @@ void	error_exit(char *str)
 void	print_objects(t_dlist *l)
 {
 	t_node *aff = l->first;
-
+	printf("-----------t_dlist------------\n");
 	while(aff)
 	{
 		t_shape *s = aff->content;

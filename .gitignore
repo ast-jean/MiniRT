@@ -1,6 +1,7 @@
 #other
 .vscode
 .DS_Store
+launch.json
 
 # Prerequisites
 *.d

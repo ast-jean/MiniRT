@@ -27,7 +27,7 @@ typedef struct s_shape
 	t_Fixed		light_ratio; //from 0.0 to 1.0
 	uint32_t	color; //RGB from 0 to 255
 	t_3dPoint	orientation; //from -1 to 1 for each xyz
-	uint32_t	FOV;		 //FOV from 0 to 180
+	uint32_t	FOV; //FOV from 0 to 180
 	t_3dPoint	coord; //coords for center xyz
 	t_Fixed		diameter; //size of sphere
 	t_Fixed		height; // height of cylinder
