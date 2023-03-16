@@ -26,10 +26,10 @@
 
 typedef struct s_Vars	// all of our values needed throught the program
 {
-	mlx_image_t *img;
-	mlx_t		*mlx;
-	t_dlist		*objs;
-	t_shape		*camera;
+	mlx_t				*mlx;
+	t_dlist				*objs;
+	t_shape				*camera;
+	mlx_image_t	*img;
 } t_Vars;
 
 
