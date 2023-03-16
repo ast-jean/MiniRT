@@ -32,14 +32,14 @@ typedef struct s_Vars	// all of our values needed throught the program
 	mlx_image_t	*img;
 } t_Vars;
 
-
+t_Vars	*init_vars();
 /*----------------------------parsing----------------------------*/
 //parsing.c
-void		parse(int argc, char **argv, t_dlist *l);
+void		parse(int argc, char **argv);
 void		valid_file(char *file);
-void		split(char *file, t_dlist *l);
+void		split(char *file);
 void		free_split(char **args);
-void		valid_element(char **elem, t_dlist *l);
+void		valid_element(char **elem);
 t_Fixed		str_to_fixed(char *elem);
 t_3dPoint	str_to_3D(char *elem);
 //scene.c
