@@ -6,7 +6,6 @@ void	parse(int argc, char **argv)
 		error_exit("Bad number of arguments");
 	valid_file(argv[1]);
 	split(argv[1]);
-	// print_objects(l);
 }
 
 void	valid_file(char *file)
@@ -54,11 +53,11 @@ void	valid_element(char **elem)
 {
 	t_Vars *vars = init_vars();
 	if (ft_strcmp(elem[0], "A"))
-		dlist_add_back(vars->objs, object_A(elem));
+		object_A(elem, vars);
 	else if (ft_strcmp(elem[0], "C"))
-		dlist_add_back(vars->objs, object_C(elem));
+		object_C(elem, vars);
 	else if (ft_strcmp(elem[0], "L"))
-		dlist_add_back(vars->objs, object_L(elem));
+		object_L(elem, vars);
 	else if (ft_strcmp(elem[0], "sp"))
 		dlist_add_back(vars->objs, object_sp(elem));
 	else if (ft_strcmp(elem[0], "pl"))
