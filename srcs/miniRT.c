@@ -94,6 +94,11 @@ int	main(int argc, char **argv)
 	print_objects(vars->objs);
 	dlist_free_content(vars->objs);
 	free(vars->objs);
+	// free(vars->ambient_light);
+	// free(vars->light);
+	// free(vars->camera);
+	// free(vars->img);
+	// free(vars);
 	return (EXIT_SUCCESS);
 }
 
