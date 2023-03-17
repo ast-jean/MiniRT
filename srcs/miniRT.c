@@ -19,7 +19,7 @@ void hook(void* param)
 	// 	img->instances[0].x += 5;
 
 	mlx_t* mlx = param;
-
+	ray_to_screen();
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
@@ -39,7 +39,7 @@ t_Vars	*init_vars(){
 		vars = malloc(sizeof(t_Vars));
 		vars->camera = malloc(sizeof(t_shape));
 		vars->mlx = NULL;
-		vars->img = malloc(sizeof(mlx_image_t));
+		vars->img = NULL;
 	}
 	return (vars);
 }
@@ -50,20 +50,19 @@ int	main(int argc, char **argv)
 	t_Vars	*vars;
 	parse(argc, argv, objects);
 	vars = init_vars();
-	// vars->img = img;
 	clock_t start_time = clock();
 	vars->mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
 	if (!(vars->mlx))
 		return(EXIT_FAILURE);
 	
 	img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
+	vars->img = img;
 	ft_memset(img->pixels, 255, img->width * img->height * sizeof(int));
-
-	ray_to_screen();
+	
 
 	mlx_image_to_window(vars->mlx, img, 0, 0);
 
-	/**/clock_t end_time = clock();												// illegal maybe using timer from philo
+	/**/clock_t end_time = clock();												// illegal timer
 	/**/double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC; //
 	/**/printf("Render time: %f seconds\n", elapsed_time);						//
 

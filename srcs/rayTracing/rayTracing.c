@@ -23,9 +23,10 @@ void save_camera(t_dlist *l, t_Vars *vars){
 	return ;
 }
 
-uint32_t castRay()
+uint32_t castRay(uint32_t x, uint32_t y)
 {
-		t_Vars *vars = init_vars();
+	(void)x, (void)y;
+	t_Vars *vars = init_vars();
 	t_Fixed fov;
 	set_value(&fov, vars->camera->FOV);
 	// double imageAspectRatio = (double)WIDTH / (double)HEIGHT; // assuming width > height
@@ -37,25 +38,41 @@ uint32_t castRay()
 
 void ray_to_screen()
 {
-
+	// t_Vars *vars = init_vars();
+	// mlx_image_t *img = vars->img;
+	// static uint32_t	x;
+	// static uint32_t	y = 0;
+	// static uint32_t	color;
 	
+	// 	if(!color)
+	// 		color = RED;
+	// 	if (x == WIDTH)
+	// 		y++;
+	// 	x = -1;
+	// 	while (++x < (uint32_t)WIDTH) 
+	// 	{																		//		 R  G  B  N
+	// 		// mlx_put_pixel(img, x, y, color += x^2 + 69); //damier 
+	// 		mlx_put_pixel(img, x, y, (x^2+y^2)/8+ RED); //damier 
+	// 		// mlx_put_pixel(img, x, y, (x^2+y^2)*WIDTH); //damier nor recusif
+	// 		// mlx_put_pixel(img, x, y, ((x^2+y^2)/4)*WIDTH); //yes blue nor recusif
+	// 		// mlx_put_pixel(img, x, y, ((x^2+y)/4)*HEIGHT); //yes blue nor recusif
+	// 		// mlx_put_pixel(img, x, y, ((x+y)/4)*HEIGHT); //yes blue nor recusif
 
-	
-	t_Fixed x;
-	set_value(&x, 0);
-	
-	t_Fixed y;
-	set_value(&y, 0);
+	// 	}
+	// 	if (y == HEIGHT)
+	// 		y = 0;
+	t_Vars *vars = init_vars();
+	mlx_image_t *img = vars->img;
+	uint32_t	x;
+	uint32_t	y = -1;
 
-	uint32_t j = -1;
-	uint32_t i = 0;
-	while (++j < (uint32_t)HEIGHT) 
+	while (++y < (uint32_t)HEIGHT) 
 	{
-		i = 0;
-		while (i < (uint32_t)WIDTH) 
+			usleep(50);
+		x = -1;
+		while (++x < (uint32_t)WIDTH) 
 		{
-			mlx_put_pixel(img, to_int(x), to_int(y), castRay()); //cast_ray output a color
-			i++;
+			mlx_put_pixel(img, x, y, castRay(x, y)); //cast_ray output a color
 		}
 	}
 }
