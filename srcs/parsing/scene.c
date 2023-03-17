@@ -1,31 +1,34 @@
 #include "../../include/miniRT.h"
 
-t_shape   *object_A(char **elem)
+void   object_A(char **elem, t_Vars *vars)
 {
-    t_shape *S = malloc(sizeof(t_shape));
-    S->id = "A";
-    S->light_ratio = str_to_fixed(elem[1]);
-	S->color = RGB_to_hex(elem[2]);
-    return(S);
+	if (vars->ambient_light)
+		error_exit("Object 'A' can only be declared once");
+	vars->ambient_light = malloc(sizeof(t_shape));
+    vars->ambient_light->id = "A";
+    vars->ambient_light->light_ratio = str_to_fixed(elem[1]);
+	vars->ambient_light->color = RGB_to_hex(elem[2]);
 }
 
-t_shape *object_C(char **elem)
+void	object_C(char **elem, t_Vars *vars)
 {
-    t_shape *S = malloc(sizeof(t_shape));
-	S->id = "C";
-	S->coord = str_to_3D(elem[1]);
-	S->orientation = str_to_3D(elem[2]);
-	S->FOV = ft_atoi(elem[3]);
-	return (S);
+    if (vars->camera)
+		error_exit("Object 'C' can only be declared once");
+	vars->camera = malloc(sizeof(t_shape));
+	vars->camera->id = "C";
+	vars->camera->coord = str_to_3D(elem[1]);
+	vars->camera->orientation = str_to_3D(elem[2]);
+	vars->camera->FOV = ft_atoi(elem[3]);
 }
 
-t_shape *object_L(char **elem)
+void	object_L(char **elem, t_Vars *vars)
 {
-    t_shape *S = malloc(sizeof(t_shape));
-	S->id = "L";
-	S->coord = str_to_3D(elem[1]);
-	S->light_ratio = str_to_fixed(elem[2]);
+	if (vars->light)
+		error_exit("Object 'L' can only be declared once");
+    vars->light = malloc(sizeof(t_shape));
+	vars->light->id = "L";
+	vars->light->coord = str_to_3D(elem[1]);
+	vars->light->light_ratio = str_to_fixed(elem[2]);
 	if (elem[3])
-		S->color = RGB_to_hex(elem[3]);
-	return (S);
+		vars->light->color = RGB_to_hex(elem[3]);
 }

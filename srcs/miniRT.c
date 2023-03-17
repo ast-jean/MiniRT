@@ -32,47 +32,61 @@ void hook(void* param)
 		img->instances[0].x += 5;
 }
 
-t_Vars	*init_vars(){
+t_Vars	*init_vars()
+{
 	static t_Vars	*vars;
-
-	if (!vars){
+	if (!vars)
+	{
 		vars = malloc(sizeof(t_Vars));
-		vars->camera = malloc(sizeof(t_shape));
+		vars->camera = NULL;
+		vars->light = NULL;
+		vars->ambient_light = NULL;
 		vars->mlx = NULL;
-		vars->img = NULL;
+		vars->img = malloc(sizeof(mlx_image_t));
+		vars->objs = malloc(sizeof(t_dlist));
+		vars->objs->first = NULL;
+		vars->objs->last = NULL;
 	}
+
+	// print_objects(objects);
+	// save_camera(objects, vars); //dlist_remove_node() present
+	// print_objects(objects);
 	return (vars);
 }
 
 int	main(int argc, char **argv)
 {
-	t_dlist *objects = malloc(sizeof(t_dlist));
-	t_Vars	*vars;
-	parse(argc, argv, objects);
-	vars = init_vars();
-	clock_t start_time = clock();
-	vars->mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
-	if (!(vars->mlx))
-		return(EXIT_FAILURE);
+	t_Vars	*vars = init_vars();
+	parse(argc, argv);
 	
+	clock_t start_time = clock();
+	// mlx_t		*mlx;
+	
+	vars->mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
+	// mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
+	// vars->mlx = mlx;
+	// if (!(vars->mlx))
+	// 	return(EXIT_FAILURE);
+	
+	// vars->img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
 	img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
 	vars->img = img;
 	ft_memset(img->pixels, 255, img->width * img->height * sizeof(int));
-	
+	// ft_memset(vars->img->pixels, 255, vars->img->width * vars->img->height * sizeof(int));
 
 	mlx_image_to_window(vars->mlx, img, 0, 0);
 
-	/**/clock_t end_time = clock();												// illegal timer
-	/**/double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC; //
-	/**/printf("Render time: %f seconds\n", elapsed_time);						//
+	clock_t end_time = clock();												// illegal maybe using timer from philo
+	double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC; //
+	printf("Render time: %f seconds\n", elapsed_time);						//
 
 
 	mlx_loop_hook(vars->mlx, &hook, vars->mlx);
 	mlx_loop(vars->mlx);
 	mlx_terminate(vars->mlx);
-	dlist_free_content(objects);
-	free(objects);
-	
+	print_objects(vars->objs);
+	dlist_free_content(vars->objs);
+	free(vars->objs);
 	return (EXIT_SUCCESS);
 }
 

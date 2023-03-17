@@ -1,12 +1,11 @@
 #include "../../include/miniRT.h"
 
-void	parse(int argc, char **argv, t_dlist *l)
+void	parse(int argc, char **argv)
 {
 	if (argc != 2)
 		error_exit("Bad number of arguments");
 	valid_file(argv[1]);
-	split(argv[1], l);
-	// print_objects(l);
+	split(argv[1]);
 }
 
 void	valid_file(char *file)
@@ -26,7 +25,7 @@ void	valid_file(char *file)
 	close(fd);
 }
 
-void	split(char *file, t_dlist *l)
+void	split(char *file)
 {
 	int	fd = open(file, O_RDONLY);
 	char *str = ft_gnl(fd);
@@ -35,7 +34,7 @@ void	split(char *file, t_dlist *l)
 	while (str)
 	{
 		args = ft_split(str, ' ');
-		valid_element(args, l);
+		valid_element(args);
 		str = ft_gnl(fd);
 	}
 	close(fd);
@@ -50,20 +49,21 @@ void	free_split(char **args)
 		free(args);
 }
 
-void	valid_element(char **elem, t_dlist *l)
+void	valid_element(char **elem)
 {
+	t_Vars *vars = init_vars();
 	if (ft_strcmp(elem[0], "A"))
-		dlist_add_back(l, object_A(elem));
+		object_A(elem, vars);
 	else if (ft_strcmp(elem[0], "C"))
-		dlist_add_back(l, object_C(elem));
+		object_C(elem, vars);
 	else if (ft_strcmp(elem[0], "L"))
-		dlist_add_back(l, object_L(elem));
+		object_L(elem, vars);
 	else if (ft_strcmp(elem[0], "sp"))
-		dlist_add_back(l, object_sp(elem));
+		dlist_add_back(vars->objs, object_sp(elem));
 	else if (ft_strcmp(elem[0], "pl"))
-		dlist_add_back(l, object_pl(elem));
+		dlist_add_back(vars->objs, object_pl(elem));
 	else if (ft_strcmp(elem[0], "cy"))
-		dlist_add_back(l, object_cy(elem));
+		dlist_add_back(vars->objs, object_cy(elem));
 	else if (!ft_strcmp(elem[0], "#"))
 		error_exit("Invalid element");
 	free_split(elem);
