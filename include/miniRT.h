@@ -22,8 +22,11 @@
 #define GREEN	0x00FF00FF
 #define BLUE	0x0000FFFF
 
-#define fp_scale 256
+#define fp_scale 256 //fixed number definition: now at 0.00
+#define WIDTH 500 //Width of screen
+#define HEIGHT 480//Height of screen
 
+static mlx_image_t* img;
 typedef struct s_Vars	// all of our values needed throught the program
 {
 	mlx_t				*mlx;
@@ -33,6 +36,10 @@ typedef struct s_Vars	// all of our values needed throught the program
 } t_Vars;
 
 
+
+/*-------------------------Initialisation-------------------------*/
+//miniRT.c
+t_Vars	*init_vars();
 /*----------------------------parsing----------------------------*/
 //parsing.c
 void		parse(int argc, char **argv, t_dlist *l);
@@ -65,6 +72,6 @@ int		to_int(t_Fixed fp);
 /*---------------------------------------------------------------*/
 /*---------------------------ray_tracing-------------------------*/
 void	save_camera(t_dlist *l, t_Vars *vars);
-
+void	ray_to_screen();
 
 #endif

@@ -64,9 +64,7 @@ void	valid_element(char **elem, t_dlist *l)
 		dlist_add_back(l, object_pl(elem));
 	else if (ft_strcmp(elem[0], "cy"))
 		dlist_add_back(l, object_cy(elem));
-	else if (ft_strcmp(elem[0], "#"))
-		return ;
-	else
+	else if (!ft_strcmp(elem[0], "#"))
 		error_exit("Invalid element");
 	free_split(elem);
 }

@@ -1,13 +1,6 @@
 #include "../include/miniRT.h"
 #include <time.h> //remove before sending project
 
-
-#define WIDTH 500
-#define HEIGHT 480
-
-static mlx_image_t* img;
-
-
 void hook(void* param)
 {
 	// t_Vars		*vars = param;
@@ -39,16 +32,15 @@ void hook(void* param)
 		img->instances[0].x += 5;
 }
 
-t_Vars	*init_vars(t_dlist *objects){
-	t_Vars	*vars;
-	vars = malloc(sizeof(t_Vars));
-	vars->camera = malloc(sizeof(t_shape));
-	vars->mlx = NULL;
-	vars->img = malloc(sizeof(mlx_image_t));
+t_Vars	*init_vars(){
+	static t_Vars	*vars;
 
-	print_objects(objects);
-	save_camera(objects, vars); //dlist_remove_node() present
-	print_objects(objects);
+	if (!vars){
+		vars = malloc(sizeof(t_Vars));
+		vars->camera = malloc(sizeof(t_shape));
+		vars->mlx = NULL;
+		vars->img = malloc(sizeof(mlx_image_t));
+	}
 	return (vars);
 }
 
@@ -57,28 +49,23 @@ int	main(int argc, char **argv)
 	t_dlist *objects = malloc(sizeof(t_dlist));
 	t_Vars	*vars;
 	parse(argc, argv, objects);
-	vars = init_vars(objects);
-	
+	vars = init_vars();
+	// vars->img = img;
 	clock_t start_time = clock();
-	// mlx_t		*mlx;
-	
 	vars->mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
-	// mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
-	// vars->mlx = mlx;
-	// if (!(vars->mlx))
-	// 	return(EXIT_FAILURE);
+	if (!(vars->mlx))
+		return(EXIT_FAILURE);
 	
-	// vars->img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
 	img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
-	
 	ft_memset(img->pixels, 255, img->width * img->height * sizeof(int));
-	// ft_memset(vars->img->pixels, 255, vars->img->width * vars->img->height * sizeof(int));
+
+	ray_to_screen();
 
 	mlx_image_to_window(vars->mlx, img, 0, 0);
 
-	clock_t end_time = clock();												// illegal maybe using timer from philo
-	double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC; //
-	printf("Render time: %f seconds\n", elapsed_time);						//
+	/**/clock_t end_time = clock();												// illegal maybe using timer from philo
+	/**/double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC; //
+	/**/printf("Render time: %f seconds\n", elapsed_time);						//
 
 
 	mlx_loop_hook(vars->mlx, &hook, vars->mlx);
@@ -86,6 +73,7 @@ int	main(int argc, char **argv)
 	mlx_terminate(vars->mlx);
 	dlist_free_content(objects);
 	free(objects);
+	
 	return (EXIT_SUCCESS);
 }
 

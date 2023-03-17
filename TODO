@@ -16,9 +16,6 @@ Parsing: (mtrembla)
 [] handle t_3dPoint
 Ray Tracing and math:
 	[X] Implement Fixed number (slavoie)
-	[ ] Implement the 3d Env [x , y, z] (ast-jean)
-	[ ] Function to place object in the 3D env
-	[ ] Function to create the "screen" (using pov)
 	[ ] Function to shoot rays from camera to screen and catching objects behind
 	[ ] Add reflections
 Controls:
@@ -26,6 +23,28 @@ Controls:
 		↳[ ] Change their values when clicked with +/-
 
 			 screen(2D)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			 00.
 			    _        object(3D)
   camera 	   | |  →      OO
 	OO     ➚   |O|  →     OOOO
@@ -53,7 +72,6 @@ Les contraintes sont les suivantes :
 	proprement.
 	↳[ ] Cliquer sur la croix rouge de la fenêtre doit fermer la fenêtre et quitter le
 	programme correctement.
-	↳[X] L’utilisation d’images de la minilibX est fortement recommandé.
 
 [ ]	Votre programme doit prendre en premier argument une description de scène avec
 	un fichier .rt.
