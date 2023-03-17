@@ -45,7 +45,9 @@ t_Vars	*init_vars()
 	if (!vars)
 	{
 		vars = malloc(sizeof(t_Vars));
-		vars->camera = malloc(sizeof(t_shape));
+		vars->camera = NULL;
+		vars->light = NULL;
+		vars->ambient_light = NULL;
 		vars->mlx = NULL;
 		vars->img = malloc(sizeof(mlx_image_t));
 		vars->objs = malloc(sizeof(t_dlist));
