@@ -51,6 +51,8 @@ t_Vars	*init_vars()
 		vars->mlx = NULL;
 		vars->img = malloc(sizeof(mlx_image_t));
 		vars->objs = malloc(sizeof(t_dlist));
+		vars->objs->first = NULL;
+		vars->objs->last = NULL;
 	}
 
 	// print_objects(objects);
