@@ -13,6 +13,7 @@ SRCS_FILES 		=	miniRT.c \
 					fixed/Fixed.c \
 
 INCLUDE_FILES	= 	miniRT.h \
+					objects.h \
 					MLX42/include/MLX42/MLX42.h \
 					
 LIBS =	include/libft/libft.a \
@@ -67,7 +68,7 @@ VALGRING = valgrind --track-fds=yes --track-origins=yes  --leak-check=full --sho
 all: mlx_glfw $(NAME)
 
 mlx_glfw:
-	@echo "Checking libs.."
+	@echo " "
 ifeq (,$(shell brew list | grep glfw))
 	brew install glfw
 endif
@@ -77,7 +78,7 @@ ifeq ("$(wildcard include/MLX42/build/libmlx42.a)","")
 endif
 
 
-$(NAME) : $(OBJS_IN_DIR)
+$(NAME) : $(INCLUDE) $(OBJS_IN_DIR)
 	@$(MAKE) -C include/libft
 	@$(MAKE) -C include/libft_dlist
 	@echo "$(CLEAR_LINE)$(BLUE)Compiling $(NAME)...$(END)"
