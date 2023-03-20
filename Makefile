@@ -12,13 +12,13 @@ SRCS_FILES 		=	miniRT.c \
 					parsing/debug.c \
 					fixed/Fixed.c \
 
-INCLUDE_FILES	= 	include/miniRT.h \
-					include/MLX42/include/MLX42/MLX42.h \
+INCLUDE_FILES	= 	miniRT.h \
+					MLX42/include/MLX42/MLX42.h \
 					
 LIBS =	include/libft/libft.a \
 		include/libft_dlist/dlist.a \
 		include/MLX42/build/libmlx42.a \
-		-Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+		# -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 
 ### Repertoires ###
 SRCS_DIR 	= srcs/
@@ -57,7 +57,7 @@ WHITE		= \033[37m
 ### Compilations et archivage ###
 CC 			= gcc
 CFLAGS 		= -Wall -Wextra -Werror -g
-MLXFLAGS	= -framework OpenGL -framework AppKit
+MLXFLAGS	=
 ### Autres Fonctions ###
 NORMINETTE 	= norminette
 ###------------------------## LEAK CHECK ##------------------------###

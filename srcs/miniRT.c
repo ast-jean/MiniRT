@@ -5,39 +5,39 @@
 #define WIDTH 500
 #define HEIGHT 480
 
-static mlx_image_t* img;
+// static mlx_image_t* img;
 
 
-void hook(void* param)
-{
-	// t_Vars		*vars = param;
-	// mlx_t		*mlx = vars->mlx;
-	// mlx_image_t *img = vars->img;
+// void hook(void* param)
+// {
+// 	// t_Vars		*vars = param;
+// 	// mlx_t		*mlx = vars->mlx;
+// 	// mlx_image_t *img = vars->img;
 
-	// if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-	// 	mlx_close_window(mlx);
-	// if (mlx_is_key_down(mlx, MLX_KEY_UP))
-	// 	img->instances[0].y -= 5;
-	// if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-	// 	img->instances[0].y += 5;
-	// if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-	// 	img->instances[0].x -= 5;
-	// if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-	// 	img->instances[0].x += 5;
+// 	// if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+// 	// 	mlx_close_window(mlx);
+// 	// if (mlx_is_key_down(mlx, MLX_KEY_UP))
+// 	// 	img->instances[0].y -= 5;
+// 	// if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
+// 	// 	img->instances[0].y += 5;
+// 	// if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
+// 	// 	img->instances[0].x -= 5;
+// 	// if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
+// 	// 	img->instances[0].x += 5;
 
-	mlx_t* mlx = param;
+// 	mlx_t* mlx = param;
 
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
-	if (mlx_is_key_down(mlx, MLX_KEY_UP))
-		img->instances[0].y -= 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-		img->instances[0].y += 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-		img->instances[0].x -= 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-		img->instances[0].x += 5;
-}
+// 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+// 		mlx_close_window(mlx);
+// 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
+// 		img->instances[0].y -= 5;
+// 	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
+// 		img->instances[0].y += 5;
+// 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
+// 		img->instances[0].x -= 5;
+// 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
+// 		img->instances[0].x += 5;
+// }
 
 t_Vars	*init_vars()
 {
@@ -59,6 +59,17 @@ t_Vars	*init_vars()
 	// save_camera(objects, vars); //dlist_remove_node() present
 	// print_objects(objects);
 	return (vars);
+}
+
+void	free_vars(t_Vars *vars)
+{
+	dlist_free_content(vars->objs);
+	free(vars->objs);
+	free(vars->ambient_light);
+	free(vars->light);
+	free(vars->camera);
+	free(vars->img);
+	free(vars);
 }
 
 int	main(int argc, char **argv)
@@ -91,14 +102,8 @@ int	main(int argc, char **argv)
 	// mlx_loop_hook(vars->mlx, &hook, vars->mlx);
 	// mlx_loop(vars->mlx);
 	// mlx_terminate(vars->mlx);
-	print_objects(vars->objs);
-	dlist_free_content(vars->objs);
-	free(vars->objs);
-	// free(vars->ambient_light);
-	// free(vars->light);
-	// free(vars->camera);
-	// free(vars->img);
-	// free(vars);
+	// print_objects(vars->objs);
+	free_vars(vars);
 	return (EXIT_SUCCESS);
 }
 
