@@ -1,6 +1,29 @@
 #include "../../include/miniRT.h"
 #include <math.h>
 
+
+
+bool solveQuadratic(double a,double b, double c, double x0, double x1)
+{
+    double discr = b * b - 4 * a * c;
+    if (discr < 0) return false;
+    else if (discr == 0) x0 = x1 = - 0.5 * b / a;
+    else {
+        double q = (b > 0) ?
+            -0.5 * (b + sqrt(discr)) :
+            -0.5 * (b - sqrt(discr));
+        x0 = q / a;
+        x1 = c / q;
+    }
+    if (x0 > x1){
+		double tmp = x1;
+		x1 = x0;
+		x0 = tmp;
+	}
+    return true;
+}
+
+
 /// @brief Projete un ray dans le plan 3D virtuel et compare les coordonnées des objects
 /// @param x coordonée x de l'img
 /// @param y coordonée x de l'img
@@ -11,11 +34,15 @@ uint32_t traceRay(uint32_t x, uint32_t y)
 {
 	t_Vars *vars = init_vars();
 	double imageAspectRatio = (double)WIDTH / (double)HEIGHT; // assuming width > height
+
+	
 	double Sx = (2 * ((x + 0.5) / (double)WIDTH ) - 1) * tan(vars->camera->FOV / 2 * M_PI / 180) * imageAspectRatio;
 	double Sy = (1 - 2 * ((y + 0.5) / (double)HEIGHT) * tan(vars->camera->FOV / 2 * M_PI / 180));
+	(void)Sx, (void)Sy;
+	//normalize with direction;
 
-(void)Sx, (void)Sy;
-
+	//cycle through objs
+	//hit_objects() //return object color;
 
 	return (RED);
 }
@@ -164,5 +191,3 @@ ____GCCIIIICCCGGG8888@@@__________________
 	    `@@@@@@@@@P'.......
 		   """"........
 */
-
-

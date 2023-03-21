@@ -9,6 +9,7 @@
 # include <stdint.h>
 # include <stdarg.h>
 # include <limits.h>
+# include <math.h>
 # include <fcntl.h>
 # include "MLX42/include/MLX42/MLX42.h"
 # include "libft/libft.h"
@@ -35,6 +36,7 @@ typedef struct s_Vars	// all of our values needed throught the program
 	t_shape		*ambient_light;
 	t_shape		*light;
 	mlx_image_t	*img;
+	int			error_message;
 } t_Vars;
 
 
@@ -42,6 +44,7 @@ typedef struct s_Vars	// all of our values needed throught the program
 /*-------------------------Initialisation-------------------------*/
 //miniRT.c
 t_Vars	*init_vars();
+void	free_vars(t_Vars *vars);
 /*----------------------------parsing----------------------------*/
 //parsing.c
 void		parse(int argc, char **argv);
@@ -65,7 +68,7 @@ uint8_t		valid_RGB(char *color);
 uint32_t	RGB_to_hex(char *elem);
 //debug.c
 void		print_objects();
-void		error_exit(char *str);
+void		error_exit(int code, char *str);
 /*---------------------------------------------------------------*/
 /*----------------------------fixed------------------------------*/
 void	set_value(t_Fixed *fp, double value);
