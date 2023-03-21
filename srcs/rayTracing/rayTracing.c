@@ -52,7 +52,7 @@ void ray_to_screen()
 		while (++x < (uint32_t)WIDTH) 
 		{																		//		 R  G  B  N
 			// mlx_put_pixel(img, x, y, color += x^2 + 69); //damier 
-			mlx_put_pixel(img, x, y, (x^2+y^2)/8+ RED); //damier 
+			mlx_put_pixel(img, x, y, (x^2+y^2)*WIDTH); //damier 
 			// mlx_put_pixel(img, x, y, (x^2+y^2)*WIDTH); //damier nor recusif
 			// mlx_put_pixel(img, x, y, ((x^2+y^2)/4)*WIDTH); //yes blue nor recusif
 			// mlx_put_pixel(img, x, y, ((x^2+y)/4)*HEIGHT); //yes blue nor recusif

@@ -96,8 +96,7 @@ int	main(int argc, char **argv)
 	mlx_loop(vars->mlx);
 	mlx_terminate(vars->mlx);
 	print_objects(vars->objs);
-	dlist_free_content(vars->objs);
-	free(vars->objs);
+	free_vars(vars);
 	return (EXIT_SUCCESS);
 }
 

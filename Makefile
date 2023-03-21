@@ -19,7 +19,7 @@ INCLUDE_FILES	= 	miniRT.h \
 LIBS =	include/libft/libft.a \
 		include/libft_dlist/dlist.a \
 		include/MLX42/build/libmlx42.a \
-		# -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+		-Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 
 ### Repertoires ###
 SRCS_DIR 	= srcs/
