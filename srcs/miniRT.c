@@ -1,5 +1,6 @@
 #include "../include/miniRT.h"
 #include <time.h> //remove before sending project
+#include <errno.h>
 
 void hook(void* param)
 {
@@ -19,7 +20,6 @@ void hook(void* param)
 	// 	img->instances[0].x += 5;
 
 	mlx_t* mlx = param;
-	ray_to_screen();
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
@@ -35,8 +35,10 @@ void hook(void* param)
 t_Vars	*init_vars()
 {
 	static t_Vars	*vars;
+
 	if (!vars)
 	{
+
 		vars = malloc(sizeof(t_Vars));
 		vars->camera = NULL;
 		vars->light = NULL;
@@ -47,6 +49,9 @@ t_Vars	*init_vars()
 		vars->objs->first = NULL;
 		vars->objs->last = NULL;
 		vars->error_message = 0;
+		vars->planeCenter = malloc(sizeof(t_Vector3d));
+		vars->planeDirectionX = malloc(sizeof(t_Vector3d));
+		vars->planeDirectionY = malloc(sizeof(t_Vector3d));
 	}
 	return (vars);
 }
@@ -88,7 +93,8 @@ int	main(int argc, char **argv)
 	clock_t end_time = clock();												// illegal maybe using timer from philo
 	double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC; //
 	printf("Render time: %f seconds\n", elapsed_time);						//
-
+	
+	ray_to_screen();
 
 	mlx_loop_hook(vars->mlx, &hook, vars->mlx);
 	mlx_loop(vars->mlx);
@@ -97,6 +103,9 @@ int	main(int argc, char **argv)
 
 	if (!vars->error_message)
 		printf("\n\nGOOD\n\n");
+	if (errno)
+		printf("\n\nNO GOOD: %d\n\n", errno);
+
 	free_vars(vars);
 	return (EXIT_SUCCESS);
 }

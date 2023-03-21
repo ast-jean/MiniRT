@@ -15,6 +15,7 @@
 # include "libft/libft.h"
 # include "libft_dlist/dlist.h"
 # include "objects.h"
+# include "Vectors.h"
 
 #define BLACK	0x000000FF
 #define WHITE	0xFFFFFFFF
@@ -28,6 +29,12 @@
 #define HEIGHT 1000//Height of screen
 
 static mlx_image_t* img;
+
+typedef struct s_Vector3d t_Vector3d;
+typedef struct s_Ray_hit t_Ray_hit;
+typedef struct s_Ray t_Ray;
+
+
 typedef struct s_Vars	// all of our values needed throught the program
 {
 	mlx_t		*mlx;
@@ -36,6 +43,9 @@ typedef struct s_Vars	// all of our values needed throught the program
 	t_shape		*ambient_light;
 	t_shape		*light;
 	mlx_image_t	*img;
+	t_Vector3d	*planeCenter;
+	t_Vector3d	*planeDirectionX;
+	t_Vector3d	*planeDirectionY;
 	int			error_message;
 } t_Vars;
 
@@ -71,12 +81,20 @@ void		print_objects();
 void		error_exit(int code, char *str);
 /*---------------------------------------------------------------*/
 /*----------------------------fixed------------------------------*/
-void	set_value(t_Fixed *fp, double value);
-double	to_double(t_Fixed fp);
-int		to_int(t_Fixed fp);
+void		set_value(t_Fixed *fp, double value);
+double		to_double(t_Fixed fp);
+int			to_int(t_Fixed fp);
+t_Vector3d	Point3d_to_Vector3d(t_3dPoint point);
 /*---------------------------------------------------------------*/
 /*---------------------------ray_tracing-------------------------*/
-void	save_camera(t_dlist *l, t_Vars *vars);
-void	ray_to_screen();
+// ray_tracing.c
+void		ray_to_screen();
+int32_t		ray_tracing(const t_Ray *ray, t_Vars *vars);
+t_Ray_hit	ray_trace(const t_Ray *ray);
+// check.c
+void	ray_checkhit(const t_Ray *ray, t_Ray_hit rh);
+bool	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit rh);
+bool	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit rh);
+bool	check_sp(const t_shape *s,const t_Ray *ray, t_Ray_hit rh);
 
 #endif
