@@ -36,6 +36,7 @@ typedef struct s_Vars	// all of our values needed throught the program
 	t_shape		*ambient_light;
 	t_shape		*light;
 	mlx_image_t	*img;
+	int			error_message;
 } t_Vars;
 
 
@@ -67,7 +68,7 @@ uint8_t		valid_RGB(char *color);
 uint32_t	RGB_to_hex(char *elem);
 //debug.c
 void		print_objects();
-void		error_exit(char *str);
+void		error_exit(int code, char *str);
 /*---------------------------------------------------------------*/
 /*----------------------------fixed------------------------------*/
 void	set_value(t_Fixed *fp, double value);
