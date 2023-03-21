@@ -105,3 +105,5 @@ double	fp_cal(char operand, int num_args, ...)
 // 	fp_cal('/', 4, fp, fp2, fp3, fp4);
 // 	printf("Int: %i, Double: %f, Zéro: %f\n", entier, reel, zero);
 // }
+
+
