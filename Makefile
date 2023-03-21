@@ -58,7 +58,7 @@ WHITE		= \033[37m
 ### Compilations et archivage ###
 CC 			= gcc
 CFLAGS 		= -Wall -Wextra -Werror -g
-MLXFLAGS	= -framework OpenGL -framework AppKit
+MLXFLAGS	=
 ### Autres Fonctions ###
 NORMINETTE 	= norminette
 ###------------------------## LEAK CHECK ##------------------------###
@@ -123,7 +123,6 @@ rew:
 	@rm -f *.o
 	@rm -rf $(OBJS_DIR)
 	@$(MAKE) -s $(NAME)
-	@./$(NAME) test.rt
 
 help:
 	@echo "Rules: all clean fclean re"

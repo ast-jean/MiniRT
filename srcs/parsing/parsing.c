@@ -39,6 +39,7 @@ void	split(char *file)
 	}
 	close(fd);
 }
+
 void	free_split(char **args)
 {
 	int	i = 0;

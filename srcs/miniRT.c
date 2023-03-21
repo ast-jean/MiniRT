@@ -54,6 +54,16 @@ t_Vars	*init_vars()
 	return (vars);
 }
 
+void	free_vars(t_Vars *vars)
+{
+	dlist_free_content(vars->objs);
+	free(vars->objs);
+	free(vars->ambient_light);
+	free(vars->light);
+	free(vars->camera);
+	free(vars);
+}
+
 int	main(int argc, char **argv)
 {
 	t_Vars	*vars = init_vars();
@@ -85,8 +95,7 @@ int	main(int argc, char **argv)
 	mlx_loop(vars->mlx);
 	mlx_terminate(vars->mlx);
 	print_objects(vars->objs);
-	dlist_free_content(vars->objs);
-	free(vars->objs);
+	free_vars(vars);
 	return (EXIT_SUCCESS);
 }
 

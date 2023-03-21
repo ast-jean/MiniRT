@@ -42,6 +42,7 @@ typedef struct s_Vars	// all of our values needed throught the program
 /*-------------------------Initialisation-------------------------*/
 //miniRT.c
 t_Vars	*init_vars();
+void	free_vars(t_Vars *vars);
 /*----------------------------parsing----------------------------*/
 //parsing.c
 void		parse(int argc, char **argv);
