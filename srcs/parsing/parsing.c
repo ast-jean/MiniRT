@@ -3,7 +3,7 @@
 void	parse(int argc, char **argv)
 {
 	if (argc != 2)
-		error_exit(1, "Bad number of arguments");
+		error_exit(1, "Wrong number of arguments");
 	valid_file(argv[1]);
 	split(argv[1]);
 }
