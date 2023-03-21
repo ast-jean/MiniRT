@@ -42,7 +42,7 @@ t_Vars	*init_vars()
 		vars->light = NULL;
 		vars->ambient_light = NULL;
 		vars->mlx = NULL;
-		vars->img = malloc(sizeof(mlx_image_t));
+		vars->img = NULL;
 		vars->objs = malloc(sizeof(t_dlist));
 		vars->objs->first = NULL;
 		vars->objs->last = NULL;
@@ -65,7 +65,7 @@ int	main(int argc, char **argv)
 {
 	t_Vars	*vars = init_vars();
 	parse(argc, argv);
-	
+
 	if (!vars->error_message)
 	{
 	clock_t start_time = clock();
