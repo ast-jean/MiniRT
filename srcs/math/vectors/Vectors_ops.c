@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:32:54 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/03/21 11:54:08 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/03/21 13:13:49 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,3 +27,11 @@ t_Vector3d  Vector3d_mult(t_Vector3d v, double b){
 t_Vector3d  Vector3d_div(t_Vector3d v, double b){
     return Vector3d_mult(v, 1.0 / b);
 }
+
+t_Vector3d  Vector3d_unit(t_Vector3d v){
+    double is = sqrt(pow(v.x,2) + pow(v.y,2) + pow(v.z,2));
+    if (!is)
+        is = 1;
+    return Vector3d_mult(v, is);
+}
+

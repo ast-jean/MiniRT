@@ -9,12 +9,11 @@ Made for UNIX systems, Linux and MacOs
     - Cylinders
     - Planes
     - ...
+
 ---
 ## Compile
 `$>make` in main repo
----
 ### With Graphic libraries GLFW and MLX42 from [Codam](https://github.com/codam-coding-college/MLX42)
---
 ### Made by :
 - [ast-jean](https://github.com/ast-jean)
 

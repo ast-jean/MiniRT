@@ -15,6 +15,7 @@
 # include "libft/libft.h"
 # include "libft_dlist/dlist.h"
 # include "objects.h"
+# include "Vectors.h"
 
 #define BLACK	0x000000FF
 #define WHITE	0xFFFFFFFF
@@ -36,6 +37,9 @@ typedef struct s_Vars	// all of our values needed throught the program
 	t_shape		*ambient_light;
 	t_shape		*light;
 	mlx_image_t	*img;
+	t_Vector3d	planeCenter;
+	t_Vector3d	planeDirectionX;
+	t_Vector3d	planeDirectionY;
 } t_Vars;
 
 
@@ -70,12 +74,12 @@ void		print_objects();
 void		error_exit(char *str);
 /*---------------------------------------------------------------*/
 /*----------------------------fixed------------------------------*/
-void	set_value(t_Fixed *fp, double value);
-double	to_double(t_Fixed fp);
-int		to_int(t_Fixed fp);
+void		set_value(t_Fixed *fp, double value);
+double		to_double(t_Fixed fp);
+int			to_int(t_Fixed fp);
+t_Vector3d	Point3d_to_Vector3d(t_3dPoint point);
 /*---------------------------------------------------------------*/
 /*---------------------------ray_tracing-------------------------*/
-void	save_camera(t_dlist *l, t_Vars *vars);
 void	ray_to_screen();
 
 #endif

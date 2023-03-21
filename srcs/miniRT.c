@@ -46,6 +46,10 @@ t_Vars	*init_vars()
 		vars->objs = malloc(sizeof(t_dlist));
 		vars->objs->first = NULL;
 		vars->objs->last = NULL;
+		vars->error_message = 0;
+		vars->planeCenter = NULL;
+		vars->planeDirectionX = NULL;
+		vars->planeDirectionY = NULL;
 	}
 
 	// print_objects(objects);
