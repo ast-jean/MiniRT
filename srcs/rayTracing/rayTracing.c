@@ -20,13 +20,59 @@ uint32_t traceRay(uint32_t x, uint32_t y)
 	return (RED);
 }
 
+// void put_circle(s_shape shape)
+// {
+	
+
+
+
+// }
+
+// t_Fixed PCR(int bx, int by, int ex, int ey)
+// {
+// 	while (bx < ex && by < ey)
+// 	{
+
+// 	}
+
+
+
+// }
+
 /// @brief Attribut la couleur retourné par traceray au pu
+// void ray_to_screen(int size_x, int size_y)
+// {
+// 	t_Vars *vars = init_vars();
+// 	mlx_image_t *img = vars->img;
+// 	uint32_t	x;
+// 	uint32_t	y = -1;
+// 	int			i;
+// 	// uint32_t	color;
+
+// 	i = 0;
+// 	while (++y < (uint32_t)HEIGHT && size_y) 
+// 	{
+// 		x = -1;
+// 		while (++x < (uint32_t)WIDTH && size_x) 
+// 		{
+// 			mlx_put_pixel(img, x, y, traceRay(x, y)); //cast_ray output a color
+// 			size_x--;
+// 		}
+// 		size_y--;
+// 	}
+
+
+// BASE
+
 void ray_to_screen()
 {
 	t_Vars *vars = init_vars();
 	mlx_image_t *img = vars->img;
 	uint32_t	x;
 	uint32_t	y = -1;
+	int			i;
+
+	i = 0;
 
 	while (++y < (uint32_t)HEIGHT) 
 	{
@@ -37,28 +83,33 @@ void ray_to_screen()
 		}
 	}
 
-	// t_Vars *vars = init_vars();
-	// mlx_image_t *img = vars->img;
-	// static uint32_t	x;
-	// static uint32_t	y = 0;
-	// static uint32_t	color;
-	
-	// 	if(!color)
-	// 		color = RED;
-	// 	if (x == WIDTH)
-	// 		y++;
-	// 	x = -1;
-	// 	while (++x < (uint32_t)WIDTH) 
-	// 	{																		//		 R  G  B  N
-	// 		// mlx_put_pixel(img, x, y, color += x^2 + 69); //damier 
-	// 		mlx_put_pixel(img, x, y, ((x^2+y^2)/4)*WIDTH); //damier 
-	// 		// mlx_put_pixel(img, x, y, ((x^2+y^2)/4)*WIDTH); //yes blue nor recusif
-	// 		// mlx_put_pixel(img, x, y, ((x^2+y)/4)*HEIGHT); //yes blue nor recusif
-	// 		// mlx_put_pixel(img, x, y, ((x+y)/4)*HEIGHT); //yes blue nor recusif
 
-	// 	}
-	// 	if (y == HEIGHT)
-	// 		y = 0;
+
+
+
+// 	t_Vars *vars = init_vars();
+// 	mlx_image_t *img = vars->img;
+// 	static uint32_t	x;
+// 	static uint32_t	y = 0;
+// 	static uint32_t	color;
+	
+// 		if(!color)
+// 			color = RED;
+// 		if (x == WIDTH)
+// 			y++;
+// 		x = -1;
+// 		while (++x < (uint32_t)WIDTH) 
+// 		{																		//		 R  G  B  N
+// 			mlx_put_pixel(img, x, y, color += x^2 + 69); //damier 
+// 			// mlx_put_pixel(img, x, y, ((x^2+y^2)/4)*WIDTH * 8); //damier 
+// 			// mlx_put_pixel(img, x, y, ((x^2+y^2)/4)*WIDTH); //yes blue nor recusif
+// 			// mlx_put_pixel(img, x, y, ((x^2 + y^2) * 0x009900FF) % 0x00FF00FF); //yes blue nor recusif
+// 			// mlx_put_pixel(img, x, y, (x^10 + y^10) * 0x000000FF); //yes blue nor recusif
+// 			// mlx_put_pixel(img, x, y, ((x+y)/4)*HEIGHT); //yes blue nor recusif
+
+// 		}
+// 		if (y == HEIGHT)
+// 			y = 0;
 
 
 
