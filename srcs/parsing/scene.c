@@ -22,10 +22,14 @@ void	object_C(char **elem, t_Vars *vars)
 
 	t_Vector3d c_coords = Point3d_to_Vector3d(vars->camera->coord);
 	t_Vector3d c_dir = Point3d_to_Vector3d(vars->camera->orientation);
+t_Vector3d pc = Vector3d_add(c_coords, Vector3d_mult(c_dir, vars->camera->FOV));  
+t_Vector3d pdx = Vector3d_unit(Vector3d_cross(c_dir, Vector3d_init(0.0, -1.0, 0.0)));
+t_Vector3d pdy = Vector3d_cross(Vector3d_mult(c_dir, -1.0), c_coords);
 
-    vars->planeCenter = Vector3d_add(c_coords, Vector3d_mult(c_dir, vars->camera->FOV));  
-	vars->planeDirectionX = Vector3d_unit(Vector3d_cross(c_dir, Vector3d_init(0.0, -1.0, 0.0)));
-	vars->planeDirectionY = Vector3d_cross(Vector3d_mult(c_dir, -1.0), c_coords);
+
+    vars->planeCenter = &pc;
+	vars->planeDirectionX = &pdx;
+	vars->planeDirectionY = &pdy;
 }
 
 void	object_L(char **elem, t_Vars *vars)

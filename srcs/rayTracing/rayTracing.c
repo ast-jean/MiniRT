@@ -1,52 +1,6 @@
 #include "../../include/miniRT.h"
 #include <math.h>
 
-
-
-bool solveQuadratic(double a,double b, double c, double x0, double x1)
-{
-    double discr = b * b - 4 * a * c;
-    if (discr < 0) return false;
-    else if (discr == 0) x0 = x1 = - 0.5 * b / a;
-    else {
-        double q = (b > 0) ?
-            -0.5 * (b + sqrt(discr)) :
-            -0.5 * (b - sqrt(discr));
-        x0 = q / a;
-        x1 = c / q;
-    }
-    if (x0 > x1){
-		double tmp = x1;
-		x1 = x0;
-		x0 = tmp;
-	}
-    return true;
-}
-
-
-/// @brief Projete un ray dans le plan 3D virtuel et compare les coordonnées des objects
-/// @param x coordonée x de l'img
-/// @param y coordonée x de l'img
-/// @param Sx coordonée x relative à l'écran projeter 
-/// @param Sy coordonée y relative à l'écran projeter 
-/// @return returne la couleur de l'objet trouvé sinon NULL
-uint32_t traceRay(uint32_t x, uint32_t y)
-{
-	t_Vars *vars = init_vars();
-	double imageAspectRatio = (double)WIDTH / (double)HEIGHT; // assuming width > height
-
-	
-	double Sx = (2 * ((x + 0.5) / (double)WIDTH ) - 1) * tan(vars->camera->FOV / 2 * M_PI / 180) * imageAspectRatio;
-	double Sy = (1 - 2 * ((y + 0.5) / (double)HEIGHT) * tan(vars->camera->FOV / 2 * M_PI / 180));
-	(void)Sx, (void)Sy;
-	//normalize with direction;
-
-	//cycle through objs
-	//hit_objects() //return object color;
-
-	return (RED);
-}
-
 /// @brief Attribut la couleur retourné par traceray au pu
 void ray_to_screen()
 {
@@ -60,7 +14,9 @@ void ray_to_screen()
 		x = -1;
 		while (++x < (uint32_t)WIDTH) 
 		{
-			mlx_put_pixel(img, x, y, traceRay(x, y)); //cast_ray output a color
+			t_Ray ray = ray_init_to_screen(vars, x, y);
+			mlx_put_pixel(img, x, y, ray_tracing(&ray, vars));
+			// mlx_put_pixel(img, x, y, BLUE);
 		}
 	}
 
@@ -86,35 +42,67 @@ void ray_to_screen()
 	// 	}
 	// 	if (y == HEIGHT)
 	// 		y = 0;
-
-
-
 }
 
-// double	lenght2(double x, double y, double z)
-// {
-// 	return (sqr(x) + sqr(y) + sqr(z));
+t_Ray_hit ray_trace(const t_Ray *ray)
+{
+	t_Ray_hit ray_hit;
+	double distance = 1.0 / 0.0f;
+	int32_t color = 0;
+
+	//initializer
+	ray_hit.color = 0;
+	ray_hit.distance = 0;
+	ray_hit.shape = NULL;
+
+	ray_checkhit(ray, ray_hit);
+	if (ray_hit.color && distance < ray_hit.distance)
+	{
+		ray_hit.distance = distance;
+		ray_hit.color = color;
+	}
+	return ray_hit;
+}
+
+int32_t ray_tracing(const t_Ray *ray, t_Vars *vars) //returns a color
+{
+	int32_t color;    
+	t_Ray_hit hit = ray_trace(ray);
+	if (hit.color == 0)
+		return BLACK;
+	else
+		color = hit.color;
+
+	(void) vars;
+//add light
+//add reflection
+//add antialiasing
+
+	return (color);
+}
+//     resultColor = closestHit.surface->material.color;
+//     Vector3 collisionPoint = vec3_add(vec3_mult(ray->direction, closestHit.distance), ray->origin);
+//     Material material = closestHit.surface->material;
+//     if (material.reflectivity > 0.0 && depth > 0) {
+//         Ray reflectedRay = ray_reflect(ray, closestHit.surface, collisionPoint);
+//         if (material.reflectionNoise > 0) {
+//             reflectedRay = ray_addNoise(&reflectedRay, material.reflectionNoise);
+//         }
+//         Color reflectionColor = ray_traceRecursive(&reflectedRay, scene, depth - 1);
+//         resultColor = color_blend(reflectionColor, material.reflectivity, resultColor);
+//     }
+//     ShadingResult shadingResult = ray_shadeAtPoint(ray, scene, closestHit.surface, collisionPoint);    
+//     resultColor = getHighlightedColor(resultColor, shadingResult, scene->ambientCoefficient);
+//     resultColor = color_mult(resultColor, (MAX_VISIBLE_DISTANCE - closestHit.distance) / MAX_VISIBLE_DISTANCE);
+//     return resultColor;
 // }
 
-// double	lenght(double x, double y, double z)
-// {
-// 	return (sqrt(lenght(x, y, z)));
-// }
-
-
-// bool	is_ray_in_cercle(t_shape cercle){
-// 	hypot();
-// 	double r = cercle.diameter / 2;
-// 	t = dot();
-// 	if (y < r)
-// 		return (printf("not in cercle"), 0);
-// }
 
 /*
 
 
-         , - ~ ~ ~ - ,
-     , '               ' ,           x^2+y^2 = R^2
+		 , - ~ ~ ~ - ,
+	 , '               ' ,           x^2+y^2 = R^2
    ,                       ,         x = sqrt(R^2 - y^2)
   ,                         ,        y = len(s- p)
  ,            S              ,		 t1 = t - x
@@ -123,11 +111,11 @@ void ray_to_screen()
   ,t1   x     ++            t2,
 o--o----------++-----------o
 p    ,                  , '
-       ' - , _ _ _ ,  '
+	   ' - , _ _ _ ,  '
 
 
-	       ____
-	    ,dP9CGG88@b,
+		   ____
+		,dP9CGG88@b,
 	  ,IPIYYICCG888@@b,
 	 dIiIIIIIICGG8888@b
 	dCIIIIIIICCGG8888@@b
@@ -137,6 +125,6 @@ ____GCCIIIICCCGGG8888@@@__________________
 	Y8GGGGGG8888888@@@@P.....
 	 Y88888888888@@@@@P......
 	 `Y8888888@@@@@@@P'......
-	    `@@@@@@@@@P'.......
+		`@@@@@@@@@P'.......
 		   """"........
 */

@@ -29,6 +29,12 @@
 #define HEIGHT 1000//Height of screen
 
 static mlx_image_t* img;
+
+typedef struct s_Vector3d t_Vector3d;
+typedef struct s_Ray_hit t_Ray_hit;
+typedef struct s_Ray t_Ray;
+
+
 typedef struct s_Vars	// all of our values needed throught the program
 {
 	mlx_t		*mlx;
@@ -81,6 +87,14 @@ int			to_int(t_Fixed fp);
 t_Vector3d	Point3d_to_Vector3d(t_3dPoint point);
 /*---------------------------------------------------------------*/
 /*---------------------------ray_tracing-------------------------*/
-void	ray_to_screen();
+// ray_tracing.c
+void		ray_to_screen();
+int32_t		ray_tracing(const t_Ray *ray, t_Vars *vars);
+t_Ray_hit	ray_trace(const t_Ray *ray);
+// check.c
+void	ray_checkhit(const t_Ray *ray, t_Ray_hit rh);
+bool	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit rh);
+bool	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit rh);
+bool	check_sp(const t_shape *s,const t_Ray *ray, t_Ray_hit rh);
 
 #endif
