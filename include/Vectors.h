@@ -41,8 +41,8 @@ t_Vector3d	Vector3d_cross(t_Vector3d a, t_Vector3d b);
 double		Vector3d_length(t_Vector3d v);
 t_Vector3d	Vector3d_unit(t_Vector3d v);
 /*-------------------------Ray.c--------------------------*/
-t_Ray ray_init(t_Vector3d origin, t_Vector3d direction);
-t_Ray ray_init_to_screen(t_Vars *v, int x, int y);
+t_Ray *ray_init(t_Vector3d origin, t_Vector3d direction);
+t_Ray *ray_init_to_screen(t_Vars *v, int x, int y);
 
 
 #endif
