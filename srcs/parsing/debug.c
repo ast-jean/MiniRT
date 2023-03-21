@@ -1,9 +1,14 @@
 #include "../../include/miniRT.h"
 
-void	error_exit(char *str)
+void	error_exit(int code, char *str)
 {
+	t_Vars *vars = init_vars();
+	
 	printf("%s\n", str);
-	exit(0);
+	if (code == 1)
+		exit(0);
+	if (code == 2)
+		vars->error_message = 1;
 }
 
 void	print_objects()

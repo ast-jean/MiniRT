@@ -51,10 +51,6 @@ t_Vars	*init_vars()
 		vars->planeDirectionX = NULL;
 		vars->planeDirectionY = NULL;
 	}
-
-	// print_objects(objects);
-	// save_camera(objects, vars); //dlist_remove_node() present
-	// print_objects(objects);
 	return (vars);
 }
 
@@ -73,20 +69,22 @@ int	main(int argc, char **argv)
 	t_Vars	*vars = init_vars();
 	parse(argc, argv);
 	
+	if (!vars->error_message)
+	{
 	clock_t start_time = clock();
-	// mlx_t		*mlx;
+	// // mlx_t		*mlx;
 	
 	vars->mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
-	// mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
-	// vars->mlx = mlx;
-	// if (!(vars->mlx))
-	// 	return(EXIT_FAILURE);
+	// // mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
+	// // vars->mlx = mlx;
+	// // if (!(vars->mlx))
+	// // 	return(EXIT_FAILURE);
 	
-	// vars->img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
+	// // vars->img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
 	img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
 	vars->img = img;
 	ft_memset(img->pixels, 255, img->width * img->height * sizeof(int));
-	// ft_memset(vars->img->pixels, 255, vars->img->width * vars->img->height * sizeof(int));
+	// // ft_memset(vars->img->pixels, 255, vars->img->width * vars->img->height * sizeof(int));
 
 	mlx_image_to_window(vars->mlx, img, 0, 0);
 
@@ -98,7 +96,10 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(vars->mlx, &hook, vars->mlx);
 	mlx_loop(vars->mlx);
 	mlx_terminate(vars->mlx);
-	print_objects(vars->objs);
+	}
+
+	if (!vars->error_message)
+		printf("\n\nGOOD\n\n");
 	free_vars(vars);
 	return (EXIT_SUCCESS);
 }

@@ -3,7 +3,7 @@
 void   object_A(char **elem, t_Vars *vars)
 {
 	if (vars->ambient_light)
-		error_exit("Object 'A' can only be declared once");
+		return(error_exit(2, "Object 'A' can only be declared once"));
 	vars->ambient_light = malloc(sizeof(t_shape));
     vars->ambient_light->id = "A";
     vars->ambient_light->light_ratio = str_to_fixed(elem[1]);
@@ -13,7 +13,7 @@ void   object_A(char **elem, t_Vars *vars)
 void	object_C(char **elem, t_Vars *vars)
 {
     if (vars->camera)
-		error_exit("Object 'C' can only be declared once");
+		return(error_exit(2, "Object 'C' can only be declared once"));
 	vars->camera = malloc(sizeof(t_shape));
 	vars->camera->id = "C";
 	vars->camera->coord = str_to_3D(elem[1]);
@@ -31,7 +31,7 @@ void	object_C(char **elem, t_Vars *vars)
 void	object_L(char **elem, t_Vars *vars)
 {
 	if (vars->light)
-		error_exit("Object 'L' can only be declared once");
+		return(error_exit(2, "Object 'L' can only be declared once"));
     vars->light = malloc(sizeof(t_shape));
 	vars->light->id = "L";
 	vars->light->coord = str_to_3D(elem[1]);

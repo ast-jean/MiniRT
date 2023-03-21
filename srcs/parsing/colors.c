@@ -15,7 +15,7 @@ uint8_t valid_RGB(char *color)
 {
 	int RGB = ft_atoi(color);
 	if ((RGB < 0 || RGB > 255) || !RGB_digit(color))
-		error_exit("Invalid RGB");
+		error_exit(2, "Invalid RGB");
 	return (RGB);
 }
 
