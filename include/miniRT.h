@@ -9,6 +9,7 @@
 # include <stdint.h>
 # include <stdarg.h>
 # include <limits.h>
+# include <math.h>
 # include <fcntl.h>
 # include "MLX42/include/MLX42/MLX42.h"
 # include "libft/libft.h"

@@ -10,10 +10,13 @@ SRCS_FILES 		=	miniRT.c \
 					parsing/colors.c \
 					parsing/scene.c \
 					parsing/debug.c \
-					fixed/Fixed.c \
+					math/Fixed.c \
+					math/vectors/Vectors.c \
+					math/vectors/Vectors_ops.c
 
 INCLUDE_FILES	= 	miniRT.h \
 					objects.h \
+					Vectors.h \
 					MLX42/include/MLX42/MLX42.h \
 					
 LIBS =	include/libft/libft.a \
@@ -58,12 +61,7 @@ WHITE		= \033[37m
 ### Compilations et archivage ###
 CC 			= gcc
 CFLAGS 		= -Wall -Wextra -Werror -g
-MLXFLAGS	=
-### Autres Fonctions ###
-NORMINETTE 	= norminette
-###------------------------## LEAK CHECK ##------------------------###
-LEAK =  #working if exits
-VALGRING = valgrind --track-fds=yes --track-origins=yes  --leak-check=full --show-leak-kinds=all ./$(NAME)
+MLXFLAGS	= -framework OpenGL -framework AppKit
 ###--------------------------## REGLES ##--------------------------###
 all: mlx_glfw $(NAME)
 
@@ -93,7 +91,7 @@ $(BONUS): $(OBJS)
 	@echo "${GREEN}${BOLD}Compilation done:${END}\n"
 
 $(OBJS_DIR)%.o : $(SRCS_DIR)%.c
-	@mkdir -p $(OBJS_DIR)parsing $(OBJS_DIR)rayTracing $(OBJS_DIR)fixed
+	@mkdir -p $(OBJS_DIR)parsing $(OBJS_DIR)rayTracing $(OBJS_DIR)math/vectors 
 	@echo "$(BLUE)Compiling object $@ ..$(END)"
 	@$(CC) $(CFLAGS) -Imlx -c $< -o $@
 
