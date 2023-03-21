@@ -61,7 +61,6 @@ void	free_vars(t_Vars *vars)
 	free(vars->ambient_light);
 	free(vars->light);
 	free(vars->camera);
-	free(vars->img);
 	free(vars);
 }
 
