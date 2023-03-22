@@ -106,8 +106,9 @@ void ray_to_screen()
 		x = -1;
 		while (++x < (uint32_t)WIDTH) 
 		{
-			t_Ray ray = ray_init_to_screen(vars, x, y);
-			mlx_put_pixel(img, x, y, ray_tracing(&ray, vars));
+			t_Ray *ray = ray_init_to_screen(vars, x, y);
+			mlx_put_pixel(img, x, y, ray_tracing(ray, vars));
+			free(ray);
 			// mlx_put_pixel(img, x, y, BLUE);
 		}
 	}
@@ -152,7 +153,7 @@ t_Ray_hit ray_trace(const t_Ray *ray)
 	ray_hit.distance = 0;
 	ray_hit.shape = NULL;
 
-	ray_checkhit(ray, ray_hit);
+	ray_checkhit(ray, &ray_hit);
 	if (ray_hit.color && distance < ray_hit.distance)
 	{
 		ray_hit.distance = distance;

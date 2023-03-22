@@ -90,12 +90,12 @@ int	main(int argc, char **argv)
 
 	mlx_image_to_window(vars->mlx, img, 0, 0);
 
-	clock_t end_time = clock();												// illegal maybe using timer from philo
-	double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC; //
-	printf("Render time: %f seconds\n", elapsed_time);						//
 	
 	ray_to_screen();
 
+	clock_t end_time = clock();												// illegal maybe using timer from philo
+	double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC; //
+	printf("Render time: %f seconds\n", elapsed_time);						//
 	mlx_loop_hook(vars->mlx, &hook, vars->mlx);
 	mlx_loop(vars->mlx);
 	mlx_terminate(vars->mlx);
