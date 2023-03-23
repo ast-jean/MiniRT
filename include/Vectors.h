@@ -26,6 +26,7 @@ typedef struct s_Ray_hit{
     double	distance;
 	int32_t	color;
 	t_shape *shape;
+	t_Vector3d *coord;
 } t_Ray_hit;
 
 

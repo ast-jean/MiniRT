@@ -65,14 +65,34 @@ t_Ray_hit ray_trace(const t_Ray *ray)
 	ray_hit.color = 0;
 	ray_hit.distance = 0;
 	ray_hit.shape = NULL;
+	ray_hit.coord = malloc(sizeof(t_Vector3d));
 
-	ray_checkhit(ray, &ray_hit);
+	ray_checkhit(ray, &ray_hit, &distance);
+	if(distance < INFINITY)
+	printf("color = %d|rhd = %f|distance = %f\n", ray_hit.color, ray_hit.distance, distance);
 	if (ray_hit.color && distance < ray_hit.distance)
 	{
 		ray_hit.distance = distance;
 		ray_hit.color = color;
+		*ray_hit.coord = Vector3d_add(ray->origin, Vector3d_mult(ray->direction, distance));
 	}
 	return ray_hit;
+}
+
+int32_t saturate(int32_t color, double scale){
+	int red;
+	int green;
+	int blue;
+	int t = 255;
+	red = color >> 24;
+	green = color >> 16;
+	blue = color >> 8;
+
+	red *= scale;
+	green *= scale;
+	blue *= scale;
+
+	return(red << 24 | green << 16 | blue << 8 | t);
 }
 
 int32_t ray_tracing(const t_Ray *ray, t_Vars *vars) //returns a color
@@ -85,45 +105,20 @@ int32_t ray_tracing(const t_Ray *ray, t_Vars *vars) //returns a color
 		color = hit.color;
 
 	(void) vars;
+//add ambiantlight
+	double scale = Vector3d_dot(*hit.coord ,  Point3d_to_Vector3d(hit.shape->coord));
+printf("scale = %f, hitx = %f, hy= %f, hz=%f\n",scale,hit.coord->x,hit.coord->y,hit.coord->z);
+	// color = saturate(color, Vector3d_dot(*hit.coord ,  Point3d_to_Vector3d(hit.shape->coord)));
+	color = saturate(color, 0.5);
 //add light
 //add reflection
 //add antialiasing
-
+	free(hit.coord);
 	return (color);
 }
-//     resultColor = closestHit.surface->material.color;
-//     Vector3 collisionPoint = vec3_add(vec3_mult(ray->direction, closestHit.distance), ray->origin);
-//     Material material = closestHit.surface->material;
-//     if (material.reflectivity > 0.0 && depth > 0) {
-//         Ray reflectedRay = ray_reflect(ray, closestHit.surface, collisionPoint);
-//         if (material.reflectionNoise > 0) {
-//             reflectedRay = ray_addNoise(&reflectedRay, material.reflectionNoise);
-//         }
-//         Color reflectionColor = ray_traceRecursive(&reflectedRay, scene, depth - 1);
-//         resultColor = color_blend(reflectionColor, material.reflectivity, resultColor);
-//     }
-//     ShadingResult shadingResult = ray_shadeAtPoint(ray, scene, closestHit.surface, collisionPoint);    
-//     resultColor = getHighlightedColor(resultColor, shadingResult, scene->ambientCoefficient);
-//     resultColor = color_mult(resultColor, (MAX_VISIBLE_DISTANCE - closestHit.distance) / MAX_VISIBLE_DISTANCE);
-//     return resultColor;
+
 // }
-
-
 /*
-
-
-		 , - ~ ~ ~ - ,
-	 , '               ' ,           x^2+y^2 = R^2
-   ,                       ,         x = sqrt(R^2 - y^2)
-  ,                         ,        y = len(s- p)
- ,            S              ,		 t1 = t - x
- ,            o              ,		 t2 = t + x
- ,            |  y           ,
-  ,t1   x     ++            t2,
-o--o----------++-----------o
-p    ,                  , '
-	   ' - , _ _ _ ,  '
-
 
 		   ____
 		,dP9CGG88@b,

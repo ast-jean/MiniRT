@@ -25,8 +25,8 @@
 #define BLUE	0x0000FFFF
 
 #define fp_scale 256 //fixed number definition: now at 0.00
-#define WIDTH	20 //Width of screen
-#define HEIGHT	20 //Height of screen
+#define WIDTH	500 //Width of screen
+#define HEIGHT	500 //Height of screen
 
 static mlx_image_t* img;
 
@@ -43,9 +43,7 @@ typedef struct s_Vars	// all of our values needed throught the program
 	t_shape		*ambient_light;
 	t_shape		*light;
 	mlx_image_t	*img;
-	t_Vector3d	*planeCenter;
-	t_Vector3d	*planeDirectionX;
-	t_Vector3d	*planeDirectionY;
+	double		distance_to_screen;
 	int			error_message;
 } t_Vars;
 
@@ -92,7 +90,7 @@ void		ray_to_screen();
 int32_t		ray_tracing(const t_Ray *ray, t_Vars *vars);
 t_Ray_hit	ray_trace(const t_Ray *ray);
 // check.c
-void	ray_checkhit(const t_Ray *ray, t_Ray_hit *rh);
+void	ray_checkhit(const t_Ray *ray, t_Ray_hit *rh, double *distance);
 bool	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh);
 bool	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit *rh);
 bool	check_sp(const t_shape *s,const t_Ray *ray, t_Ray_hit *rh);
