@@ -25,8 +25,8 @@
 #define BLUE	0x0000FFFF
 
 #define fp_scale 256 //fixed number definition: now at 0.00
-#define WIDTH 200 //Width of screen
-#define HEIGHT 200//Height of screen
+#define WIDTH	20 //Width of screen
+#define HEIGHT	20 //Height of screen
 
 static mlx_image_t* img;
 

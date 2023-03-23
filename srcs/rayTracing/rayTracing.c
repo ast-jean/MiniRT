@@ -9,16 +9,26 @@ void ray_to_screen()
 	uint32_t	x;
 	uint32_t	y = -1;
 
-	while (++y < (uint32_t)HEIGHT) 
+	while (++y < HEIGHT) 
 	{
+		// ft_putstr_fd(" y =",1 );
+		// ft_putstr_fd(ft_itoa(y), 1);
+		// ft_putstr_fd("\n",1 );
 		x = -1;
-		while (++x < (uint32_t)WIDTH) 
+		while (++x < WIDTH) 
 		{
+			// ft_putstr_fd(" x =",1 );
+		// ft_putstr_fd(ft_itoa(x), 1);
+
 			t_Ray *ray = ray_init_to_screen(vars, x, y);
 			mlx_put_pixel(img, x, y, ray_tracing(ray, vars));
 			free(ray);
+			
+			// ft_putstr_fd("\n",1 );
 			// mlx_put_pixel(img, x, y, BLUE);
 		}
+			// ft_putstr_fd("\n",1 );
+
 	}
 
 	// t_Vars *vars = init_vars();
