@@ -41,7 +41,7 @@ bool	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh)
 
 }
 
-void ray_checkhit(const t_Ray *ray, t_Ray_hit *rh){
+void ray_checkhit(const t_Ray *ray, t_Ray_hit *rh, double *distance){
 	t_Vars *vars = init_vars();
 	t_node *aff = vars->objs->first;
 	rh->color = 0;
@@ -52,8 +52,14 @@ void ray_checkhit(const t_Ray *ray, t_Ray_hit *rh){
 		t_shape *s = aff->content;
 		rh->shape = s;
 		if (ft_strcmp(s->id, "sp")){
-			if (check_sp(s, ray, rh))
-				rh->color = s->color;
+			if (check_sp(s, ray, rh)){
+				if(rh->distance < *distance)
+				{
+					*distance = rh->distance;
+					rh->color = s->color;
+				}
+
+			}
 			// printf("in checkhit - color = %X\n", rh.color);
 		}
 		// else if (ft_strcmp(s->id, "pl")){

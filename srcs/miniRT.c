@@ -49,9 +49,7 @@ t_Vars	*init_vars()
 		vars->objs->first = NULL;
 		vars->objs->last = NULL;
 		vars->error_message = 0;
-		vars->planeCenter = malloc(sizeof(t_Vector3d));
-		vars->planeDirectionX = malloc(sizeof(t_Vector3d));
-		vars->planeDirectionY = malloc(sizeof(t_Vector3d));
+		vars->distance_to_screen = 0;
 	}
 	return (vars);
 }
@@ -81,7 +79,6 @@ int	main(int argc, char **argv)
 	// // vars->mlx = mlx;
 	// // if (!(vars->mlx))
 	// // 	return(EXIT_FAILURE);
-	
 	// // vars->img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
 	img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
 	vars->img = img;
@@ -90,6 +87,7 @@ int	main(int argc, char **argv)
 
 	mlx_image_to_window(vars->mlx, img, 0, 0);
 
+	printf("FOV = %d\n",vars->camera->FOV);
 	
 	ray_to_screen();
 
