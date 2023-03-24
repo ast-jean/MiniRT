@@ -95,6 +95,11 @@ int32_t saturate(int32_t color, double scale){
 	return(red << 24 | green << 16 | blue << 8 | t);
 }
 
+double remap(double a, double b, double t)
+{
+	return ((t-a)/(b-a));
+}
+
 int32_t ray_tracing(const t_Ray *ray, t_Vars *vars) //returns a color
 {
 	int32_t color;    
@@ -106,10 +111,24 @@ int32_t ray_tracing(const t_Ray *ray, t_Vars *vars) //returns a color
 
 	(void) vars;
 //add ambiantlight
-	double scale = Vector3d_dot(*hit.coord ,  Point3d_to_Vector3d(hit.shape->coord));
-printf("scale = %f, hitx = %f, hy= %f, hz=%f\n",scale,hit.coord->x,hit.coord->y,hit.coord->z);
-	// color = saturate(color, Vector3d_dot(*hit.coord ,  Point3d_to_Vector3d(hit.shape->coord)));
-	color = saturate(color, 0.5);
+
+	// ro = ray origin
+	// rd = ray direction
+	// s = shape.coord
+	// r = radius ray
+	// t = dot(s-ro, rd);
+	// p = ro + rd * t
+
+	double y = Vector3d_length(*hit.shape->coord, )
+
+	double scale = Vector3d_dot(*hit.coord ,  Point3d_to_Vector3d(hit.shape->coord)) - sqrt(r*r - y*y);
+// printf("scale = %f, hitx = %f, hy= %f, hz=%f\n",scale,hit.coord->x,hit.coord->y,hit.coord->z);
+		color = saturate(color, scale);
+
+
+
+		printf("remap value = %f\nscale value = %f\nhit coord x=%f y=%f z=%f\n",remap(Point3d_to_Vector3d(hit.shape->coord).z - (to_double(hit.shape->diameter)/2),\
+		Point3d_to_Vector3d(hit.shape->coord).z, scale), scale, hit.coord->x, hit.coord->y, hit.coord->z);
 //add light
 //add reflection
 //add antialiasing
