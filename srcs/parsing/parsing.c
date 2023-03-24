@@ -21,7 +21,7 @@ void	valid_file(char *file)
 		error_exit(1, "File is empty");
 	file = ft_strrchr(file, '.');
 	if (ft_strncmp(file, ".rt", 4))
-		error_exit(1, "Doit être un fichier '.rt'");
+		error_exit(1, "Must be a '.rt' type of file");
 	close(fd);
 }
 
