@@ -166,7 +166,7 @@ t_Ray_hit ray_trace(const t_Ray *ray)
 
 	ray_checkhit(ray, &ray_hit, &distance);
 	if(distance < INFINITY)
-	printf("color = %d|rhd = %f|distance = %f\n", ray_hit.color, ray_hit.distance, distance);
+	// printf("color = %d|rhd = %f|distance = %f\n", ray_hit.color, ray_hit.distance, distance);
 	if (ray_hit.color && distance < ray_hit.distance)
 	{
 		ray_hit.distance = distance;
@@ -196,15 +196,15 @@ int32_t ray_tracing(const t_Ray *ray, t_Vars *vars) //returns a color
 {
 	int32_t color;    
 	t_Ray_hit hit = ray_trace(ray);
-	if (hit.color == 0)
+	if (hit.color == 0) 
 		return BLACK;
 	else
 		color = hit.color;
 
 	(void) vars;
 //add ambiantlight
-	double scale = Vector3d_dot(*hit.coord ,  Point3d_to_Vector3d(hit.shape->coord));
-printf("scale = %f, hitx = %f, hy= %f, hz=%f\n",scale,hit.coord->x,hit.coord->y,hit.coord->z);
+	// double scale = Vector3d_dot(*hit.coord ,  Point3d_to_Vector3d(hit.shape->coord));
+// printf("scale = %f, hitx = %f, hy= %f, hz=%f\n",scale,hit.coord->x,hit.coord->y,hit.coord->z);
 	// color = saturate(color, Vector3d_dot(*hit.coord ,  Point3d_to_Vector3d(hit.shape->coord)));
 	color = saturate(color, 0.5);
 //add light
