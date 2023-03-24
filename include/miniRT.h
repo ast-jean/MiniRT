@@ -44,6 +44,9 @@ typedef struct s_Vars	// all of our values needed throught the program
 	t_shape		*light;
 	mlx_image_t	*img;
 	double		distance_to_screen;
+	int 		mouse_x;
+	int 		mouse_y;
+	t_shape		*selected;
 	int			error_message;
 } t_Vars;
 
