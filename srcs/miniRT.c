@@ -115,8 +115,23 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 		if (vars->selected)
 		{
 			vars->selected->diameter.value -= 50;
-			ray_to_screen();
+	
+	usleep(500);
+	printf("key= %d\n", keydata.key);
+	//Changes the FOV
+	if (keydata.key == 70)
+		if ((int)vars->camera->FOV <= (int)180){
+			vars->camera->FOV += 5;
+			vars->distance_to_screen = (0.5 * WIDTH) / tan((vars->camera->FOV * (M_PI / 180.0)) * 0.5);
 		}
+	if (keydata.key == 71)
+		if (vars->camera->FOV >= 0){
+			vars->camera->FOV -= 6;
+			vars->distance_to_screen = (0.5 * WIDTH) / tan((vars->camera->FOV * (M_PI / 180.0)) * 0.5);
+		}
+
+
+	
 
 }
 
@@ -141,12 +156,9 @@ int	main(int argc, char **argv)
 	vars->img = img;
 	ft_memset(img->pixels, 255, img->width * img->height * sizeof(int));
 	// // ft_memset(vars->img->pixels, 255, vars->img->width * vars->img->height * sizeof(int));
-
-	mlx_image_to_window(vars->mlx, img, 0, 0);
-
-	printf("FOV = %d\n",vars->camera->FOV);
 	
 	ray_to_screen();
+	mlx_image_to_window(vars->mlx, img, 0, 0);	
 
 	clock_t end_time = clock();												// illegal maybe using timer from philo
 	double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC; //
