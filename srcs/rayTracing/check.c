@@ -10,7 +10,11 @@ bool	check_sp(const t_shape *s,const t_Ray *ray, t_Ray_hit *rh)
     if (disc < 0)
         return (false);
     double distSqrt = sqrt(disc);
-    double q = b < 0.0 ? (-b - distSqrt) / 2.0 : (-b + distSqrt) / 2.0;
+	double q;
+	if (b < 0.0)
+		q = (-b - distSqrt) / 2.0;
+	else
+		q = (-b + distSqrt) / 2.0;
     double t0 = q / a;
     double t1 = c / q;
     if (t0 > t1) {
@@ -18,13 +22,12 @@ bool	check_sp(const t_shape *s,const t_Ray *ray, t_Ray_hit *rh)
         t0 = t1;
         t1 = tmp;
     }
-    if (t1 < 0) {
+    if (t1 < 0)
         return false;
-    } else if(t0 < 0) {
+	else if(t0 < 0)
         rh->distance = t1;
-    } else {
+	else
         rh->distance = t0;
-    }
     return true;
 }
 
@@ -58,19 +61,20 @@ void ray_checkhit(const t_Ray *ray, t_Ray_hit *rh, double *distance){
 					*distance = rh->distance;
 					rh->color = s->color;
 					*rh->coord = Vector3d_mult(Point3d_to_Vector3d(vars->camera->coord), *distance);
-
+					// continue;
 				}
-
 			}
 			// printf("in checkhit - color = %X\n", rh.color);
 		}
 		// else if (ft_strcmp(s->id, "pl")){
 		// 	rh = check_pl(s, ray, rh);
 		// 	rh.shape = *s;
+		//	continue;
 		// }
 		// else if (ft_strcmp(s->id, "cy")){
 		// 	rh = check_cy(s, ray, rh);
 		// 	rh.shape = *s;
+		//	continue;
 		// }
 		aff = aff->next;
 	}

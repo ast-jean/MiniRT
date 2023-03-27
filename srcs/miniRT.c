@@ -1,5 +1,4 @@
 #include "../include/miniRT.h"
-#include <time.h> //remove before sending project
 #include <errno.h>
 
 void hook(void* param)
@@ -22,14 +21,25 @@ void hook(void* param)
 	t_Vars* vars = param;
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(vars->mlx);
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_UP))
-		img->instances[0].y -= 5;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_DOWN))
-		img->instances[0].y += 5;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
-		img->instances[0].x -= 5;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
-		img->instances[0].x += 5;
+	// if (mlx_is_key_down(vars->mlx, MLX_KEY_UP)){
+	// 	set_value(&vars->camera->orientation.y,to_double(vars->camera->orientation.y) - 1);
+	// 	// img->instances[0].y -= 5;
+	// }
+	// if (mlx_is_key_down(vars->mlx, MLX_KEY_DOWN))
+	// {
+	// 	set_value(&vars->camera->orientation.y,to_double(vars->camera->orientation.y) + 1);
+	// 	// img->instances[0].y += 5;
+	// }
+	// if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
+	// {
+	// 	set_value(&vars->camera->orientation.x,to_double(vars->camera->orientation.x) - 1);
+	// 	// img->instances[0].x -= 5;
+	// }
+	// if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
+	// {
+	// 	set_value(&vars->camera->orientation.x,to_double(vars->camera->orientation.x) + 1);
+	// 	// img->instances[0].x += 5;
+	// }
 
 }
 
@@ -94,29 +104,60 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 	t_Vars *vars;
 
 	vars = param;
-	if (keydata.key == 61 || keydata.key == 334)
-		if (vars->selected)
-			vars->selected->diameter.value += 50;
-	if (keydata.key == 45 || keydata.key == 333)
-		if (vars->selected)
-			vars->selected->diameter.value -= 50;
-	
-	usleep(500);
-	printf("key= %d\n", keydata.key);
-	//Changes the FOV
-	if (keydata.key == 70)
-		if ((int)vars->camera->FOV <= (int)180){
-			vars->camera->FOV += 5;
-			vars->distance_to_screen = (0.5 * WIDTH) / tan((vars->camera->FOV * (M_PI / 180.0)) * 0.5);
+	if(keydata.key == 61 || keydata.key == 70 || keydata.key == 71 || \
+	keydata.key == 334||keydata.key == 333||keydata.key == 45||
+	keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_DOWN ||\
+	keydata.key ==  MLX_KEY_LEFT || keydata.key == MLX_KEY_RIGHT ||
+	keydata.key == MLX_KEY_ESCAPE)
+	{
+		if (keydata.key == 61 || keydata.key == 334)
+			if (vars->selected)
+				vars->selected->diameter.value += 50;
+		if (keydata.key == 45 || keydata.key == 333)
+			if (vars->selected)
+				vars->selected->diameter.value -= 50;
+		
+		//Changes the FOV
+		if (mlx_is_key_down(vars->mlx, MLX_KEY_G))
+			if ((int)vars->camera->FOV <= (int)180){
+				vars->camera->FOV += 5;
+				vars->distance_to_screen = (0.5 * WIDTH) / tan((vars->camera->FOV * (M_PI / 180.0)) * 0.5);
+			}
+		if (mlx_is_key_down(vars->mlx, MLX_KEY_F))
+			if (vars->camera->FOV >= 0){
+				vars->camera->FOV -= 6;
+				vars->distance_to_screen = (0.5 * WIDTH) / tan((vars->camera->FOV * (M_PI / 180.0)) * 0.5);
+			}
+		if (mlx_is_key_down(vars->mlx, MLX_KEY_UP))
+		{
+			if (to_double(vars->ambient_light->light_ratio) + 0.1 >= 1)
+				set_value(&vars->ambient_light->light_ratio, 1);
+			else
+				set_value(&vars->ambient_light->light_ratio,to_double(vars->ambient_light->light_ratio) + 0.1);
+			printf("Ambient light = %f\n", to_double(vars->ambient_light->light_ratio));
 		}
-	if (keydata.key == 71)
-		if (vars->camera->FOV >= 0){
-			vars->camera->FOV -= 6;
-			vars->distance_to_screen = (0.5 * WIDTH) / tan((vars->camera->FOV * (M_PI / 180.0)) * 0.5);
+		if (mlx_is_key_down(vars->mlx, MLX_KEY_DOWN))
+		{
+			if (to_double(vars->ambient_light->light_ratio) - 0.1 <= 0)
+				set_value(&vars->ambient_light->light_ratio, 0);
+			else
+				set_value(&vars->ambient_light->light_ratio, to_double(vars->ambient_light->light_ratio) - 0.1);
+			printf("Ambient light = %f\n", to_double(vars->ambient_light->light_ratio));
 		}
-
-
-	
+		// if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
+		// {
+		// 	set_value(&vars->camera->orientation.z,to_double(vars->camera->orientation.x) - 0.01);
+		// 	// img->instances[0].x -= 5;
+		// }
+		// if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
+		// {
+		// 	set_value(&vars->camera->orientation.z,to_double(vars->camera->orientation.x) + 0.01);
+		// 	// img->instances[0].x += 5;
+		// }
+		if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
+			mlx_close_window(vars->mlx);
+		ray_to_screen();
+	}
 
 }
 
@@ -128,31 +169,18 @@ int	main(int argc, char **argv)
 
 	if (!vars->error_message)
 	{
-	clock_t start_time = clock();
-	// // mlx_t		*mlx;
-	
-	vars->mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
-	// // mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
-	// // vars->mlx = mlx;
-	// // if (!(vars->mlx))
-	// // 	return(EXIT_FAILURE);
-	// // vars->img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
-	img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
-	vars->img = img;
-	ft_memset(img->pixels, 255, img->width * img->height * sizeof(int));
-	// // ft_memset(vars->img->pixels, 255, vars->img->width * vars->img->height * sizeof(int));
-	
-	ray_to_screen();
-	mlx_image_to_window(vars->mlx, img, 0, 0);	
 
-	clock_t end_time = clock();												// illegal maybe using timer from philo
-	double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC; //
-	printf("Render time: %f seconds\n", elapsed_time);
-	mlx_mouse_hook(vars->mlx, mouse_hook, vars);
-	mlx_key_hook(vars->mlx, shape_modifier, vars);					//
-	mlx_loop_hook(vars->mlx, &hook, vars);
-	mlx_loop(vars->mlx);
-	mlx_terminate(vars->mlx);
+		vars->mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
+		img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
+		vars->img = img;
+		
+		ray_to_screen();
+		mlx_image_to_window(vars->mlx, img, 0, 0);	
+		mlx_mouse_hook(vars->mlx, mouse_hook, vars);
+		mlx_key_hook(vars->mlx, shape_modifier, vars);
+		mlx_loop_hook(vars->mlx, &hook, vars);
+		mlx_loop(vars->mlx);
+		mlx_terminate(vars->mlx);
 	}
 
 	if (!vars->error_message)
@@ -163,53 +191,3 @@ int	main(int argc, char **argv)
 	free_vars(vars);
 	return (EXIT_SUCCESS);
 }
-
-
-/*static mlx_image_t* img;
-
-void hook(void* param)
-{
-	mlx_t* mlx = param;
-
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
-	if (mlx_is_key_down(mlx, MLX_KEY_UP))
-		img->instances[0].y -= 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-		img->instances[0].y += 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-		img->instances[0].x -= 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-		img->instances[0].x += 5;
-}
-
-int	main(int argc, char **argv)
-{
-	t_dlist *objects = malloc(sizeof(t_dlist));
-	parse(argc, argv, objects);
-
-	t_Vars vars;
-	mlx_t* mlx;
-	clock_t start_time = clock();
-	
-	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true)))
-		return(EXIT_FAILURE);
-	vars.img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	ft_memset(vars.img->pixels, 255, vars.img->width * vars.img->height * sizeof(int));
-
-	mlx_image_to_window(mlx, vars.img, 0, 0);
-
-
-	clock_t end_time = clock();												// illegal maybe using timer from philo
-	double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC; //
-	printf("Render time: %f seconds\n", elapsed_time);						//
-
-
-	mlx_loop_hook(mlx, &hook, mlx);
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
-	dlist_free_content(objects);
-	free(objects);
-	return (EXIT_SUCCESS);
-}
-*/

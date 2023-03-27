@@ -6,6 +6,7 @@ BONUS 	= miniRT_bonus
 SRCS_FILES 		=	miniRT.c \
 					rayTracing/rayTracing.c \
 					rayTracing/check.c \
+					rayTracing/colors.c \
 					parsing/parsing.c \
 					parsing/objects.c \
 					parsing/colors.c \

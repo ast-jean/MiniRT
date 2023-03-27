@@ -6,22 +6,11 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:25:43 by slavoie           #+#    #+#             */
-/*   Updated: 2023/03/23 16:15:12 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/03/27 15:43:46 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/miniRT.h"
-
-/*
-	Initialise le fixed_point à la valeur du "double" passées en paramètre et
-	le scale 
-
-	slavoie
-*/
-// void	init_fp(t_Fixed *fp, double start_value) // TOFIX 
-// {
-// 	fp->value = start_value * fixed_scale;
-// }
 
 t_Vector3d Point3d_to_Vector3d(t_3dPoint point)
 {
