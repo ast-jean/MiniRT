@@ -95,13 +95,29 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 
 	vars = param;
 
-	if (keydata.key == 61 || keydata.key == 334)
+	if (keydata.key == MLX_KEY_ESCAPE)
+		mlx_close_window(vars->mlx);
+	if (keydata.key == MLX_KEY_UP)
+		img->instances[0].y -= 5;
+	if (keydata.key == MLX_KEY_DOWN)
+		img->instances[0].y += 5;
+	if (keydata.key == MLX_KEY_LEFT)
+		img->instances[0].x -= 5;
+	if (keydata.key == MLX_KEY_RIGHT)
+		img->instances[0].x += 5;
+	else if (keydata.key == 61 || keydata.key == 334)
 		if (vars->selected)
-			vars->selected->diameter.value += 50;
+			{
+				vars->selected->diameter.value += 50;
+				ray_to_screen();
+			}
 	if (keydata.key == 45 || keydata.key == 333)
 		if (vars->selected)
+		{
 			vars->selected->diameter.value -= 50;
-	ray_to_screen();
+			ray_to_screen();
+		}
+
 }
 
 
@@ -137,7 +153,7 @@ int	main(int argc, char **argv)
 	printf("Render time: %f seconds\n", elapsed_time);
 	mlx_mouse_hook(vars->mlx, mouse_hook, vars);
 	mlx_key_hook(vars->mlx, shape_modifier, vars);					//
-	mlx_loop_hook(vars->mlx, &hook, vars);
+	// mlx_loop_hook(vars->mlx, &hook, vars);
 	mlx_loop(vars->mlx);
 	mlx_terminate(vars->mlx);
 	}

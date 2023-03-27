@@ -202,11 +202,11 @@ int32_t ray_tracing(const t_Ray *ray, t_Vars *vars) //returns a color
 		color = hit.color;
 
 	(void) vars;
-//add ambiantlight
-	// double scale = Vector3d_dot(*hit.coord ,  Point3d_to_Vector3d(hit.shape->coord));
-// printf("scale = %f, hitx = %f, hy= %f, hz=%f\n",scale,hit.coord->x,hit.coord->y,hit.coord->z);
-	// color = saturate(color, Vector3d_dot(*hit.coord ,  Point3d_to_Vector3d(hit.shape->coord)));
-	color = saturate(color, 0.5);
+// add ambiantlight
+// 	double scale = Vector3d_dot(*hit.coord ,  Point3d_to_Vector3d(hit.shape->coord));
+// // printf("scale = %f, hitx = %f, hy= %f, hz=%f\n",scale,hit.coord->x,hit.coord->y,hit.coord->z);
+// 	// color = saturate(color, 0.5);
+// 	color = saturate(color, scale);
 //add light
 //add reflection
 //add antialiasing
