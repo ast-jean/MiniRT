@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: mtrembla <mtrembla@student.42quebec>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 19:56:57 by ast-jean          #+#    #+#             */
-/*   Updated: 2022/07/18 11:16:40 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/03/29 11:31:45 by mtrembla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	j;
 	size_t	tot_len;
 
-	if (!s1 || !s2)
+	if (!s1 && !s2)
 		return (NULL);
 	i = 0;
 	tot_len = ft_strlen(s1) + ft_strlen(s2);
@@ -27,10 +27,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!str)
 		return (NULL);
 	j = 0;
-	while (s1[j])
+	while (s1 && s1[j])
 		str[i++] = s1[j++];
 	j = 0;
-	while (s2[j])
+	while (s2 && s2[j])
 		str[i++] = s2[j++];
 	str[i] = '\0';
 	return (str);
