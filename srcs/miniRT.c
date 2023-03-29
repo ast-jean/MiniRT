@@ -96,33 +96,52 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 	t_Vars *vars;
 
 	vars = param;
-	if (keydata.key == 61 || keydata.key == 334)
+
+	if (keydata.key == MLX_KEY_ESCAPE)
+		mlx_close_window(vars->mlx);
+	if (keydata.key == MLX_KEY_UP)
+		img->instances[0].y -= 5;
+	if (keydata.key == MLX_KEY_DOWN)
+		img->instances[0].y += 5;
+	if (keydata.key == MLX_KEY_LEFT)
+		img->instances[0].x -= 5;
+	if (keydata.key == MLX_KEY_RIGHT)
+		img->instances[0].x += 5;
+	else if (mlx_is_key_down(vars->mlx, 61) || mlx_is_key_down(vars->mlx, 334))
 		if (vars->selected)
-			vars->selected->diameter.value += 50;
-	if (keydata.key == 45 || keydata.key == 333)
+			{
+				vars->selected->diameter.value += 50;
+				ray_to_screen();
+			}
+	if (mlx_is_key_down(vars->mlx, 45) || mlx_is_key_down(vars->mlx, 333))
 		if (vars->selected)
+		{
 			vars->selected->diameter.value -= 50;
+			ray_to_screen();
+		}
 	
-	usleep(500);
-	printf("key= %d\n", keydata.key);
+	// usleep(500);
+	// printf("key= %d\n", keydata.key);
 	//Changes the FOV
-	if (keydata.key == 70)
-		if ((int)vars->camera->FOV <= (int)180){
+	if (mlx_is_key_down(vars->mlx, 70))
+	{
+		if ((int)vars->camera->FOV <= (int)180)
+		{
 			vars->camera->FOV += 5;
 			vars->distance_to_screen = (0.5 * WIDTH) / tan((vars->camera->FOV * (M_PI / 180.0)) * 0.5);
+			ray_to_screen();
 		}
-	if (keydata.key == 71)
+	}
+	if (mlx_is_key_down(vars->mlx, 71))
+	{
 		if (vars->camera->FOV >= 0)
 		{
 			vars->camera->FOV -= 6;
 			vars->distance_to_screen = (0.5 * WIDTH) / tan((vars->camera->FOV * (M_PI / 180.0)) * 0.5);
+			ray_to_screen();
 		}
-
-
-	
-
+	}
 }
-
 
 int	main(int argc, char **argv)
 {
@@ -153,7 +172,7 @@ int	main(int argc, char **argv)
 	printf("Render time: %f seconds\n", elapsed_time);
 	mlx_mouse_hook(vars->mlx, mouse_hook, vars);
 	mlx_key_hook(vars->mlx, shape_modifier, vars);					//
-	mlx_loop_hook(vars->mlx, &hook, vars);
+	// mlx_loop_hook(vars->mlx, &hook, vars);
 	mlx_loop(vars->mlx);
 	mlx_terminate(vars->mlx);
 	}
