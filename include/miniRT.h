@@ -37,7 +37,7 @@ typedef struct s_Ray t_Ray;
 
 typedef struct s_Vars	// all of our values needed throught the program
 {
-	// mlx_t		*mlx;
+	mlx_t		*mlx;
 	t_dlist		*objs;
 	t_shape		*camera;
 	t_shape		*ambient_light;
