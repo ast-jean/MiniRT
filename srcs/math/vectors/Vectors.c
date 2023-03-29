@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:34:27 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/03/21 11:52:54 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/03/22 13:38:45 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,3 @@ t_Vector3d  Vector3d_cross(t_Vector3d a, t_Vector3d b){
 double  Vector3d_length(t_Vector3d v){
     return sqrt(pow(v.x,2) + pow(v.y,2) + pow(v.z,2));
 }
-
-t_Vector3d  Vector3d_unit(t_Vector3d v){
-    double is = sqrt(pow(v.x,2) + pow(v.y,2) + pow(v.z,2));
-    if (!is)
-        is = 1;
-    return Vector3d_mult(v, is);
-}
-

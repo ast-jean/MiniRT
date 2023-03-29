@@ -27,6 +27,9 @@ void	object_C(char **elem, t_Vars *vars)
 		vars->camera->orientation = str_to_3D(elem[2]);
 		vars->camera->FOV = valid_uint8(elem[3], 180);
 	}
+	// vars->distance_to_screen = 0.5 * HEIGHT / tan(0.5 * vars->camera->FOV);
+	vars->distance_to_screen = (0.5 * WIDTH) / tan((vars->camera->FOV * (M_PI / 180.0)) * 0.5);
+	printf("distance_to_screen = %f\n", vars->distance_to_screen);
 	if(vars->error_message)
 		error_exit(2, "Camera (C): ");
 }

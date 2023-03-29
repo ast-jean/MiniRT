@@ -4,6 +4,8 @@ NAME 	= miniRT
 BONUS 	= miniRT_bonus
 
 SRCS_FILES 		=	miniRT.c \
+					rayTracing/rayTracing.c \
+					rayTracing/check.c \
 					parsing/parsing.c \
 					parsing/objects.c \
 					parsing/colors.c \
@@ -12,6 +14,7 @@ SRCS_FILES 		=	miniRT.c \
 					math/Fixed.c \
 					# rayTracing/rayTracing.c \
 					math/vectors/Vectors.c \
+					math/vectors/ray.c \
 					math/vectors/Vectors_ops.c
 
 INCLUDE_FILES	= 	miniRT.h \

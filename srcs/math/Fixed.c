@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Fixed.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtrembla <mtrembla@student.42quebec>       +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:25:43 by slavoie           #+#    #+#             */
-/*   Updated: 2023/03/13 16:43:55 by mtrembla         ###   ########.fr       */
+/*   Updated: 2023/03/23 16:15:12 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@
 // {
 // 	fp->value = start_value * fixed_scale;
 // }
+
+t_Vector3d Point3d_to_Vector3d(t_3dPoint point)
+{
+	t_Vector3d	vec;
+
+	vec.x = to_double(point.x);
+	vec.y = to_double(point.y);
+	vec.z = to_double(point.z);
+	return (vec);
+}
 
 void	set_value(t_Fixed *fp, double value)
 {
