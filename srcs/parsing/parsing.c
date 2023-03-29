@@ -70,7 +70,7 @@ void	valid_element(char **elem)
 	else if (ft_strcmp(elem[0], "cy"))
 		dlist_add_back(vars->objs, object_cy(elem, vars));
 	else if (!ft_strcmp(elem[0], "#"))
-		error_exit(2, ft_strjoin("Invalid element: ", elem[0]));
+		error_exit(4, elem[0]);
 	free_split(elem);
 }
 
