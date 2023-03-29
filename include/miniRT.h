@@ -30,13 +30,13 @@
 static mlx_image_t* img;
 typedef struct s_Vars	// all of our values needed throught the program
 {
-	mlx_t		*mlx;
+	// mlx_t		*mlx;
 	t_dlist		*objs;
 	t_shape		*camera;
 	t_shape		*ambient_light;
 	t_shape		*light;
-	mlx_image_t	*img;
-	int			error_message;
+	// mlx_image_t	*img;
+	char		*error_message;
 } t_Vars;
 
 
@@ -59,13 +59,13 @@ void		object_A(char **elem, t_Vars *vars);
 void		object_C(char **elem, t_Vars *vars);
 void		object_L(char **elem, t_Vars *vars);
 //objects.c
-t_shape 	*object_sp(char **elem);
-t_shape 	*object_pl(char **elem);
-t_shape 	*object_cy(char **elem);
+t_shape 	*object_sp(char **elem, t_Vars *vars);
+t_shape 	*object_pl(char **elem, t_Vars *vars);
+t_shape 	*object_cy(char **elem, t_Vars *vars);
 //colors.c
-int			RGB_digit(char *color);
-uint8_t		valid_RGB(char *color);
-uint32_t	RGB_to_hex(char *elem);
+int			str_is_digit(char *color);
+uint8_t		valid_uint8(char *elem, int range);
+uint32_t	rgb_to_hex(char *elem);
 //debug.c
 void		print_objects();
 void		error_exit(int code, char *str);

@@ -4,13 +4,13 @@ NAME 	= miniRT
 BONUS 	= miniRT_bonus
 
 SRCS_FILES 		=	miniRT.c \
-					rayTracing/rayTracing.c \
 					parsing/parsing.c \
 					parsing/objects.c \
 					parsing/colors.c \
 					parsing/scene.c \
 					parsing/debug.c \
 					math/Fixed.c \
+					# rayTracing/rayTracing.c \
 					math/vectors/Vectors.c \
 					math/vectors/Vectors_ops.c
 
@@ -22,7 +22,7 @@ INCLUDE_FILES	= 	miniRT.h \
 LIBS =	include/libft/libft.a \
 		include/libft_dlist/dlist.a \
 		include/MLX42/build/libmlx42.a \
-		-Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+		# -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 
 ### Repertoires ###
 SRCS_DIR 	= srcs/
@@ -61,7 +61,7 @@ WHITE		= \033[37m
 ### Compilations et archivage ###
 CC 			= gcc
 CFLAGS 		= -Wall -Wextra -Werror -g
-MLXFLAGS	= -framework OpenGL -framework AppKit
+MLXFLAGS	= 
 ###--------------------------## REGLES ##--------------------------###
 all: mlx_glfw $(NAME)
 
