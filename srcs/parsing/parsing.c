@@ -3,7 +3,7 @@
 void	parse(int argc, char **argv)
 {
 	if (argc != 2)
-		error_exit(1, "Wrong number of arguments");
+		error_exit(1, "Wrong number of arguments\n");
 	valid_file(argv[1]);
 	split(argv[1]);
 }
@@ -14,14 +14,14 @@ void	valid_file(char *file)
 	char	c;
 
 	if (fd == -1)
-		error_exit(1, "File do not exist");
+		error_exit(1, "File do not exist\n");
 	if (read(fd, &c, 1) == -1)
-		error_exit(1, "File is a directory");
+		error_exit(1, "File is a directory\n");
 	if (!ft_gnl(fd))
-		error_exit(1, "File is empty");
+		error_exit(1, "File is empty\n");
 	file = ft_strrchr(file, '.');
 	if (ft_strncmp(file, ".rt", 4))
-		error_exit(1, "Doit être un fichier '.rt'");
+		error_exit(1, "Must be a '.rt' type of file\n");
 	close(fd);
 }
 
@@ -47,6 +47,7 @@ void	free_split(char **args)
 {
 	int	i = 0;
 
+	if (args)
 	while (args[i])
 		free(args[i++]);
 	if (args)
@@ -63,13 +64,13 @@ void	valid_element(char **elem)
 	else if (ft_strcmp(elem[0], "L"))
 		object_L(elem, vars);
 	else if (ft_strcmp(elem[0], "sp"))
-		dlist_add_back(vars->objs, object_sp(elem));
+		dlist_add_back(vars->objs, object_sp(elem, vars));
 	else if (ft_strcmp(elem[0], "pl"))
-		dlist_add_back(vars->objs, object_pl(elem));
+		dlist_add_back(vars->objs, object_pl(elem, vars));
 	else if (ft_strcmp(elem[0], "cy"))
-		dlist_add_back(vars->objs, object_cy(elem));
+		dlist_add_back(vars->objs, object_cy(elem, vars));
 	else if (!ft_strcmp(elem[0], "#"))
-		error_exit(2, "Invalid element");
+		error_exit(2, ft_strjoin("Invalid element: ", elem[0]));
 	free_split(elem);
 }
 

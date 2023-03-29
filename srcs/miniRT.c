@@ -45,12 +45,12 @@ t_Vars	*init_vars()
 		vars->light = NULL;
 		vars->ambient_light = NULL;
 		vars->mlx = NULL;
-		vars->img = NULL;
+		vars->img = malloc(sizeof(mlx_image_t));
 		vars->objs = malloc(sizeof(t_dlist));
 		vars->objs->first = NULL;
 		vars->objs->last = NULL;
+		vars->error_message = NULL;
 		vars->selected = NULL;
-		vars->error_message = 0;
 		vars->distance_to_screen = 0;
 	}
 	return (vars);
@@ -63,6 +63,8 @@ void	free_vars(t_Vars *vars)
 	free(vars->ambient_light);
 	free(vars->light);
 	free(vars->camera);
+	if (vars->error_message)
+		free(vars->error_message);
 	free(vars);
 }
 
@@ -110,7 +112,8 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 			vars->distance_to_screen = (0.5 * WIDTH) / tan((vars->camera->FOV * (M_PI / 180.0)) * 0.5);
 		}
 	if (keydata.key == 71)
-		if (vars->camera->FOV >= 0){
+		if (vars->camera->FOV >= 0)
+		{
 			vars->camera->FOV -= 6;
 			vars->distance_to_screen = (0.5 * WIDTH) / tan((vars->camera->FOV * (M_PI / 180.0)) * 0.5);
 		}
@@ -157,8 +160,8 @@ int	main(int argc, char **argv)
 
 	if (!vars->error_message)
 		printf("\n\nGOOD\n\n");
-	if (errno)
-		printf("\n\nNO GOOD: %d\n\n", errno);
+	else
+		printf("%s\n", vars->error_message);
 
 	free_vars(vars);
 	return (EXIT_SUCCESS);

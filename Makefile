@@ -63,7 +63,7 @@ WHITE		= \033[37m
 ### Compilations et archivage ###
 CC 			= gcc
 CFLAGS 		= -Wall -Wextra -Werror -g
-MLXFLAGS	= -framework OpenGL -framework AppKit
+MLXFLAGS	= 
 ###--------------------------## REGLES ##--------------------------###
 all: mlx_glfw $(NAME)
 

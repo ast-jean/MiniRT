@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: mtrembla <mtrembla@student.42quebec>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 12:52:21 by ast-jean          #+#    #+#             */
-/*   Updated: 2022/07/18 11:16:52 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/03/24 13:12:23 by mtrembla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ size_t	ft_strlen(const char *str)
 	size_t	count;
 
 	count = 0;
-	while (str[count] != '\0')
+	if (str)
+	while (*str++)
 		count++;
 	return (count);
 }
