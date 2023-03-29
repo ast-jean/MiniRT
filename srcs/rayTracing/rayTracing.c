@@ -2,7 +2,7 @@
 #include <math.h>
 #include <time.h> //remove before sending project
 
-bool solveQuadratic(double a,double b, double c, double x0, double x1)
+bool solveQuadratic(double a,double b, double c, double x0, double x1)//UNUSED
 {
     double discr = b * b - 4 * a * c;
     if (discr < 0) return false;
@@ -65,26 +65,35 @@ t_Ray_hit ray_trace(const t_Ray *ray)
 	return ray_hit;
 }
 
-// int32_t light(int32_t color, const t_Ray *ray, t_Ray_hit hit){
-// 	t_Vector3d cc = ray->origin;
-// 	t_Vector3d cd = ray->direction;
-// 	t_Vector3d sc = Point3d_to_Vector3d(hit.shape->coord);
+int32_t light(int32_t color, const t_Ray *ray, t_Ray_hit hit){
+	t_Vector3d cc = ray->origin;
+	t_Vector3d cd = ray->direction;
+	t_Vector3d sc = Point3d_to_Vector3d(hit.shape->coord);
 	
-// 	double sr = to_double(hit.shape->diameter)/2;
-// 	double t = Vector3d_dot(Vector3d_sub(sc, cc), cd)/ Vector3d_dot(cd, cd) ;
-// 	double c = 0.0;
-// 	t_Vector3d p = Vector3d_add(cc, Vector3d_mult(cd, t));
-// 	double y = Vector3d_length(Vector3d_sub(sc,p));
-// 	if(y < sr)
-// 	{
-// 		double x = sqrt((sr * sr) - (y * y));
-// 		double t1 = t + x;
-// 		c = remap( sc.y - sr, sc.y, t1);
-// 		color = brightness(color, c);
-// 		color = brightness(color, to_double(init_vars()->ambient_light->light_ratio)); //TODO: Add ambiant light color!! Since the light doesn't come from anywhere, all sides of an object are illuminated equally
-// 	}
-// 	return color;
-// }
+	double sr = to_double(hit.shape->diameter)/2;
+	double t = Vector3d_dot(Vector3d_sub(sc, cc), cd)/ Vector3d_dot(cd, cd) ;
+	double c = 0.0;
+	t_Vector3d p = Vector3d_add(cc, Vector3d_mult(cd, t));
+	double y = Vector3d_length(Vector3d_sub(sc,p));
+	if(y < sr)
+	{
+		double x = sqrt((sr * sr) - (y * y));
+		double t1 = t + x;
+		c = remap( sc.y - sr, sc.y, t1);
+		color = brightness(color, c);
+	}
+	return color;
+}
+
+
+int32_t ambient(int32_t color){
+	uint32_t a_c = init_vars()->ambient_light->color;  
+	a_c -= 0xFF;
+	a_c += (uint32_t)((to_double(init_vars()->ambient_light->light_ratio)) * 255);
+	color = brightness(color, to_double(init_vars()->ambient_light->light_ratio));
+	color = mix_colors(color, a_c,(to_double(init_vars()->ambient_light->light_ratio)));
+	return color;
+}
 
 int32_t ray_tracing(const t_Ray *ray, t_Vars *vars) //returns a color
 {
@@ -95,14 +104,14 @@ int32_t ray_tracing(const t_Ray *ray, t_Vars *vars) //returns a color
 	else
 		color = hit.color;
 //add light
+	// color = light(color, ray, hit);
 
 //add reflection
 
 //add antialiasing
 
 //add ambiantlight
-	color = brightness(color, to_double(init_vars()->ambient_light->light_ratio));
-
+	color = ambient(color);
 	// free(hit.coord);
 		(void) vars;
 	return (color);

@@ -24,7 +24,7 @@
 #define GREEN	0x00FF00FF
 #define BLUE	0x0000FFFF
 
-#define fp_scale 256 //fixed number definition: now at 0.00
+#define fp_scale 512 //fixed number definition: now at 0.00
 #define WIDTH	500 //Width of screen
 #define HEIGHT	500 //Height of screen
 
@@ -49,8 +49,6 @@ typedef struct s_Vars	// all of our values needed throught the program
 	t_shape		*selected;
 	int			error_message;
 } t_Vars;
-
-
 
 /*-------------------------Initialisation-------------------------*/
 //miniRT.c
@@ -80,13 +78,13 @@ uint32_t	RGB_to_hex(char *elem);
 //debug.c
 void		print_objects();
 void		error_exit(int code, char *str);
-/*---------------------------------------------------------------*/
+
 /*----------------------------fixed------------------------------*/
 void		set_value(t_Fixed *fp, double value);
 double		to_double(t_Fixed fp);
 int			to_int(t_Fixed fp);
 t_Vector3d	Point3d_to_Vector3d(t_3dPoint point);
-/*---------------------------------------------------------------*/
+
 /*-------------------------ray_tracing-------------------------*/
 // ray_tracing.c
 void		ray_to_screen();
@@ -97,9 +95,11 @@ void	ray_checkhit(const t_Ray *ray, t_Ray_hit *rh, double *distance);
 bool	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh);
 bool	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit *rh);
 bool	check_sp(const t_shape *s,const t_Ray *ray, t_Ray_hit *rh);
-/*---------------------------------------------------------------*/
+
 /*---------------------------colors-------------------------*/
-double remap(double a, double b, double t);
-int32_t brightness(int32_t color, double scale);
+double	remap(double a, double b, double t);
+int32_t	brightness(int32_t color, double scale);
+t_rgba	separate_color_rgba(int32_t color);
+int32_t mix_colors(int32_t colorA, int32_t colorB, double ratio);
 
 #endif

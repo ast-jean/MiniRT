@@ -6,11 +6,26 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:32:54 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/03/24 14:02:34 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/03/29 12:28:42 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/Vectors.h"
+
+double round_to_first_digit(double num) {
+    double log_val = log10(fabs(num));
+    double int_part;
+    modf(log_val, &int_part);
+    double power = pow(10, int_part);
+    return copysign(power, num);
+}
+double trunc_to_first_digit(double num) {
+    double log_val = log10(fabs(num));
+    double int_part;
+    modf(log_val, &int_part);
+    double power = pow(10, int_part- 1);
+    return copysign(power, num);
+}
 
 t_Ray *ray_init(t_Vector3d o, t_Vector3d d)
 {
