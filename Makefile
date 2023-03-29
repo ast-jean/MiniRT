@@ -12,7 +12,6 @@ SRCS_FILES 		=	miniRT.c \
 					parsing/scene.c \
 					parsing/debug.c \
 					math/Fixed.c \
-					# rayTracing/rayTracing.c \
 					math/vectors/Vectors.c \
 					math/vectors/ray.c \
 					math/vectors/Vectors_ops.c

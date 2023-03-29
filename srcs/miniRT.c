@@ -160,8 +160,8 @@ int	main(int argc, char **argv)
 
 	if (!vars->error_message)
 		printf("\n\nGOOD\n\n");
-	if (errno)
-		printf("\n\nNO GOOD: %d\n\n", errno);
+	else
+		printf("%s\n", vars->error_message);
 
 	free_vars(vars);
 	return (EXIT_SUCCESS);
