@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:32:54 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/03/24 14:02:34 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:39:51 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,3 +42,31 @@ t_Ray *ray_init_to_screen(t_Vars *v, int x, int y)
 	return (ray);
 
 }
+
+t_Ray bounce_light(t_Vars *vars, t_Ray_hit *hit)
+{
+	t_Ray light_ray;
+
+	light_ray.direction = Point3d_to_Vector3d(vars->light->coord);
+	light_ray.origin = *hit->coord;
+
+	return (light_ray);
+}
+
+// int light_is_visible(t_Vars *vars, t_Ray_hit *hit)
+// {
+// 	t_Ray light_ray;
+// 	t_node *node;
+
+// 	light_ray = bounce_light(vars, hit);
+// 	node = vars->objs->first;
+
+// 	while (node)
+// 	{
+		
+
+// 	}
+
+
+
+// }
