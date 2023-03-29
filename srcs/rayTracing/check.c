@@ -50,13 +50,15 @@ void ray_checkhit(const t_Ray *ray, t_Ray_hit *rh, double *distance){
 	while(aff)
 	{
 		t_shape *s = aff->content;
-		rh->shape = s;
 		if (ft_strcmp(s->id, "sp")){
 			if (check_sp(s, ray, rh)){
 				if(rh->distance < *distance)
 				{
+					rh->shape = s;
 					*distance = rh->distance;
 					rh->color = s->color;
+					*rh->coord = Vector3d_mult(Point3d_to_Vector3d(vars->camera->coord), *distance);
+
 				}
 
 			}
