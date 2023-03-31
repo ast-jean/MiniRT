@@ -79,6 +79,7 @@ uint8_t		valid_uint8(char *elem, int range);
 uint32_t	rgb_to_hex(char *elem);
 //debug.c
 void		print_objects();
+void draw_ray(t_Ray *ray, double x, double y, double distance);
 void		error_exit(int code, char *str);
 /*---------------------------------------------------------------*/
 /*----------------------------fixed------------------------------*/
@@ -90,7 +91,7 @@ t_Vector3d	Point3d_to_Vector3d(t_3dPoint point);
 /*-------------------------ray_tracing-------------------------*/
 // ray_tracing.c
 void		ray_to_screen();
-int32_t		ray_tracing(const t_Ray *ray, t_Vars *vars);
+int32_t		ray_tracing(const t_Ray *ray);
 t_Ray_hit	ray_trace(const t_Ray *ray);
 // check.c
 void	ray_checkhit(const t_Ray *ray, t_Ray_hit *rh, double *distance);

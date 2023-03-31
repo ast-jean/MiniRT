@@ -105,18 +105,20 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 {
 	t_Vars *vars;
 
+
+	(void)keydata;
 	vars = param;
 	
-	if(keydata.key == 61 || keydata.key == 70 || keydata.key == 71 || \
-	keydata.key == 334||keydata.key == 333||keydata.key == 45||
-	keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_DOWN ||\
-	keydata.key ==  MLX_KEY_LEFT || keydata.key == MLX_KEY_RIGHT ||
-	keydata.key == MLX_KEY_ESCAPE)
+	if(mlx_is_key_down(vars->mlx, 61) || mlx_is_key_down(vars->mlx, 70) || mlx_is_key_down(vars->mlx, 71) || \
+	mlx_is_key_down(vars->mlx, 334)||mlx_is_key_down(vars->mlx, 333)||mlx_is_key_down(vars->mlx, 45)||
+	mlx_is_key_down(vars->mlx, MLX_KEY_UP) || mlx_is_key_down(vars->mlx, MLX_KEY_DOWN) ||\
+	mlx_is_key_down(vars->mlx,  MLX_KEY_LEFT) || mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT) ||
+	mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
 	{
-		if (keydata.key == 61 || keydata.key == 334)
+		if (mlx_is_key_down(vars->mlx, 61) || mlx_is_key_down(vars->mlx, 334))
 			if (vars->selected)
 				vars->selected->diameter.value += 50;
-		if (keydata.key == 45 || keydata.key == 333)
+		if (mlx_is_key_down(vars->mlx, 45) || mlx_is_key_down(vars->mlx, 333))
 			if (vars->selected)
 				vars->selected->diameter.value -= 50;
 		
@@ -175,7 +177,8 @@ int	main(int argc, char **argv)
 		vars->mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
 		img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
 		vars->img = img;
-		
+		// print_objects();
+		// mlx_put_pixel(vars->img, 1000000, 0, RED);
 		ray_to_screen();
 		mlx_image_to_window(vars->mlx, img, 0, 0);	
 		mlx_mouse_hook(vars->mlx, mouse_hook, vars);

@@ -22,7 +22,7 @@ bool solveQuadratic(double a,double b, double c, double x0, double x1)
     return true;
 }
 
-void ray_to_screen()
+void 	ray_to_screen()
 {
 	t_Vars *vars = init_vars();
 	mlx_image_t *img = vars->img;
@@ -35,7 +35,7 @@ void ray_to_screen()
 		while (++x < WIDTH) 
 		{
 			t_Ray *ray = ray_init_to_screen(vars, x, y);
-			mlx_put_pixel(img, x, y, ray_tracing(ray, vars));
+			mlx_put_pixel(img, x, y, ray_tracing(ray));
 			free(ray);
 		}
 	}
@@ -86,7 +86,7 @@ t_Ray_hit ray_trace(const t_Ray *ray)
 // 	return color;
 // }
 
-int32_t ray_tracing(const t_Ray *ray, t_Vars *vars) //returns a color
+int32_t ray_tracing(const t_Ray *ray) //returns a color
 {
 	int32_t color;    
 	t_Ray_hit hit = ray_trace(ray);
@@ -101,10 +101,12 @@ int32_t ray_tracing(const t_Ray *ray, t_Vars *vars) //returns a color
 //add antialiasing
 
 //add ambiantlight
+	light_is_visible(init_vars(), &hit);
 	color = brightness(color, to_double(init_vars()->ambient_light->light_ratio));
+	// printf("light_is_visible = %d\n",light_is_visible(init_vars(), &hit));
 
 	// free(hit.coord);
-		(void) vars;
+		// (void) vars;
 	return (color);
 }
 

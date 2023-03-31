@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:32:54 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/03/27 16:39:51 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/03/31 18:51:31 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,30 +43,52 @@ t_Ray *ray_init_to_screen(t_Vars *v, int x, int y)
 
 }
 
-t_Ray bounce_light(t_Vars *vars, t_Ray_hit *hit)
+t_Ray *bounce_light(t_Vars *vars, t_Ray_hit *hit)
 {
-	t_Ray light_ray;
+	t_Ray *light_ray;
 
-	light_ray.direction = Point3d_to_Vector3d(vars->light->coord);
-	light_ray.origin = *hit->coord;
+	light_ray = ray_init(*hit->coord, Point3d_to_Vector3d(vars->light->coord));
+
+	// draw_ray(light_ray, hit->coord->x, hit->coord->y, 250);
 
 	return (light_ray);
 }
 
-// int light_is_visible(t_Vars *vars, t_Ray_hit *hit)
+bool light_is_visible(t_Vars *vars, t_Ray_hit *hit)
+{
+	t_Ray *light_ray;
+	t_node *node;
+	double distance;
+
+	distance = INFINITY;
+
+	light_ray = bounce_light(vars, hit);
+	node = vars->objs->first;
+
+	ray_checkhit(light_ray, hit, &distance);
+
+	if (distance == INFINITY)
+		return (false);
+	else
+		return (true);
+}
+
+// void draw_ray(t_Ray *ray, double x, double y, double distance)
 // {
-// 	t_Ray light_ray;
-// 	t_node *node;
+//     int i;
+//     int x2, y2;
+//     int color = 0xFFFFFF; // couleur du rayon (blanc)
+// 	t_Vars *vars = init_vars();
 
-// 	light_ray = bounce_light(vars, hit);
-// 	node = vars->objs->first;
+//     // On calcule les coordonnées du deuxième point du rayon
+//     x2 = x + (ray->direction.x * distance);
+//     y2 = y + (ray->direction.y * distance);
 
-// 	while (node)
-// 	{
-		
-
-// 	}
-
-
-
+//     // On dessine une ligne entre les deux points
+//     mlx_put_pixel(vars->img, x, y, color);
+//     mlx_put_pixel(vars->img, x2, y2, color);
+//     for (i = 1; i < distance; i++)
+//     {
+//         mlx_put_pixel(vars->img,  x + (ray->direction.x * i), y + (ray->direction.y * i), color);
+//     }
 // }
