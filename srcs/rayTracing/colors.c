@@ -19,9 +19,14 @@ int32_t mix_colors(int32_t colorA, int32_t colorB, double ratio)
 	t_rgba	A = separate_color_rgba(colorA);
 	t_rgba	B = separate_color_rgba(colorB);
 
-    N.r = (int)((1.0 - ratio) * A.r + ratio * B.r);
-    N.g = (int)((1.0 - ratio) * A.g + ratio * B.g);
-    N.b = (int)((1.0 - ratio) * A.b + ratio * B.b);
+	(void)ratio;
+    // N.r = (int)((1.0 - ratio) * A.r + ratio * B.r);
+    // N.g = (int)((1.0 - ratio) * A.g + ratio * B.g);
+    // N.b = (int)((1.0 - ratio) * A.b + ratio * B.b);
+
+	N.r = (A.r + B.r) / 2;
+	N.g = (A.g + B.g) / 2;
+	N.b = (A.b + B.b) / 2;
 
     return ((N.r << 24) | (N.g << 16) | (N.b << 8) | N.a);
 }

@@ -166,14 +166,11 @@ int	main(int argc, char **argv)
 {
 	t_Vars	*vars = init_vars();
 	parse(argc, argv);
-
 	if (!vars->error_message)
 	{
-
 		vars->mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
 		img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
-		vars->img = img;
-		
+		vars->img = img;	
 		ray_to_screen();
 		mlx_image_to_window(vars->mlx, img, 0, 0);	
 		mlx_mouse_hook(vars->mlx, mouse_hook, vars);
@@ -182,7 +179,6 @@ int	main(int argc, char **argv)
 		mlx_loop(vars->mlx);
 		mlx_terminate(vars->mlx);
 	}
-
 	if (!vars->error_message)
 		printf("\n\nGOOD\n\n");
 	if (errno)

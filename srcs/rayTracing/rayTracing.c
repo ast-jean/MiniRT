@@ -55,8 +55,6 @@ t_Ray_hit ray_trace(const t_Ray *ray)
 	ray_hit.coord = malloc(sizeof(t_Vector3d));
 
 	ray_checkhit(ray, &ray_hit, &distance);
-	// if(distance < INFINITY)
-	// printf("color = %d|rhd = %f|distance = %f\n", ray_hit.color, ray_hit.distance, distance);
 	if (ray_hit.color && distance < ray_hit.distance)
 	{
 		ray_hit.distance = distance;
@@ -86,15 +84,20 @@ int32_t light(int32_t color, const t_Ray *ray, t_Ray_hit hit){
 }
 
 
-int32_t ambient(int32_t color){
-	uint32_t a_c = init_vars()->ambient_light->color;  
-	a_c -= 0xFF;
-	a_c += (uint32_t)((to_double(init_vars()->ambient_light->light_ratio)) * 255);
-	color = brightness(color, to_double(init_vars()->ambient_light->light_ratio));
-	color = mix_colors(color, a_c,(to_double(init_vars()->ambient_light->light_ratio)));
-	return color;
-}
 
+int32_t ambient(int32_t color){
+	// uint32_t ac = init_vars()->ambient_light->color;
+	// t_rgba rgba_ac = separate_color_rgba(ac);
+	t_rgba rgba = separate_color_rgba(color);
+	// double	intensity = to_double(init_vars()->ambient_light->light_ratio);
+	color = brightness(color, to_double(init_vars()->ambient_light->light_ratio));
+	// color = mix_colors(color, ac, 1);
+
+
+
+
+	return ((rgba.r << 24) | (rgba.g << 16) | (rgba.b << 8) | 255);
+}
 int32_t ray_tracing(const t_Ray *ray, t_Vars *vars) //returns a color
 {
 	int32_t color;    
