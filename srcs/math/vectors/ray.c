@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:32:54 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/03/31 18:51:31 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/04/03 17:05:45 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,17 @@ bool light_is_visible(t_Vars *vars, t_Ray_hit *hit)
 	t_node *node;
 	double distance;
 
-	distance = INFINITY;
+	distance = 10000;
 
 	light_ray = bounce_light(vars, hit);
 	node = vars->objs->first;
 
 	ray_checkhit(light_ray, hit, &distance);
 
-	if (distance == INFINITY)
-		return (false);
-	else
+	if (distance == 10000)
 		return (true);
+	else
+		return (false);
 }
 
 // void draw_ray(t_Ray *ray, double x, double y, double distance)
