@@ -18,13 +18,13 @@ typedef struct s_Vector3d{
 } t_Vector3d;
 
 typedef struct s_Ray{
-    t_Vector3d origin;
-	t_Vector3d direction;
+    t_Vector3d o;
+	t_Vector3d d;
 } t_Ray;
 
 typedef struct s_Ray_hit{
     double	distance;
-	int32_t	color;
+	uint32_t	color;
 	t_shape *shape;
 	t_Vector3d *coord;
 } t_Ray_hit;

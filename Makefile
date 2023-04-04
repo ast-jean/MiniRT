@@ -15,7 +15,8 @@ SRCS_FILES 		=	miniRT.c \
 					math/Fixed.c \
 					math/vectors/Vectors.c \
 					math/vectors/ray.c \
-					math/vectors/Vectors_ops.c
+					math/vectors/Vectors_ops.c \
+					math/math_other.c
 
 INCLUDE_FILES	= 	miniRT.h \
 					objects.h \
@@ -64,7 +65,7 @@ WHITE		= \033[37m
 ### Compilations et archivage ###
 CC 			= gcc
 CFLAGS 		= -Wall -Wextra -Werror -g
-MLXFLAGS	= -framework OpenGL -framework AppKit
+MLXFLAGS	= 
 ###--------------------------## REGLES ##--------------------------###
 all: mlx_glfw $(NAME)
 

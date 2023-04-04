@@ -29,6 +29,7 @@ void ray_to_screen()
 	uint32_t	x;
 	uint32_t	y = -1;
 	clock_t start_time = clock(); // illegal
+
 	while (++y < HEIGHT) 
 	{
 		x = -1;
@@ -58,17 +59,17 @@ t_Ray_hit ray_trace(const t_Ray *ray)
 	if (ray_hit.color && distance < ray_hit.distance)
 	{
 		ray_hit.distance = distance;
-		*ray_hit.coord = Vector3d_add(ray->origin, Vector3d_mult(ray->direction, distance));
+		*ray_hit.coord = Vector3d_add(ray->o, Vector3d_mult(ray->d, distance));
 	}
 	return ray_hit;
 }
 
 int32_t light(int32_t color, const t_Ray *ray, t_Ray_hit hit){
-	t_Vector3d cc = ray->origin;
-	t_Vector3d cd = ray->direction;
+	t_Vector3d cc = ray->o;
+	t_Vector3d cd = ray->d;
 	t_Vector3d sc = Point3d_to_Vector3d(hit.shape->coord);
 	
-	double sr = to_double(hit.shape->diameter)/2;
+	double sr = to_double(hit.shape->radius);
 	double t = Vector3d_dot(Vector3d_sub(sc, cc), cd)/ Vector3d_dot(cd, cd) ;
 	double c = 0.0;
 	t_Vector3d p = Vector3d_add(cc, Vector3d_mult(cd, t));
@@ -85,19 +86,13 @@ int32_t light(int32_t color, const t_Ray *ray, t_Ray_hit hit){
 
 
 
-int32_t ambient(int32_t color){
-	// uint32_t ac = init_vars()->ambient_light->color;
-	// t_rgba rgba_ac = separate_color_rgba(ac);
-	t_rgba rgba = separate_color_rgba(color);
-	// double	intensity = to_double(init_vars()->ambient_light->light_ratio);
+uint32_t ambient(uint32_t color){
+	uint32_t ac = init_vars()->ambient_light->color;
+	color = mix_colors(color, ac, to_double(init_vars()->ambient_light->light_ratio));
 	color = brightness(color, to_double(init_vars()->ambient_light->light_ratio));
-	// color = mix_colors(color, ac, 1);
-
-
-
-
-	return ((rgba.r << 24) | (rgba.g << 16) | (rgba.b << 8) | 255);
+	return (color);
 }
+
 int32_t ray_tracing(const t_Ray *ray, t_Vars *vars) //returns a color
 {
 	int32_t color;    
@@ -111,7 +106,7 @@ int32_t ray_tracing(const t_Ray *ray, t_Vars *vars) //returns a color
 
 //add reflection
 
-//add antialiasing
+//add antialiasing //optional
 
 //add ambiantlight
 	color = ambient(color);

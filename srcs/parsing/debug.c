@@ -3,13 +3,47 @@
 void	error_exit(int code, char *str)
 {
 	t_Vars *vars = init_vars();
+	char *temp;
 	
-	printf("%s\n", str);
 	if (code == 1)
+	{
+		printf("%s", str);
+		free_vars(vars);
 		exit(0);
+	}
 	if (code == 2)
-		vars->error_message = 1;
+	{
+		temp = vars->error_message;
+		vars->error_message = ft_strjoin(str, vars->error_message);
+		free(temp);
+	}
+	if (code == 3)
+		vars->error_message = ft_strjoin(str, vars->error_message);
+	if (code == 180)
+		vars->error_message = ft_strjoin("Invalid FOV -> ", str);
+	if (code == 255)
+		vars->error_message = ft_strjoin("Invalid RGB -> ", str);
 }
+
+/*
+New error exit with code for each type of info
+ex:
+error_exit(int code, char *invalid_info)
+{
+if (code == 1)
+vars->error_message = ft_strjoin("Invalid RGB -> ", invalid_info);
+code 2 = FOV
+error_message = ft_strjoin("Invalid FOV -> ", invalid_info);
+...
+}
+
+back to object function: 
+error_message = strjoin("Object '..': ", error_message)
+
+final message example:
+Object A: Invalid FOV -> 256
+>%
+*/
 
 void	print_objects()
 {
