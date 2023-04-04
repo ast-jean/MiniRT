@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:32:54 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/04/04 11:49:54 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/04/04 13:17:33 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,13 @@ t_Ray *bounce_light(t_Vars *vars, t_Ray_hit *hit)
 bool light_is_visible(t_Vars *vars, t_Ray_hit *hit)
 {
 	t_Ray *light_ray;
-	t_node *node;
+	// t_node *node;
 	double distance;
 
 	distance = 10000;
 
 	light_ray = bounce_light(vars, hit);
-	node = vars->objs->first;
+	// node = vars->objs->first;
 
 	ray_checkhit(light_ray, hit, &distance);
 

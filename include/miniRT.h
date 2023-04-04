@@ -25,8 +25,8 @@
 #define BLUE	0x0000FFFF
 
 #define fp_scale 256 //fixed number definition: now at 0.00
-#define WIDTH	500 //Width of screen
-#define HEIGHT	400 //Height of screen
+#define WIDTH	100 //Width of screen
+#define HEIGHT	100 //Height of screen
 
 static mlx_image_t* img;
 
@@ -48,6 +48,8 @@ typedef struct s_Vars	// all of our values needed throught the program
 	int 		mouse_y;
 	t_shape		*selected;
 	char		*error_message;
+	int			i;
+
 } t_Vars;
 
 /*-------------------------Initialisation-------------------------*/

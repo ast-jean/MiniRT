@@ -40,6 +40,7 @@ void 	ray_to_screen()
 			free(ray);
 		}
 	}
+	printf("i = %d\n", vars->i);
 	clock_t end_time = clock();												// illegal
 	double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC; //
 	printf("Render time: %f seconds\n", elapsed_time);						//
@@ -180,9 +181,10 @@ int32_t ray_tracing(const t_Ray *ray) //returns a color
 //add antialiasing //optional
 
 //add ambiantlight
-	light_is_visible(init_vars(), &hit);
+	// light_is_visible(init_vars(), &hit);
 	// printf("light_is_visible = %d\n",light_is_visible(init_vars(), &hit));
-
+	if(light_is_visible(init_vars(), &hit))
+		init_vars()->i++;
 	color = ambient(color);
 	// free(hit.coord);
 		// (void) vars;
