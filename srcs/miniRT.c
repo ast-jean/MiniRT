@@ -116,10 +116,10 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 	{
 		if (mlx_is_key_down(vars->mlx, 61) ||  mlx_is_key_down(vars->mlx, 334))
 			if (vars->selected)
-				vars->selected->diameter.value += 50;
+				vars->selected->radius.value += 50;
 		if (mlx_is_key_down(vars->mlx, 45) || mlx_is_key_down(vars->mlx, 333))
 			if (vars->selected)
-				vars->selected->diameter.value -= 50;
+				vars->selected->radius.value -= 50;
 		//Changes the FOV
 		if (mlx_is_key_down(vars->mlx, MLX_KEY_PAGE_DOWN))
 			if ((int)vars->camera->FOV <= (int)180){
