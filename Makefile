@@ -15,7 +15,8 @@ SRCS_FILES 		=	miniRT.c \
 					math/Fixed.c \
 					math/vectors/Vectors.c \
 					math/vectors/ray.c \
-					math/vectors/Vectors_ops.c
+					math/vectors/Vectors_ops.c \
+					math/math_other.c
 
 INCLUDE_FILES	= 	miniRT.h \
 					objects.h \

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:32:54 by ast-jean          #+#    #+#             */
 /*   Updated: 2023/04/03 17:05:45 by slavoie          ###   ########.fr       */
@@ -12,11 +12,26 @@
 
 #include "../../../include/Vectors.h"
 
+double round_to_first_digit(double num) {
+    double log_val = log10(fabs(num));
+    double int_part;
+    modf(log_val, &int_part);
+    double power = pow(10, int_part);
+    return copysign(power, num);
+}
+double trunc_to_first_digit(double num) {
+    double log_val = log10(fabs(num));
+    double int_part;
+    modf(log_val, &int_part);
+    double power = pow(10, int_part- 1);
+    return copysign(power, num);
+}
+
 t_Ray *ray_init(t_Vector3d o, t_Vector3d d)
 {
 	t_Ray *ray = malloc(sizeof(t_Ray));
-	ray->origin = o;
-	ray->direction = d;
+	ray->o = o;
+	ray->d = d;
 	return ray;
 }
 
@@ -30,7 +45,7 @@ t_Ray *ray_init_to_screen(t_Vars *v, int x, int y)
 	double py;
 	double px;
 	
-	px = (2 * (double)x / (double)WIDTH) - 1;
+	px = ((2 * (double)x / (double)WIDTH) - 1) * ((double)WIDTH/ (double)HEIGHT);
 	py = 1 - (2 * (double)y / (double)HEIGHT);
 
 	t_Vector3d up = Vector3d_unit(Vector3d_cross(Vector3d_cross(c_dir, reference_up), c_dir));
@@ -40,7 +55,6 @@ t_Ray *ray_init_to_screen(t_Vars *v, int x, int y)
 	t_Vector3d ray_dir = Vector3d_unit(Vector3d_sub(*screen_position, c_coords));
 	t_Ray *ray =  ray_init(c_coords, ray_dir);
 	return (ray);
-
 }
 
 t_Ray *bounce_light(t_Vars *vars, t_Ray_hit *hit)
@@ -51,6 +65,8 @@ t_Ray *bounce_light(t_Vars *vars, t_Ray_hit *hit)
 
 	// draw_ray(light_ray, hit->coord->x, hit->coord->y, 250);
 
+	light_ray.d = Point3d_to_Vector3d(vars->light->coord);
+	light_ray.o = *hit->coord;
 	return (light_ray);
 }
 

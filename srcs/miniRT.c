@@ -108,30 +108,33 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 
 	(void)keydata;
 	vars = param;
-	
-	if(mlx_is_key_down(vars->mlx, 61) || mlx_is_key_down(vars->mlx, 70) || mlx_is_key_down(vars->mlx, 71) || \
-	mlx_is_key_down(vars->mlx, 334)||mlx_is_key_down(vars->mlx, 333)||mlx_is_key_down(vars->mlx, 45)||
-	mlx_is_key_down(vars->mlx, MLX_KEY_UP) || mlx_is_key_down(vars->mlx, MLX_KEY_DOWN) ||\
-	mlx_is_key_down(vars->mlx,  MLX_KEY_LEFT) || mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT) ||
-	mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
+
+	(void)keydata;
+	if(mlx_is_key_down(vars->mlx, 61) || mlx_is_key_down(vars->mlx, MLX_KEY_PAGE_UP) \
+	|| mlx_is_key_down(vars->mlx, MLX_KEY_PAGE_DOWN) || mlx_is_key_down(vars->mlx, 334) \
+	|| mlx_is_key_down(vars->mlx, 333) || mlx_is_key_down(vars->mlx, 45) \
+	|| mlx_is_key_down(vars->mlx, MLX_KEY_UP) || mlx_is_key_down(vars->mlx, MLX_KEY_DOWN) \
+	|| mlx_is_key_down(vars->mlx, MLX_KEY_LEFT) || mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT) \
+	|| mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
 	{
-		if (mlx_is_key_down(vars->mlx, 61) || mlx_is_key_down(vars->mlx, 334))
+		if (mlx_is_key_down(vars->mlx, 61) ||  mlx_is_key_down(vars->mlx, 334))
 			if (vars->selected)
-				vars->selected->diameter.value += 50;
+				vars->selected->radius.value += 50;
 		if (mlx_is_key_down(vars->mlx, 45) || mlx_is_key_down(vars->mlx, 333))
 			if (vars->selected)
-				vars->selected->diameter.value -= 50;
-		
+				vars->selected->radius.value -= 50;
 		//Changes the FOV
-		if (mlx_is_key_down(vars->mlx, MLX_KEY_G))
+		if (mlx_is_key_down(vars->mlx, MLX_KEY_PAGE_DOWN))
 			if ((int)vars->camera->FOV <= (int)180){
-				vars->camera->FOV += 5;
-				vars->distance_to_screen = (0.5 * WIDTH) / tan((vars->camera->FOV * (M_PI / 180.0)) * 0.5);
+				vars->camera->FOV = clamp(vars->camera->FOV + 6, 0 , 180);
+				vars->distance_to_screen = (0.5 * WIDTH) / tan(deg2grad(vars->camera->FOV) * 0.5);
+				printf("FOV= %d\n", vars->camera->FOV);
 			}
-		if (mlx_is_key_down(vars->mlx, MLX_KEY_F))
+		if (mlx_is_key_down(vars->mlx, MLX_KEY_PAGE_UP))
 			if (vars->camera->FOV >= 0){
-				vars->camera->FOV -= 6;
-				vars->distance_to_screen = (0.5 * WIDTH) / tan((vars->camera->FOV * (M_PI / 180.0)) * 0.5);
+				vars->camera->FOV = clamp(vars->camera->FOV - 6, 0 , 180);
+				vars->distance_to_screen = (0.5 * WIDTH) / tan(deg2grad(vars->camera->FOV) * 0.5);
+				printf("FOV= %d\n", vars->camera->FOV);
 			}
 		if (mlx_is_key_down(vars->mlx, MLX_KEY_UP))
 		{
@@ -139,7 +142,7 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 				set_value(&vars->ambient_light->light_ratio, 1);
 			else
 				set_value(&vars->ambient_light->light_ratio,to_double(vars->ambient_light->light_ratio) + 0.1);
-			printf("Ambient light = %f\n", to_double(vars->ambient_light->light_ratio));
+				printf("Ambient light = %f\n", (to_double(vars->ambient_light->light_ratio)));
 		}
 		if (mlx_is_key_down(vars->mlx, MLX_KEY_DOWN))
 		{
@@ -147,7 +150,7 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 				set_value(&vars->ambient_light->light_ratio, 0);
 			else
 				set_value(&vars->ambient_light->light_ratio, to_double(vars->ambient_light->light_ratio) - 0.1);
-			printf("Ambient light = %f\n", to_double(vars->ambient_light->light_ratio));
+			printf("Ambient light = %f\n", (to_double(vars->ambient_light->light_ratio)));
 		}
 		// if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
 		// {
@@ -160,7 +163,10 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 		// 	// img->instances[0].x += 5;
 		// }
 		if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
+		{
 			mlx_close_window(vars->mlx);
+			return ;
+		}
 		ray_to_screen();
 	}
 
@@ -170,15 +176,14 @@ int	main(int argc, char **argv)
 {
 	t_Vars	*vars = init_vars();
 	parse(argc, argv);
-
 	if (!vars->error_message)
 	{
-
 		vars->mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
 		img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
 		vars->img = img;
 		// print_objects();
 		// mlx_put_pixel(vars->img, 1000000, 0, RED);
+
 		ray_to_screen();
 		mlx_image_to_window(vars->mlx, img, 0, 0);	
 		mlx_mouse_hook(vars->mlx, mouse_hook, vars);
@@ -187,7 +192,6 @@ int	main(int argc, char **argv)
 		mlx_loop(vars->mlx);
 		mlx_terminate(vars->mlx);
 	}
-
 	if (!vars->error_message)
 		printf("\n\nGOOD\n\n");
 	else

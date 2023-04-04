@@ -20,15 +20,22 @@ typedef struct s_3dPoint{
 	t_Fixed z;
 } t_3dPoint;
 
+typedef struct s_rgba{
+  uint8_t r;
+  uint8_t g;
+  uint8_t b;
+  uint8_t a;
+} t_rgba;
+
 typedef struct s_shape
 {
 	char 		*id;
 	t_Fixed		light_ratio; //from 0.0 to 1.0
 	uint32_t	color; //RGB from 0 to 255
 	t_3dPoint	orientation; //from -1 to 1 for each xyz
-	uint8_t		FOV; //FOV from 0 to 180
+	int16_t		FOV; //FOV from 0 to 180
 	t_3dPoint	coord; //coords for center xyz
-	t_Fixed		diameter; //size of sphere
+	t_Fixed		radius; //size of sphere
 	t_Fixed		height; // height of cylinder
 }	t_shape;
 

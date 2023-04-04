@@ -2,7 +2,7 @@
 #include <math.h>
 #include <time.h> //remove before sending project
 
-bool solveQuadratic(double a,double b, double c, double x0, double x1)
+bool solveQuadratic(double a,double b, double c, double x0, double x1)//UNUSED
 {
     double discr = b * b - 4 * a * c;
     if (discr < 0) return false;
@@ -29,6 +29,7 @@ void 	ray_to_screen()
 	uint32_t	x;
 	uint32_t	y = -1;
 	clock_t start_time = clock(); // illegal
+
 	while (++y < HEIGHT) 
 	{
 		x = -1;
@@ -126,36 +127,42 @@ t_Ray_hit ray_trace(const t_Ray *ray)
 	ray_hit.coord = malloc(sizeof(t_Vector3d));
 
 	ray_checkhit(ray, &ray_hit, &distance);
-	// if(distance < INFINITY)
-	// printf("color = %d|rhd = %f|distance = %f\n", ray_hit.color, ray_hit.distance, distance);
 	if (ray_hit.color && distance < ray_hit.distance)
 	{
 		ray_hit.distance = distance;
-		*ray_hit.coord = Vector3d_add(ray->origin, Vector3d_mult(ray->direction, distance));
+		*ray_hit.coord = Vector3d_add(ray->o, Vector3d_mult(ray->d, distance));
 	}
 	return ray_hit;
 }
 
-// int32_t light(int32_t color, const t_Ray *ray, t_Ray_hit hit){
-// 	t_Vector3d cc = ray->origin;
-// 	t_Vector3d cd = ray->direction;
-// 	t_Vector3d sc = Point3d_to_Vector3d(hit.shape->coord);
+int32_t light(int32_t color, const t_Ray *ray, t_Ray_hit hit){
+	t_Vector3d cc = ray->o;
+	t_Vector3d cd = ray->d;
+	t_Vector3d sc = Point3d_to_Vector3d(hit.shape->coord);
 	
-// 	double sr = to_double(hit.shape->diameter)/2;
-// 	double t = Vector3d_dot(Vector3d_sub(sc, cc), cd)/ Vector3d_dot(cd, cd) ;
-// 	double c = 0.0;
-// 	t_Vector3d p = Vector3d_add(cc, Vector3d_mult(cd, t));
-// 	double y = Vector3d_length(Vector3d_sub(sc,p));
-// 	if(y < sr)
-// 	{
-// 		double x = sqrt((sr * sr) - (y * y));
-// 		double t1 = t + x;
-// 		c = remap( sc.y - sr, sc.y, t1);
-// 		color = brightness(color, c);
-// 		color = brightness(color, to_double(init_vars()->ambient_light->light_ratio)); //TODO: Add ambiant light color!! Since the light doesn't come from anywhere, all sides of an object are illuminated equally
-// 	}
-// 	return color;
-// }
+	double sr = to_double(hit.shape->radius);
+	double t = Vector3d_dot(Vector3d_sub(sc, cc), cd)/ Vector3d_dot(cd, cd) ;
+	double c = 0.0;
+	t_Vector3d p = Vector3d_add(cc, Vector3d_mult(cd, t));
+	double y = Vector3d_length(Vector3d_sub(sc,p));
+	if(y < sr)
+	{
+		double x = sqrt((sr * sr) - (y * y));
+		double t1 = t + x;
+		c = remap( sc.y - sr, sc.y, t1);
+		color = brightness(color, c);
+	}
+	return color;
+}
+
+
+
+uint32_t ambient(uint32_t color){
+	uint32_t ac = init_vars()->ambient_light->color;
+	color = mix_colors(color, ac, to_double(init_vars()->ambient_light->light_ratio));
+	color = brightness(color, to_double(init_vars()->ambient_light->light_ratio));
+	return (color);
+}
 
 int32_t ray_tracing(const t_Ray *ray) //returns a color
 {
@@ -166,16 +173,18 @@ int32_t ray_tracing(const t_Ray *ray) //returns a color
 	else
 		color = hit.color;
 //add light
+	// color = light(color, ray, hit);
 
 //add reflection
 
-//add antialiasing
+//add antialiasing //optional
 
 //add ambiantlight
 	light_is_visible(init_vars(), &hit);
 	color = brightness(color, to_double(init_vars()->ambient_light->light_ratio));
 	// printf("light_is_visible = %d\n",light_is_visible(init_vars(), &hit));
 
+	color = ambient(color);
 	// free(hit.coord);
 		// (void) vars;
 	return (color);

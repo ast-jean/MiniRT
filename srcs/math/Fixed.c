@@ -22,9 +22,16 @@ t_Vector3d Point3d_to_Vector3d(t_3dPoint point)
 	return (vec);
 }
 
+t_Fixed fp_init(double value)
+{
+	t_Fixed fp;
+	fp.value = value;
+	return (fp);
+}
+
 void	set_value(t_Fixed *fp, double value)
 {
-		fp->value = value * fp_scale;
+	fp->value = value * fp_scale;
 }
 
 int	to_int(t_Fixed fp)

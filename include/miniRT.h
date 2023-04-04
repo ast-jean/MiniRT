@@ -26,7 +26,7 @@
 
 #define fp_scale 256 //fixed number definition: now at 0.00
 #define WIDTH	500 //Width of screen
-#define HEIGHT	500 //Height of screen
+#define HEIGHT	400 //Height of screen
 
 static mlx_image_t* img;
 
@@ -49,8 +49,6 @@ typedef struct s_Vars	// all of our values needed throught the program
 	t_shape		*selected;
 	char		*error_message;
 } t_Vars;
-
-
 
 /*-------------------------Initialisation-------------------------*/
 //miniRT.c
@@ -81,13 +79,14 @@ uint32_t	rgb_to_hex(char *elem);
 void		print_objects();
 void draw_ray(t_Ray *ray, double x, double y, double distance);
 void		error_exit(int code, char *str);
-/*---------------------------------------------------------------*/
+
 /*----------------------------fixed------------------------------*/
 void		set_value(t_Fixed *fp, double value);
 double		to_double(t_Fixed fp);
 int			to_int(t_Fixed fp);
+t_Fixed		fp_init(double value);
 t_Vector3d	Point3d_to_Vector3d(t_3dPoint point);
-/*---------------------------------------------------------------*/
+double		fp_cal(char operand, int num_args, ...);
 /*-------------------------ray_tracing-------------------------*/
 // ray_tracing.c
 void		ray_to_screen();
@@ -95,12 +94,19 @@ int32_t		ray_tracing(const t_Ray *ray);
 t_Ray_hit	ray_trace(const t_Ray *ray);
 // check.c
 void	ray_checkhit(const t_Ray *ray, t_Ray_hit *rh, double *distance);
-bool	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh);
-bool	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit *rh);
+bool	check_cy(const t_shape *s,const  t_Ray *ray, t_Ray_hit *rh);
+bool	check_pl(const t_shape *s,const t_Ray *ray, t_Ray_hit *rh);
 bool	check_sp(const t_shape *s,const t_Ray *ray, t_Ray_hit *rh);
-/*---------------------------------------------------------------*/
-/*---------------------------colors-------------------------*/
-double remap(double a, double b, double t);
-int32_t brightness(int32_t color, double scale);
 
+/*---------------------------colors-------------------------*/
+double	remap(double a, double b, double t);
+int32_t	brightness(int32_t color, double scale);
+t_rgba	separate_color_rgba(int32_t color);
+int32_t mix_colors(int32_t colorA, int32_t colorB, double ratio);
+
+/*---------------------------Math-------------------------*/
+//math_other.c
+double		deg2grad(double deg);
+uint32_t	clamp(uint32_t value, uint32_t min, uint32_t max);
+double		find_distance(t_Vector3d A, t_Vector3d B);
 #endif
