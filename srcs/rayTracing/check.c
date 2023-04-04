@@ -1,6 +1,6 @@
 #include "../../include/miniRT.h"
 
-bool	check_sp(const t_shape *s,const t_Ray *ray, t_Ray_hit *rh)
+bool	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh)
 {
 	// t_Vector3d L = Vector3d_sub(ray->o, Point3d_to_Vector3d(s->coord));
     // double t_ca = Vector3d_dot(L, ray->d);
@@ -24,9 +24,9 @@ bool	check_sp(const t_shape *s,const t_Ray *ray, t_Ray_hit *rh)
 
     // return (true);
 
-    t_Vector3d ro_sc = Vector3d_sub(ray->o, Point3d_to_Vector3d(s->coord));
-	double a =  Vector3d_dot(ray->d, ray->d);
-    double b = 2.0 * Vector3d_dot(ray->d, ro_sc);
+    t_Vector3d ro_sc = Vector3d_sub(ray.o, Point3d_to_Vector3d(s->coord));
+	double a =  Vector3d_dot(ray.d, ray.d);
+    double b = 2.0 * Vector3d_dot(ray.d, ro_sc);
     double c = Vector3d_dot(ro_sc, ro_sc) - pow(to_double(s->radius), 2);
     double disc = pow(b, 2) - 4 * a * c;
     if (disc < 0)
@@ -50,35 +50,35 @@ bool	check_sp(const t_shape *s,const t_Ray *ray, t_Ray_hit *rh)
         rh->distance = t1;
 	else
         rh->distance = t0;
-    *rh->coord = Vector3d_mult(ray->d,rh->distance);
+    *rh->coord = Vector3d_mult(ray.d,rh->distance);
 	return true;
 }
 
-bool	check_pl(const t_shape *s,const t_Ray *ray, t_Ray_hit *rh)
+bool	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit *rh)
 {
 	t_Vector3d sc = Point3d_to_Vector3d(s->coord);
 	t_Vector3d so = Point3d_to_Vector3d(s->orientation);
 
-	double denom = Vector3d_dot(so, ray->d);
+	double denom = Vector3d_dot(so, ray.d);
 	if (fabs(denom) > 1e-6){
-		double t = Vector3d_dot(Vector3d_sub(sc, ray->o), so) / denom;	
+		double t = Vector3d_dot(Vector3d_sub(sc, ray.o), so) / denom;	
 		rh->distance = t;
-		*rh->coord = Vector3d_mult(ray->d, t);
+		*rh->coord = Vector3d_mult(ray.d, t);
 		return (t >= 0);
 	}
 	return (false);
 }
 
-bool	check_cy(const t_shape *s,const  t_Ray *ray, t_Ray_hit *rh)
+bool	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh)
 {
     // Calculer l'équation du rayon
-    t_Vector3d o = ray.origin;
-    t_Vector3d d = ray.direction;
+    t_Vector3d o = ray.o;
+    t_Vector3d d = ray.d;
 
     // Calculer les coefficients de l'équation quadratique
     double a = (d.x * d.x) + (d.y * d.y);
     double b = 2.0 * (o.x * d.x + o.y * d.y);
-    double c = o.x * o.x + o.y * o.y - s->diameter.value * s->diameter.value / 4.0;
+    double c = o.x * o.x + o.y * o.y - s->radius.value * s->radius.value;
 
     // calculer le discriminant
     double discriminant = b * b - 4.0 * a * c;
@@ -87,7 +87,7 @@ bool	check_cy(const t_shape *s,const  t_Ray *ray, t_Ray_hit *rh)
     if (discriminant < 0.0)
         return false;
 
-    // Calculer les distances entre l'origine du rayon et les points d'intersection possibles
+    // Calculer les distances entre l'oe du rayon et les points d'intersection possibles
     double t1 = (-b - sqrt(discriminant))  / (2.0 * a);
     double t2 = (-b + sqrt(discriminant))  / (2.0 * a);
 
@@ -131,8 +131,6 @@ bool	check_cy(const t_shape *s,const  t_Ray *ray, t_Ray_hit *rh)
     return true;
 }
 
-
-
 void ray_checkhit(const t_Ray *ray, t_Ray_hit *rh, double *distance){
 	t_Vars *vars = init_vars();
 	t_node *aff = vars->objs->first;
@@ -145,7 +143,7 @@ void ray_checkhit(const t_Ray *ray, t_Ray_hit *rh, double *distance){
 		if (ft_strcmp(s->id, "sp"))
 
 		{
-			if (check_sp(s, ray, rh))
+			if (check_sp(s, *ray, rh))
 			{	
 				rh->distance = find_distance(ray->o, *rh->coord);
 				if(rh->distance < *distance)
@@ -154,7 +152,7 @@ void ray_checkhit(const t_Ray *ray, t_Ray_hit *rh, double *distance){
 					*distance = rh->distance;
 					rh->color = s->color;
 					// *rh->coord = Vector3d_mult(Point3d_to_Vector3d(vars->camera->coord), *distance);
-                    *rh->coord = Vector3d_add(ray->origin, Vector3d_mult(ray->direction, rh->distance));
+                    *rh->coord = Vector3d_add(ray->o, Vector3d_mult(ray->d, rh->distance));
 
 					// continue;
 				}
@@ -172,7 +170,7 @@ void ray_checkhit(const t_Ray *ray, t_Ray_hit *rh, double *distance){
 		// }
 		else if (ft_strcmp(s->id, "pl"))
 		{
-			if (check_pl(s, ray, rh))
+			if (check_pl(s, *ray, rh))
 			{
 				rh->distance = find_distance(ray->o, *rh->coord);
 				if(rh->distance < *distance)

@@ -159,8 +159,8 @@ int32_t light(int32_t color, const t_Ray *ray, t_Ray_hit hit){
 
 uint32_t ambient(uint32_t color){
 	uint32_t ac = init_vars()->ambient_light->color;
-	color = mix_colors(color, ac, to_double(init_vars()->ambient_light->light_ratio));
 	color = brightness(color, to_double(init_vars()->ambient_light->light_ratio));
+	color = mix_colors(color, ac, to_double(init_vars()->ambient_light->light_ratio));
 	return (color);
 }
 
@@ -181,7 +181,6 @@ int32_t ray_tracing(const t_Ray *ray) //returns a color
 
 //add ambiantlight
 	light_is_visible(init_vars(), &hit);
-	color = brightness(color, to_double(init_vars()->ambient_light->light_ratio));
 	// printf("light_is_visible = %d\n",light_is_visible(init_vars(), &hit));
 
 	color = ambient(color);

@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:32:54 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/04/03 17:05:45 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/04/04 11:49:54 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ t_Ray *bounce_light(t_Vars *vars, t_Ray_hit *hit)
 
 	// draw_ray(light_ray, hit->coord->x, hit->coord->y, 250);
 
-	light_ray.d = Point3d_to_Vector3d(vars->light->coord);
-	light_ray.o = *hit->coord;
+	light_ray->d = Point3d_to_Vector3d(vars->light->coord);
+	light_ray->o = *hit->coord;
 	return (light_ray);
 }
 

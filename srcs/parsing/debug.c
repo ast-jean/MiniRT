@@ -71,7 +71,7 @@ void	print_objects()
 		if (ft_strcmp(s->id, "sp")){
 			printf("ID:\t%s\n", s->id);
 			printf("Coord:\t(%f),(%f),(%f)\n", to_double(s->coord.x), to_double(s->coord.y), to_double(s->coord.z));
-			printf("Dia.:\t%f\n", to_double(s->diameter));
+			printf("Dia.:\t%f\n", to_double(s->radius));
 			printf("Color:\t%X\n", s->color);
 		}
 		else if (ft_strcmp(s->id, "pl")){
@@ -84,7 +84,7 @@ void	print_objects()
 			printf("ID:\t%s\n", s->id);
             printf("Coord:\t(%f),(%f),(%f)\n", to_double(s->coord.x), to_double(s->coord.y), to_double(s->coord.z));
             printf("Ori.:\t(%f),(%f),(%f)\n", to_double(s->orientation.x), to_double(s->orientation.y), to_double(s->orientation.z));
-			printf("Dia.:\t%f\n", to_double(s->diameter));
+			printf("Dia.:\t%f\n", to_double(s->radius));
 			printf("Height:\t%f\n", to_double(s->height));
 			printf("Color:\t%X\n", s->color);
 		}
