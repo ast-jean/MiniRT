@@ -44,8 +44,9 @@ t_Vector3d	Vector3d_unit(t_Vector3d v);
 /*-------------------------Ray.c--------------------------*/
 t_Ray *ray_init(t_Vector3d origin, t_Vector3d direction);
 t_Ray *ray_init_to_screen(t_Vars *v, int x, int y);
+t_Ray *bounce_light(t_Vars *vars, t_Ray_hit *hit);
+bool light_is_visible(t_Vars *vars, t_Ray_hit *hit);
 double round_to_first_digit(double num);
 double trunc_to_first_digit(double num);
-
 
 #endif

@@ -1,0 +1,5 @@
+
+
+supression de vars dans Raytracing et adaptation dans le reste du code, la ligne (void)vars me laissais entendre qu'on ne l'utiliserais pas 
+
+tentative de debug des rayons, mlx_put_pixel segfault lorsque l'on sors des limites de l'écran, donc tous les négatifs. Parler avec Adam de l'organisation des scènes 

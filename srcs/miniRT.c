@@ -105,7 +105,10 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 {
 	t_Vars *vars;
 
+
+	(void)keydata;
 	vars = param;
+
 	(void)keydata;
 	if(mlx_is_key_down(vars->mlx, 61) || mlx_is_key_down(vars->mlx, MLX_KEY_PAGE_UP) \
 	|| mlx_is_key_down(vars->mlx, MLX_KEY_PAGE_DOWN) || mlx_is_key_down(vars->mlx, 334) \
@@ -177,7 +180,10 @@ int	main(int argc, char **argv)
 	{
 		vars->mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
 		img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
-		vars->img = img;	
+		vars->img = img;
+		// print_objects();
+		// mlx_put_pixel(vars->img, 1000000, 0, RED);
+
 		ray_to_screen();
 		mlx_image_to_window(vars->mlx, img, 0, 0);	
 		mlx_mouse_hook(vars->mlx, mouse_hook, vars);

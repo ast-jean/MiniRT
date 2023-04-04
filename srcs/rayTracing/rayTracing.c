@@ -22,7 +22,7 @@ bool solveQuadratic(double a,double b, double c, double x0, double x1)//UNUSED
     return true;
 }
 
-void ray_to_screen()
+void 	ray_to_screen()
 {
 	t_Vars *vars = init_vars();
 	mlx_image_t *img = vars->img;
@@ -36,7 +36,7 @@ void ray_to_screen()
 		while (++x < WIDTH) 
 		{
 			t_Ray *ray = ray_init_to_screen(vars, x, y);
-			mlx_put_pixel(img, x, y, ray_tracing(ray, vars));
+			mlx_put_pixel(img, x, y, ray_tracing(ray));
 			free(ray);
 		}
 	}
@@ -44,6 +44,77 @@ void ray_to_screen()
 	double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC; //
 	printf("Render time: %f seconds\n", elapsed_time);						//
 }
+
+t_Vector3d shape_normal(const t_shape *shape, const t_Vector3d point)
+{
+    t_shape *sphere = (t_shape *)shape;
+    t_Vector3d normal = Vector3d_sub(point, Point3d_to_Vector3d(sphere->coord));
+    normal = Vector3d_unit(normal);
+    return normal;
+}
+
+void put_line(t_Vector3d p1, t_Vector3d p2, t_Vars *vars, int color)
+{
+    double x1 = p1.x;
+    double y1 = p1.y;
+    double x2 = p2.x;
+    double y2 = p2.y;
+
+    double dx = fabs(x2 - x1);
+    double dy = fabs(y2 - y1);
+    double sx = x1 < x2 ? 1 : -1;
+    double sy = y1 < y2 ? 1 : -1;
+    double err = dx - dy;
+
+    while (1)
+    {
+        mlx_put_pixel(vars->img, x1, y1, color);
+        if (x1 == x2 && y1 == y2)
+            break;
+        double e2 = 2 * err;
+        if (e2 > -dy)
+        {
+            err -= dy;
+            x1 += sx;
+        }
+        if (e2 < dx)
+        {
+            err += dx;
+            y1 += sy;
+        }
+    }
+}
+
+
+
+// t_Ray_hit ray_trace(const t_Ray *ray)
+// {
+//     t_Ray_hit ray_hit;
+//     // double distance = INFINITY;
+//     double distance = 10000;
+
+//     ray_hit.color = 0;
+//     // double distance = INFINITY;
+//     ray_hit.distance = 10000;
+//     ray_hit.shape = NULL;
+//     ray_hit.coord = malloc(sizeof(t_Vector3d));
+
+//     ray_checkhit(ray, &ray_hit, &distance);
+
+//     if (ray_hit.color && distance < ray_hit.distance)
+//     {
+//         ray_hit.distance = distance;
+//         *ray_hit.coord = Vector3d_add(ray->origin, Vector3d_mult(ray->direction, distance));
+//         t_Vector3d normal = shape_normal(ray_hit.shape, *ray_hit.coord);
+//         t_Vector3d normal_end = Vector3d_add(*ray_hit.coord, Vector3d_mult(normal, 50.0));
+//         put_line(*ray_hit.coord, normal_end, init_vars(), 0xFF0000); // Dessine la normale
+//     }
+
+//     return ray_hit;
+// }
+
+
+
 
 t_Ray_hit ray_trace(const t_Ray *ray)
 {
@@ -93,7 +164,7 @@ uint32_t ambient(uint32_t color){
 	return (color);
 }
 
-int32_t ray_tracing(const t_Ray *ray, t_Vars *vars) //returns a color
+int32_t ray_tracing(const t_Ray *ray) //returns a color
 {
 	int32_t color;    
 	t_Ray_hit hit = ray_trace(ray);
@@ -109,9 +180,13 @@ int32_t ray_tracing(const t_Ray *ray, t_Vars *vars) //returns a color
 //add antialiasing //optional
 
 //add ambiantlight
+	light_is_visible(init_vars(), &hit);
+	color = brightness(color, to_double(init_vars()->ambient_light->light_ratio));
+	// printf("light_is_visible = %d\n",light_is_visible(init_vars(), &hit));
+
 	color = ambient(color);
 	// free(hit.coord);
-		(void) vars;
+		// (void) vars;
 	return (color);
 }
 
