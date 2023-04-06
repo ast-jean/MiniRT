@@ -51,17 +51,17 @@ void	print_objects()
 	t_node *aff = vars->objs->first;
 	printf("------------Struct-------------\n");
 	printf("ID:\t%s\n", vars->camera->id);
-	printf("Coord:\t(%f),(%f),(%f)\n", to_double(vars->camera->coord.x), to_double(vars->camera->coord.y), to_double(vars->camera->coord.z));
-    printf("Ori.:\t(%f),(%f),(%f)\n", to_double(vars->camera->orientation.x), to_double(vars->camera->orientation.y), to_double(vars->camera->orientation.z));
+	printf("Coord:\t(%f),(%f),(%f)\n", vars->camera->coord.x, vars->camera->coord.y, vars->camera->coord.z);
+    printf("Ori.:\t(%f),(%f),(%f)\n", vars->camera->orien.x, vars->camera->orien.y, vars->camera->orien.z);
     printf("FOV:\t%d\n", vars->camera->FOV);
 	printf("-------------------------------\n");
 	printf("ID:\t%s\n", vars->ambient_light->id);
-	printf("LRatio:\t%f\n", to_double(vars->ambient_light->light_ratio));
+	printf("LRatio:\t%hhu\n", vars->ambient_light->light_ratio);
 	printf("Color:\t%X\n", vars->ambient_light->color);
 	printf("-------------------------------\n");
 	printf("ID:\t%s\n", vars->light->id);
-	printf("Coord:\t(%f),(%f),(%f)\n", to_double(vars->light->coord.x), to_double(vars->light->coord.y), to_double(vars->light->coord.z));
-	printf("LRatio:\t%f\n", to_double(vars->light->light_ratio));
+	printf("Coord:\t(%f),(%f),(%f)\n", vars->light->coord.x, vars->light->coord.y, vars->light->coord.z);
+	printf("LRatio:\t%hhu\n", vars->light->light_ratio);
 	printf("Color:\t%X\n", vars->light->color);
 	printf("------------t_dlist------------\n");
 	while(aff)
@@ -70,22 +70,22 @@ void	print_objects()
 
 		if (ft_strcmp(s->id, "sp")){
 			printf("ID:\t%s\n", s->id);
-			printf("Coord:\t(%f),(%f),(%f)\n", to_double(s->coord.x), to_double(s->coord.y), to_double(s->coord.z));
-			printf("Dia.:\t%f\n", to_double(s->radius));
+			printf("Coord:\t(%f),(%f),(%f)\n", s->coord.x, s->coord.y, s->coord.z);
+			printf("Radius:\t%f\n", s->radius);
 			printf("Color:\t%X\n", s->color);
 		}
 		else if (ft_strcmp(s->id, "pl")){
 			printf("ID:\t%s\n", s->id);
-            printf("Coord:\t(%f),(%f),(%f)\n", to_double(s->coord.x), to_double(s->coord.y), to_double(s->coord.z));
-            printf("Ori.:\t(%f),(%f),(%f)\n", to_double(s->orientation.x), to_double(s->orientation.y), to_double(s->orientation.z));
+            printf("Coord:\t(%f),(%f),(%f)\n", s->coord.x, s->coord.y, s->coord.z);
+            printf("Ori.:\t(%f),(%f),(%f)\n", s->orien.x, s->orien.y, s->orien.z);
 			printf("Color:\t%X\n", s->color);
 		}
 		else if (ft_strcmp(s->id, "cy")){
 			printf("ID:\t%s\n", s->id);
-            printf("Coord:\t(%f),(%f),(%f)\n", to_double(s->coord.x), to_double(s->coord.y), to_double(s->coord.z));
-            printf("Ori.:\t(%f),(%f),(%f)\n", to_double(s->orientation.x), to_double(s->orientation.y), to_double(s->orientation.z));
-			printf("Dia.:\t%f\n", to_double(s->radius));
-			printf("Height:\t%f\n", to_double(s->height));
+            printf("Coord:\t(%f),(%f),(%f)\n", s->coord.x, s->coord.y, s->coord.z);
+            printf("Ori.:\t(%f),(%f),(%f)\n", s->orien.x, s->orien.y, s->orien.z);
+			printf("Radius:\t%f\n", s->radius);
+			printf("Height:\t%f\n", s->height);
 			printf("Color:\t%X\n", s->color);
 		}
 		printf("------------------------------\n");
@@ -100,7 +100,7 @@ void	print_objects()
 		// }
 		// else if (ft_strcmp(s->id, "C")){
 		// 	printf("ID:\t%s\n", s->id);
-		// 	printf("Coord:\t(%f),(%f),(%f)\n", to_double(s->coord.x), to_double(s->coord.y), to_double(s->coord.z));
+		// 	printf("Coord:\t(%f),(%f),(%f)\n", to_double(s->coord->x), to_double(s->coord->y), to_double(s->coord->z));
         //     printf("Ori.:\t(%f),(%f),(%f)\n", to_double(s->orientation.x), to_double(s->orientation.y), to_double(s->orientation.z));
         //     printf("FOV:\t%d\n", s->FOV);
 		// }
@@ -178,7 +178,7 @@ void	print_objects()
 
 // }
 
-double Vector3d_distance(t_Vector3d point, t_Vector3d end_point)
+double Vector3d_distance(t_Vector3d point, t_Vector3d end_point) //
 {
     double dx = end_point.x - point.x;
     double dy = end_point.y - point.y;

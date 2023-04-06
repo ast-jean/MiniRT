@@ -74,26 +74,52 @@ void	valid_element(char **elem)
 	free_split(elem);
 }
 
-t_Fixed	str_to_fixed(char *elem)
-{
-	t_Fixed f;
-	// char **part = ft_split(elem, '.');
-	// f.entier = ft_atoi(part[0]);
-	// if (part[1])
-	// 	f.decimal = ft_atoi(part[1]);
-	// else
-	// 	f.decimal = 0;
-	set_value(&f, atof(elem));
-	return (f);
-}
 
-t_3dPoint str_to_3D(char *elem)
+// t_Fixed	str_to_fixed(char *elem)
+// {
+// 	t_Fixed f;
+// 	// char **part = ft_split(elem, '.');
+// 	// f.entier = ft_atoi(part[0]);
+// 	// if (part[1])
+// 	// 	f.decimal = ft_atoi(part[1]);
+// 	// else
+// 	// 	f.decimal = 0;
+// 	set_value(&f, atof(elem));
+// 	return (f);
+// }
+
+t_Vector3d str_to_3D(char *elem)
 {
-	t_3dPoint p;
+	t_Vector3d p;
 	char **coord = ft_split(elem, ',');
-	p.x = str_to_fixed(coord[0]);
-	p.y = str_to_fixed(coord[1]);
-	p.z = str_to_fixed(coord[2]);
+	p.x = atof(coord[0]);
+	p.y = atof(coord[1]);
+	p.z = atof(coord[2]);
 	free_split(coord);
 	return (p);
 }
+
+
+// t_Fixed	str_to_fixed(char *elem)
+// {
+// 	t_Fixed f;
+// 	// char **part = ft_split(elem, '.');
+// 	// f.entier = ft_atoi(part[0]);
+// 	// if (part[1])
+// 	// 	f.decimal = ft_atoi(part[1]);
+// 	// else
+// 	// 	f.decimal = 0;
+// 	set_value(&f, atof(elem));
+// 	return (f);
+// }
+
+// t_3dPoint str_to_3D(char *elem)
+// {
+// 	t_3dPoint p;
+// 	char **coord = ft_split(elem, ',');
+// 	p.x = str_to_fixed(coord[0]);
+// 	p.y = str_to_fixed(coord[1]);
+// 	p.z = str_to_fixed(coord[2]);
+// 	free_split(coord);
+// 	return (p);
+// }

@@ -3,88 +3,97 @@
 /*                                                        :::      ::::::::   */
 /*   Fixed.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:25:43 by slavoie           #+#    #+#             */
-/*   Updated: 2023/03/31 18:29:42 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/04/06 17:09:36 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/miniRT.h"
 
-t_Vector3d Point3d_to_Vector3d(t_3dPoint point)
-{
-	t_Vector3d	vec;
+// t_Vector3d Point3d_to_Vector3d(t_3dPoint point)
+// {
+// 	t_Vector3d	vec;
 
-	vec.x = to_double(point.x);
-	vec.y = to_double(point.y);
-	vec.z = to_double(point.z);
-	return (vec);
-}
+// 	vec.x = to_double(point.x);
+// 	vec.y = to_double(point.y);
+// 	vec.z = to_double(point.z);
+// 	return (vec);
+// }
+// t_3dPoint Vector3d_to_Point3d(t_Vector3d vec)
+// {
+// 	t_3dPoint	point;
 
-t_Fixed fp_init(double value)
-{
-	t_Fixed fp;
-	fp.value = value;
-	return (fp);
-}
+// 	point.x = fp_init(vec.x * fp_scale);
+// 	point.y = fp_init(vec.y * fp_scale);
+// 	point.z = fp_init(vec.z * fp_scale);
+// 	return (point);
+// }
 
-void	set_value(t_Fixed *fp, double value)
-{
-	fp->value = value * fp_scale;
-}
+// t_Fixed fp_init(double value)
+// {
+// 	t_Fixed fp;
+// 	fp.value = value;
+// 	return (fp);
+// }
 
-int	to_int(t_Fixed fp)
-{
-	return (fp.value / fp_scale);
-}
+// void	set_value(t_Fixed *fp, double value)
+// {
+// 	fp->value = value * fp_scale;
+// }
 
-double	to_double(t_Fixed fp)
-{
-	return ((double) fp.value / fp_scale);
-}
+// int	to_int(t_Fixed fp)
+// {
+// 	return (fp.value / fp_scale);
+// }
 
-/*
-	Cette fonction effectue l'operand sur un nombre variable d'argument 
-	et renvoie le résultat en type double
+// double	to_double(t_Fixed fp)
+// {
+// 	return ((double) fp.value / fp_scale);
+// }
 
-	operand = le signe à utilisé pour l'opération
+// /*
+// 	Cette fonction effectue l'operand sur un nombre variable d'argument 
+// 	et renvoie le résultat en type double
+
+// 	operand = le signe à utilisé pour l'opération
 	
-	num_args = le nombre d'argument qui seront passées à la fonction, si 
-	plus d'arguments sont passées que le nombre annoncées l'opération s'effetue 
-	sur une valeur non initialisé. La fonction ne planteras pas, ATTENTION !!!
+// 	num_args = le nombre d'argument qui seront passées à la fonction, si 
+// 	plus d'arguments sont passées que le nombre annoncées l'opération s'effetue 
+// 	sur une valeur non initialisé. La fonction ne planteras pas, ATTENTION !!!
 
-	... = tous les fixed_point à utilisé dans la chaine d'opération
+// 	... = tous les fixed_point à utilisé dans la chaine d'opération
 
-	slavoie
-*/
-double	fp_cal(char operand, int num_args, ...)
-{
-	va_list	args;
-	int		i;
-	double	result;
-	t_Fixed	fp;
+// 	slavoie
+// */
+// double	fp_cal(char operand, int num_args, ...)
+// {
+// 	va_list	args;
+// 	int		i;
+// 	double	result;
+// 	t_Fixed	fp;
 
-	va_start(args, num_args);
-	fp = va_arg(args, t_Fixed);
-	result = to_double(fp);
-	i = 0;
-	while (i < num_args - 1)
-	{
-		fp = va_arg(args, t_Fixed);
-		if (operand == '+')
-			result = result + to_double(fp);
-		else if (operand == '-')
-			result = result - to_double(fp);
-		else if (operand == '*')
-			result = result * to_double(fp);
-		else if (operand == '/')
-			result = result / to_double(fp);
-		i++;
-	}
-	va_end(args);
-	return (result);
-}
+// 	va_start(args, num_args);
+// 	fp = va_arg(args, t_Fixed);
+// 	result = to_double(fp);
+// 	i = 0;
+// 	while (i < num_args - 1)
+// 	{
+// 		fp = va_arg(args, t_Fixed);
+// 		if (operand == '+')
+// 			result = result + to_double(fp);
+// 		else if (operand == '-')
+// 			result = result - to_double(fp);
+// 		else if (operand == '*')
+// 			result = result * to_double(fp);
+// 		else if (operand == '/')
+// 			result = result / to_double(fp);
+// 		i++;
+// 	}
+// 	va_end(args);
+// 	return (result);
+// }
 
 // int	main(void)
 // {

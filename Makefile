@@ -19,8 +19,6 @@ SRCS_FILES 		=	miniRT.c \
 					math/math_other.c
 
 INCLUDE_FILES	= 	miniRT.h \
-					objects.h \
-					Vectors.h \
 					MLX42/include/MLX42/MLX42.h \
 					
 LIBS =	include/libft/libft.a \
