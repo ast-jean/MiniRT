@@ -82,7 +82,7 @@ void	free_vars(t_Vars *vars)
 void  mouse_hook(mouse_key_t button, action_t action, modifier_key_t mods, void* param)
 {
 	t_Vars *vars;
-	t_Ray *ray;
+	t_Ray ray;
 	t_Ray_hit hit;
 
 	vars = param;
@@ -93,10 +93,10 @@ void  mouse_hook(mouse_key_t button, action_t action, modifier_key_t mods, void*
 	{
 		mlx_get_mouse_pos(vars->mlx, &vars->mouse_x, &vars->mouse_y);
 		ray = ray_init_to_screen(vars, vars->mouse_x, vars->mouse_y);
-		hit = ray_trace(ray);
+		hit = ray_trace(ray, 999999.9);
 		if (hit.shape)
 			vars->selected = hit.shape;
-		free(ray);
+		// free(ray);
 		// printf("mouse_x = %d  mouse_y = %d\n", vars->mouse_x, vars->mouse_y);
 		// mlx_put_pixel(vars->img, vars->mouse_x, vars->mouse_y, RED);
 	}
