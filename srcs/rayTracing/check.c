@@ -131,7 +131,7 @@ bool	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh)
     return true;
 }
 
-void ray_checkhit(const t_Ray *ray, t_Ray_hit *rh, double *distance){
+void ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance){
 	t_Vars *vars = init_vars();
 	t_node *aff = vars->objs->first;
 	rh->color = 0;
@@ -143,16 +143,16 @@ void ray_checkhit(const t_Ray *ray, t_Ray_hit *rh, double *distance){
 		if (ft_strcmp(s->id, "sp"))
 
 		{
-			if (check_sp(s, *ray, rh))
+			if (check_sp(s, ray, rh))
 			{	
-				rh->distance = find_distance(ray->o, *rh->coord);
+				rh->distance = find_distance(ray.o, *rh->coord);
 				if(rh->distance < *distance)
 				{
 					rh->shape = s;
 					*distance = rh->distance;
 					rh->color = s->color;
-					// *rh->coord = Vector3d_mult(Point3d_to_Vector3d(vars->camera->coord), *distance);
-                    *rh->coord = Vector3d_add(ray->o, Vector3d_mult(ray->d, rh->distance));
+					//  *rh->coord = Vector3d_mult(Point3d_to_Vector3d(vars->camera->coord), *distance);
+                    *rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, rh->distance));
 
 					// continue;
 				}
@@ -160,7 +160,7 @@ void ray_checkhit(const t_Ray *ray, t_Ray_hit *rh, double *distance){
 		}
 		else if (ft_strcmp(s->id, "cy"))
         {
-	        check_cy(s, *ray, rh);
+	        check_cy(s, ray, rh);
 		}
 			// printf("in checkhit - color = %X\n", rh.color);
 		// else if (ft_strcmp(s->id, "pl")){
@@ -170,9 +170,9 @@ void ray_checkhit(const t_Ray *ray, t_Ray_hit *rh, double *distance){
 		// }
 		else if (ft_strcmp(s->id, "pl"))
 		{
-			if (check_pl(s, *ray, rh))
+			if (check_pl(s, ray, rh))
 			{
-				rh->distance = find_distance(ray->o, *rh->coord);
+				rh->distance = find_distance(ray.o, *rh->coord);
 				if(rh->distance < *distance)
 				{
 					rh->shape = s;

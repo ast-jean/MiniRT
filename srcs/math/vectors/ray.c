@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:32:54 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/04/04 11:49:54 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/04/10 11:10:07 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,15 @@ t_Ray *ray_init_to_screen(t_Vars *v, int x, int y)
 t_Ray *bounce_light(t_Vars *vars, t_Ray_hit *hit)
 {
 	t_Ray *light_ray;
-
-	light_ray = ray_init(*hit->coord, Point3d_to_Vector3d(vars->light->coord));
-
-	// draw_ray(light_ray, hit->coord->x, hit->coord->y, 250);
-
-	light_ray->d = Point3d_to_Vector3d(vars->light->coord);
-	light_ray->o = *hit->coord;
+	light_ray = ray_init(*hit->coord, Vector3d_norm(Vector3d_sub(*hit->coord, vars->light->coord)));
 	return (light_ray);
+}
+
+//Return the length of a ray between 2 vectors
+float ray_length(t_Vector3d start, t_Vector3d end)
+{
+	t_Vector3d difference = Vector3d_sub(start, end);
+    return Vector3d_length(difference);
 }
 
 bool light_is_visible(t_Vars *vars, t_Ray_hit *hit)
@@ -76,12 +77,14 @@ bool light_is_visible(t_Vars *vars, t_Ray_hit *hit)
 	t_node *node;
 	double distance;
 
-	distance = 10000;
+	t_Vector3d light_coor = Point3d_to_Vector3d(vars->light->coord); 
 
+	distance = ray_length(*hit->coord, light_coor);
 	light_ray = bounce_light(vars, hit);
-	node = vars->objs->first;
+	t_Ray_hit bounce = ray_trace(light_ray, distance); //malloced ray_hit.coord
+	// node = vars->objs->first;
 
-	ray_checkhit(light_ray, hit, &distance);
+	// ray_checkhit(light_ray, hit, &distance);
 
 	if (distance == 10000)
 		return (true);

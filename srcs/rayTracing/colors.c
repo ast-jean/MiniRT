@@ -22,7 +22,7 @@ int32_t mix_colors(int32_t colorA, int32_t colorB, double ratio)
     // N.r = (int)((1.0 - ratio) * A.r + ratio * B.r);
     // N.g = (int)((1.0 - ratio) * A.g + ratio * B.g);
     // N.b = (int)((1.0 - ratio) * A.b + ratio * B.b);
-(void)ratio;
+	(void)ratio;
 	N.r = clamp((A.r * B.r) / 255,0,255);
 	N.g = clamp((A.g * B.g) / 255,0,255);
 	N.b = clamp((A.b * B.b) / 255,0,255);
