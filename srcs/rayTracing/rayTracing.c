@@ -35,9 +35,9 @@ void 	ray_to_screen()
 		x = -1;
 		while (++x < WIDTH) 
 		{
-			t_Ray *ray = ray_init_to_screen(vars, x, y);
-			mlx_put_pixel(img, x, y, ray_tracing(*ray));
-			free(ray);
+			t_Ray ray = ray_init_to_screen(vars, x, y);
+			mlx_put_pixel(img, x, y, ray_tracing(ray));
+			// free(ray);
 		}
 	}
 	clock_t end_time = clock();												// illegal
@@ -114,10 +114,10 @@ void put_line(t_Vector3d p1, t_Vector3d p2, t_Vars *vars, int color)
 // }
 
 
-t_Ray_hit ray_trace(const t_Ray ray, float dist)
+t_Ray_hit ray_trace(const t_Ray ray, double dist)
 {
 	t_Ray_hit ray_hit;
-	float distance = dist;
+	double distance = dist;
 
 	// ray_hit.color = 0;
 	ray_hit.distance = dist;
@@ -142,13 +142,17 @@ uint32_t ambient(uint32_t color){
 
 int32_t ray_tracing(const t_Ray ray) //returns a color
 {
-	int32_t color;    
+	uint32_t color;    
 	t_Ray_hit hit = ray_trace(ray, INFINITY);
 	if (!hit.color) 
 		return BLACK;
 	else
 		color = hit.color;
 //add light
+
+	if (light_is_visible(init_vars(), &hit))
+		color = brightness(color, 0.5);
+	// printf("light_is_visible = %d\n",light_is_visible(init_vars(), &hit));
 	// color = light(color, ray, hit);
 
 //add reflection
@@ -156,8 +160,7 @@ int32_t ray_tracing(const t_Ray ray) //returns a color
 //add antialiasing //optional
 
 //add ambiantlight
-	light_is_visible(init_vars(), &hit);
-	// printf("light_is_visible = %d\n",light_is_visible(init_vars(), &hit));
+
 
 	color = ambient(color);
 	// free(hit.coord);
