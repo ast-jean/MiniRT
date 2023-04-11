@@ -1,44 +1,25 @@
 #include "../../include/miniRT.h"
 
+
+
+
+
+
 bool	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh)
 {
-	// t_Vector3d L = Vector3d_sub(ray->o, Point3d_to_Vector3d(s->coord));
-    // double t_ca = Vector3d_dot(L, ray->d);
-    // // if (t_ca < 0) // The ray is pointing away from the sphere
-    // //     return (printf("away from sphere\n"),false);
-    // double d2 = Vector3d_dot(L, L) - t_ca * t_ca;
-    // double radius_squared = (to_double(s->radius)) * (to_double(s->radius));
-    // if (d2 > radius_squared) // The ray misses the sphere
-    //     return (printf("ray misses\n"),false);
-    // double t_hc = sqrt(radius_squared - d2);
-    // double t0 = t_ca - t_hc;
-    // double t1 = t_ca + t_hc;
-
-    // // Choose the smaller positive t value
-    // double t = (t0 < t1 && t0 > 0) ? t0 : t1;
-
-    // // Calculate the hit coordinates
-    // rh->coord->x = ray->o.x + t * ray->d.x;
-    // rh->coord->y = ray->o.y + t * ray->d.y;
-    // rh->coord->z = ray->o.z + t * ray->d.z;
-
-    // return (true);
 
     t_Vector3d ro_sc = Vector3d_sub(ray.o, Point3d_to_Vector3d(s->coord));
     t_Vector3d abc;
     t_Vector2d t;
 
-
 	abc.x =  Vector3d_dot(ray.d, ray.d);
     abc.y = 2.0 * Vector3d_dot(ray.d, ro_sc);
     abc.z = Vector3d_dot(ro_sc, ro_sc) - pow(to_double(s->radius), 2);
 
-    double disc = pow(abc.y, 2) - 4 * abc.x * abc.z;
-    // solveQuadratic(abc, &t);
-    if (disc < 0)
+    double disc;
+
+    if (!solveQuadratic(abc, &t, &disc))
         return (false);
-    // if (solveQuadratic(abc, &t))
-        // return (false);
     double distSqrt = sqrt(disc);
 	double q;
 	if (abc.y < 0.0)
@@ -47,11 +28,6 @@ bool	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh)
 		q = (-abc.y + distSqrt) / 2.0;
     t.x = q / abc.x;
     t.y = abc.z / q;
-    // if (t.x > t.y) {
-    //     double tmp = t.x;
-    //     t.x = t.y;
-    //     t.y = tmp;
-    // }
     if (t.y < 0)
         return false;
 	else if(t.x < 0)
@@ -137,51 +113,43 @@ bool	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh)
     // Calculer l'équation du rayon
     t_Vector3d o = ray.o;
     t_Vector3d d = ray.d;
+    t_Vector3d abc;
+    t_Vector2d t;
 
     // Calculer les coefficients de l'équation quadratique
-    double a = (d.x * d.x) + (d.y * d.y);
-    double b = 2.0 * (o.x * d.x + o.y * d.y);
-    double c = o.x * o.x + o.y * o.y - s->radius.value * s->radius.value;
-
+    abc.x = (d.x * d.x) + (d.y * d.y);
+    abc.y = 2.0 * (o.x * d.x + o.y * d.y);
+    abc.z = o.x * o.x + o.y * o.y - s->radius.value * s->radius.value;
     // calculer le discriminant
-    double discriminant = b * b - 4.0 * a * c;
+    double discriminant;
 
     // Vérifier si le rayon intersecte le cylindre
-    if (discriminant < 0.0)
+    if (!solveQuadratic(abc, &t, &discriminant))
         return false;
-
-    // Calculer les distances entre l'oe du rayon et les points d'intersection possibles
-    double t1 = (-b - sqrt(discriminant))  / (2.0 * a);
-    double t2 = (-b + sqrt(discriminant))  / (2.0 * a);
-
     // Choisir la plus petite distance positive
-    double distance = -1.0;
-
-    if (t1 > 0.0 && (t2 < 0.0 || t1 < t2)) 
+    double distance;
+    if (t.x > 0.0 && (t.y < 0.0 || t.x < t.y)) 
     {
         // Vérifier si l'intersection est dans la hauteur du cylindre
-        double z1 = o.z + t1 * d.z;
+        double z1 = o.z + t.x * d.z;
         
         if (z1 >= to_double(s->coord.z) - to_double(s->height) / 2.0 && z1 <= to_double(s->coord.z) + to_double(s->height )/ 2.0) 
-            distance = t1;
+            distance = t.x;
     }
-    
     if (distance < 0.0) 
     {
-        if (t2 > 0.0 && (t1 < 0.0 || t2 < t1)) 
+        if (t.y > 0.0 && (t.x < 0.0 || t.y < t.x)) 
         {
             // Vérifier si l'intersection est dans la hauteur du cylindre
-            double z2 = o.z + t2 * d.z;
+            double z2 = o.z + t.y * d.z;
             
             if (z2 >= to_double(s->coord.z) - to_double(s->height) / 2.0 && z2 <= to_double(s->coord.z) + to_double(s->height )/ 2.0)
-                distance = t2;
+                distance = t.y;
         }
     }
-
     // Vérifier si une intersection a été trouvée
-    if (distance < 0.0)
+    if (distance)
         return false;
-
     // Remplir la structure t_Ray_hit avec les informations de l'intersection
     rh->distance = distance;
     rh->color = s->color;
@@ -193,6 +161,7 @@ bool	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh)
 
     return true;
 }
+
 
 void ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance){
 	t_Vars *vars = init_vars();

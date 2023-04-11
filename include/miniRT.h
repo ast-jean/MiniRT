@@ -112,6 +112,6 @@ int32_t mix_colors(int32_t colorA, int32_t colorB, double ratio);
 double		deg2grad(double deg);
 uint32_t	clamp(uint32_t value, uint32_t min, uint32_t max);
 double		find_distance(t_Vector3d A, t_Vector3d B);
-bool solveQuadratic(t_Vector3d abc, t_Vector2d *t);
+bool		solveQuadratic(t_Vector3d abc, t_Vector2d *t, double *disc);
 
 #endif
