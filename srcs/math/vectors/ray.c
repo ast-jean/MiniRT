@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:32:54 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/04/10 14:41:25 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/04/11 15:53:49 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ bool light_is_visible(t_Vars *vars, t_Ray_hit *hit)
 
 	distance = ray_length(*hit->coord, lc);
 	light_ray = bounce_light(vars, hit);
-	// node = vars->objs->first;
 
 	/**/if (hit->color == (uint32_t)0xFFC0CBFF) //debug
 	{
@@ -90,7 +89,6 @@ bool light_is_visible(t_Vars *vars, t_Ray_hit *hit)
 			printf("Dist Bef= %f\n", distance); //debug
 
 	}
-
 	t_Ray_hit bounce = ray_trace(light_ray, distance);
 
 	/**/if (hit->color == (uint32_t)0xFFC0CBFF) //debug
