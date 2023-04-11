@@ -28,25 +28,25 @@
 #define WIDTH	1000 //Width of screen
 #define HEIGHT	1000 //Height of screen
 
-static mlx_image_t* img;
+// static mlx_image_t* img;
 
-typedef struct s_Vector3d t_Vector3d;
-typedef struct s_Ray_hit t_Ray_hit;
-typedef struct s_Ray t_Ray;
+// typedef struct s_Vector3d t_Vector3d;
+// typedef struct s_Ray_hit t_Ray_hit;
+// typedef struct s_Ray t_Ray;
 
 
 typedef struct s_Vars	// all of our values needed throught the program
 {
-	mlx_t		*mlx;
+	// mlx_t		*mlx;
 	t_dlist		*objs;
 	t_shape		*camera;
 	t_shape		*ambient_light;
 	t_shape		*light;
-	mlx_image_t	*img;
-	double		distance_to_screen;
+	// mlx_image_t	*img;
+	// double		distance_to_screen;
 	int 		mouse_x;
 	int 		mouse_y;
-	t_shape		*selected;
+	// t_shape		*selected;
 	char		*error_message;
 } t_Vars;
 

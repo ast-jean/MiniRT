@@ -4,17 +4,17 @@ NAME 	= miniRT
 BONUS 	= miniRT_bonus
 
 SRCS_FILES 		=	miniRT.c \
-					rayTracing/rayTracing.c \
-					rayTracing/check.c \
 					parsing/parsing.c \
 					parsing/objects.c \
 					parsing/colors.c \
 					parsing/scene.c \
 					parsing/debug.c \
 					math/Fixed.c \
-					math/vectors/Vectors.c \
-					math/vectors/ray.c \
-					math/vectors/Vectors_ops.c
+					# rayTracing/check.c \
+					# rayTracing/rayTracing.c \
+					# math/vectors/Vectors.c \
+					# math/vectors/ray.c \
+					# math/vectors/Vectors_ops.c
 
 INCLUDE_FILES	= 	miniRT.h \
 					objects.h \
@@ -24,7 +24,7 @@ INCLUDE_FILES	= 	miniRT.h \
 LIBS =	include/libft/libft.a \
 		include/libft_dlist/dlist.a \
 		include/MLX42/build/libmlx42.a \
-		-Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+		# -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 
 ### Repertoires ###
 SRCS_DIR 	= srcs/

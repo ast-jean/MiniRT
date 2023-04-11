@@ -97,3 +97,10 @@ t_3dPoint str_to_3D(char *elem)
 	free_split(coord);
 	return (p);
 }
+
+int	range(double elem, int low, int high)
+{
+	if (elem < low || elem > high)
+		return(0);
+	return (1);
+}
