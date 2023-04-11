@@ -62,6 +62,7 @@ t_Vars	*init_vars()
 		vars->error_message = NULL;
 		vars->selected = NULL;
 		vars->distance_to_screen = 0;
+		vars->i = 0;
 	}
 	return (vars);
 }

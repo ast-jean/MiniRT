@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:32:54 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/04/11 13:47:11 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/04/11 15:53:38 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,26 +50,23 @@ t_Ray bounce_light(t_Vars *vars, t_Ray_hit *hit)
 	return (light_ray);
 }
 
-bool light_is_visible(t_Vars *vars, t_Ray_hit *hit)
+bool	light_is_visible(t_Vars *vars, t_Ray_hit *hit)
 {
-	t_Ray light_ray;
-	double distance = 0;
+	t_Ray		light_ray = bounce_light(vars, hit);
+	t_Vector3d	lc = Point3d_to_Vector3d(vars->light->coord);
+	double		distance = find_distance(hit->coord, lc);
+	t_Ray_hit	bounce = ray_trace(light_ray, distance);
 
-	t_Vector3d lc = Point3d_to_Vector3d(vars->light->coord);
-
-	distance = find_distance(hit->coord, lc);
-	light_ray = bounce_light(vars, hit);
-	t_Ray_hit bounce = ray_trace(light_ray, distance);
-
-	// /**/if (hit->color == (uint32_t)0xFFC0CBFF) //debug
 	if (hit->color == (uint32_t)0xFFC0CBFF) //debug
 	{
-		printf("\nLc.x=%f |Lc.y=%f |Lc.z=%f\n", lc.x,lc.y,lc.z); 
 		printf("rh.x=%f |rh.y=%f |rh.z=%f\n", hit->coord.x,hit->coord.y,hit->coord.z); 
 		printf("Dist Bef= %f\n", distance); //debug
-		// printf("Shape= %s\n", bounce.shape->id); //debug
-	}
+		if (bounce.shape)
+			printf("Shape= %s\n", bounce.shape->id); //debug
+		else
+			printf("Shape= Null\n"); //debug
 
+	}
 	if (!bounce.shape)//if the shape is NULL so has touched nothing
 		return (true);
 	else
