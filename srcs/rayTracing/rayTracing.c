@@ -19,7 +19,6 @@ void 	ray_to_screen()
 		{
 			t_Ray ray = ray_init_to_screen(vars, x, y);
 			mlx_put_pixel(img, x, y, ray_tracing(ray));
-			// free(ray);
 		}
 	}
 	printf("i = %d\n", vars->i);
@@ -36,84 +35,17 @@ t_Vector3d shape_normal(const t_shape *shape, const t_Vector3d point)
     return normal;
 }
 
-void put_line(t_Vector3d p1, t_Vector3d p2, t_Vars *vars, int color)
-{
-    double x1 = p1.x;
-    double y1 = p1.y;
-    double x2 = p2.x;
-    double y2 = p2.y;
-
-    double dx = fabs(x2 - x1);
-    double dy = fabs(y2 - y1);
-    double sx = x1 < x2 ? 1 : -1;
-    double sy = y1 < y2 ? 1 : -1;
-    double err = dx - dy;
-
-    while (1)
-    {
-        mlx_put_pixel(vars->img, x1, y1, color);
-        if (x1 == x2 && y1 == y2)
-            break;
-        double e2 = 2 * err;
-        if (e2 > -dy)
-        {
-            err -= dy;
-            x1 += sx;
-        }
-        if (e2 < dx)
-        {
-            err += dx;
-            y1 += sy;
-        }
-    }
-}
-
-
-
-// t_Ray_hit ray_trace(const t_Ray *ray)
-// {
-//     t_Ray_hit ray_hit;
-//     // double distance = INFINITY;
-//     double distance = 10000;
-
-//     ray_hit.color = 0;
-//     // double distance = INFINITY;
-//     ray_hit.distance = 10000;
-//     ray_hit.shape = NULL;
-//     ray_hit.coord = malloc(sizeof(t_Vector3d));
-
-//     ray_checkhit(ray, &ray_hit, &distance);
-
-//     if (ray_hit.color && distance < ray_hit.distance)
-//     {
-//         ray_hit.distance = distance;
-//         *ray_hit.coord = Vector3d_add(ray->origin, Vector3d_mult(ray->direction, distance));
-//         t_Vector3d normal = shape_normal(ray_hit.shape, *ray_hit.coord);
-//         t_Vector3d normal_end = Vector3d_add(*ray_hit.coord, Vector3d_mult(normal, 50.0));
-//         put_line(*ray_hit.coord, normal_end, init_vars(), 0xFF0000); // Dessine la normale
-//     }
-
-//     return ray_hit;
-// }
-
 
 t_Ray_hit ray_trace(const t_Ray ray, double dist)
 {
 	t_Ray_hit ray_hit;
 	double distance = dist;
 
-	// ray_hit.color = 0;
 	ray_hit.distance = dist;
-	// ray_hit.shape = NULL;
-	ray_hit.coord = malloc(sizeof(t_Vector3d));
-
 	ray_checkhit(ray, &ray_hit, &distance);
-	if (ray_hit.color && distance < ray_hit.distance)
-	{
-		ray_hit.distance = distance;
-		*ray_hit.coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, distance));
-	}
-	return ray_hit;
+	ray_hit.distance = distance;
+
+	return (ray_hit);
 }
 
 uint32_t ambient(uint32_t color){
@@ -123,50 +55,21 @@ uint32_t ambient(uint32_t color){
 	return (color);
 }
 
-int32_t ray_tracing(const t_Ray ray) //returns a color
+uint32_t ray_tracing(const t_Ray ray) //returns a color
 {
-	uint32_t color;    
+	uint32_t color;
 	t_Ray_hit hit = ray_trace(ray, INFINITY);
 	if (!hit.color) 
 		return BLACK;
 	else
 		color = hit.color;
 //add light
-
-	if (light_is_visible(init_vars(), &hit))
-		color = brightness(color, 0.5);
-	// printf("light_is_visible = %d\n",light_is_visible(init_vars(), &hit));
-	// color = light(color, ray, hit);
+	// if (light_is_visible(init_vars(), &hit))
+	// 	color = brightness(color, 0.5);
 
 //add reflection
 
-//add antialiasing //optional
-
 //add ambiantlight
-	// light_is_visible(init_vars(), &hit);
-	// printf("light_is_visible = %d\n",light_is_visible(init_vars(), &hit));
-	if(light_is_visible(init_vars(), &hit))
-		init_vars()->i++;
-	color = ambient(color);
-	// free(hit.coord);
-		// (void) vars;
+	// color = ambient(color);
 	return (color);
 }
-
-// }
-/*
-
-		   ____
-		,dP9CGG88@b,
-	  ,IPIYYICCG888@@b,
-	 dIiIIIIIICGG8888@b
-	dCIIIIIIICCGG8888@@b
-____GCCIIIICCCGGG8888@@@__________________
-	GGCCCCCCCGGG88888@@@
-	GGGGCCCGGGG88888@@@@...
-	Y8GGGGGG8888888@@@@P.....
-	 Y88888888888@@@@@P......
-	 `Y8888888@@@@@@@P'......
-		`@@@@@@@@@P'.......
-		   """"........
-*/

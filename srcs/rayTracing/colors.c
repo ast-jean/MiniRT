@@ -2,7 +2,7 @@
 #include <math.h>
 
 
-t_rgba separate_color_rgba(int32_t color)
+t_rgba separate_color_rgba(uint32_t color)
 {
 	t_rgba rgba;
 
@@ -13,7 +13,7 @@ t_rgba separate_color_rgba(int32_t color)
 	return (rgba);
 }
 
-int32_t mix_colors(int32_t colorA, int32_t colorB, double ratio)
+uint32_t mix_colors(uint32_t colorA, uint32_t colorB, double ratio)
 {
 	t_rgba	N;
 	t_rgba	A = separate_color_rgba(colorA);
@@ -30,7 +30,7 @@ int32_t mix_colors(int32_t colorA, int32_t colorB, double ratio)
     return ((N.r << 24) | (N.g << 16) | (N.b << 8) | N.a);
 }
 
-int32_t brightness(int32_t color, double scale) 
+uint32_t brightness(uint32_t color, double scale) 
 {
 	t_rgba rgba = separate_color_rgba(color);
 

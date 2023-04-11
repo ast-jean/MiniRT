@@ -93,19 +93,19 @@ double		fp_cal(char operand, int num_args, ...);
 /*-------------------------ray_tracing-------------------------*/
 // ray_tracing.c
 void		ray_to_screen();
-int32_t		ray_tracing(const t_Ray ray);
+uint32_t	ray_tracing(const t_Ray ray);
 t_Ray_hit	ray_trace(const t_Ray ray, double dist);
 // check.c
 void	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance);
-bool	check_cy(const t_shape *s,const t_Ray ray, t_Ray_hit *rh);
-bool	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit *rh);
-bool	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh);
+double	check_cy(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
+double	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
+double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
 
 /*---------------------------colors-------------------------*/
-double	remap(double a, double b, double t);
-int32_t	brightness(int32_t color, double scale);
-t_rgba	separate_color_rgba(int32_t color);
-int32_t mix_colors(int32_t colorA, int32_t colorB, double ratio);
+double		remap(double a, double b, double t);
+uint32_t	brightness(uint32_t color, double scale);
+t_rgba		separate_color_rgba(uint32_t color);
+uint32_t	mix_colors(uint32_t colorA, uint32_t colorB, double ratio);
 
 /*---------------------------Math-------------------------*/
 //math_other.c

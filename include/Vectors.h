@@ -23,10 +23,10 @@ typedef struct s_Ray{
 } t_Ray;
 
 typedef struct s_Ray_hit{
-    double	distance;
+    double		distance;
 	uint32_t	color;
-	t_shape *shape;
-	t_Vector3d *coord;
+	t_shape		*shape;
+	t_Vector3d	coord;
 } t_Ray_hit;
 
 
