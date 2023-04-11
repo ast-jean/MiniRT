@@ -6,30 +6,15 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:32:54 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/04/10 14:35:48 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/04/11 13:47:11 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/Vectors.h"
 
-double round_to_first_digit(double num) {
-    double log_val = log10(fabs(num));
-    double int_part;
-    modf(log_val, &int_part);
-    double power = pow(10, int_part);
-    return copysign(power, num);
-}
-double trunc_to_first_digit(double num) {
-    double log_val = log10(fabs(num));
-    double int_part;
-    modf(log_val, &int_part);
-    double power = pow(10, int_part- 1);
-    return copysign(power, num);
-}
-
 t_Ray ray_init(t_Vector3d o, t_Vector3d d)
 {
-	t_Ray ray;// = malloc(sizeof(t_Ray));
+	t_Ray ray;
 	ray.o = o;
 	ray.d = d;
 	return ray;
@@ -45,7 +30,7 @@ t_Ray ray_init_to_screen(t_Vars *v, int x, int y)
 	double py;
 	double px;
 	
-	px = ((2 * (double)x / (double)WIDTH) - 1) * ((double)WIDTH/ (double)HEIGHT);
+	px = ((2 * (double)x / (double)WIDTH) - 1) * ((double)WIDTH / (double)HEIGHT);
 	py = 1 - (2 * (double)y / (double)HEIGHT);
 
 	t_Vector3d up = Vector3d_unit(Vector3d_cross(Vector3d_cross(c_dir, reference_up), c_dir));
@@ -61,15 +46,8 @@ t_Ray bounce_light(t_Vars *vars, t_Ray_hit *hit)
 {
 	t_Ray light_ray;
 	t_Vector3d light_coor = Point3d_to_Vector3d(vars->light->coord);
-	light_ray = ray_init(*hit->coord, Vector3d_norm(Vector3d_sub(*hit->coord, light_coor)));
+	light_ray = ray_init(hit->coord, Vector3d_norm(Vector3d_sub(hit->coord, light_coor)));
 	return (light_ray);
-}
-
-//Return the length of a ray between 2 vectors
-float ray_length(t_Vector3d start, t_Vector3d end)
-{
-	t_Vector3d d = Vector3d_sub(end, start);
-    return (sqrt(d.x*d.x + d.y *d.y + d.z * d.z));
 }
 
 bool light_is_visible(t_Vars *vars, t_Ray_hit *hit)
@@ -79,23 +57,20 @@ bool light_is_visible(t_Vars *vars, t_Ray_hit *hit)
 
 	t_Vector3d lc = Point3d_to_Vector3d(vars->light->coord);
 
-	distance = ray_length(*hit->coord, lc);
+	distance = find_distance(hit->coord, lc);
 	light_ray = bounce_light(vars, hit);
-
-	/**/if (hit->color == (uint32_t)0xFFC0CBFF) //debug
-	{
-	/**/	printf("\nLc.x=%f |Lc.y=%f |Lc.z=%f\n", lc.x,lc.y,lc.z); 
-	/**/	printf("rh.x=%f |rh.y=%f |th.z=%f\n", hit->coord->x,hit->coord->y,hit->coord->z); 
-			printf("Dist Bef= %f\n", distance); //debug
-
-	}
-
 	t_Ray_hit bounce = ray_trace(light_ray, distance);
 
-	/**/if (hit->color == (uint32_t)0xFFC0CBFF) //debug
-	/**/	printf("Dist Aft= %f\n", distance); //debug
+	// /**/if (hit->color == (uint32_t)0xFFC0CBFF) //debug
+	if (hit->color == (uint32_t)0xFFC0CBFF) //debug
+	{
+		printf("\nLc.x=%f |Lc.y=%f |Lc.z=%f\n", lc.x,lc.y,lc.z); 
+		printf("rh.x=%f |rh.y=%f |rh.z=%f\n", hit->coord.x,hit->coord.y,hit->coord.z); 
+		printf("Dist Bef= %f\n", distance); //debug
+		// printf("Shape= %s\n", bounce.shape->id); //debug
+	}
 
-	if (!bounce.color)//if the shape is NULL so has touched nothing
+	if (!bounce.shape)//if the shape is NULL so has touched nothing
 		return (true);
 	else
 		return (false);
