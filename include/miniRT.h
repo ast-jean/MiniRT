@@ -26,11 +26,12 @@
 
 #define fp_scale 256 //fixed number definition: now at 0.00
 #define WIDTH	500 //Width of screen
-#define HEIGHT	400 //Height of screen
+#define HEIGHT	500 //Height of screen
 
 static mlx_image_t* img;
 
 typedef struct s_Vector3d t_Vector3d;
+typedef struct s_Vector2d t_Vector2d;
 typedef struct s_Ray_hit t_Ray_hit;
 typedef struct s_Ray t_Ray;
 
@@ -48,6 +49,8 @@ typedef struct s_Vars	// all of our values needed throught the program
 	int 		mouse_y;
 	t_shape		*selected;
 	char		*error_message;
+	int			i;
+
 } t_Vars;
 
 /*-------------------------Initialisation-------------------------*/
@@ -109,4 +112,6 @@ int32_t mix_colors(int32_t colorA, int32_t colorB, double ratio);
 double		deg2grad(double deg);
 uint32_t	clamp(uint32_t value, uint32_t min, uint32_t max);
 double		find_distance(t_Vector3d A, t_Vector3d B);
+bool		solveQuadratic(t_Vector3d abc, t_Vector2d *t, double *disc);
+
 #endif

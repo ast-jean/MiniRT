@@ -187,36 +187,36 @@ double Vector3d_distance(t_Vector3d point, t_Vector3d end_point)
 }
 
 
-// void draw_ray(t_Ray *ray, double x, double y, double distance)
-// {
-//     int i;
-//     int x2, y2;
-//     int color = 0xFFFFFF; // couleur du rayon (blanc)
+void draw_ray(t_Ray *ray, double x, double y, double distance)
+{
+    int i;
+    int x2, y2;
+    int color = 0xFFFFFF; // couleur du rayon (blanc)
 
-//     // On calcule les coordonnées du deuxième point du rayon
-//     x2 = x + (ray->direction.x * distance);
-//     y2 = y + (ray->direction.y * distance);
+    // On calcule les coordonnées du deuxième point du rayon
+    x2 = x + (ray->d.x * distance);
+    y2 = y + (ray->d.y * distance);
 
-//     // On vérifie que les coordonnées ne dépassent pas les limites de l'écran
-//     if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
-//         return;
-//     if (x2 < 0 || x2 >= WIDTH || y2 < 0 || y2 >= HEIGHT)
-//         return;
+    // On vérifie que les coordonnées ne dépassent pas les limites de l'écran
+    if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
+        return;
+    if (x2 < 0 || x2 >= WIDTH || y2 < 0 || y2 >= HEIGHT)
+        return;
 
-//     // On dessine une ligne entre les deux points en ajoutant un effet de profondeur
-//     for (i = 0; i < distance; i++)
-//     {
-//         double depth = remap(0.0, distance, i); // effet de profondeur
-//         int r = (color >> 16) & 0xFF;
-//         int g = (color >> 8) & 0xFF;
-//         int b = color & 0xFF;
-//         r = (int)(r * depth);
-//         g = (int)(g * depth);
-//         b = (int)(b * depth);
-//         int new_color = (r << 16) | (g << 8) | b;
-//         mlx_put_pixel(init_vars()->img, x + (ray->direction.x * i), y + (ray->direction.y * i), new_color);
-//     }
-// }
+    // On dessine une ligne entre les deux points en ajoutant un effet de profondeur
+    for (i = 0; i < distance; i++)
+    {
+        double depth = remap(0.0, distance, i); // effet de profondeur
+        int r = (color >> 16) & 0xFF;
+        int g = (color >> 8) & 0xFF;
+        int b = color & 0xFF;
+        r = (int)(r * depth);
+        g = (int)(g * depth);
+        b = (int)(b * depth);
+        int new_color = (r << 16) | (g << 8) | b;
+        mlx_put_pixel(init_vars()->img, x + (ray->d.x * i), y + (ray->d.y * i), new_color);
+    }
+}
 
 
 // void draw_ray(t_Ray *ray)

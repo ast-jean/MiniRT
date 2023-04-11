@@ -2,25 +2,7 @@
 #include <math.h>
 #include <time.h> //remove before sending project
 
-bool solveQuadratic(double a,double b, double c, double x0, double x1)//UNUSED
-{
-    double discr = b * b - 4 * a * c;
-    if (discr < 0) return false;
-    else if (discr == 0) x0 = x1 = - 0.5 * b / a;
-    else {
-        double q = (b > 0) ?
-            -0.5 * (b + sqrt(discr)) :
-            -0.5 * (b - sqrt(discr));
-        x0 = q / a;
-        x1 = c / q;
-    }
-    if (x0 > x1){
-		double tmp = x1;
-		x1 = x0;
-		x0 = tmp;
-	}
-    return true;
-}
+
 
 void 	ray_to_screen()
 {
@@ -40,6 +22,7 @@ void 	ray_to_screen()
 			// free(ray);
 		}
 	}
+	printf("i = %d\n", vars->i);
 	clock_t end_time = clock();												// illegal
 	double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC; //
 	printf("Render time: %f seconds\n", elapsed_time);						//
@@ -160,8 +143,10 @@ int32_t ray_tracing(const t_Ray ray) //returns a color
 //add antialiasing //optional
 
 //add ambiantlight
-
-
+	// light_is_visible(init_vars(), &hit);
+	// printf("light_is_visible = %d\n",light_is_visible(init_vars(), &hit));
+	if(light_is_visible(init_vars(), &hit))
+		init_vars()->i++;
 	color = ambient(color);
 	// free(hit.coord);
 		// (void) vars;
