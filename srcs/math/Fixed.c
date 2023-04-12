@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:25:43 by slavoie           #+#    #+#             */
-/*   Updated: 2023/03/31 18:29:42 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/04/12 15:04:34 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ t_Vector3d Point3d_to_Vector3d(t_3dPoint point)
 t_Fixed fp_init(double value)
 {
 	t_Fixed fp;
-	fp.value = value;
+	// fp.value = value;
+	set_value(&fp, value);
 	return (fp);
 }
 

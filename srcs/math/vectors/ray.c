@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:32:54 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/04/11 16:06:39 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/04/12 11:55:26 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ t_Ray bounce_light(t_Vars *vars, t_Ray_hit *hit)
 {
 	t_Ray light_ray;
 	t_Vector3d light_coor = Point3d_to_Vector3d(vars->light->coord);
+
+
 	light_ray = ray_init(hit->coord, Vector3d_norm(Vector3d_sub(hit->coord, light_coor)));
 	return (light_ray);
 }
@@ -57,18 +59,19 @@ bool	light_is_visible(t_Vars *vars, t_Ray_hit *hit)
 	double		distance = find_distance(hit->coord, lc);
 	t_Ray_hit	bounce = ray_trace(light_ray, distance);
 
-	if (hit->color == (uint32_t)0xFFC0CBFF) //debug
-	{
-		printf("rh.x=%f |rh.y=%f |rh.z=%f\n", hit->coord.x,hit->coord.y,hit->coord.z); 
-		printf("Dist Bef= %f\n", distance); //debug
-		if (bounce.shape)
-			printf("Shape= %s\n", bounce.shape->id); //debug
-		else
-			printf("Shape= Null\n"); //debug
+	// if (hit->color == (uint32_t)0xFFC0CBFF) //debug
+	// {
+	// 	printf("rh.x=%f |rh.y=%f |rh.z=%f\n", hit->coord.x,hit->coord.y,hit->coord.z); 
+	// 	printf("Dist Bef= %f\n", distance); //debug
+	// 	if (bounce.shape)
+	// 		printf("Shape= %s\n", bounce.shape->id); //debug
+	// 	else
+	// 		printf("Shape= Null\n"); //debug
 
-	}
+	// }
 	if (!bounce.shape)//if the shape is NULL so has touched nothing
 		return (true);
 	else
 		return (false);
 }
+
