@@ -177,6 +177,7 @@ int	main(int argc, char **argv)
 {
 	t_Vars	*vars = init_vars();
 	parse(argc, argv);
+	// print_objects();
 	if (!vars->error_message)
 	{
 		vars->mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);

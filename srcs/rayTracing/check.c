@@ -66,15 +66,15 @@ double	check_pl(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double dist)
 double	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh, double dist)
 {
 	// Calculer l'équation du rayon
-	t_Vector3d o = ray.o;//optional just write ray.o for each
-	t_Vector3d d = ray.d;//optional just write ray.d for each
+	// t_Vector3d o = ray.o;//optional just write ray.o for each
+	// t_Vector3d d = ray.d;//optional just write ray.d for each
 	t_Vector3d abc;
 	t_Vector2d t;
 
 	// Calculer les coefficients de l'équation quadratique
-	abc.x = (d.x * d.x) + (d.y * d.y);
-	abc.y = 2.0 * (o.x * d.x + o.y * d.y);
-	abc.z = o.x * o.x + o.y * o.y - s->radius.value * s->radius.value;
+	abc.x = (ray.d.x * ray.d.x) + (ray.d.y * ray.d.y);
+	abc.y = 2.0 * (ray.o.x * ray.d.x + ray.o.y * ray.d.y);
+	abc.z = ray.o.x * ray.o.x + ray.o.y * ray.o.y - to_double(s->radius) * to_double(s->radius);
 	// calculer le discriminant
 	double discriminant;
 
@@ -87,7 +87,7 @@ double	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh, double dist)
 	if (t.x > 0.0 && (t.y < 0.0 || t.x < t.y)) 
 	{
 		// Vérifier si l'intersection est dans la hauteur du cylindre
-		double z1 = o.z + t.x * d.z;
+		double z1 = ray.o.z + t.x * ray.d.z;
 		
 		if (z1 >= to_double(s->coord.z) - to_double(s->height) / 2.0 && z1 <= to_double(s->coord.z) + to_double(s->height )/ 2.0) 
 			distance = t.x;
@@ -97,7 +97,7 @@ double	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh, double dist)
 		if (t.y > 0.0 && (t.x < 0.0 || t.y < t.x)) 
 		{
 			// Vérifier si l'intersection est dans la hauteur du cylindre
-			double z2 = o.z + t.y * d.z;
+			double z2 = ray.o.z + t.y * ray.d.z;
 			
 			if (z2 >= to_double(s->coord.z) - to_double(s->height) / 2.0 && z2 <= to_double(s->coord.z) + to_double(s->height )/ 2.0)
 				distance = t.y;
@@ -112,7 +112,7 @@ double	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh, double dist)
 		rh->distance = distance;
 		rh->color = s->color;
 		rh->shape = (t_shape*)s;
-		rh->coord = Vector3d_add(o, Vector3d_mult(d, distance));
+		rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, distance));
 		return distance;
 	}
 	return dist;
