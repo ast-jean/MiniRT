@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:32:54 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/04/11 15:53:38 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/04/11 17:10:41 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ bool	light_is_visible(t_Vars *vars, t_Ray_hit *hit)
 	double		distance = find_distance(hit->coord, lc);
 	t_Ray_hit	bounce = ray_trace(light_ray, distance);
 
+	// if (ft_strcmp(hit->shape->id, "sp")) //sphere shading
+	// 	hit->color = shading_sp(hit->color, light_ray, *hit);
+
 	if (hit->color == (uint32_t)0xFFC0CBFF) //debug
 	{
 		printf("rh.x=%f |rh.y=%f |rh.z=%f\n", hit->coord.x,hit->coord.y,hit->coord.z); 
@@ -65,9 +68,8 @@ bool	light_is_visible(t_Vars *vars, t_Ray_hit *hit)
 			printf("Shape= %s\n", bounce.shape->id); //debug
 		else
 			printf("Shape= Null\n"); //debug
-
 	}
-	if (!bounce.shape)//if the shape is NULL so has touched nothing
+	if (!bounce.shape && !bounce.color)//if the shape is NULL so has touched nothing
 		return (true);
 	else
 		return (false);

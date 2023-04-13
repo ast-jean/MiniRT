@@ -100,6 +100,9 @@ void	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance);
 double	check_cy(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
 double	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
 double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
+/*---------------------------Shading-------------------------*/
+uint32_t shading_sp(uint32_t color, t_Ray ray, t_Ray_hit hit);
+// uint32_t shading(uint32_t color, t_Ray *ray, t_Ray_hit hit);
 
 /*---------------------------colors-------------------------*/
 double		remap(double a, double b, double t);

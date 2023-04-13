@@ -1,8 +1,8 @@
 #include "../../include/miniRT.h"
 
-int32_t shading_sp(int32_t color, const t_Ray *ray, t_Ray_hit hit){
-	t_Vector3d cc = ray->o;
-	t_Vector3d cd = ray->d;
+uint32_t shading_sp(uint32_t color, t_Ray ray, t_Ray_hit hit){
+	t_Vector3d cc = ray.o;
+	t_Vector3d cd = ray.d;
 	t_Vector3d sc = Point3d_to_Vector3d(hit.shape->coord);
 	
 
@@ -16,7 +16,15 @@ int32_t shading_sp(int32_t color, const t_Ray *ray, t_Ray_hit hit){
 		double x = sqrt((sr * sr) - (y * y));
 		double t1 = t + x;
 		c = remap( sc.y - sr, sc.y, t1);
-		color = brightness(color, c);
+		printf("c = %f", c - 1);
+		color = brightness(color, c - 1);
 	}
 	return color;
 }
+
+
+// uint32_t shading_sp(uint32_t color, t_Ray_hit hit)
+// {
+
+// 	return color;
+// }
