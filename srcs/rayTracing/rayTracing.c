@@ -70,6 +70,8 @@ uint32_t ray_tracing(const t_Ray ray) //returns a color
 	}
 	//color = shading(color, hit);
 
+	// if (light_is_visible(init_vars(), &hit))
+	// 	color = brightness(color, 0.5);
 
 //add reflection
 

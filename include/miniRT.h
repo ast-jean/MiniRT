@@ -80,7 +80,7 @@ uint8_t		valid_uint8(char *elem, int range);
 uint32_t	rgb_to_hex(char *elem);
 //debug.c
 void		print_objects();
-void draw_ray(t_Ray *ray, double x, double y, double distance);
+// void 		draw_ray(t_Ray *ray, double x, double y, double distance);
 void		error_exit(int code, char *str);
 
 /*----------------------------fixed------------------------------*/
