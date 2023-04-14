@@ -1,0 +1,36 @@
+{
+	leak property_copyAttributeValue
+	Memcheck:Leak
+	...
+	fun:property_copyAttributeValue
+}
+{
+	leak objc_initializeClassPair
+	Memcheck:Leak
+	...
+	fun:objc_initializeClassPair
+}
+{
+	leak attachCategories
+	Memcheck:Leak
+	...
+	fun:attachCategories
+}
+{
+	leak objc_msgSendSuper2
+	Memcheck:Leak
+	...
+	fun:objc_msgSendSuper2
+}
+{
+	leak objc_msgLookup_fpret
+	Memcheck:Leak
+	...
+	fun:objc_msgLookup_fpret
+}
+{
+	leak glfw
+	Memcheck:Leak
+	...
+	obj:/usr/lib
+}

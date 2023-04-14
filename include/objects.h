@@ -30,6 +30,7 @@ typedef struct s_rgba{
 typedef struct s_shape
 {
 	char 		*id;
+	int			index;
 	t_Fixed		light_ratio; //from 0.0 to 1.0
 	uint32_t	color; //RGB from 0 to 255
 	t_3dPoint	orientation; //from -1 to 1 for each xyz

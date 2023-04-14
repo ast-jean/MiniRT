@@ -114,11 +114,11 @@ fclean:	clean
 	@echo "$(GREEN)${BOLD}🚮 Exectuable deleted 🚮${END}"
 
 leak:
-	leaks --atExit -- ./$(NAME)
+	leaks -list -fullContent --atExit -- ./$(NAME) test.rt
 
 valgrind:
-	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
-
+	valgrind --leak-check=full --suppressions=supp.txt  --show-leak-kinds=reachable -- ./$(NAME) test.rt
+#	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
 re: fclean all
 
 rew: 

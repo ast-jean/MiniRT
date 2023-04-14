@@ -45,3 +45,10 @@ double remap(double a, double b, double t)
 {
 	return ((t-a)/(b-a));
 }
+uint32_t ambient(uint32_t color)
+{
+	uint32_t ac = init_vars()->ambient_light->color;
+	color = brightness(color, to_double(init_vars()->ambient_light->light_ratio));
+	color = mix_colors(color, ac, to_double(init_vars()->ambient_light->light_ratio));
+	return (color);
+}

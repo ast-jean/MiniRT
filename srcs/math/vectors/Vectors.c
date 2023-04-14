@@ -6,11 +6,12 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:34:27 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/04/10 13:46:20 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/04/13 16:28:01 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/Vectors.h"
+
 
 t_Vector3d Vector3d_init(double x, double y, double z){
     t_Vector3d v;

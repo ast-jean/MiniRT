@@ -3,7 +3,6 @@
 #include <time.h> //remove before sending project
 
 
-
 void 	ray_to_screen()
 {
 	t_Vars *vars = init_vars();
@@ -36,46 +35,43 @@ t_Vector3d shape_normal(const t_shape *shape, const t_Vector3d point)
 }
 
 
-t_Ray_hit ray_trace(const t_Ray ray, double dist)
+t_Ray_hit ray_trace(const t_Ray ray, double dist, t_shape *shape)
 {
-	t_Ray_hit ray_hit;
+	t_Ray_hit ray_hit; // TOFIX:  RAY.HIT only has a distance
 	double distance = dist;
+	if (!shape)
+		ray_checkhit(ray, &ray_hit, &distance, NULL);//initialise rayhit Null
+	else
+		ray_checkhit(ray, &ray_hit, &distance, shape);//initialise rayhit shape hit before
 
 	ray_hit.distance = dist;
-	ray_checkhit(ray, &ray_hit, &distance);
 	ray_hit.distance = distance;
 
 	return (ray_hit);
 }
 
-uint32_t ambient(uint32_t color){
-	uint32_t ac = init_vars()->ambient_light->color;
-	color = brightness(color, to_double(init_vars()->ambient_light->light_ratio));
-	color = mix_colors(color, ac, to_double(init_vars()->ambient_light->light_ratio));
-	return (color);
-}
 
 uint32_t ray_tracing(const t_Ray ray) //returns a color
 {
 	uint32_t color;
-	t_Ray_hit hit = ray_trace(ray, INFINITY);
+	t_Ray_hit hit = ray_trace(ray, INFINITY, NULL); //first draw shape
 	if (!hit.color) 
 		return BLACK;
 	else
 		color = hit.color;
 //add light
 	if (light_is_visible(init_vars(), &hit)){
-		color = hit.color;
+		// color = hit.color;
 		// color = brightness(color, 0.5);
+		color = hit.color;
 	}
 	//color = shading(color, hit);
 
 	// if (light_is_visible(init_vars(), &hit))
 	// 	color = brightness(color, 0.5);
-
 //add reflection
 
-//add ambiantlight
+// add ambiantlight
 	// color = ambient(color);
 	return (color);
 }

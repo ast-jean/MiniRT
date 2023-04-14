@@ -116,24 +116,26 @@ double	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh, double dist)
 		return distance;
 	}
 	return dist;
-
 }
 
-
-void	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance){
+void	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o){
 	t_Vars *vars = init_vars();
 	t_node *aff = vars->objs->first;
 	rh->color = 0;
 	rh->shape = NULL;
+
 	while(aff)
 	{
 		t_shape *s = aff->content;
-		if (ft_strcmp(s->id, "sp"))
-			*distance = check_sp(s, ray, rh, *distance);
-		else if (ft_strcmp(s->id, "cy"))
-			*distance = check_cy(s, ray, rh, *distance);
-		else if (ft_strcmp(s->id, "pl"))
-			*distance = check_pl(s, ray, rh, *distance);
+		if (!shape_o || s->index != shape_o->index)
+		{
+			if (ft_strcmp(s->id, "sp"))
+				*distance = check_sp(s, ray, rh, *distance);
+			else if (ft_strcmp(s->id, "cy"))
+				*distance = check_cy(s, ray, rh, *distance);
+			else if (ft_strcmp(s->id, "pl"))
+				*distance = check_pl(s, ray, rh, *distance);
+		}
 		aff = aff->next;
 	}
 	return ;

@@ -63,6 +63,7 @@ t_Vars	*init_vars()
 		vars->selected = NULL;
 		vars->distance_to_screen = 0;
 		vars->i = 0;
+		vars->nbr_obj = 0;
 	}
 	return (vars);
 }
@@ -93,7 +94,7 @@ void  mouse_hook(mouse_key_t button, action_t action, modifier_key_t mods, void*
 	{
 		mlx_get_mouse_pos(vars->mlx, &vars->mouse_x, &vars->mouse_y);
 		ray = ray_init_to_screen(vars, vars->mouse_x, vars->mouse_y);
-		hit = ray_trace(ray, 999999.9);
+		hit = ray_trace(ray, 999999.9, NULL);
 		if (hit.shape)
 			vars->selected = hit.shape;
 		// free(ray);
