@@ -9,9 +9,11 @@ SRCS_FILES 		=	miniRT.c \
 					rayTracing/colors.c \
 					rayTracing/shading.c \
 					parsing/parsing.c \
+					parsing/converter.c \
 					parsing/objects.c \
 					parsing/colors.c \
 					parsing/scene.c \
+					parsing/utils.c \
 					parsing/debug.c \
 					math/Fixed.c \
 					math/vectors/Vectors.c \
