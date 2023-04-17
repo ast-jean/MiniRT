@@ -4,17 +4,20 @@ NAME 	= miniRT
 BONUS 	= miniRT_bonus
 
 SRCS_FILES 		=	miniRT.c \
+					rayTracing/rayTracing.c \
+					rayTracing/check.c \
+					rayTracing/colors.c \
+					rayTracing/shading.c \
 					parsing/parsing.c \
 					parsing/objects.c \
 					parsing/colors.c \
 					parsing/scene.c \
 					parsing/debug.c \
 					math/Fixed.c \
-					# rayTracing/check.c \
-					# rayTracing/rayTracing.c \
-					# math/vectors/Vectors.c \
-					# math/vectors/ray.c \
-					# math/vectors/Vectors_ops.c
+					math/vectors/Vectors.c \
+					math/vectors/ray.c \
+					math/vectors/Vectors_ops.c \
+					math/math_other.c
 
 INCLUDE_FILES	= 	miniRT.h \
 					objects.h \
@@ -111,11 +114,11 @@ fclean:	clean
 	@echo "$(GREEN)${BOLD}🚮 Exectuable deleted 🚮${END}"
 
 leak:
-	leaks --atExit -- ./$(NAME)
+	leaks -list -fullContent --atExit -- ./$(NAME) test.rt
 
 valgrind:
-	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
-
+	valgrind --leak-check=full --suppressions=supp.txt  --show-leak-kinds=reachable -- ./$(NAME) test.rt
+#	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
 re: fclean all
 
 rew: 

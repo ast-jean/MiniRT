@@ -25,14 +25,15 @@
 #define BLUE	0x0000FFFF
 
 #define fp_scale 256 //fixed number definition: now at 0.00
-#define WIDTH	1000 //Width of screen
-#define HEIGHT	1000 //Height of screen
+#define WIDTH	500 //Width of screen
+#define HEIGHT	500 //Height of screen
 
 // static mlx_image_t* img;
 
-// typedef struct s_Vector3d t_Vector3d;
-// typedef struct s_Ray_hit t_Ray_hit;
-// typedef struct s_Ray t_Ray;
+typedef struct s_Vector3d t_Vector3d;
+typedef struct s_Vector2d t_Vector2d;
+typedef struct s_Ray_hit t_Ray_hit;
+typedef struct s_Ray t_Ray;
 
 
 typedef struct s_Vars	// all of our values needed throught the program
@@ -48,9 +49,9 @@ typedef struct s_Vars	// all of our values needed throught the program
 	int 		mouse_y;
 	// t_shape		*selected;
 	char		*error_message;
+	int			i;
+	int			nbr_obj;
 } t_Vars;
-
-
 
 /*-------------------------Initialisation-------------------------*/
 //miniRT.c
@@ -79,23 +80,43 @@ uint8_t		valid_uint8(char *elem, int range);
 uint32_t	rgb_to_hex(char *elem);
 //debug.c
 void		print_objects();
+// void 		draw_ray(t_Ray *ray, double x, double y, double distance);
 void		error_exit(int code, char *str);
-/*---------------------------------------------------------------*/
+
 /*----------------------------fixed------------------------------*/
 void		set_value(t_Fixed *fp, double value);
 double		to_double(t_Fixed fp);
 int			to_int(t_Fixed fp);
+t_Fixed		fp_init(double value);
 t_Vector3d	Point3d_to_Vector3d(t_3dPoint point);
-/*---------------------------------------------------------------*/
-/*---------------------------ray_tracing-------------------------*/
+double		fp_cal(char operand, int num_args, ...);
+/*-------------------------ray_tracing-------------------------*/
 // ray_tracing.c
 void		ray_to_screen();
-int32_t		ray_tracing(const t_Ray *ray, t_Vars *vars);
-t_Ray_hit	ray_trace(const t_Ray *ray);
+uint32_t	ray_tracing(const t_Ray ray);
+t_Ray_hit	ray_trace(const t_Ray ray, double dist, t_shape *shape);
 // check.c
-void	ray_checkhit(const t_Ray *ray, t_Ray_hit *rh, double *distance);
-bool	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh);
-bool	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit *rh);
-bool	check_sp(const t_shape *s,const t_Ray *ray, t_Ray_hit *rh);
+void	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o);
+double	check_cy(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
+double	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
+double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
+/*---------------------------Shading-------------------------*/
+uint32_t shading_sp(uint32_t color, t_Ray ray, t_Ray_hit hit);
+// uint32_t shading(uint32_t color, t_Ray *ray, t_Ray_hit hit);
+
+/*---------------------------colors-------------------------*/
+double		remap(double a, double b, double t);
+uint32_t	brightness(uint32_t color, double scale);
+t_rgba		separate_color_rgba(uint32_t color);
+uint32_t	mix_colors(uint32_t colorA, uint32_t colorB, double ratio);
+uint32_t	ambient(uint32_t color);
+
+/*---------------------------Math-------------------------*/
+//math_other.c
+double		deg2grad(double deg);
+uint32_t	clamp(uint32_t value, uint32_t min, uint32_t max);
+double		clampd(double value, double min, double max);
+double		find_distance(t_Vector3d A, t_Vector3d B);
+bool		solveQuadratic(t_Vector3d abc, t_Vector2d *t, double *disc);
 
 #endif

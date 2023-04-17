@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Fixed.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:25:43 by slavoie           #+#    #+#             */
-/*   Updated: 2023/03/23 16:15:12 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:04:34 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/miniRT.h"
-
-/*
-	Initialise le fixed_point à la valeur du "double" passées en paramètre et
-	le scale 
-
-	slavoie
-*/
-// void	init_fp(t_Fixed *fp, double start_value) // TOFIX 
-// {
-// 	fp->value = start_value * fixed_scale;
-// }
 
 t_Vector3d Point3d_to_Vector3d(t_3dPoint point)
 {
@@ -33,9 +22,17 @@ t_Vector3d Point3d_to_Vector3d(t_3dPoint point)
 	return (vec);
 }
 
+t_Fixed fp_init(double value)
+{
+	t_Fixed fp;
+	// fp.value = value;
+	set_value(&fp, value);
+	return (fp);
+}
+
 void	set_value(t_Fixed *fp, double value)
 {
-		fp->value = value * fp_scale;
+	fp->value = value * fp_scale;
 }
 
 int	to_int(t_Fixed fp)
