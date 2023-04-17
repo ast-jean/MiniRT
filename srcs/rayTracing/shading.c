@@ -1,104 +1,64 @@
 #include "../../include/miniRT.h"
 #include <math.h>
 
+
+// # The material parameters are constants independant of the object for now
+// ambient = 0.4 * Vec3(0.4, 0.4, 1)
+// k_ambient = 1
+// k_diffuse = 2
+// k_specular = 10
+// n_specular = 50
+// https://github.com/nesvoboda/minirt/blob/master/srcs/shading.c
 uint32_t shading_sp(uint32_t color, t_Ray ray, t_Ray_hit hit){
-	// t_Vector3d cc = ray.o;
-	// t_Vector3d cd = Vector3d_mult(Vector3d_norm(ray.d), -1);
-	// t_Vector3d sc = Point3d_to_Vector3d(hit.shape->coord);
+	t_shape *light = init_vars()->light;
+
+	// double index_diffuse = 2;
+	double index_specular = 10;
+	double n_specular = 50;
+	t_Vector3d s_normal = shape_normal(hit.shape, Point3d_to_Vector3d(light->coord));
+	t_Vector3d l = Vector3d_sub(Point3d_to_Vector3d(light->coord), hit.coord);
+	t_Vector3d r = Vector3d_norm(Vector3d_sub(Vector3d_mult(s_normal,2), l));
+
+	(void)ray;
+
+	// uint32_t ambient_color = init_vars()->ambient_light->color;
+	// uint32_t ambient_res = brightness(mix_colors(color, ambient_color), to_double(init_vars()->ambient_light->light_ratio));
 	
+	//ambient
+	color = ambient(color);
+	color = brightness(color, Vector3d_dot(s_normal, Vector3d_norm(l)));
+	// double diffuse_res = index_diffuse  * max(Vector3d_dot(s_normal, Vector3d_norm(l)), 0) * to_double(light->light_ratio);
+	double specular = index_specular * pow(max(Vector3d_dot(r, Vector3d_norm(Vector3d_mult(hit.coord, -1))), 0), n_specular) *  to_double(light->light_ratio);
 
-	// double sr = to_double(hit.shape->radius);
-	// double t = Vector3d_dot(Vector3d_sub(sc, cc), cd)/ Vector3d_dot(cd, cd) ;
-	// double c = 0;
-	// t_Vector3d p = Vector3d_add(cc, Vector3d_mult(cd, t));
-	// double y = Vector3d_length(Vector3d_sub(sc,p));
-	// if(y < sr)
-	// {
-	// 	double x = sqrt((sr * sr) - (y * y));
-	// 	double t1 = t - x;
-	// 	c = remap( sc.z, sc.z - sr, t1);
-	// 	// c = clampd(c, 0, 1);
-	// 	printf("Aft c = %f\n", c);
-	// 	color = brightness(color, c);
-	// }
-	// return color;
-  
-	// //Shape Coords(sc)
-	// t_Vector3d sc = Point3d_to_Vector3d(hit.shape->coord);
+if (hit.color == 0xFFC0CBFF){
 
-	// //Light Coords(lc) 
-	// t_Vector3d lc = hit.coord;
+	printf("\nInfo\n");
+	// printf("ambient_res = %f\n", ambient_res);
+	printf("diffuse_res = %f\n", Vector3d_dot(s_normal, Vector3d_norm(l)));
+	printf("specular = %f\n", specular);
+}
 
-	// //Light Direction(ld)
-	// t_Vector3d ld = ray_direction(sc,lc);
+		// c = mul(asset.color, i_ambient + i_diffuse + i_specular)
 
-	// //Light color(lcolor)
-	// uint32_t lcolor = init_vars()->light->color;
-
-	// //diffuse
-	// t_Vector3d norm = Vector3d_init(0.0, 0.0, 1.0);
-    // double diffuse = fmax(Vector3d_dot(ld, norm),0.0) * mix_colors(color, lcolor, 0.5);
-	// //Specular
-	// //Camera Coords(cc)
-	// t_Vector3d cc = Point3d_to_Vector3d(init_vars()->camera->coord);
-	// t_Vector3d point =  Vector3d_add(Vector3d_init(0.0, 0.0, 0.0), Vector3d_mult(norm,5.0));
-	
-	// t_Vector3d toEye = Vector3d_norm(Vector3d_sub(cc, point));
-	// t_Vector3d reflectLight = Vector3d_norm(reflect(ld, norm));
-	// float specPower = 30.0;
-	// // t_Vector3d specMaterial = Vector3d_init(1.0, 1.0, 0.75);
-
-	// // uint32_t specColor = lc * specMaterial * pow(fmax(dot(toEye, reflectLight), 0.0), specPower);
-	// uint32_t specColor = lcolor * pow(fmax(Vector3d_dot(toEye, reflectLight), 0.0), specPower);
-	
-	// // color = + diffuse + specColor;
-	// color = ambient(hit.color) + diffuse + specColor;
-
-	color = brightness(color, 1.2);
+	// color = 
 	return (color);
 }
 
-/*
-     	vec3 lightDirection = vec3(1.0, -1.0, 0.0);
-        vec3 lightColor = vec3(1, 1, 1);
-
-       lightDirection = normalize(lightDirection);
-        
-        //ambient
-        vec3 ambient = color * 0.1;
-
-        //diffuse
-        vec3 diffuse = max(dot(lightDirection, norm),0.0) * (color * lightColor);
-
-        //specular
-        vec3 eyePos = vec3(0.0,0.0,-1.0);
-        vec3 point = vec3(0.0, 0.0, 0.0) + 5.0 * norm;
-        
-        vec3 toEye = normalize(eyePos - point);
-        vec3 reflectLight = normalize(reflect(lightDirection, norm));
-        float specPower = 30.0;
-        vec3 specMaterial = vec3(1.0, 1.0, 0.75);
-
-        vec3 specColor = lightColor * specMaterial * pow(max(dot(toEye, reflectLight), 0.0), specPower);
-        
-        color = ambient + diffuse + specColor;*/
 
 
+// def render_pixel(u, v, camera, light, asset, file):
+// 	c = Vec3(0, 0, 0)
+// 	ray = camera.shoot_ray(u, v)
+// 	intersect, i = asset.intersect(ray)
+// 	if intersect:
+// 		n = asset.normal(i)
+// 		l = light.pos - i
+// 		r = normalize(2 * n - l)
 
+// 		l_intensity = light.strength(i) * light.color
+// 		i_ambient = k_ambient * ambient
+// 		i_diffuse = k_diffuse * max(dot(n, normalize(l)), 0) * l_intensity
+// 		i_specular = k_specular * pow(max(dot(r, normalize(-1 * i)), 0), n_specular) * l_intensity
 
-//ro 	ray origin 
-//rd 	ray direction
-//col 	color
-//s 	center sphere
-//r 	radius
-//t		variable
-//p		ro + rd * t
-
-
-
-
-// uint32_t shading_sp(uint32_t color, t_Ray_hit hit)
-// {
-
-// 	return color;
-// }
+// 		c = mul(asset.color, i_ambient + i_diffuse + i_specular)
+// 	file.write("{} {} {}\n".format(floatto8bit(c.x), floatto8bit(c.y), floatto8bit(c.z)))

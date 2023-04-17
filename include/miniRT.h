@@ -95,11 +95,13 @@ double		fp_cal(char operand, int num_args, ...);
 void		ray_to_screen();
 uint32_t	ray_tracing(const t_Ray ray);
 t_Ray_hit	ray_trace(const t_Ray ray, double dist, t_shape *shape);
+t_Vector3d	shape_normal(const t_shape *shape, const t_Vector3d point);
 // check.c
 void	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o);
 double	check_cy(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
 double	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
 double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
+
 /*---------------------------Shading-------------------------*/
 uint32_t shading_sp(uint32_t color, t_Ray ray, t_Ray_hit hit);
 // uint32_t shading(uint32_t color, t_Ray *ray, t_Ray_hit hit);
@@ -118,5 +120,5 @@ uint32_t	clamp(uint32_t value, uint32_t min, uint32_t max);
 double		clampd(double value, double min, double max);
 double		find_distance(t_Vector3d A, t_Vector3d B);
 bool		solveQuadratic(t_Vector3d abc, t_Vector2d *t, double *disc);
-
+double		max(double value1, double value2);
 #endif

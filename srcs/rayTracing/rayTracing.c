@@ -20,7 +20,6 @@ void 	ray_to_screen()
 			mlx_put_pixel(img, x, y, ray_tracing(ray));
 		}
 	}
-	printf("i = %d\n", vars->i);
 	clock_t end_time = clock();												// illegal
 	double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC; //
 	printf("Render time: %f seconds\n", elapsed_time);						//
