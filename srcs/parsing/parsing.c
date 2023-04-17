@@ -43,17 +43,6 @@ void	split(char *file)
 	close(fd);
 }
 
-void	free_split(char **args)
-{
-	int	i = 0;
-
-	if (args)
-	while (args[i])
-		free(args[i++]);
-	if (args)
-		free(args);
-}
-
 void	valid_element(char **elem)
 {
 	t_Vars *vars = init_vars();
@@ -70,30 +59,6 @@ void	valid_element(char **elem)
 	else if (ft_strcmp(elem[0], "cy"))
 		dlist_add_back(vars->objs, object_cy(elem, vars));
 	else if (!ft_strcmp(elem[0], "#"))
-		error_exit(2, ft_strjoin("Invalid element: ", elem[0]));
+		error_exit(4, elem[0]);
 	free_split(elem);
-}
-
-t_Fixed	str_to_fixed(char *elem)
-{
-	t_Fixed f;
-	// char **part = ft_split(elem, '.');
-	// f.entier = ft_atoi(part[0]);
-	// if (part[1])
-	// 	f.decimal = ft_atoi(part[1]);
-	// else
-	// 	f.decimal = 0;
-	set_value(&f, atof(elem));
-	return (f);
-}
-
-t_3dPoint str_to_3D(char *elem)
-{
-	t_3dPoint p;
-	char **coord = ft_split(elem, ',');
-	p.x = str_to_fixed(coord[0]);
-	p.y = str_to_fixed(coord[1]);
-	p.z = str_to_fixed(coord[2]);
-	free_split(coord);
-	return (p);
 }
