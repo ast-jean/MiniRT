@@ -172,7 +172,7 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 		ray_to_screen();
 	}
 
-// }
+}
 
 int	main(int argc, char **argv)
 {
