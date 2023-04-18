@@ -40,38 +40,4 @@ t_Ray	bounce_light(t_Vars *vars, t_Ray_hit *hit)
 	return (light_ray);
 }
 
-bool	light_is_visible(t_Vars *vars, t_Ray_hit *hit)
-{
-	t_Ray		light_ray = bounce_light(vars, hit);
-	t_Vector3d	lc = Point3d_to_Vector3d(vars->light->coord);
-	double		distance = find_distance(hit->coord, lc);
-	t_Ray_hit	bounce = ray_trace(light_ray, distance, hit->shape);
-
-	//put in shading function in shading.c
-	if (ft_strcmp(hit->shape->id, "sp"))
-	{
-		light_ray.o = lc;
-		hit->color = shading_sp(hit->color, light_ray, *hit);
-	}
-	// if (ft_strcmp(hit->shape->id, "pl"))
-	// 		hit->color = shading_pl();
-	// if (ft_strcmp(hit->shape->id, "cy"))
-	// 		hit->color = shading_cy();
-
-
-
-	// if (hit->color == (uint32_t)0xFFC0CBFF) //debug
-	// {
-	// 	printf("rh.x=%f |rh.y=%f |rh.z=%f\n", hit->coord.x,hit->coord.y,hit->coord.z); 
-	// 	printf("Dist Bef= %f\n", distance); //debug
-	// 	if (bounce.shape)
-	// 		printf("Shape= %s\n", bounce.shape->id); //debug
-	// 	else
-	// 		printf("Shape= Null\n"); //debug
-	// }
-	if (!bounce.shape)//if the shape is NULL so has touched nothing
-		return (true);
-	else
-		return (false);
-}
 

@@ -1,0 +1,31 @@
+{
+    "files.associations": {
+        "minirt.h": "c",
+        "algorithm": "c",
+        "vectors.h": "c",
+        "__node_handle": "c",
+        "iterator": "c",
+        "complex": "c",
+        "__hash_table": "c",
+        "__mutex_base": "c",
+        "__split_buffer": "c",
+        "__threading_support": "c",
+        "__undef_macros": "c",
+        "bit": "c",
+        "chrono": "c",
+        "cmath": "c",
+        "functional": "c",
+        "memory_resource": "c",
+        "istream": "c",
+        "limits": "c",
+        "locale": "c",
+        "memory": "c",
+        "mutex": "c",
+        "ratio": "c",
+        "sstream": "c",
+        "string": "c",
+        "string_view": "c",
+        "vector": "c"
+    },
+    "cmake.sourceDirectory": "${workspaceFolder}/include/MLX42"
+}

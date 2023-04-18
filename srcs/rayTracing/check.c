@@ -104,23 +104,28 @@ double	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh, double dist)
 	return dist;
 }
 
-void	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o)
+bool	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o)
 {
 	t_node *aff = init_vars()->objs->first;
+	double dist = *distance;
 
 	while(aff)
 	{
 		t_shape *s = aff->content;
-		if (!shape_o || s->index != shape_o->index)
-		{
+		// if (!shape_o || s->index != shape_o->index) //if the object is not itself
+		// {
+			(void)shape_o;
 			if (ft_strcmp(s->id, "cy"))
 				*distance = check_cy(s, ray, rh, *distance);
 			else if (ft_strcmp(s->id, "pl"))
 				*distance = check_pl(s, ray, rh, *distance);
 			else if (ft_strcmp(s->id, "sp"))
 				*distance = check_sp(s, ray, rh, *distance);
-		}
+		// }
 		aff = aff->next;
 	}
-	return ;
+	if (*distance == dist) 
+		return (false); //if the distance is the same it has touch nothing
+	else
+		return (true);
 }

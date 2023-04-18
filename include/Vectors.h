@@ -27,6 +27,8 @@ typedef struct s_Ray_hit{
 	uint32_t	color;
 	t_shape		*shape;
 	t_Vector3d	coord;
+	t_Vector3d	normal;
+	double		coeff;
 } t_Ray_hit;
 
 
