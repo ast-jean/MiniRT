@@ -14,12 +14,12 @@ t_Vector3d	find_normal(t_Ray_hit hit)
 {
 	if (hit.shape)
 	{
-	if (ft_strcmp(hit.shape->id, "sp"))
-		return (Vector3d_norm(Vector3d_sub(hit.coord, Point3d_to_Vector3d(hit.shape->coord))));
-	if (ft_strcmp(hit.shape->id, "pl"))
-		return (Point3d_to_Vector3d(hit.shape->orientation));
-	// if (ft_strcmp(hit.shape->id, "cy"))
-		// return (/*cylinder normal*/);
+		if (ft_strcmp(hit.shape->id, "sp"))
+			return (Vector3d_norm(Vector3d_sub(hit.coord, Point3d_to_Vector3d(hit.shape->coord))));
+		if (ft_strcmp(hit.shape->id, "pl"))
+			return (Point3d_to_Vector3d(hit.shape->orientation));
+		// if (ft_strcmp(hit.shape->id, "cy"))
+			// return (/*cylinder normal*/);
 	}
 	return(Vector3d_init(0,0,0));
 }

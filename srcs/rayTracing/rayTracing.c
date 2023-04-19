@@ -59,7 +59,7 @@ uint32_t ray_tracing(const t_Ray ray) //returns a color
 	else
 		color = hit.color;
 //add shading
-	color = rgba_to_int32_t(shading(&hit));
+	// color = rgba_to_int32_t(shading(&hit));
 //add reflection
 
 // add ambiantlight
