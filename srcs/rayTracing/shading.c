@@ -1,9 +1,11 @@
 #include "../../include/miniRT.h"
 #include <math.h>
 
+
 uint32_t shading_sp(uint32_t color, t_Ray ray, t_Ray_hit hit){
 	(void)hit;
 	(void)ray;
+
 	// t_Vector3d cc = ray.o;
 	// t_Vector3d cd = Vector3d_mult(Vector3d_norm(ray.d), -1);
 	// t_Vector3d sc = Point3d_to_Vector3d(hit.shape->coord);
