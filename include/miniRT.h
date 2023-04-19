@@ -62,10 +62,7 @@ void	free_vars(t_Vars *vars);
 void		parse(int argc, char **argv);
 void		valid_file(char *file);
 void		split(char *file);
-void		free_split(char **args);
 void		valid_element(char **elem);
-t_Fixed		str_to_fixed(char *elem);
-t_3dPoint	str_to_3D(char *elem);
 //scene.c
 void		object_A(char **elem, t_Vars *vars);
 void		object_C(char **elem, t_Vars *vars);

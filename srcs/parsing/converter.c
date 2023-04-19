@@ -3,7 +3,6 @@
 t_Fixed	str_to_fixed(char *elem)
 {
 	t_Fixed f;
-
 	set_value(&f, atod(elem));
 	return (f);
 }

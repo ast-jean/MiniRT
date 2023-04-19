@@ -40,3 +40,4 @@ t_shape *object_cy(char **elem, t_Vars *vars)
 		error_exit(2, "Cylinder (cy): ");
 	return (S);
 }
+

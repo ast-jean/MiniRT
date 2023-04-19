@@ -49,7 +49,6 @@ void	object_L(char **elem, t_Vars *vars)
 		error_exit(2, "Light (L): ");
 }
 
-
 t_Fixed	parse_light_ratio(char *elem)
 {
 	t_Fixed f;
