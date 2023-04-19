@@ -33,7 +33,8 @@ t_shape *object_cy(char **elem, t_Vars *vars)
 	S->index = vars->nbr_obj++; 
     S->coord = str_to_3D(elem[1]);
 	S->orientation = str_to_3D(elem[2]);
-	S->radius = fp_init(atof(elem[2])/2);
+	S->radius = fp_init(atof(elem[3])/2);
+	printf("Cylinder radius = %f\n", to_double(S->radius));
 	S->height = str_to_fixed(elem[4]);
 	S->color = rgb_to_hex(elem[5]);
 	if(vars->error_message)
