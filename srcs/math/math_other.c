@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:33:32 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/04/13 11:30:39 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/04/18 12:03:41 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ double	clampd(double value, double min, double max)
     return value;
 }
 
+double max(double value1, double value2)
+{
+    if(value1 > value2)
+        return value1;
+    else
+        return value2;
+}
 
 //find distance between 2 coords
 double	find_distance(t_Vector3d A, t_Vector3d B)
@@ -47,14 +54,14 @@ double	find_distance(t_Vector3d A, t_Vector3d B)
 bool solveQuadratic(t_Vector3d abc, t_Vector2d *t, double *discr)
 {
     *discr = pow(abc.y, 2) - 4 * abc.x * abc.z;
-    if (*discr < 0) 
+    if (*discr < 0)
         return false;
     else if (discr == 0) 
         t->x = t->y = - 0.5 * abc.y / abc.x;
     else 
     {
         double q = (abc.y > 0) ?
-            -0.5 * (abc.y + sqrt(*discr)) :
+            -0.5 * (abc.y + sqrt(*discr)):
             -0.5 * (abc.y - sqrt(*discr));
         t->x = q / abc.x;
         t->y = abc.z / q;

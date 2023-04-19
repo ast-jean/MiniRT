@@ -1,107 +1,63 @@
 #include "../../include/miniRT.h"
 #include <math.h>
 
-uint32_t shading_sp(uint32_t color, t_Ray ray, t_Ray_hit hit)
+
+// # The material parameters are constants independant of the object for now
+// ambient = 0.4 * Vec3(0.4, 0.4, 1)
+// k_ambient = 1
+// k_diffuse = 2
+// k_specular = 10
+// n_specular = 50
+// https://github.com/nesvoboda/minirt/blob/master/srcs/shading.c
+
+t_Vector3d	find_normal(t_Ray_hit hit)
 {
-	(void) ray;
-	(void) hit;
-	// t_Vector3d cc = ray.o;
-	// t_Vector3d cd = Vector3d_mult(Vector3d_norm(ray.d), -1);
-	// t_Vector3d sc = Point3d_to_Vector3d(hit.shape->coord);
-	
+	if (hit.shape)
+	{
+		if (ft_strcmp(hit.shape->id, "sp"))
+			return (Vector3d_norm(Vector3d_sub(hit.coord, Point3d_to_Vector3d(hit.shape->coord))));
+		if (ft_strcmp(hit.shape->id, "pl"))
+			return (Point3d_to_Vector3d(hit.shape->orientation));
+		// if (ft_strcmp(hit.shape->id, "cy"))
+			// return (/*cylinder normal*/);
+	}
+	return(Vector3d_init(0,0,0));
+}
 
-	// double sr = to_double(hit.shape->radius);
-	// double t = Vector3d_dot(Vector3d_sub(sc, cc), cd)/ Vector3d_dot(cd, cd) ;
-	// double c = 0;
-	// t_Vector3d p = Vector3d_add(cc, Vector3d_mult(cd, t));
-	// double y = Vector3d_length(Vector3d_sub(sc,p));
-	// if(y < sr)
-	// {
-	// 	double x = sqrt((sr * sr) - (y * y));
-	// 	double t1 = t - x;
-	// 	c = remap( sc.z, sc.z - sr, t1);
-	// 	// c = clampd(c, 0, 1);
-	// 	printf("Aft c = %f\n", c);
-	// 	color = brightness(color, c);
-	// }
-	// return color;
-  
-	// //Shape Coords(sc)
-	// t_Vector3d sc = Point3d_to_Vector3d(hit.shape->coord);
+t_rgba shading_obj(t_Ray ray, t_Ray_hit *hit)
+{
+	t_rgba	color = separate_color_rgba(0); //initialize color
+	t_rgba	color_to_add;
 
-	// //Light Coords(lc) 
-	// t_Vector3d lc = hit.coord;
+	hit->normal = find_normal(*hit);
+	// normal_sp(hit->coord, *hit->shape); //only difference between all shading objects
+	if (Vector3d_dot(ray.d, hit->normal) > 0)
+	{
+		// hit->normal  = Vector3d_sub(Vector3d_init(0,0,0),  Vector3d_mult(hit->normal, 1));
+		hit->normal =  Vector3d_mult(hit->normal, -1); //same has other
+		hit->coeff = fmax(0, Vector3d_dot(hit->coord, ray.d));
+	}
+	// while(lights) throught all linked listed lights if we add multiple lights bonus
+	color_to_add = mix_colors_light(*hit, ray);
+	color = rgba_add(color, color_to_add);
 
-	// //Light Direction(ld)
-	// t_Vector3d ld = ray_direction(sc,lc);
-
-	// //Light color(lcolor)
-	// uint32_t lcolor = init_vars()->light->color;
-
-	// //diffuse
-	// t_Vector3d norm = Vector3d_init(0.0, 0.0, 1.0);
-    // double diffuse = fmax(Vector3d_dot(ld, norm),0.0) * mix_colors(color, lcolor, 0.5);
-	// //Specular
-	// //Camera Coords(cc)
-	// t_Vector3d cc = Point3d_to_Vector3d(init_vars()->camera->coord);
-	// t_Vector3d point =  Vector3d_add(Vector3d_init(0.0, 0.0, 0.0), Vector3d_mult(norm,5.0));
-	
-	// t_Vector3d toEye = Vector3d_norm(Vector3d_sub(cc, point));
-	// t_Vector3d reflectLight = Vector3d_norm(reflect(ld, norm));
-	// float specPower = 30.0;
-	// // t_Vector3d specMaterial = Vector3d_init(1.0, 1.0, 0.75);
-
-	// // uint32_t specColor = lc * specMaterial * pow(fmax(dot(toEye, reflectLight), 0.0), specPower);
-	// uint32_t specColor = lcolor * pow(fmax(Vector3d_dot(toEye, reflectLight), 0.0), specPower);
-	
-	// // color = + diffuse + specColor;
-	// color = ambient(hit.color) + diffuse + specColor;
-
-	color = brightness(color, 1.2);
 	return (color);
 }
 
-/*
-     	vec3 lightDirection = vec3(1.0, -1.0, 0.0);
-        vec3 lightColor = vec3(1, 1, 1);
+t_rgba	shading(t_Ray_hit *hit)
+{
+	t_rgba		rgba = separate_color_rgba(0);
+	t_Ray		light_ray = bounce_light(init_vars(), hit);
+	t_Vector3d	lc = Point3d_to_Vector3d(init_vars()->light->coord);
+	double		distance = find_distance(hit->coord, lc);
 
-       lightDirection = normalize(lightDirection);
-        
-        //ambient
-        vec3 ambient = color * 0.1;
+	t_Ray_hit	bounce = ray_trace(light_ray, distance, hit->shape);
 
-        //diffuse
-        vec3 diffuse = max(dot(lightDirection, norm),0.0) * (color * lightColor);
+	//put in shading function in shading.c
+		light_ray.o = lc;
 
-        //specular
-        vec3 eyePos = vec3(0.0,0.0,-1.0);
-        vec3 point = vec3(0.0, 0.0, 0.0) + 5.0 * norm;
-        
-        vec3 toEye = normalize(eyePos - point);
-        vec3 reflectLight = normalize(reflect(lightDirection, norm));
-        float specPower = 30.0;
-        vec3 specMaterial = vec3(1.0, 1.0, 0.75);
+	rgba = shading_obj(light_ray, &bounce);
 
-        vec3 specColor = lightColor * specMaterial * pow(max(dot(toEye, reflectLight), 0.0), specPower);
-        
-        color = ambient + diffuse + specColor;*/
+	return (rgba);
+}
 
-
-
-
-//ro 	ray origin 
-//rd 	ray direction
-//col 	color
-//s 	center sphere
-//r 	radius
-//t		variable
-//p		ro + rd * t
-
-
-
-
-// uint32_t shading_sp(uint32_t color, t_Ray_hit hit)
-// {
-
-// 	return color;
-// }

@@ -1,4 +1,3 @@
-
 #include "../../include/miniRT.h"
 
 int	str_is_digit(char *color)
@@ -12,13 +11,13 @@ int	str_is_digit(char *color)
 	return (1);
 }
 
-uint8_t	valid_uint8(char *elem, int range)
+uint8_t	valid_uint8(char *elem)
 {
 	int	nbr;
 
 	nbr = ft_atoi(elem);
-	if ((nbr < 0 || nbr > range) || !str_is_digit(elem))
-		error_exit(range, elem);
+	if ((nbr < 0 || nbr > 255) || is_number(elem) != 1)
+		error_exit(5, ft_strjoin("Invalid RGB -> ", elem));
 	return (nbr);
 }
 
@@ -30,10 +29,10 @@ uint32_t	rgb_to_hex(char *elem)
 	uint32_t rgb = 0;
 	
 	while (colors && colors[i])
-		rgb += (valid_uint8(colors[i++], 255) << (bytes -= 8));
+		rgb += (valid_uint8(colors[i++]) << (bytes -= 8));
 	rgb += 255;
 	if (!colors || i != 3)
-		error_exit(255, elem);
+		error_exit(5, ft_strjoin("Invalid RGB -> ", elem));
 	free_split(colors);
 	return(rgb);
 }

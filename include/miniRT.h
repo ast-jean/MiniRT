@@ -62,26 +62,36 @@ void	free_vars(t_Vars *vars);
 void		parse(int argc, char **argv);
 void		valid_file(char *file);
 void		split(char *file);
-void		free_split(char **args);
 void		valid_element(char **elem);
-t_Fixed		str_to_fixed(char *elem);
-t_3dPoint	str_to_3D(char *elem);
 //scene.c
 void		object_A(char **elem, t_Vars *vars);
 void		object_C(char **elem, t_Vars *vars);
 void		object_L(char **elem, t_Vars *vars);
+t_Fixed		parse_light_ratio(char *elem);
+t_3dPoint	parse_coordinates(char *elem);
+t_3dPoint	parse_orientation(char *elem);
+uint8_t 	parse_FOV(char *elem);
 //objects.c
 t_shape 	*object_sp(char **elem, t_Vars *vars);
 t_shape 	*object_pl(char **elem, t_Vars *vars);
 t_shape 	*object_cy(char **elem, t_Vars *vars);
 //colors.c
 int			str_is_digit(char *color);
-uint8_t		valid_uint8(char *elem, int range);
+uint8_t		valid_uint8(char *elem);
 uint32_t	rgb_to_hex(char *elem);
+//converter.c
+t_Fixed		str_to_fixed(char *elem);
+t_3dPoint	str_to_3D(char *elem);
+double		atod(char *str);
 //debug.c
-void		print_objects();
-// void 		draw_ray(t_Ray *ray, double x, double y, double distance);
 void		error_exit(int code, char *str);
+void		print_objects();
+//utils.c
+void		free_split(char **args);
+int			range(double elem, int low, int high);
+int			char_isdigit(char c);
+int			is_number(char *str);
+// void 		draw_ray(t_Ray *ray, double x, double y, double distance);
 
 /*----------------------------fixed------------------------------*/
 void		set_value(t_Fixed *fp, double value);
@@ -95,28 +105,31 @@ double		fp_cal(char operand, int num_args, ...);
 void		ray_to_screen();
 uint32_t	ray_tracing(const t_Ray ray);
 t_Ray_hit	ray_trace(const t_Ray ray, double dist, t_shape *shape);
+t_Vector3d	shape_normal(const t_shape *shape, const t_Vector3d point);
 // check.c
-void	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o);
+bool	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o);
 double	check_cy(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
 double	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
 double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
-/*---------------------------Shading-------------------------*/
-uint32_t shading_sp(uint32_t color, t_Ray ray, t_Ray_hit hit);
-// uint32_t shading(uint32_t color, t_Ray *ray, t_Ray_hit hit);
 
+/*---------------------------Shading-------------------------*/
+t_rgba		shading(t_Ray_hit *hit);
+t_rgba		shading_sp(t_Ray ray, t_Ray_hit *hit);
 /*---------------------------colors-------------------------*/
 double		remap(double a, double b, double t);
-uint32_t	brightness(uint32_t color, double scale);
+t_rgba		brightness(t_rgba color, double scale);
 t_rgba		separate_color_rgba(uint32_t color);
-uint32_t	mix_colors(uint32_t colorA, uint32_t colorB, double ratio);
+t_rgba		mix_colors(t_rgba colorA, t_rgba colorB);
 uint32_t	ambient(uint32_t color);
-
-/*---------------------------Math-------------------------*/
+t_rgba		mix_colors_light(t_Ray_hit hit,  t_Ray ray);
+int32_t		rgba_to_int32_t(t_rgba rgba);
+t_rgba		rgba_add(t_rgba a, t_rgba b);
+/*--------------------------Math-------------------------*/
 //math_other.c
 double		deg2grad(double deg);
 uint32_t	clamp(uint32_t value, uint32_t min, uint32_t max);
 double		clampd(double value, double min, double max);
 double		find_distance(t_Vector3d A, t_Vector3d B);
 bool		solveQuadratic(t_Vector3d abc, t_Vector2d *t, double *disc);
-
+double		max(double value1, double value2);
 #endif

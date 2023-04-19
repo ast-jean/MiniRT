@@ -54,8 +54,8 @@ t_Vars	*init_vars()
 		vars->camera = NULL;
 		vars->light = NULL;
 		vars->ambient_light = NULL;
-		vars->mlx = NULL;
-		vars->img = malloc(sizeof(mlx_image_t));
+		// vars->mlx = NULL;
+		// vars->img = malloc(sizeof(mlx_image_t));
 		vars->objs = malloc(sizeof(t_dlist));
 		vars->objs->first = NULL;
 		vars->objs->last = NULL;
@@ -276,15 +276,12 @@ int	main(int argc, char **argv)
 {
 	t_Vars	*vars = init_vars();
 	parse(argc, argv);
-	// print_objects();
+
 	if (!vars->error_message)
 	{
 		vars->mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
 		img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
-		vars->img = img;
-		// print_objects();
-		// mlx_put_pixel(vars->img, 1000000, 0, RED);
-
+		vars->img = img; //remove global variable
 		ray_to_screen();
 		mlx_image_to_window(vars->mlx, img, 0, 0);	
 		mlx_mouse_hook(vars->mlx, mouse_hook, vars);

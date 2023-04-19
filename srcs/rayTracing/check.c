@@ -2,32 +2,19 @@
 
 double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist)
 {
-
 	t_Vector3d ro_sc = Vector3d_sub(ray.o, Point3d_to_Vector3d(s->coord));
 	t_Vector3d abc;
 	t_Vector2d t;
 
 	abc.x =  Vector3d_dot(ray.d, ray.d);
 	abc.y = 2.0 * Vector3d_dot(ray.d, ro_sc);
-	abc.z = Vector3d_dot(ro_sc, ro_sc) - pow(to_double(s->radius), 2);
+	abc.z = Vector3d_dot(ro_sc, ro_sc) - pow(to_double(s->radius), 2.0);
 
 	double disc;
 	double distance;
 	if (!solveQuadratic(abc, &t, &disc))
 		return (dist);
-	double q;
-	if (abc.y < 0)
-		q = (-abc.y - sqrt(disc)) / 2.0;
-	else
-		q = (-abc.y + sqrt(disc)) / 2.0;
-	t.x = q / abc.x;
-	t.y = abc.z / q;
-	if (t.y < 0)
-		return (dist);
-	else if(t.x < 0)
-		distance = t.y; //t0
-	else
-		distance = t.x; //t1
+		distance = t.x;
 	if (dist >= distance) //distance comparaison
 	{
 		rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, distance));
@@ -44,9 +31,9 @@ double	check_pl(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double dist)
 	t_Vector3d so = Point3d_to_Vector3d(s->orientation);
 
 	double denom = Vector3d_dot(so, ray.d);
-	if (fabs(denom) > 1e-6){
+	if (fabs(denom) > 0){
 		double t = Vector3d_dot(Vector3d_sub(sc, ray.o), so) / denom;	
-		if(dist > t) //distance comparaison
+		if(dist >= t) //distance comparaison
 		{
 			if (t > 0) //only if t is positive
 			{
@@ -58,7 +45,6 @@ double	check_pl(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double dist)
 			else
 				return (dist);
 		}
-		return (dist);
 	}
 	return (dist);
 }
@@ -118,25 +104,28 @@ double	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh, double dist)
 	return dist;
 }
 
-void	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o){
-	t_Vars *vars = init_vars();
-	t_node *aff = vars->objs->first;
-	rh->color = 0;
-	rh->shape = NULL;
+bool	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o)
+{
+	t_node *aff = init_vars()->objs->first;
+	double dist = *distance;
 
 	while(aff)
 	{
 		t_shape *s = aff->content;
-		if (!shape_o || s->index != shape_o->index)
-		{
-			if (ft_strcmp(s->id, "sp"))
-				*distance = check_sp(s, ray, rh, *distance);
-			else if (ft_strcmp(s->id, "cy"))
+		// if (!shape_o || s->index != shape_o->index) //if the object is not itself
+		// {
+			(void)shape_o;
+			if (ft_strcmp(s->id, "cy"))
 				*distance = check_cy(s, ray, rh, *distance);
 			else if (ft_strcmp(s->id, "pl"))
 				*distance = check_pl(s, ray, rh, *distance);
-		}
+			else if (ft_strcmp(s->id, "sp"))
+				*distance = check_sp(s, ray, rh, *distance);
+		// }
 		aff = aff->next;
 	}
-	return ;
+	if (*distance == dist) 
+		return (false); //if the distance is the same it has touch nothing
+	else
+		return (true);
 }

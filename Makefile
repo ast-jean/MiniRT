@@ -11,8 +11,10 @@ SRCS_FILES 		=	miniRT.c \
 					parsing/parsing.c \
 					parsing/objects.c \
 					parsing/colors.c \
+					parsing/converter.c \
 					parsing/scene.c \
 					parsing/debug.c \
+					parsing/utils.c \
 					math/Fixed.c \
 					math/vectors/Vectors.c \
 					math/vectors/ray.c \
