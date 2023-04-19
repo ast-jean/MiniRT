@@ -19,10 +19,12 @@ void	error_exit(int code, char *str)
 	}
 	if (code == 3)
 		vars->error_message = ft_strjoin(str, vars->error_message);
-	if (code == 180)
-		vars->error_message = ft_strjoin("Invalid FOV -> ", str);
-	if (code == 255)
-		vars->error_message = ft_strjoin("Invalid RGB -> ", str);
+	if (code == 4)
+		vars->error_message = ft_strjoin("Invalid element: ", str);
+	if (code == 5 && !vars->error_message)
+		{
+			vars->error_message = str;
+		}
 }
 
 /*
