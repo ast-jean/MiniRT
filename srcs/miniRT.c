@@ -54,8 +54,8 @@ t_Vars	*init_vars()
 		vars->camera = NULL;
 		vars->light = NULL;
 		vars->ambient_light = NULL;
-		vars->mlx = NULL;
-		vars->img = malloc(sizeof(mlx_image_t));
+		// vars->mlx = NULL;
+		// vars->img = malloc(sizeof(mlx_image_t));
 		vars->objs = malloc(sizeof(t_dlist));
 		vars->objs->first = NULL;
 		vars->objs->last = NULL;
