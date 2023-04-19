@@ -54,8 +54,8 @@ t_Vars	*init_vars()
 		vars->camera = NULL;
 		vars->light = NULL;
 		vars->ambient_light = NULL;
-		vars->mlx = NULL;
-		vars->img = malloc(sizeof(mlx_image_t));
+		// vars->mlx = NULL;
+		// vars->img = malloc(sizeof(mlx_image_t));
 		vars->objs = malloc(sizeof(t_dlist));
 		vars->objs->first = NULL;
 		vars->objs->last = NULL;
@@ -107,17 +107,19 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 {
 	t_Vars *vars;
 
-
-	(void)keydata;
+	
+	printf("%d\n", keydata.key);
+	// (void)keydata;
 	vars = param;
 
-	(void)keydata;
 	if(mlx_is_key_down(vars->mlx, 61) || mlx_is_key_down(vars->mlx, MLX_KEY_PAGE_UP) \
 	|| mlx_is_key_down(vars->mlx, MLX_KEY_PAGE_DOWN) || mlx_is_key_down(vars->mlx, 334) \
 	|| mlx_is_key_down(vars->mlx, 333) || mlx_is_key_down(vars->mlx, 45) \
 	|| mlx_is_key_down(vars->mlx, MLX_KEY_UP) || mlx_is_key_down(vars->mlx, MLX_KEY_DOWN) \
 	|| mlx_is_key_down(vars->mlx, MLX_KEY_LEFT) || mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT) \
-	|| mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
+	|| mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE) || mlx_is_key_down(vars->mlx, MLX_KEY_A) \
+	|| mlx_is_key_down(vars->mlx, MLX_KEY_W) || mlx_is_key_down(vars->mlx, MLX_KEY_D) \
+	|| mlx_is_key_down(vars->mlx, MLX_KEY_S) || mlx_is_key_down(vars->mlx, MLX_KEY_Q) || mlx_is_key_down(vars->mlx, MLX_KEY_E))
 	{
 		if (mlx_is_key_down(vars->mlx, 61) ||  mlx_is_key_down(vars->mlx, 334))
 			if (vars->selected)
@@ -128,17 +130,17 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 		//Changes the FOV
 		if (mlx_is_key_down(vars->mlx, MLX_KEY_PAGE_DOWN))
 			if ((int)vars->camera->FOV <= (int)180){
-				vars->camera->FOV = clamp(vars->camera->FOV + 6, 0 , 180);
+				vars->camera->FOV = clamp(vars->camera->FOV + 3, 0 , 180);
 				vars->distance_to_screen = (0.5 * WIDTH) / tan(deg2grad(vars->camera->FOV) * 0.5);
 				printf("FOV= %d\n", vars->camera->FOV);
 			}
 		if (mlx_is_key_down(vars->mlx, MLX_KEY_PAGE_UP))
 			if (vars->camera->FOV >= 0){
-				vars->camera->FOV = clamp(vars->camera->FOV - 6, 0 , 180);
+				vars->camera->FOV = clamp(vars->camera->FOV - 3, 0 , 180);
 				vars->distance_to_screen = (0.5 * WIDTH) / tan(deg2grad(vars->camera->FOV) * 0.5);
 				printf("FOV= %d\n", vars->camera->FOV);
 			}
-		if (mlx_is_key_down(vars->mlx, MLX_KEY_UP))
+		if (mlx_is_key_down(vars->mlx, MLX_KEY_8))
 		{
 			if (to_double(vars->ambient_light->light_ratio) + 0.1 >= 1)
 				set_value(&vars->ambient_light->light_ratio, 1);
@@ -146,24 +148,120 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 				set_value(&vars->ambient_light->light_ratio,to_double(vars->ambient_light->light_ratio) + 0.1);
 				printf("Ambient light = %f\n", (to_double(vars->ambient_light->light_ratio)));
 		}
-		if (mlx_is_key_down(vars->mlx, MLX_KEY_DOWN))
+		if (mlx_is_key_down(vars->mlx, MLX_KEY_7))
 		{
 			if (to_double(vars->ambient_light->light_ratio) - 0.1 <= 0)
 				set_value(&vars->ambient_light->light_ratio, 0);
 			else
-				set_value(&vars->ambient_light->light_ratio, to_double(vars->ambient_light->light_ratio) - 0.1);
+				set_value(&vars->ambient_light->light_ratio, to_double(vars->ambient_light->light_ratio) - 0.01);
 			printf("Ambient light = %f\n", (to_double(vars->ambient_light->light_ratio)));
 		}
-		// if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
-		// {
-		// 	set_value(&vars->camera->orientation.z,to_double(vars->camera->orientation.x) - 0.01);
-		// 	// img->instances[0].x -= 5;
-		// }
-		// if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
-		// {
-		// 	set_value(&vars->camera->orientation.z,to_double(vars->camera->orientation.x) + 0.01);
-		// 	// img->instances[0].x += 5;
-		// }
+		if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
+		{
+			// set_value(&vars->camera->orientation.z, to_double(vars->camera->orientation.z) - 0.015);
+			// vars->camera->orientation.x.value -= 46;
+			if (to_double(vars->camera->orientation.z) - 0.15 <= -1.0)
+				set_value(&vars->camera->orientation.z, -1);
+			else
+				set_value(&vars->camera->orientation.z, to_double(vars->camera->orientation.z) - 0.007);
+
+			printf("z = %f\n", to_double(vars->camera->orientation.z));
+			// img->instances[0].x -= 5;
+		}
+		if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
+		{
+			// set_value(&vars->camera->orientation.z, to_double(vars->camera->orientation.z) + 0.015);
+			if (to_double(vars->camera->orientation.z) + 0.15 >= 2.0)
+				set_value(&vars->camera->orientation.z, 2);
+			else
+				set_value(&vars->camera->orientation.z, to_double(vars->camera->orientation.z) + 0.007);
+			// vars->camera->orientation.x.value += 46;
+			printf("z = %f\n", to_double(vars->camera->orientation.z));
+
+			// img->instances[0].x += 5;
+		}
+				if (mlx_is_key_down(vars->mlx, MLX_KEY_DOWN))
+		{
+			// set_value(&vars->camera->orientation.z, to_double(vars->camera->orientation.z) - 0.015);
+			// vars->camera->orientation.x.value -= 46;
+			if (to_double(vars->camera->orientation.y) - 0.15 <= -1.0)
+				set_value(&vars->camera->orientation.y, -1);
+			else
+				set_value(&vars->camera->orientation.y, to_double(vars->camera->orientation.y) - 0.007);
+
+			printf("y = %f\n", to_double(vars->camera->orientation.y));
+			// img->instances[0].x -= 5;
+		}
+		if (mlx_is_key_down(vars->mlx, MLX_KEY_UP))
+		{
+			// set_value(&vars->camera->orientation.y, to_double(vars->camera->orientation.y) + 0.015);
+			if (to_double(vars->camera->orientation.y) + 0.15 >= 2.0)
+				set_value(&vars->camera->orientation.y, 2);
+			else
+				set_value(&vars->camera->orientation.y, to_double(vars->camera->orientation.y) + 0.007);
+			// vars->camera->orientation.x.value += 46;
+			printf("y = %f\n", to_double(vars->camera->orientation.y));
+
+			// img->instances[0].x += 5;
+		}
+
+		if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
+		{
+			// set_value(&vars->camera->orientation.y, to_double(vars->camera->orientation.y) + 0.015);
+			set_value(&vars->camera->coord.z, to_double(vars->camera->coord.z) - 1.0);
+			// vars->camera->orientation.x.value += 46;
+			printf("CZ = %f\n", to_double(vars->camera->coord.z));
+
+			// img->instances[0].x += 5;
+		}
+
+		if (mlx_is_key_down(vars->mlx, MLX_KEY_D))
+		{
+			// set_value(&vars->camera->orientation.y, to_double(vars->camera->orientation.y) + 0.015);
+			set_value(&vars->camera->coord.z, to_double(vars->camera->coord.z) + 1.0);
+			// vars->camera->orientation.x.value += 46;
+			printf("CZ = %f\n", to_double(vars->camera->coord.z));
+
+			// img->instances[0].x += 5;
+		}
+		if (mlx_is_key_down(vars->mlx, MLX_KEY_S))
+		{
+			// set_value(&vars->camera->orientation.y, to_double(vars->camera->orientation.y) + 0.015);
+			set_value(&vars->camera->coord.x, to_double(vars->camera->coord.x) - 50.0);
+			// vars->camera->orientation.x.value += 46;
+			printf("CX = %f\n", to_double(vars->camera->coord.x));
+
+			// img->instances[0].x += 5;
+		}
+		if (mlx_is_key_down(vars->mlx, MLX_KEY_W))
+		{
+			// set_value(&vars->camera->orientation.y, to_double(vars->camera->orientation.y) + 0.015);
+			set_value(&vars->camera->coord.x, to_double(vars->camera->coord.x) + 50.0);
+			// vars->camera->orientation.x.value += 46;
+			printf("CX = %f\n", to_double(vars->camera->coord.x));
+
+			// img->instances[0].x += 5;
+		}
+		if (mlx_is_key_down(vars->mlx, MLX_KEY_Q))
+		{
+			// set_value(&vars->camera->orientation.y, to_double(vars->camera->orientation.y) + 0.015);
+			set_value(&vars->camera->coord.y, to_double(vars->camera->coord.y) - 1.0);
+			// vars->camera->orientation.x.value += 46;
+			printf("CY = %f\n", to_double(vars->camera->coord.y));
+
+			// img->instances[0].x += 5;
+		}
+		if (mlx_is_key_down(vars->mlx, MLX_KEY_E))
+		{
+			// set_value(&vars->camera->orientation.y, to_double(vars->camera->orientation.y) + 0.015);
+			set_value(&vars->camera->coord.y, to_double(vars->camera->coord.y) + 1.0);
+			// vars->camera->orientation.y.value += 46;
+			printf("Cy = %f\n", to_double(vars->camera->coord.y));
+
+			// img->instances[0].x += 5;
+		}
+
+
 		if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
 		{
 			mlx_close_window(vars->mlx);
