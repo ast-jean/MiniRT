@@ -119,7 +119,7 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 	|| mlx_is_key_down(vars->mlx, MLX_KEY_LEFT) || mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT) \
 	|| mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE) || mlx_is_key_down(vars->mlx, MLX_KEY_A) \
 	|| mlx_is_key_down(vars->mlx, MLX_KEY_W) || mlx_is_key_down(vars->mlx, MLX_KEY_D) \
-	|| mlx_is_key_down(vars->mlx, MLX_KEY_S) || mlx_is_key_down(vars->mlx, MLX_KEY_Q) || mlx_is_key_down(vars->mlx, MLX_KEY_E))
+	|| mlx_is_key_down(vars->mlx, MLX_KEY_S) || mlx_is_key_down(vars->mlx, MLX_KEY_Q) || mlx_is_key_down(vars->mlx, MLX_KEY_E)|| mlx_is_key_down(vars->mlx, MLX_KEY_7) || mlx_is_key_down(vars->mlx, MLX_KEY_8))
 	{
 		if (mlx_is_key_down(vars->mlx, 61) ||  mlx_is_key_down(vars->mlx, 334))
 			if (vars->selected)
@@ -227,7 +227,7 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 		if (mlx_is_key_down(vars->mlx, MLX_KEY_S))
 		{
 			// set_value(&vars->camera->orientation.y, to_double(vars->camera->orientation.y) + 0.015);
-			set_value(&vars->camera->coord.x, to_double(vars->camera->coord.x) - 50.0);
+			set_value(&vars->camera->coord.x, to_double(vars->camera->coord.x) - 10.0);
 			// vars->camera->orientation.x.value += 46;
 			printf("CX = %f\n", to_double(vars->camera->coord.x));
 
@@ -236,7 +236,7 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 		if (mlx_is_key_down(vars->mlx, MLX_KEY_W))
 		{
 			// set_value(&vars->camera->orientation.y, to_double(vars->camera->orientation.y) + 0.015);
-			set_value(&vars->camera->coord.x, to_double(vars->camera->coord.x) + 50.0);
+			set_value(&vars->camera->coord.x, to_double(vars->camera->coord.x) + 10.0);
 			// vars->camera->orientation.x.value += 46;
 			printf("CX = %f\n", to_double(vars->camera->coord.x));
 
