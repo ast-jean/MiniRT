@@ -6,10 +6,13 @@ double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist)
 	t_Vector3d abc;
 	t_Vector2d t;
 
+
 	abc.x =  Vector3d_dot(ray.d, ray.d);
 	abc.y = 2.0 * Vector3d_dot(ray.d, ro_sc);
 	abc.z = Vector3d_dot(ro_sc, ro_sc) - pow(to_double(s->radius), 2.0);
 
+	// printf("A = %f, B = %f, C = %f\n", abc.x, abc.y, abc.z);
+	// printf("A = %f, B = %f, C = %f\n", abc.x, abc.y, abc.z);
 	double disc;
 	double distance;
 	if (!solveQuadratic(abc, &t, &disc))
@@ -50,6 +53,49 @@ double	check_pl(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double dist)
 }
 
 double	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh, double dist)
+// {
+// 	(void)rh;
+// 	(void)dist;
+
+// 	t_Vector3d pos = {
+// 		ray.o.x - to_double(s->coord.x),
+// 		ray.o.y - to_double(s->coord.y),
+// 		ray.o.z - to_double(s->coord.z),
+//     };
+
+// 	t_Vector3d abc = {
+// 		pow(ray.d.x, 2) + pow(ray.d.y, 2),
+// 		2 * (ray.d.x * pos.x + ray.d.y * pos.y),
+// 		pow(pos.x, 2) + pow(pos.y, 2) - pow(to_double(s->radius), 2)
+// 	};
+
+// 	double discriminant = pow(abc.y, 2) - 4 * abc.x * abc.z;
+
+//     if (discriminant < 0.0)
+// 	{
+//         return false;
+//     }
+
+// 	double t0 = (-abc.y - sqrtf(discriminant)) / (2 * abc.x);
+//     double t1 = (-abc.y + sqrtf(discriminant)) / (2 * abc.x);
+
+// 	double t = t0 < t1 ? t0 : t1;
+
+// 	double z = ray.o.z + t * ray.d.z;
+
+// 	if (z >= to_double(s->coord.z) && z <= to_double(s->coord.z )+ to_double(s->height)) {
+//         *out_t = t;
+//         return true;
+//     }
+
+//     return false;
+// }
+
+
+
+
+
+
 {
 	// Calculer l'équation du rayon
 	t_Vector3d abc;
@@ -58,7 +104,9 @@ double	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh, double dist)
 	// Calculer les coefficients de l'équation quadratique
 	abc.x = (ray.d.x * ray.d.x) + (ray.d.y * ray.d.y);
 	abc.y = 2.0 * (ray.o.x * ray.d.x + ray.o.y * ray.d.y);
-	abc.z = ray.o.x * ray.o.x + ray.o.y * ray.o.y - to_double(s->radius) * to_double(s->radius);
+	abc.z = (ray.o.x * ray.o.x) + (ray.o.y * ray.o.y) - to_double(s->radius) * to_double(s->radius);
+
+	// printf("A = %f, B = %f, C = %f\n", abc.x, abc.y, abc.z);
 	// calculer le discriminant
 	double discriminant;
 
