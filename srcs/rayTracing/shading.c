@@ -1,15 +1,6 @@
 #include "../../include/miniRT.h"
 #include <math.h>
 
-
-// # The material parameters are constants independant of the object for now
-// ambient = 0.4 * Vec3(0.4, 0.4, 1)
-// k_ambient = 1
-// k_diffuse = 2
-// k_specular = 10
-// n_specular = 50
-// https://github.com/nesvoboda/minirt/blob/master/srcs/shading.c
-
 t_Vector3d	find_normal(t_Ray_hit hit)
 {
 	if (hit.shape)
