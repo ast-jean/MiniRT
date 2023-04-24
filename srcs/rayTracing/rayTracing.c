@@ -25,28 +25,45 @@ void 	ray_to_screen()
 	printf("Render time: %f seconds\n", elapsed_time);						//
 }
 
-t_Vector3d shape_normal(const t_shape *shape, const t_Vector3d point)
+t_Ray_hit init_Ray_hit()
 {
-    t_shape *sphere = (t_shape *)shape;
-    t_Vector3d normal = Vector3d_sub(point, Point3d_to_Vector3d(sphere->coord));
-    normal = Vector3d_unit(normal);
-    return normal;
+	t_Ray_hit rh;
+	rh.color = 0;
+	rh.coord = Vector3d_init(0,0,0);
+	rh.distance = 0;
+	rh.normal = Vector3d_init(0,0,0);
+	rh.shape = NULL;
+	return (rh);
 }
 
-
+/// @brief Initialize the information of the intersected point
+/// @param ray		:The ray it initialized from
+/// @param dist_bef	:The distance from the hit coordinate to the other intersection, 
+///					 if non INFINITY it is the distance to the light.
+///					 if the distance < dist_bef it means an object was caught inbetween
+/// @param shape 	:The object the ray originated from. If non Null it -> Light or reflection
+/// @return 		:The Ray_hit struct 
 t_Ray_hit ray_trace(const t_Ray ray, double dist_bef, t_shape *shape)
 {
-	t_Ray_hit ray_hit;
-	ray_hit.normal = Vector3d_init(0,0,0);
-	double distance;
-	
+	t_Ray_hit light_ray_hit = init_Ray_hit();
+	double distance = 0;
+	bool hit = false; //used for debug
+
 	distance = dist_bef;
 	if (!shape)
-		ray_checkhit(ray, &ray_hit, &distance, NULL);//initialise rayhit Null
+	{
+		if(ray_checkhit(ray, &light_ray_hit, &distance, NULL))
+			hit = true;	//initialise rayhit Null
+	}
 	else
-		ray_checkhit(ray, &ray_hit, &distance, shape);//initialise rayhit shape hit before
-	ray_hit.distance = distance;
-	return (ray_hit);
+	{
+		if(ray_checkhit(ray, &light_ray_hit, &distance, shape))//initialise rayhit shape hit before
+		hit = true;
+	}
+	if (light_ray_hit.distance == 0)
+		light_ray_hit.distance = distance; //added 
+	light_ray_hit.hit = hit;	
+	return (light_ray_hit);
 }
 
 
@@ -59,7 +76,7 @@ uint32_t ray_tracing(const t_Ray ray) //returns a color
 	else
 		color = hit.color;
 //add shading
-	// color = rgba_to_int32_t(shading(&hit));
+	color = rgba_to_int32_t(shading(&hit));
 //add reflection
 
 // add ambiantlight

@@ -106,7 +106,6 @@ double		fp_cal(char operand, int num_args, ...);
 void		ray_to_screen();
 uint32_t	ray_tracing(const t_Ray ray);
 t_Ray_hit	ray_trace(const t_Ray ray, double dist, t_shape *shape);
-t_Vector3d	shape_normal(const t_shape *shape, const t_Vector3d point);
 // check.c
 bool	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o);
 double	check_cy(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
@@ -115,16 +114,18 @@ double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
 
 /*---------------------------Shading-------------------------*/
 t_rgba		shading(t_Ray_hit *hit);
-t_rgba		shading_sp(t_Ray ray, t_Ray_hit *hit);
+// t_rgba		shading_sp(t_Ray ray, t_Ray_hit *hit);
 /*---------------------------colors-------------------------*/
 double		remap(double a, double b, double t);
 t_rgba		brightness(t_rgba color, double scale);
 t_rgba		separate_color_rgba(uint32_t color);
-t_rgba		mix_colors(t_rgba colorA, t_rgba colorB);
+t_rgba		mix_colors(t_rgba colorA, t_rgba colorB, double mix_factor);
 uint32_t	ambient(uint32_t color);
-t_rgba		mix_colors_light(t_Ray_hit hit,  t_Ray ray);
+t_rgba		mix_colors_light(t_Ray_hit hit,  t_Ray ray, t_shape shape, double coeff);
 int32_t		rgba_to_int32_t(t_rgba rgba);
 t_rgba		rgba_add(t_rgba a, t_rgba b);
+t_rgba		rgba_init();
+
 /*--------------------------Math-------------------------*/
 //math_other.c
 double		deg2grad(double deg);

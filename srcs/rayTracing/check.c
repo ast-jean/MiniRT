@@ -23,6 +23,7 @@ double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist)
 		rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, distance));
 		rh->color = s->color;
 		rh->shape = (t_shape*)s;
+		rh->distance = distance;
 		return (distance);
 	}
 	return (dist);
@@ -43,6 +44,7 @@ double	check_pl(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double dist)
 				rh->color = s->color;
 				rh->shape = (t_shape*)s;
 				rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, t));
+				rh->distance = t;
 				return t;
 			}
 			else
@@ -107,27 +109,32 @@ double	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh, double dist)
 	return dist;
 }
 
+/// @brief 			:Check for the intersection of each object with the provided t_Ray
+/// @param ray		:The ray
+/// @param rh		:The t_Ray_hit containing intersection information
+/// @param distance :The distance to compare if dist == old_dist nothing is intersected
+/// @param shape_o	:The object(self) it needs to ignore
+/// @return			:Returns a bool if the ray hit(True) or not(false) an object
 bool	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o)
 {
 	t_node *aff = init_vars()->objs->first;
-	double dist = *distance;
+	double old_dist = *distance; //Should dist be distance?
 
 	while(aff)
 	{
 		t_shape *s = aff->content;
-		// if (!shape_o || s->index != shape_o->index) //if the object is not itself
-		// {
-			(void)shape_o;
+		if (!shape_o || s->index != shape_o->index) //if the object is not itself
+		{
 			if (ft_strcmp(s->id, "cy"))
 				*distance = check_cy(s, ray, rh, *distance);
 			else if (ft_strcmp(s->id, "pl"))
 				*distance = check_pl(s, ray, rh, *distance);
 			else if (ft_strcmp(s->id, "sp"))
 				*distance = check_sp(s, ray, rh, *distance);
-		// }
+		}
 		aff = aff->next;
 	}
-	if (*distance == dist) 
+	if (*distance == old_dist) 
 		return (false); //if the distance is the same it has touch nothing
 	else
 		return (true);

@@ -28,7 +28,7 @@ typedef struct s_Ray_hit{
 	t_shape		*shape;
 	t_Vector3d	coord;
 	t_Vector3d	normal;
-	double		coeff;
+	bool		hit;
 } t_Ray_hit;
 
 
@@ -40,6 +40,7 @@ t_Vector3d	Vector3d_mult3d(t_Vector3d v, t_Vector3d b);
 t_Vector3d	Vector3d_div(t_Vector3d v, double b);
 t_Vector3d	Vector3d_unit(t_Vector3d v);
 t_Vector3d	reflect(t_Vector3d i,  t_Vector3d n);
+void  print_Vector(char *title, t_Vector3d a);
 
 /*-------------------------Vectors.c--------------------------*/
 t_Vector3d	Vector3d_init(double x, double y, double z);
@@ -50,7 +51,6 @@ t_Vector3d 	Vector3d_norm(const t_Vector3d v);
 /*-------------------------Ray.c--------------------------*/
 t_Ray ray_init(t_Vector3d origin, t_Vector3d direction);
 t_Ray ray_init_to_screen(t_Vars *v, int x, int y);
-t_Ray bounce_light(t_Vars *vars, t_Ray_hit *hit);
 bool light_is_visible(t_Vars *vars, t_Ray_hit *hit);
 t_Vector3d ray_direction(t_Vector3d from, t_Vector3d to);
 

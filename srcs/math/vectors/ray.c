@@ -30,14 +30,3 @@ t_Ray ray_init_to_screen(t_Vars *v, int x, int y)
 	t_Vector3d ray_dir = Vector3d_unit(Vector3d_sub(screen_position, c_coords));
 	return (ray_init(c_coords, ray_dir));
 }
-
-t_Ray	bounce_light(t_Vars *vars, t_Ray_hit *hit)
-{
-	t_Ray light_ray;
-	t_Vector3d light_coor = Point3d_to_Vector3d(vars->light->coord);
-
-	light_ray = ray_init(hit->coord, Vector3d_norm(Vector3d_sub(hit->coord, light_coor)));
-	return (light_ray);
-}
-
-

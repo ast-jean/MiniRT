@@ -6,11 +6,16 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:34:27 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/04/13 16:28:01 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/04/24 12:02:31 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/Vectors.h"
+
+void  print_Vector(char *title, t_Vector3d a)
+{
+    printf("%s.x=%f, %s.y=%f, %s.z=%f\n",title, a.x,title, a.y,title, a.z);
+}
 
 
 t_Vector3d Vector3d_init(double x, double y, double z){
@@ -20,7 +25,8 @@ t_Vector3d Vector3d_init(double x, double y, double z){
 }
 
 double  Vector3d_dot(t_Vector3d a, t_Vector3d b){
-    return (a.x * b.x) + (a.y * b.y) + (a.z * b.z);
+    double res = (a.x * b.x) + (a.y * b.y) + (a.z * b.z);
+    return (res);
 }
 
 t_Vector3d  Vector3d_cross(t_Vector3d a, t_Vector3d b){
@@ -42,7 +48,7 @@ t_Vector3d Vector3d_norm(const t_Vector3d v)
     t_Vector3d result;
     double length = Vector3d_length(v);
     if (length == 0)
-        return (t_Vector3d){0, 0, 0};
+        return Vector3d_init(0,0,0);
     result.x = v.x / length;
     result.y = v.y / length;
     result.z = v.z / length;

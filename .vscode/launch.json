@@ -1,12 +1,14 @@
 {
     "version": "0.2.0",
     "configurations": [
+
+    
         {
             "name": "Debug C Program",
             "type": "lldb",
             "request": "launch",
             "program": "${workspaceFolder}/miniRT",
-            "args": ["test.rt"],
+            "args": ["test2.rt"],
             "cwd": "${workspaceFolder}",
         }
     ]
