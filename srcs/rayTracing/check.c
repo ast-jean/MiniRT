@@ -54,8 +54,6 @@ double	check_pl(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double dist)
 double	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh, double dist)
 {
 	// Calculer l'équation du rayon
-	// t_Vector3d o = ray.o;//optional just write ray.o for each
-	// t_Vector3d d = ray.d;//optional just write ray.d for each
 	t_Vector3d abc;
 	t_Vector2d t;
 

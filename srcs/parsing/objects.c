@@ -33,7 +33,7 @@ t_shape *object_cy(char **elem, t_Vars *vars)
 	S->index = vars->nbr_obj++; 
 	S->coord = parse_coordinates(elem[1]);
 	S->orientation = parse_orientation(elem[2]);
-	S->radius = fp_init(fp_cal('/', 2, str_to_fixed(elem[2]), fp_init(2)));
+	S->radius = fp_init(fp_cal('/', 2, str_to_fixed(elem[3]), fp_init(2)));
 	S->height = str_to_fixed(elem[4]);
 	S->color = rgb_to_hex(elem[5]);
 	if(vars->error_message)
