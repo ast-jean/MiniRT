@@ -6,10 +6,13 @@ double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist)
 	t_Vector3d abc;
 	t_Vector2d t;
 
+
 	abc.x =  Vector3d_dot(ray.d, ray.d);
 	abc.y = 2.0 * Vector3d_dot(ray.d, ro_sc);
 	abc.z = Vector3d_dot(ro_sc, ro_sc) - pow(to_double(s->radius), 2.0);
 
+	// printf("A = %f, B = %f, C = %f\n", abc.x, abc.y, abc.z);
+	// printf("A = %f, B = %f, C = %f\n", abc.x, abc.y, abc.z);
 	double disc;
 	double distance;
 	if (!solveQuadratic(abc, &t, &disc))
@@ -60,7 +63,9 @@ double	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh, double dist)
 	// Calculer les coefficients de l'équation quadratique
 	abc.x = (ray.d.x * ray.d.x) + (ray.d.y * ray.d.y);
 	abc.y = 2.0 * (ray.o.x * ray.d.x + ray.o.y * ray.d.y);
-	abc.z = ray.o.x * ray.o.x + ray.o.y * ray.o.y - to_double(s->radius) * to_double(s->radius);
+	abc.z = (ray.o.x * ray.o.x) + (ray.o.y * ray.o.y) - to_double(s->radius) * to_double(s->radius);
+
+	// printf("A = %f, B = %f, C = %f\n", abc.x, abc.y, abc.z);
 	// calculer le discriminant
 	double discriminant;
 
@@ -90,7 +95,7 @@ double	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh, double dist)
 		}
 	}
 	// Vérifier si une intersection a été trouvée
-	if (distance)
+	if (!distance)
 		return dist;
 	// Remplir la structure t_Ray_hit avec les informations de l'intersection
 	if(dist > distance)

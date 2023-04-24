@@ -6,6 +6,7 @@
 # include <unistd.h>
 # include <signal.h>
 # include <stdlib.h>
+# include <stdbool.h>
 # include <stdint.h>
 # include <stdarg.h>
 # include <limits.h>
