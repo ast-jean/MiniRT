@@ -53,49 +53,6 @@ double	check_pl(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double dist)
 }
 
 double	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh, double dist)
-// {
-// 	(void)rh;
-// 	(void)dist;
-
-// 	t_Vector3d pos = {
-// 		ray.o.x - to_double(s->coord.x),
-// 		ray.o.y - to_double(s->coord.y),
-// 		ray.o.z - to_double(s->coord.z),
-//     };
-
-// 	t_Vector3d abc = {
-// 		pow(ray.d.x, 2) + pow(ray.d.y, 2),
-// 		2 * (ray.d.x * pos.x + ray.d.y * pos.y),
-// 		pow(pos.x, 2) + pow(pos.y, 2) - pow(to_double(s->radius), 2)
-// 	};
-
-// 	double discriminant = pow(abc.y, 2) - 4 * abc.x * abc.z;
-
-//     if (discriminant < 0.0)
-// 	{
-//         return false;
-//     }
-
-// 	double t0 = (-abc.y - sqrtf(discriminant)) / (2 * abc.x);
-//     double t1 = (-abc.y + sqrtf(discriminant)) / (2 * abc.x);
-
-// 	double t = t0 < t1 ? t0 : t1;
-
-// 	double z = ray.o.z + t * ray.d.z;
-
-// 	if (z >= to_double(s->coord.z) && z <= to_double(s->coord.z )+ to_double(s->height)) {
-//         *out_t = t;
-//         return true;
-//     }
-
-//     return false;
-// }
-
-
-
-
-
-
 {
 	// Calculer l'équation du rayon
 	t_Vector3d abc;
@@ -136,7 +93,7 @@ double	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh, double dist)
 		}
 	}
 	// Vérifier si une intersection a été trouvée
-	if (distance)
+	if (!distance)
 		return dist;
 	// Remplir la structure t_Ray_hit avec les informations de l'intersection
 	if(dist > distance)

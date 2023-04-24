@@ -282,7 +282,7 @@ int	main(int argc, char **argv)
 		vars->mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
 		img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
 		vars->img = img; //remove global variable
-		print_objects();
+		// print_objects();
 		ray_to_screen();
 		mlx_image_to_window(vars->mlx, img, 0, 0);	
 		mlx_mouse_hook(vars->mlx, mouse_hook, vars);
