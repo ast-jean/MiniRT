@@ -32,6 +32,8 @@ typedef struct s_Ray_hit{
 } t_Ray_hit;
 
 
+
+
 /*-------------------------Vectors_ops.c--------------------------*/
 t_Vector3d	Vector3d_add(t_Vector3d a, t_Vector3d b);
 t_Vector3d	Vector3d_sub(t_Vector3d a, t_Vector3d b);

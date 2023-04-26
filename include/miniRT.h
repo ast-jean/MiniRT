@@ -54,6 +54,17 @@ typedef struct s_Vars	// all of our values needed throught the program
 	int			nbr_obj;
 } t_Vars;
 
+typedef struct s_matrice3x3
+{
+	double m[3][3];
+} t_matrice3x3;
+
+typedef struct s_rotation
+{
+	double phi;
+	double theta;
+}	t_rotation;
+
 /*-------------------------Initialisation-------------------------*/
 //miniRT.c
 t_Vars	*init_vars();
@@ -134,4 +145,13 @@ double		clampd(double value, double min, double max);
 double		find_distance(t_Vector3d A, t_Vector3d B);
 bool		solveQuadratic(t_Vector3d abc, t_Vector2d *t, double *disc);
 double		max(double value1, double value2);
+
+//matrice.c
+t_matrice3x3 matrice_rotation_x(double alpha);
+t_matrice3x3 matrice_rotation_y(double beta);
+t_matrice3x3 matrice_rotation_z(double gamma);
+t_matrice3x3 multiplier_matrices(t_matrice3x3 A, t_matrice3x3 B);
+t_3dPoint rotation_point(t_matrice3x3 M, t_3dPoint P);
+t_rotation vector_to_rotation_angles(t_Vector3d orientation);
+
 #endif

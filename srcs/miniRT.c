@@ -272,6 +272,14 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 
 }
 
+
+
+
+
+
+
+
+
 int	main(int argc, char **argv)
 {
 	t_Vars	*vars = init_vars();
@@ -299,3 +307,4 @@ int	main(int argc, char **argv)
 	free_vars(vars);
 	return (EXIT_SUCCESS);
 }
+
