@@ -34,44 +34,48 @@ double	find_angle_normals(t_Vector3d Norm1, t_Vector3d Norm2)
 /// @param first_hit = Info of the first object hit.
 /// @param shape = the source shape
 /// @return 
-t_rgba shading_obj(t_Ray ray, t_Ray_hit *hit_light, t_shape shape, t_Ray_hit *first_hit)
+t_rgba shading_obj(t_Ray ray, t_Ray_hit *hit_light, t_shape shape, t_Ray_hit *first_hit, t_rgba color_shape)
 {
-	t_rgba	color = rgba_init(); //initialize color
 	t_rgba	color_to_add;
-	double coeff;
-
+	t_rgba	color = rgba_init(0,0,0);
 	t_Vector3d light_dir;
 	t_Vector3d obj_normal;
+	double coeff;
 
-	light_dir = find_normal(Point3d_to_Vector3d(init_vars()->light->coord), shape); //works with sphere
-
+	light_dir = find_normal(Point3d_to_Vector3d(init_vars()->light->coord), shape);
 	obj_normal = find_normal(first_hit->coord, shape);
-
 	coeff = find_angle_normals(light_dir, obj_normal); //asign var
 
-	color_to_add = mix_colors_light(*hit_light, ray, shape, coeff);
-	color = rgba_add(color, color_to_add);
-
+	if (hit_light->hit == false) //in light
+	{
+		color_to_add = mix_colors_light(*hit_light, ray, coeff, color_shape);
+		color = rgba_add(color, color_to_add);
+		// color = rgba_add(color, ambient());
+	}
+	else	//in shadow
+		// color = rgba_add(color, ambient());
+	
 	return (color);
 }
 
 /// @brief 		:Returns the color of the pixel depending on object
 /// @param hit 	:Information on the intersected point
 /// @return 	:Color in rgba form
-t_rgba	shading(t_Ray_hit *hit)
+t_rgba	shading(t_Ray_hit *hit, t_rgba color)
 {
-	t_rgba		rgba = rgba_init(); //init at r=0, g=0, b=0
+	t_rgba		rgba = rgba_init(0,0,0);
 	t_Vector3d	lc;
-	t_Ray		ray_s2l; // Ray from shape to the light
-	double		distance;
+	t_Ray		ray_s2l;	// Ray from shape to the light
+	double		distance;	// Distance from hit point to light
+	t_Ray_hit	bounce;
 	
 	lc = Point3d_to_Vector3d(init_vars()->light->coord);
-	ray_s2l = ray_init(hit->coord, Vector3d_norm(Vector3d_sub(hit->coord, lc)));
-	distance = find_distance(hit->coord, lc);
+	ray_s2l = ray_init(hit->coord, Vector3d_norm(Vector3d_sub(hit->coord, lc))); //from shape to light
+	distance = find_distance(hit->coord, lc); 
 
-	t_Ray_hit	bounce = ray_trace(ray_s2l, distance, hit->shape);
-	ray_s2l.o = lc; 
-	rgba = shading_obj(ray_s2l, &bounce, *hit->shape, hit);
+	bounce = ray_trace(ray_s2l, distance, hit->shape);
+	// ray_s2l.o = lc; //useful?
+	rgba = shading_obj(ray_s2l, &bounce, *hit->shape, hit, color);
 	return (rgba);
 }
 

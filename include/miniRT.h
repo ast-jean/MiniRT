@@ -91,7 +91,6 @@ void		free_split(char **args);
 int			range(double elem, int low, int high);
 int			char_isdigit(char c);
 int			is_number(char *str);
-// void 		draw_ray(t_Ray *ray, double x, double y, double distance);
 
 /*----------------------------fixed------------------------------*/
 void		set_value(t_Fixed *fp, double value);
@@ -110,20 +109,22 @@ bool	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *sha
 double	check_cy(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
 double	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
 double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
+bool	check_dot_sign(t_Vector3d shape_pos, t_Vector3d Vec1, t_Vector3d Vec2);
 
 /*---------------------------Shading-------------------------*/
-t_rgba		shading(t_Ray_hit *hit);
+t_rgba		shading(t_Ray_hit *hit, t_rgba color);
+t_Vector3d	find_normal(t_Vector3d coords, t_shape shape);
 // t_rgba		shading_sp(t_Ray ray, t_Ray_hit *hit);
 /*---------------------------colors-------------------------*/
-double		remap(double a, double b, double t);
 t_rgba		brightness(t_rgba color, double scale);
 t_rgba		separate_color_rgba(uint32_t color);
 t_rgba		mix_colors(t_rgba colorA, t_rgba colorB, double mix_factor);
-uint32_t	ambient(uint32_t color);
-t_rgba		mix_colors_light(t_Ray_hit hit,  t_Ray ray, t_shape shape, double coeff);
+t_rgba		ambient(t_rgba color);
+t_rgba		mix_colors_light(t_Ray_hit hit,  t_Ray ray, double coeff, t_rgba color);
 int32_t		rgba_to_int32_t(t_rgba rgba);
 t_rgba		rgba_add(t_rgba a, t_rgba b);
-t_rgba		rgba_init();
+t_rgba		rgba_init(int r, int g, int b);
+
 
 /*--------------------------Math-------------------------*/
 //math_other.c

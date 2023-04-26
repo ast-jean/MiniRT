@@ -7,10 +7,9 @@ double		spec_coeff(t_Ray_hit hit,  t_Ray ray)
 	t_Vector3d		reflection;
 	t_Vector3d		back_view_ray;
 	double			result;
-
-
-	t_Vector3d light_coord = Point3d_to_Vector3d(init_vars()->light->coord);
-
+	t_Vector3d light_coord;
+	
+	light_coord = Point3d_to_Vector3d(init_vars()->light->coord);
 	light_ray = Vector3d_norm(Vector3d_sub(light_coord, hit.coord));
 	reflection = Vector3d_add(light_ray, \
 				Vector3d_mult(Vector3d_mult(hit.normal, \
@@ -27,7 +26,7 @@ int32_t rgba_to_int32_t(t_rgba rgba)
 }
 
 
-t_rgba	specular(t_Ray_hit hit,  t_Ray ray)
+t_rgba	specular(t_Ray_hit hit,  t_Ray ray, t_rgba color)
 {
 	t_rgba	specular;
 	t_rgba	highlight;
@@ -38,19 +37,19 @@ t_rgba	specular(t_Ray_hit hit,  t_Ray ray)
 	highlight.r = 255;
 	highlight.g = 255;
 	highlight.b = 255;
-	highlight = brightness(highlight, (255 - shine));
-	specular = rgba_add(brightness(separate_color_rgba(hit.color), shine), highlight);
+	highlight = brightness(highlight,- shine);
+	specular = rgba_add(brightness(color, shine), highlight);
 	coeff = spec_coeff(hit, ray);
 	return (brightness(specular, coeff));
 }
 
-t_rgba rgba_init()
+t_rgba rgba_init(int r, int g, int b)
 {
 	t_rgba rgba;
-	rgba.r = 0;
-	rgba.g = 0;
-	rgba.b = 0;
-	rgba.a = 0;
+	rgba.r = (int8_t)r;
+	rgba.g = (int8_t)g;
+	rgba.b = (int8_t)b;
+	rgba.a = (int8_t)255;
 	return (rgba);
 }
 
@@ -75,22 +74,32 @@ t_rgba	rgba_add(t_rgba a, t_rgba b)
 	return (result);
 }
 
-t_rgba	mix_colors_light(t_Ray_hit hit,  t_Ray ray, t_shape shape, double coeff)
+t_rgba	rgba_sub(t_rgba a, t_rgba b)
+{
+	t_rgba	result;
+
+	result.r = fmax(a.r - b.r, 0);
+	result.g = fmax(a.g - b.g, 0);
+	result.b = fmax(a.b - b.b, 0);
+	return (result);
+}
+
+
+t_rgba	mix_colors_light(t_Ray_hit hit,  t_Ray ray, double coeff, t_rgba color)
 {
 
-	t_rgba	result = rgba_init();
-	// t_rgba	light_color = rgba_init();
-	double	l_r = to_double(init_vars()->light->light_ratio);
-	t_rgba	object_color = rgba_init();
+	t_rgba	result = rgba_init(0,0,0);
+	double	l_r = to_double(init_vars()->light->light_ratio); //l_r = light ratio
+	// t_rgba	object_color = separate_color_rgba(shape.color);
 	t_rgba	light_color = separate_color_rgba(init_vars()->light->color); //was lcolor
+	t_rgba res1;
 //add ambient somewhere here
-
+	// printf("hit.hit= %d\n", hit.hit);
 	// light_color = brightness(lcolor, l_r);
-	object_color = separate_color_rgba(shape.color);
-	t_rgba res1 = mix_colors(light_color, object_color, l_r);
-	// result = brightness(res1, coeff);
-	result = rgba_add(brightness(res1, coeff), specular(hit, ray)); //phong specular
-	(void)ray;
+
+	res1 = mix_colors(light_color, color, l_r);
+	result = rgba_add(brightness(res1, coeff), specular(hit, ray, result)); //phong specular
+
 	return (result);
 }
 
@@ -126,17 +135,44 @@ t_rgba mix_colors(t_rgba color1, t_rgba color2, double mix_factor)
     return (result);
 }
 
-
-double remap(double a, double b, double t)
+t_rgba remove_excess(t_rgba c)
 {
-	return ((t-a)/(b-a));
+	if (c.r == fmin(c.r, c.b) && c.r == fmin(c.r, c.g)) 
+	{
+		c.r = 0;
+		c.g -= c.r;
+		c.b -= c.r;
+	}
+	else if (c.b == fmin(c.b, c.r) && c.b == fmin(c.b, c.g))
+	{
+		c.r -= c.b;
+		c.g -= c.b;
+		c.b = 0;
+	}
+	else if (c.g == fmin(c.g, c.r) && c.g == fmin(c.g, c.b))
+	{
+		c.r -= c.g;
+		c.g = 0;
+		c.b -= c.g;
+	}
+	return (c);
 }
 
-// t_rgba ambient(uint32_t color)
-// {
-// 	t_rgba ac;
-// 	 = init_vars()->ambient_light->color;
-// 	color = brightness(color, to_double(init_vars()->ambient_light->light_ratio));
-// 	color = mix_colors(color, ac, to_double(init_vars()->ambient_light->light_ratio));
-// 	return (color);
-// }
+t_rgba ambient(t_rgba color)
+{
+	double intensity = to_double(init_vars()->ambient_light->light_ratio);
+	t_rgba ac;
+	ac = separate_color_rgba(init_vars()->ambient_light->color);
+	// t_rgba color_add = rgba_init(0,0,0);
+
+//if intensity == 1; color should mix 50/50
+	
+	// ac = remove_excess(ac);
+	// color = rgba_add(remove_excess(color_add), brightness(ac, intensity));
+	// color = mix_colors(color, ac, intensity);
+	color = brightness(color, intensity);
+
+	(void)intensity;
+	
+	return (color);
+}

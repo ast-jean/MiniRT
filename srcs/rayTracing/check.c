@@ -14,8 +14,8 @@ double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist)
 	double distance;
 	if (!solveQuadratic(abc, &t, &disc))
 		return (dist);
-		distance = t.x;
-	if (dist >= distance) //distance comparaison
+	distance = t.x;
+	if (dist > distance) //distance comparaison
 	{
 		rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, distance));
 		rh->color = s->color;
@@ -32,7 +32,8 @@ double	check_pl(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double dist)
 	t_Vector3d so = Point3d_to_Vector3d(s->orientation);
 
 	double denom = Vector3d_dot(so, ray.d);
-	if (fabs(denom) > 0){
+	if (fabs(denom) > 0)
+	{
 		double t = Vector3d_dot(Vector3d_sub(sc, ray.o), so) / denom;	
 		if(dist >= t) //distance comparaison
 		{
@@ -104,6 +105,25 @@ double	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh, double dist)
 	return dist;
 }
 
+/// @brief Checks if the dot product of both vectors created from the sphere is the same sign
+/// @param shape_pos position vector of the shape.
+/// @param Vec1 position vector of the vec1.
+/// @param Vec2 position vector of the vec2.
+/// @return 
+bool	check_dot_sign(t_Vector3d shape_pos, t_Vector3d Vec1, t_Vector3d Vec2)
+{
+	double dot1 = Vector3d_dot(shape_pos, Vec1);
+	double dot2 = Vector3d_dot(shape_pos, Vec2);
+
+	if (dot1 >= 0 && dot2 >= 0)
+		return (true);
+	else if (dot1 >= 0 && dot2 >= 0)
+		return (true);
+	else
+		return (false);
+}
+
+
 /// @brief 			:Check for the intersection of each object with the provided t_Ray
 /// @param ray		:The ray
 /// @param rh		:The t_Ray_hit containing intersection information
@@ -118,6 +138,7 @@ bool	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *sha
 	while(aff)
 	{
 		t_shape *s = aff->content;
+
 		if (!shape_o || s->index != shape_o->index) //if the object is not itself
 		{
 			if (ft_strcmp(s->id, "cy"))
@@ -129,8 +150,12 @@ bool	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *sha
 		}
 		aff = aff->next;
 	}
-	if (*distance == old_dist) 
-		return (false); //if the distance is the same it has touch nothing
+	if (*distance >= old_dist && !rh->bounced) 
+		return (false); //if the distance is the same or farther, it has touched nothing.
+	else if (!rh->bounced)
+		return (true); //if shorter, it has touched.
+	else if(*distance == old_dist && rh->bounced)
+		return (true); //if ray is bounced (should see if something interrupting light), if distance is same it has touched
 	else
-		return (true);
+		return (false);
 }

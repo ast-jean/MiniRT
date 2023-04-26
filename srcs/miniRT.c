@@ -153,7 +153,7 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 			if (to_double(vars->ambient_light->light_ratio) - 0.1 <= 0)
 				set_value(&vars->ambient_light->light_ratio, 0);
 			else
-				set_value(&vars->ambient_light->light_ratio, to_double(vars->ambient_light->light_ratio) - 0.01);
+				set_value(&vars->ambient_light->light_ratio, to_double(vars->ambient_light->light_ratio) - 0.1);
 			printf("Ambient light = %f\n", (to_double(vars->ambient_light->light_ratio)));
 		}
 		if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))

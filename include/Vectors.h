@@ -29,6 +29,7 @@ typedef struct s_Ray_hit{
 	t_Vector3d	coord;
 	t_Vector3d	normal;
 	bool		hit;
+	bool		bounced;
 } t_Ray_hit;
 
 
