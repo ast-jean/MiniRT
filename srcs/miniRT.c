@@ -272,7 +272,55 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 
 }
 
+void cy_tranform(t_shape cy)
+{
+	int num_points;
+	double x;
+	double y;
+	double angle;
+	int index;
+	num_points = 12;
 
+
+	t_3dPoint points[num_points];
+
+	
+
+
+	index = 0;
+
+	// t_Vars vars = init_vars();
+
+
+	while(index < num_points)
+	{
+		angle = 2 * M_PI * index/num_points;
+
+		points[index].x = fp_init(to_double(cy.radius) * cos(angle));
+		points[index].y = fp_init(to_double(cy.radius) * sin(angle));
+
+		index++;
+	}
+
+	index = 0;
+
+	while(index < num_points)
+	{
+		points[index].x = fp_init(to_double(points[index].x) + to_double(cy.coord.x));
+		points[index].y = fp_init(to_double(points[index].y) + to_double(cy.coord.y));
+		points[index].z = fp_init(0.0 + to_double(cy.coord.z));
+
+		index++;
+	}
+
+	t_rotation rotation = vector_to_rotation_angles(Point3d_to_Vector3d(cy.orientation));
+
+
+	t_matrice3x3 rx = matrice_rotation_x(rotation.phi);
+	t_matrice3x3 ry = matrice_rotation_y(rotation.theta);
+
+
+}
 
 
 
