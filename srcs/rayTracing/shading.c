@@ -52,7 +52,7 @@ t_rgba shading_obj(t_Ray ray, t_Ray_hit *hit_light, t_shape shape, t_Ray_hit *fi
 		color = rgba_add(color, color_to_add);
 		// color = rgba_add(color, ambient());
 	}
-	else	//in shadow
+	// else	//in shadow
 		// color = rgba_add(color, ambient());
 	
 	return (color);
