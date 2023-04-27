@@ -10,8 +10,6 @@
 #                                                                              #
 # **************************************************************************** #
 
-
-
 SRC = ft_atoi.c	\
 	  ft_bzero.c \
 	  ft_isalpha.c \
@@ -61,7 +59,7 @@ SRC = ft_atoi.c	\
 NAME = libft.a
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-HEADER =-I  libft.h
+HEADER = -I libft
 
 ### Repertoires ###
 SRCS_DIR 	= srcs/
@@ -98,7 +96,6 @@ OBJS_IN_DIR = $(addprefix $(OBJS_DIR), $(OBJS))
 all: start
 
 $(NAME) : $(OBJS_IN_DIR)
-#	@echo "$(CURSOR_UP)$(GREEN)Compiling DONE!                   $(END)$(CURSOR_DOWN)"
 	@echo "$(BLUE)\033[1ACreating archive $(NAME)     $(END)"
 	@ar -rc $(NAME) $^
 	@echo "$(GREEN)${SELECTED}>Libft completed!<$(END)"
