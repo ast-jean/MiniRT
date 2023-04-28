@@ -29,7 +29,7 @@
 #define WIDTH	500 //Width of screen
 #define HEIGHT	500 //Height of screen
 
-static mlx_image_t* img;
+
 
 typedef struct s_Vector3d t_Vector3d;
 typedef struct s_Vector2d t_Vector2d;
