@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Fixed.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtrembla <mtrembla@student.42quebec>       +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:25:43 by slavoie           #+#    #+#             */
-/*   Updated: 2023/04/17 15:45:37 by mtrembla         ###   ########.fr       */
+/*   Updated: 2023/04/27 16:24:07 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,17 @@ t_Vector3d Point3d_to_Vector3d(t_3dPoint point)
 	vec.y = to_double(point.y);
 	vec.z = to_double(point.z);
 	return (vec);
+}
+
+t_3dPoint Vec3D_to_point3D(t_Vector3d vec)
+{
+	t_3dPoint point;
+
+	point.x = fp_init(vec.x);
+	point.x = fp_init(vec.y);
+	point.x = fp_init(vec.z);
+
+	return(point);
 }
 
 t_Fixed fp_init(double value)

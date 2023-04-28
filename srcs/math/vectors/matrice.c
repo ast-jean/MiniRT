@@ -104,5 +104,18 @@ t_rotation vector_to_rotation_angles(t_Vector3d orientation)
     // Calculer l'angle theta (rotation autour de l'axe Y)
     angles.theta = atan2(orientation.x, orientation.z);
 
+    // Calculer l'angle psi (rotation autour de l'axe Z)
+    angles.psi = atan2(orientation.y, orientation.x);
+
     return angles;
+}
+
+t_matrice3x3 combine_matrice(t_matrice3x3 rx, t_matrice3x3 ry, t_matrice3x3 rz)
+{
+    t_matrice3x3 matrix;
+
+    matrix = multiplier_matrices(ry, rx);
+    matrix = multiplier_matrices(rz, matrix);
+
+    return matrix;
 }

@@ -63,6 +63,7 @@ typedef struct s_rotation
 {
 	double phi;
 	double theta;
+	double psi;
 }	t_rotation;
 
 /*-------------------------Initialisation-------------------------*/
@@ -111,15 +112,16 @@ double		to_double(t_Fixed fp);
 int			to_int(t_Fixed fp);
 t_Fixed		fp_init(double value);
 t_Vector3d	Point3d_to_Vector3d(t_3dPoint point);
+t_3dPoint Vec3D_to_point3D(t_Vector3d vec);
 double		fp_cal(char operand, int num_args, ...);
 /*-------------------------ray_tracing-------------------------*/
 // ray_tracing.c
 void		ray_to_screen();
 uint32_t	ray_tracing(const t_Ray ray);
-t_Ray_hit	ray_trace(const t_Ray ray, double dist, t_shape *shape);
+t_Ray_hit	ray_trace(t_Ray ray, double dist, t_shape *shape);
 // check.c
 bool	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o);
-double	check_cy(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
+double	check_cy(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double *dist);
 double	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
 double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
 
@@ -153,5 +155,6 @@ t_matrice3x3 matrice_rotation_z(double gamma);
 t_matrice3x3 multiplier_matrices(t_matrice3x3 A, t_matrice3x3 B);
 t_3dPoint rotation_point(t_matrice3x3 M, t_3dPoint P);
 t_rotation vector_to_rotation_angles(t_Vector3d orientation);
+t_matrice3x3 combine_matrice(t_matrice3x3 rx, t_matrice3x3 ry, t_matrice3x3 rz);
 
 #endif
