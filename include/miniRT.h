@@ -59,6 +59,11 @@ typedef struct s_matrice3x3
 	double m[3][3];
 } t_matrice3x3;
 
+typedef struct s_matrice4x4
+{
+	double m[4][4];
+} t_matrice4x4;
+
 typedef struct s_rotation
 {
 	double phi;

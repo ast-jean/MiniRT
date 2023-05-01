@@ -15,6 +15,7 @@ typedef struct s_Vector3d{
     double x;
 	double y;
 	double z;
+	double w;
 } t_Vector3d;
 
 typedef struct s_Ray{

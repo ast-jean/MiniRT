@@ -96,73 +96,106 @@ t_Ray inverse_transform_ray(const t_Ray ray, const t_matrice3x3 transformation_m
 {
     t_Ray transformed_ray;
 
-    // Inverse the transformation matrix
     t_matrice3x3 inverse_matrix = inverse_matrice3x3(transformation_matrix);
 
-    // Apply the inverse transformation to the ray origin and direction
     transformed_ray.o = Point3d_to_Vector3d(rotation_point(inverse_matrix, Vec3D_to_point3D(ray.o)));
     transformed_ray.d = Point3d_to_Vector3d(rotation_point(inverse_matrix, Vec3D_to_point3D(ray.d)));
 
     return transformed_ray;
 }
 
-
-double	check_cy(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double *dist)
+bool intersectRayPlane(t_Vector3d ray_origin, t_Vector3d ray_direction, t_Vector3d plane_point, t_Vector3d plane_normal, double *t)
 {
-	// Calculer l'équation du rayon
-	t_Vector3d abc;
-	t_Vector2d t;
+	double denom = Vector3d_dot(plane_normal, ray_direction);
+	if (fabs(denom) < 1e-6)
+		return false; // Le rayon est parallèle au plan
 
+	*t = Vector3d_dot(Vector3d_sub(plane_point, ray_origin), plane_normal) / denom;
 
-	// Calculer les coefficients de l'équation quadratique
-	abc.x = (ray.d.x * ray.d.x) + (ray.d.y * ray.d.y);
-	abc.y = 2.0 * (ray.o.x * ray.d.x + ray.o.y * ray.d.y);
-	abc.z = (ray.o.x * ray.o.x) + (ray.o.y * ray.o.y) - to_double(s->radius) * to_double(s->radius);
-
-	// printf("A = %f, B = %f, C = %f\n", abc.x, abc.y, abc.z);
-	// calculer le discriminant
-	double discriminant;
-
-	// Vérifier si le rayon intersecte le cylindre
-	if (!solveQuadratic(abc, &t, &discriminant))
-		return *dist;
-
-	// Choisir la plus petite distance positive
-	double distance = 0;
-	if (t.x > 0.0 && (t.y < 0.0 || t.x < t.y)) 
-	{
-		// Vérifier si l'intersection est dans la hauteur du cylindre
-		double z1 = ray.o.z + t.x * ray.d.z;
-		
-		if (z1 >= to_double(s->coord.z) - to_double(s->height) / 2.0 && z1 <= to_double(s->coord.z) + to_double(s->height )/ 2.0) 
-			distance = t.x;
-	}
-	if (distance < 0.0) 
-	{
-		if (t.y > 0.0 && (t.x < 0.0 || t.y < t.x)) 
-		{
-			// Vérifier si l'intersection est dans la hauteur du cylindre
-			double z2 = ray.o.z + t.y * ray.d.z;
-			
-			if (z2 >= to_double(s->coord.z) - to_double(s->height) / 2.0 && z2 <= to_double(s->coord.z) + to_double(s->height )/ 2.0)
-				distance = t.y;
-		}
-	}
-	// Vérifier si une intersection a été trouvée
-	if (!distance)
-		return *dist;
-	// Remplir la structure t_Ray_hit avec les informations de l'intersection
-	if(*dist > distance)
-	{
-		rh->distance = distance;
-		rh->color = s->color;
-		rh->shape = (t_shape*)s;
-		rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, distance));
-		*dist = distance;
-		return distance;
-	}
-	return *dist;
+	return (*t >= 0);
 }
+
+
+double check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
+{
+    // Paramètres du cylindre
+    t_Vector3d C = Point3d_to_Vector3d(s->coord);      // point de départ de l'axe du cylindre
+    t_Vector3d V = Point3d_to_Vector3d(s->orientation); // orientation du cylindre (vecteur unitaire)
+    double r = to_double(s->radius);                 // rayon du cylindre
+    double maxm = to_double(s->height);              // longueur de l'axe du cylindre
+
+    t_Vector3d X = Vector3d_sub(ray.o, C);
+    t_Vector3d abc;
+
+    // Coefficients de l'équation quadratique
+    abc.x = ray.d.x * ray.d.x - pow(ray.d.x * V.x, 2) + ray.d.y * ray.d.y - pow(ray.d.y * V.y, 2) + ray.d.z * ray.d.z - pow(ray.d.z * V.z, 2);
+    abc.y = 2 * (X.x * ray.d.x - X.x * V.x * ray.d.x * V.x + X.y * ray.d.y - X.y * V.y * ray.d.y * V.y + X.z * ray.d.z - X.z * V.z * ray.d.z * V.z);
+    abc.z = X.x * X.x - pow(X.x * V.x, 2) + X.y * X.y - pow(X.y * V.y, 2) + X.z * X.z - pow(X.z * V.z, 2) - r * r;
+
+    double discriminant;
+    t_Vector2d t;
+    if (!solveQuadratic(abc, &t, &discriminant))
+        return *dist;
+
+    // Vérifier les intersections avec le cylindre et ses extrémités
+    double min_distance = INFINITY;
+    for (int i = 0; i < 2; ++i)
+    {
+        double curr_t = (i == 0) ? t.x : t.y;
+        if (curr_t > 0)
+        {
+            double m = ray.d.x * V.x * curr_t + X.x * V.x + ray.d.y * V.y * curr_t + X.y * V.y + ray.d.z * V.z * curr_t + X.z * V.z;
+            if (m >= 0 && m <= maxm)
+            {
+                if (curr_t < min_distance)
+                {
+                    min_distance = curr_t;
+                    rh->distance = min_distance;
+                    rh->color = s->color;
+                    rh->shape = (t_shape *)s;
+                    rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, min_distance));
+                    *dist = min_distance;
+                }
+            }
+        }
+    }
+
+    // // Vérifier les intersections avec les extrémités du cylindre
+    // t_Vector3d base_point = C;
+    // t_Vector3d top_point = Vector3d_add(C, Vector3d_mult(V, maxm));
+    // double t_plane;
+
+    // for (int i = 0; i < 2; ++i)
+    // {
+    //     t_Vector3d plane_point = (i == 0) ? base_point : top_point;
+    //     if (intersectRayPlane(ray.o, ray.d, plane_point, V, &t_plane))
+    //     {
+    //         t_Vector3d intersection_point = Vector3d_add(ray.o, Vector3d_mult(ray.d, t_plane));
+    //         t_Vector3d vec_from_center = Vector3d_sub(intersection_point, plane_point);
+
+    //         if (Vector3d_length(vec_from_center) <= r)
+    //         {
+    //             if (t_plane < min_distance)
+    //             {
+    //                 min_distance = t_plane;
+    //                 rh->distance = min_distance;
+    //                 rh->color = s->color;
+    //                 rh->shape = (t_shape *)s;
+    //                 rh->coord = intersection_point;
+    //                 *dist = min_distance;
+    //             }
+    //         }
+    //     }
+    // }
+
+    return *dist;
+}
+
+
+
+
+
+
 
 
 t_matrice3x3 create_matrice(t_shape *s)
@@ -182,6 +215,9 @@ t_matrice3x3 create_matrice(t_shape *s)
 }
 
 
+
+
+
 bool ray_checkhit(t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o)
 {
     t_node *aff = init_vars()->objs->first;
@@ -194,26 +230,30 @@ bool ray_checkhit(t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o)
         {
             if (ft_strcmp(s->id, "cy"))
             {
-                t_Ray transformed_ray = ray; // Create a copy of the ray for transformation
+                check_cy(s, ray, rh, distance);
 
-                t_rotation rotation = vector_to_rotation_angles(Point3d_to_Vector3d(s->orientation));
-                t_matrice3x3 inv_m = combine_matrice(matrice_rotation_x(-rotation.phi), matrice_rotation_y(-rotation.theta), matrice_rotation_z(-rotation.psi));
 
-                t_3dPoint tranformed_o = rotation_point(inv_m, Vec3D_to_point3D(ray.o));
-                transformed_ray.o = Point3d_to_Vector3d(tranformed_o);
-                t_3dPoint tranformed_d = rotation_point(inv_m, Vec3D_to_point3D(ray.d));
-                transformed_ray.d = Point3d_to_Vector3d(tranformed_d);
 
-                double new_distance = check_cy(s, transformed_ray, rh, distance);
-                if (new_distance < *distance) // Only update if the new distance is smaller
-                {
-                    *distance = new_distance;
 
-                    t_matrice3x3 m = create_matrice(s);
-                    t_3dPoint rotated_intersection = rotation_point(m, Vec3D_to_point3D(rh->coord));
-                    rh->coord = Point3d_to_Vector3d(rotated_intersection);
-                    rh->normal = Point3d_to_Vector3d(rotation_point(m, Vec3D_to_point3D(rh->normal)));
-                }
+                // // t_Ray transformed_ray = ray; // Create a copy of the ray for transformation
+
+                // t_rotation rotation = vector_to_rotation_angles(Point3d_to_Vector3d(s->orientation));
+                // t_matrice3x3 inv_m = combine_matrice(matrice_rotation_x(-rotation.phi), matrice_rotation_y(-rotation.theta), matrice_rotation_z(-rotation.psi));
+
+                // // t_3dPoint tranformed_o = rotation_point(inv_m, Vec3D_to_point3D(ray.o));
+                // // transformed_ray.o = Point3d_to_Vector3d(tranformed_o);
+                // // t_3dPoint tranformed_d = rotation_point(inv_m, Vec3D_to_point3D(ray.d));
+                // // transformed_ray.d = Point3d_to_Vector3d(tranformed_d);
+
+                // if (new_distance < *distance) // Only update if the new distance is smaller
+                // {
+                //     *distance = new_distance;
+
+                //     t_matrice3x3 m = create_matrice(s);
+                //     t_3dPoint rotated_intersection = rotation_point(m, Vec3D_to_point3D(rh->coord));
+                //     rh->coord = Point3d_to_Vector3d(rotated_intersection);
+                //     rh->normal = Point3d_to_Vector3d(rotation_point(m, Vec3D_to_point3D(rh->normal)));
+                // }
             }
             else if (ft_strcmp(s->id, "pl"))
                 *distance = check_pl(s, ray, rh, *distance);
