@@ -3,6 +3,9 @@
 NAME 	= miniRT
 BONUS 	= miniRT_bonus
 
+UNAME :=$(shell uname)
+ARCH  :=$(shell uname -m)
+
 SRCS_FILES 		=	miniRT.c \
 					rayTracing/rayTracing.c \
 					rayTracing/check.c \
@@ -26,13 +29,23 @@ SRCS_FILES 		=	miniRT.c \
 INCLUDE_FILES	= 	miniRT.h \
 					objects.h \
 					Vectors.h \
-					MLX42/include/MLX42/MLX42.h \
-					
-LIBS =	include/libft/libft.a \
+					MLX42/include/MLX42/MLX42.h
+LIBS = include/libft/libft.a \
 		include/libft_dlist/dlist.a \
-		include/MLX42/build/libmlx42.a \
-		-Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
-
+		include/MLX42/build/libmlx42.a
+ifeq ($(UNAME), Darwin)	
+LIBS += -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+	ifeq (,$(wildcard /usr/local/Cellar/glfw))
+		# $(error GLFW not found. Please install it via Homebrew using: brew install glfw)
+	endif
+else ifeq ($(UNAME), Linux)
+LIBS +=	-Iinclude -lglfw -lm -ldl -pthread
+ifeq (,$(shell pkg-config --exists glfw3 && echo "found"))
+	$(error GLFW not found. Please install it via your package manager. For example, on Ubuntu or Debian-based systems: sudo apt-get install libglfw3-dev)
+	endif
+else
+	$(error Unsupported OS : $(UNAME))
+endif
 ### Repertoires ###
 SRCS_DIR 	= srcs/
 OBJS_DIR	= objs/
@@ -69,16 +82,13 @@ WHITE		= \033[37m
 
 ### Compilations et archivage ###
 CC 			= gcc
-CFLAGS 		= -Wall -Wextra -Werror -g
-MLXFLAGS	= 
+CFLAGS 		= -Wall -Wextra -g -Wno-error=misleading-indentation
+
 ###--------------------------## REGLES ##--------------------------###
 all: mlx_glfw $(NAME)
 
 mlx_glfw:
 	@echo " "
-ifeq (,$(shell brew list | grep glfw))
-	brew install glfw
-endif
 ifeq ("$(wildcard include/MLX42/build/libmlx42.a)","")
 	cd include/MLX42/ && cmake -B build
 	cd include/MLX42/build && make

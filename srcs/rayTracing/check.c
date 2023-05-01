@@ -17,7 +17,7 @@ double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist)
 	double distance;
 	if (!solveQuadratic(abc, &t, &disc))
 		return (dist);
-		distance = t.x;
+	distance = t.x;
 	if (dist >= distance) //distance comparaison
 	{
 		rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, distance));
