@@ -31,18 +31,16 @@ INCLUDE_FILES	= 	miniRT.h \
 LIBS = include/libft/libft.a \
 		include/libft_dlist/dlist.a \
 		include/MLX42/build/libmlx42.a
-ifeq ($(UNAME), Darwin)	
+
+ifeq ($(UNAME), Darwin)
 LIBS += -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
-	ifeq (,$(wildcard /usr/local/Cellar/glfw))
-		$(error GLFW not found. Please install it via Homebrew using: brew install glfw)
-	endif
 else ifeq ($(UNAME), Linux)
 LIBS +=	-Iinclude -lglfw -lm -ldl -pthread
 ifeq (,$(shell pkg-config --exists glfw3 && echo "found"))
-	$(error GLFW not found. Please install it via your package manager. For example, on Ubuntu or Debian-based systems: sudo apt-get install libglfw3-dev)
-	endif
+$(error GLFW not found. Please install it via your package manager. For example, on Ubuntu or Debian-based systems: sudo apt-get install libglfw3-dev)
+endif
 else
-	$(error Unsupported OS : $(UNAME))
+$(error Unsupported OS : $(UNAME))
 endif
 ### Repertoires ###
 SRCS_DIR 	= srcs/
