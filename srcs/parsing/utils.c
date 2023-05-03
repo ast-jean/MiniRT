@@ -46,3 +46,11 @@ int	is_number(char *str)
 	}
 	return (is_double + 1);
 }
+
+void	valid_scene()
+{
+	t_Vars *vars = init_vars();
+
+	if (!vars->camera || !vars->ambient_light || !vars->light)
+		error_exit(3, "Invalid Scene");
+}

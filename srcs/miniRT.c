@@ -296,7 +296,7 @@ int	main(int argc, char **argv)
 	if (!vars->error_message)
 		printf("\n\nGOOD\n\n");
 	else
-		printf("%s\n", vars->error_message);
+		printf("Error\n%s\n", vars->error_message);
 
 	free_vars(vars);
 	return (EXIT_SUCCESS);
