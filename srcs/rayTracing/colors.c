@@ -1,46 +1,25 @@
 #include "../../include/miniRT.h"
 #include <math.h>
 
-double		spec_coeff(t_Ray_hit hit,  t_Ray ray)
-{
-	t_Vector3d		light_ray;
-	t_Vector3d		reflection;
-	t_Vector3d		back_view_ray;
-	double			result;
-	t_Vector3d light_coord;
-	
-	light_coord = Point3d_to_Vector3d(init_vars()->light->coord);
-	light_ray = Vector3d_norm(Vector3d_sub(light_coord, hit.coord));
-	reflection = Vector3d_add(light_ray, \
-				Vector3d_mult(Vector3d_mult(hit.normal, \
-				Vector3d_dot(light_ray, hit.normal)), -2));
-	back_view_ray = Vector3d_norm(Vector3d_sub(hit.coord, ray.o));
-	result = fmax(Vector3d_dot(reflection, back_view_ray), 0);
-	result = pow(result, 10);
-	return (result);
-}
-
 int32_t rgba_to_int32_t(t_rgba rgba)
 {
 	return ((rgba.r << 24) | (rgba.g << 16) | (rgba.b << 8) | rgba.a);
 }
 
 
-t_rgba	specular(t_Ray_hit hit,  t_Ray ray, t_rgba color)
+t_rgba	specular(t_rgba obj_color, double coefficient)
 {
 	t_rgba	specular;
-	t_rgba	highlight;
+	t_rgba	highlight = rgba_init(255,255,255);
 	double		shine;
-	double		coeff;
+	// double		coeff;
 
-	shine = 0.1;
-	highlight.r = 255;
-	highlight.g = 255;
-	highlight.b = 255;
-	highlight = brightness(highlight,- shine);
-	specular = rgba_add(brightness(color, shine), highlight);
-	coeff = spec_coeff(hit, ray);
-	return (brightness(specular, coeff));
+	shine = 0.5;
+	highlight = brightness(highlight, shine);
+	// specular = rgba_add(brightness(separate_color_rgba(hit.color), shine), highlight);
+	specular = rgba_add(brightness(obj_color, shine), highlight);
+	// coeff = spec_coeff(hit, ray);
+	return (brightness(specular, coefficient));
 }
 
 t_rgba rgba_init(int r, int g, int b)
@@ -74,32 +53,25 @@ t_rgba	rgba_add(t_rgba a, t_rgba b)
 	return (result);
 }
 
-t_rgba	rgba_sub(t_rgba a, t_rgba b)
+t_rgba	mix_colors_light(t_Ray_hit hit, t_Ray ray, t_shape shape, double coeff)
 {
-	t_rgba	result;
-
-	result.r = fmax(a.r - b.r, 0);
-	result.g = fmax(a.g - b.g, 0);
-	result.b = fmax(a.b - b.b, 0);
-	return (result);
-}
-
-
-t_rgba	mix_colors_light(t_Ray_hit hit,  t_Ray ray, double coeff, t_rgba color)
-{
-
+	(void)ray;
 	t_rgba	result = rgba_init(0,0,0);
-	double	l_r = to_double(init_vars()->light->light_ratio); //l_r = light ratio
-	// t_rgba	object_color = separate_color_rgba(shape.color);
+
+	double	l_r = to_double(init_vars()->light->light_ratio);
+	t_rgba	object_color = rgba_init(0,0,0);
 	t_rgba	light_color = separate_color_rgba(init_vars()->light->color); //was lcolor
-	t_rgba res1;
+	object_color = separate_color_rgba(shape.color);
+	t_rgba res1 = mix_colors(light_color, object_color, l_r);
+	if(hit.hit)
+		coeff = 0;
+
+	if(coeff > 0)
+	{
+		result = rgba_add(brightness(res1, coeff), specular(object_color, pow(coeff,100))); //phong specular
+	}
 //add ambient somewhere here
-	// printf("hit.hit= %d\n", hit.hit);
 	// light_color = brightness(lcolor, l_r);
-
-	res1 = mix_colors(light_color, color, l_r);
-	result = rgba_add(brightness(res1, coeff), specular(hit, ray, result)); //phong specular
-
 	return (result);
 }
 

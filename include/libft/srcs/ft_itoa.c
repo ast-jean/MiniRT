@@ -33,7 +33,6 @@ char	*ft_itoa(int nb)
 {
 	char	*c;
 	int		i;
-	int		neg;
 	long	n;
 
 	n = nb;
@@ -42,7 +41,6 @@ char	*ft_itoa(int nb)
 		return (NULL);
 	i = count_char(n);
 	c[i--] = '\0';
-	neg = 1;
 	if (n < 0)
 		n *= -1;
 	while (i >= 0)

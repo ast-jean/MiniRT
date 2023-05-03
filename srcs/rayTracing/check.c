@@ -6,16 +6,19 @@ double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist)
 	t_Vector3d abc;
 	t_Vector2d t;
 
+
 	abc.x =  Vector3d_dot(ray.d, ray.d);
 	abc.y = 2.0 * Vector3d_dot(ray.d, ro_sc);
 	abc.z = Vector3d_dot(ro_sc, ro_sc) - pow(to_double(s->radius), 2.0);
 
+	// printf("A = %f, B = %f, C = %f\n", abc.x, abc.y, abc.z);
+	// printf("A = %f, B = %f, C = %f\n", abc.x, abc.y, abc.z);
 	double disc;
 	double distance;
 	if (!solveQuadratic(abc, &t, &disc))
 		return (dist);
 	distance = t.x;
-	if (dist > distance) //distance comparaison
+	if (dist >= distance) //distance comparaison
 	{
 		rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, distance));
 		rh->color = s->color;
@@ -61,7 +64,9 @@ double	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh, double dist)
 	// Calculer les coefficients de l'équation quadratique
 	abc.x = (ray.d.x * ray.d.x) + (ray.d.y * ray.d.y);
 	abc.y = 2.0 * (ray.o.x * ray.d.x + ray.o.y * ray.d.y);
-	abc.z = ray.o.x * ray.o.x + ray.o.y * ray.o.y - to_double(s->radius) * to_double(s->radius);
+	abc.z = (ray.o.x * ray.o.x) + (ray.o.y * ray.o.y) - to_double(s->radius) * to_double(s->radius);
+
+	// printf("A = %f, B = %f, C = %f\n", abc.x, abc.y, abc.z);
 	// calculer le discriminant
 	double discriminant;
 
@@ -91,7 +96,7 @@ double	check_cy(const t_shape *s,const  t_Ray ray, t_Ray_hit *rh, double dist)
 		}
 	}
 	// Vérifier si une intersection a été trouvée
-	if (distance)
+	if (!distance)
 		return dist;
 	// Remplir la structure t_Ray_hit avec les informations de l'intersection
 	if(dist > distance)
@@ -134,7 +139,7 @@ bool	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *sha
 {
 	t_node *aff = init_vars()->objs->first;
 	double old_dist = *distance; //Should dist be distance?
-
+	rh->shape = NULL;
 	while(aff)
 	{
 		t_shape *s = aff->content;
@@ -150,12 +155,8 @@ bool	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *sha
 		}
 		aff = aff->next;
 	}
-	if (*distance >= old_dist && !rh->bounced) 
-		return (false); //if the distance is the same or farther, it has touched nothing.
-	else if (!rh->bounced)
-		return (true); //if shorter, it has touched.
-	else if(*distance == old_dist && rh->bounced)
-		return (true); //if ray is bounced (should see if something interrupting light), if distance is same it has touched
+	if (rh->shape)
+		return (true);
 	else
 		return (false);
 }

@@ -33,7 +33,7 @@ t_Ray_hit init_Ray_hit()
 	rh.distance = 0;
 	rh.normal = Vector3d_init(0,0,0);
 	rh.shape = NULL;
-	// rh.bounced = false;
+	rh.bounced = false;
 	rh.hit = false;
 	return (rh);
 }
@@ -49,24 +49,21 @@ t_Ray_hit ray_trace(const t_Ray ray, double dist_bef, t_shape *shape)
 {
 	t_Ray_hit light_ray_hit = init_Ray_hit();
 	double distance = 0;
-	light_ray_hit.hit = false;
+	light_ray_hit.hit = true;
 
 	distance = dist_bef;
 	if (!shape)
 	{	
-		light_ray_hit.bounced = false;
+		light_ray_hit.bounced =  false;
 		if(ray_checkhit(ray, &light_ray_hit, &distance, NULL))
 			light_ray_hit.hit = true;	//initialise rayhit Null
 	}
 	else
 	{
 		light_ray_hit.bounced = true;
-		if(ray_checkhit(ray, &light_ray_hit, &distance, shape))//if it hits 
+		if(!ray_checkhit(ray, &light_ray_hit, &distance, shape))//if it hits 
 			light_ray_hit.hit = false;
 	}
-	if (light_ray_hit.distance == 0)
-		light_ray_hit.distance = distance; //added 
-
 	return (light_ray_hit);
 }
 
@@ -83,7 +80,5 @@ uint32_t ray_tracing(const t_Ray ray) //returns a color
 	color = rgba_to_int32_t(shading(&hit, separate_color_rgba(color)));
 //add reflection
 	//color = mixcolor (color, other object, reflection_intensity)
-// add ambiantlight
-	// color = ambient(color);
 	return (color);
 }

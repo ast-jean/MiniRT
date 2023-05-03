@@ -6,6 +6,7 @@
 # include <unistd.h>
 # include <signal.h>
 # include <stdlib.h>
+# include <stdbool.h>
 # include <stdint.h>
 # include <stdarg.h>
 # include <limits.h>
@@ -28,7 +29,7 @@
 #define WIDTH	500 //Width of screen
 #define HEIGHT	500 //Height of screen
 
-static mlx_image_t* img;
+
 
 typedef struct s_Vector3d t_Vector3d;
 typedef struct s_Vector2d t_Vector2d;
@@ -113,14 +114,14 @@ bool	check_dot_sign(t_Vector3d shape_pos, t_Vector3d Vec1, t_Vector3d Vec2);
 
 /*---------------------------Shading-------------------------*/
 t_rgba		shading(t_Ray_hit *hit, t_rgba color);
-t_Vector3d	find_normal(t_Vector3d coords, t_shape shape);
+t_Vector3d	find_normal(t_Vector3d coords, t_Vector3d obj_coord, t_shape shape, bool is_light);
 // t_rgba		shading_sp(t_Ray ray, t_Ray_hit *hit);
 /*---------------------------colors-------------------------*/
 t_rgba		brightness(t_rgba color, double scale);
 t_rgba		separate_color_rgba(uint32_t color);
 t_rgba		mix_colors(t_rgba colorA, t_rgba colorB, double mix_factor);
 t_rgba		ambient(t_rgba color);
-t_rgba		mix_colors_light(t_Ray_hit hit,  t_Ray ray, double coeff, t_rgba color);
+t_rgba		mix_colors_light(t_Ray_hit hit, t_Ray ray, t_shape shape, double coeff);
 int32_t		rgba_to_int32_t(t_rgba rgba);
 t_rgba		rgba_add(t_rgba a, t_rgba b);
 t_rgba		rgba_init(int r, int g, int b);

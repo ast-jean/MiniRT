@@ -25,7 +25,8 @@
         "sstream": "c",
         "string": "c",
         "string_view": "c",
-        "vector": "c"
+        "vector": "c",
+        "__locale": "c"
     },
     "cmake.sourceDirectory": "${workspaceFolder}/include/MLX42"
 }

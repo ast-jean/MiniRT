@@ -1,6 +1,8 @@
 #include "../include/miniRT.h"
 #include <errno.h>
 
+static mlx_image_t* img;
+
 void hook(void* param)
 {
 	// t_Vars		*vars = param;
@@ -146,7 +148,7 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 				set_value(&vars->ambient_light->light_ratio, 1);
 			else
 				set_value(&vars->ambient_light->light_ratio,to_double(vars->ambient_light->light_ratio) + 0.1);
-				printf("Ambient light = %f\n", (to_double(vars->ambient_light->light_ratio)));
+			printf("Ambient light = %f\n", (to_double(vars->ambient_light->light_ratio)));
 		}
 		if (mlx_is_key_down(vars->mlx, MLX_KEY_7))
 		{
@@ -227,7 +229,7 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 		if (mlx_is_key_down(vars->mlx, MLX_KEY_S))
 		{
 			// set_value(&vars->camera->orientation.y, to_double(vars->camera->orientation.y) + 0.015);
-			set_value(&vars->camera->coord.x, to_double(vars->camera->coord.x) - 10.0);
+			set_value(&vars->camera->coord.x, to_double(vars->camera->coord.x) - 50.0);
 			// vars->camera->orientation.x.value += 46;
 			printf("CX = %f\n", to_double(vars->camera->coord.x));
 
@@ -236,7 +238,7 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 		if (mlx_is_key_down(vars->mlx, MLX_KEY_W))
 		{
 			// set_value(&vars->camera->orientation.y, to_double(vars->camera->orientation.y) + 0.015);
-			set_value(&vars->camera->coord.x, to_double(vars->camera->coord.x) + 10.0);
+			set_value(&vars->camera->coord.x, to_double(vars->camera->coord.x) + 50.0);
 			// vars->camera->orientation.x.value += 46;
 			printf("CX = %f\n", to_double(vars->camera->coord.x));
 
@@ -282,6 +284,7 @@ int	main(int argc, char **argv)
 		vars->mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
 		img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
 		vars->img = img; //remove global variable
+		// print_objects();
 		ray_to_screen();
 		mlx_image_to_window(vars->mlx, img, 0, 0);	
 		mlx_mouse_hook(vars->mlx, mouse_hook, vars);
