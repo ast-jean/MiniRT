@@ -4,6 +4,8 @@ void   object_A(char **elem, t_Vars *vars)
 {
 	if (vars->ambient_light)
 		error_exit(3, "Can only be declared once");
+	else if (info_count(elem) != 3)
+		error_exit(3, "Invalid number of information");
 	else
 	{
 		vars->ambient_light = malloc(sizeof(t_shape));
@@ -19,6 +21,8 @@ void	object_C(char **elem, t_Vars *vars)
 {
     if (vars->camera)
 		error_exit(3, "Can only be declared once");
+	else if (info_count(elem) != 4)
+		error_exit(3, "Invalid number of information");
 	else
 	{
 		vars->camera = malloc(sizeof(t_shape));
@@ -36,6 +40,8 @@ void	object_L(char **elem, t_Vars *vars)
 {
 	if (vars->light)
 		error_exit(3, "Can only be declared once");
+	else if (info_count(elem) != 3 && info_count(elem) != 4)
+		error_exit(3, "Invalid number of information");
 	else
 	{
     	vars->light = malloc(sizeof(t_shape));

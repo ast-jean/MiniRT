@@ -59,6 +59,24 @@ typedef struct s_Vars	// all of our values needed throught the program
 t_Vars	*init_vars();
 void	free_vars(t_Vars *vars);
 /*----------------------------parsing----------------------------*/
+//colors.c
+int			str_is_digit(char *color);
+uint8_t		valid_uint8(char *elem);
+uint32_t	rgb_to_hex(char *elem);
+//converter.c
+t_Fixed		str_to_fixed(char *elem);
+t_3dPoint	str_to_3D(char *elem);
+double		atod(char *str);
+//debug.c
+void		error_exit(int code, char *str);
+int			info_count(char **elem);
+void		print_objects();
+//objects.c
+t_shape 	*object_sp(char **elem, t_Vars *vars);
+t_shape 	*object_pl(char **elem, t_Vars *vars);
+t_shape 	*object_cy(char **elem, t_Vars *vars);
+t_Fixed		parse_size(char *elem);
+t_Fixed		parse_radius(char *elem);
 //parsing.c
 void		parse(int argc, char **argv);
 void		valid_file(char *file);
@@ -72,26 +90,12 @@ t_Fixed		parse_light_ratio(char *elem);
 t_3dPoint	parse_coordinates(char *elem);
 t_3dPoint	parse_orientation(char *elem);
 uint8_t 	parse_FOV(char *elem);
-//objects.c
-t_shape 	*object_sp(char **elem, t_Vars *vars);
-t_shape 	*object_pl(char **elem, t_Vars *vars);
-t_shape 	*object_cy(char **elem, t_Vars *vars);
-//colors.c
-int			str_is_digit(char *color);
-uint8_t		valid_uint8(char *elem);
-uint32_t	rgb_to_hex(char *elem);
-//converter.c
-t_Fixed		str_to_fixed(char *elem);
-t_3dPoint	str_to_3D(char *elem);
-double		atod(char *str);
-//debug.c
-void		error_exit(int code, char *str);
-void		print_objects();
 //utils.c
 void		free_split(char **args);
 int			range(double elem, int low, int high);
 int			char_isdigit(char c);
 int			is_number(char *str);
+void		valid_scene();
 // void 		draw_ray(t_Ray *ray, double x, double y, double distance);
 
 /*----------------------------fixed------------------------------*/

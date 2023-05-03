@@ -7,7 +7,7 @@ void	error_exit(int code, char *str)
 	
 	if (code == 1)
 	{
-		printf("%s", str);
+		printf("Error\n%s", str);
 		free_vars(vars);
 		exit(0);
 	}
@@ -17,33 +17,29 @@ void	error_exit(int code, char *str)
 		vars->error_message = ft_strjoin(str, vars->error_message);
 		free(temp);
 	}
-	if (code == 3)
+	if (code == 3 && !vars->error_message)
 		vars->error_message = ft_strjoin(str, vars->error_message);
-	if (code == 4)
-		vars->error_message = ft_strjoin("Invalid element: ", str);
-	if (code == 5 && !vars->error_message)
+	if (code == 5)
 		{
-			vars->error_message = str;
+			if (!vars->error_message)
+				vars->error_message = ft_strjoin(str, vars->error_message);
+			free(str);
 		}
 }
-
 /*
-New error exit with code for each type of info
-ex:
-error_exit(int code, char *invalid_info)
-{
-if (code == 1)
-vars->error_message = ft_strjoin("Invalid RGB -> ", invalid_info);
-code 2 = FOV
-error_message = ft_strjoin("Invalid FOV -> ", invalid_info);
-...
-}
-back to object function: 
-error_message = strjoin("Object '..': ", error_message)
-final message example:
-Object A: Invalid FOV -> 256
->%
+2 = free old message, join new part in front of it
+3 = New error message
+5 = new error message free str
 */
+
+int	info_count(char **elem)
+{
+	int i = 0;
+
+	while (elem && elem[i] && elem[i][0] != '#')
+		i++;
+	return(i);
+}
 
 void	print_objects()
 {
