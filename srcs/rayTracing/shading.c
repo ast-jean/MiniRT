@@ -13,9 +13,9 @@ t_Vector3d	find_normal(t_Vector3d coords, t_Vector3d obj_coord, t_shape shape, b
 		return (Vector3d_norm(Vector3d_sub(coords, obj_coord)));
 	else if (ft_strcmp(shape.id, "pl"))
 		return (Point3d_to_Vector3d(shape.orientation));
-	else
-		// if (ft_strcmp(hit.shape->id, "cy"))
-		// 	return (/*cylinder normal*/);
+	else if (ft_strcmp(shape.id, "cy"))
+			return (cylinder_normal(coords, Point3d_to_Vector3d(shape.coord), Point3d_to_Vector3d(shape.orientation)));
+
 	return(Vector3d_init(0,0,0));
 }
 
@@ -43,6 +43,8 @@ t_rgba shading_obj(t_Ray ray, t_Ray_hit *hit_light, t_shape shape, t_Ray_hit *fi
 	t_rgba	color_to_add;
 	double coeff;
 
+	(void)ray;
+
 	t_Vector3d light_dir;
 	t_Vector3d obj_normal;
 
@@ -51,6 +53,7 @@ t_rgba shading_obj(t_Ray ray, t_Ray_hit *hit_light, t_shape shape, t_Ray_hit *fi
 
 	coeff = find_angle_normals(light_dir, obj_normal); //asign var
 	color_to_add = mix_colors_light(*hit_light, ray, shape, coeff);
+	// color_to_add = calculate_lighting(hit_light, &obj_normal);
 	color = rgba_add(color, color_to_add);
 
 	return (color);

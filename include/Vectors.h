@@ -15,6 +15,7 @@ typedef struct s_Vector3d{
     double x;
 	double y;
 	double z;
+	double w;
 } t_Vector3d;
 
 typedef struct s_Ray{
@@ -32,6 +33,8 @@ typedef struct s_Ray_hit{
 } t_Ray_hit;
 
 
+
+
 /*-------------------------Vectors_ops.c--------------------------*/
 t_Vector3d	Vector3d_add(t_Vector3d a, t_Vector3d b);
 t_Vector3d	Vector3d_sub(t_Vector3d a, t_Vector3d b);
@@ -40,7 +43,7 @@ t_Vector3d	Vector3d_mult3d(t_Vector3d v, t_Vector3d b);
 t_Vector3d	Vector3d_div(t_Vector3d v, double b);
 t_Vector3d	Vector3d_unit(t_Vector3d v);
 t_Vector3d	reflect(t_Vector3d i,  t_Vector3d n);
-void  print_Vector(char *title, t_Vector3d a);
+void 		print_Vector(char *title, t_Vector3d a);
 
 /*-------------------------Vectors.c--------------------------*/
 t_Vector3d	Vector3d_init(double x, double y, double z);

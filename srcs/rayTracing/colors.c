@@ -53,6 +53,7 @@ t_rgba	rgba_add(t_rgba a, t_rgba b)
 	return (result);
 }
 
+
 t_rgba	mix_colors_light(t_Ray_hit hit, t_Ray ray, t_shape shape, double coeff)
 {
 	(void)ray;
