@@ -75,22 +75,21 @@ t_rgba	rgba_add(t_rgba a, t_rgba b)
 	return (result);
 }
 
-t_rgba rgba_mult(t_rgba color, double scalar)
-{
-    t_rgba result;
-    result.r = (color.r * scalar);
-    result.g = (color.g * scalar);
-    result.b = (color.b * scalar);
-    result.a = (color.a * scalar);
+// t_rgba rgba_mult(t_rgba color, double scalar)
+// {
+//     t_rgba result;
+//     result.r = (color.r * scalar);
+//     result.g = (color.g * scalar);
+//     result.b = (color.b * scalar);
+//     result.a = (color.a * scalar);
 
-    // Clamp les composantes de la couleur résultante entre 0 et 255
-    result.r = clamp(result.r, 0, 255);
-    result.g = clamp(result.g, 0, 255);
-    result.b = clamp(result.b, 0, 255);
-    result.a = clamp(result.a, 0, 255);
+//     result.r = clamp(result.r, 0, 255);
+//     result.g = clamp(result.g, 0, 255);
+//     result.b = clamp(result.b, 0, 255);
+//     result.a = clamp(result.a, 0, 255);
 
-    return result;
-}
+//     return result;
+// }
 
 
 
