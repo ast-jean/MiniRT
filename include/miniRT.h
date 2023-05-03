@@ -162,4 +162,8 @@ t_3dPoint rotation_point(t_matrice3x3 M, t_3dPoint P);
 t_rotation vector_to_rotation_angles(t_Vector3d orientation);
 t_matrice3x3 combine_matrice(t_matrice3x3 rx, t_matrice3x3 ry, t_matrice3x3 rz);
 
+t_rgba calculate_lighting(t_Ray_hit *rh, const t_Vector3d *normal);
+t_Vector3d cylinder_normal(t_Vector3d intersection, t_Vector3d C, t_Vector3d V);
+
+
 #endif
