@@ -11,9 +11,10 @@ void	parse(int argc, char **argv)
 
 void	valid_file(char *file)
 {
-	int		fd =  open(file, O_RDONLY);
+	int		fd;
 	char	c;
 
+	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		error_exit(1, "File do not exist\n");
 	if (read(fd, &c, 1) == -1)
@@ -28,11 +29,14 @@ void	valid_file(char *file)
 
 void	split(char *file)
 {
-	t_Vars *vars = init_vars();
-	int	fd = open(file, O_RDONLY);
-	char *str = ft_gnl(fd);
-	char **args;
+	t_Vars	*vars;
+	int		fd;
+	char	*str;
+	char	**args;
 
+	vars = init_vars();
+	fd = open(file, O_RDONLY);
+	str = ft_gnl(fd);
 	while (str && !vars->error_message)
 	{
 		args = ft_split(str, ' ');
@@ -44,26 +48,17 @@ void	split(char *file)
 	close(fd);
 }
 
-// void	free_split(char **args)
-// {
-// 	int	i = 0;
-
-// 	if (args)
-// 	while (args[i])
-// 		free(args[i++]);
-// 	if (args)
-// 		free(args);
-// }
-
 void	valid_element(char **elem)
 {
-	t_Vars *vars = init_vars();
+	t_Vars	*vars;
+
+	vars = init_vars();
 	if (ft_strcmp(elem[0], "A"))
-		object_A(elem, vars);
+		object_a(elem, vars);
 	else if (ft_strcmp(elem[0], "C"))
-		object_C(elem, vars);
+		object_c(elem, vars);
 	else if (ft_strcmp(elem[0], "L"))
-		object_L(elem, vars);
+		object_l(elem, vars);
 	else if (ft_strcmp(elem[0], "sp"))
 		dlist_add_back(vars->objs, object_sp(elem, vars));
 	else if (ft_strcmp(elem[0], "pl"))
