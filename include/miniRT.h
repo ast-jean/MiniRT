@@ -65,7 +65,7 @@ uint8_t		valid_uint8(char *elem);
 uint32_t	rgb_to_hex(char *elem);
 //converter.c
 t_Fixed		str_to_fixed(char *elem);
-t_3dPoint	str_to_3D(char *elem);
+t_3dPoint	str_to_3d(char *elem);
 double		atod(char *str);
 //debug.c
 void		error_exit(int code, char *str);
@@ -83,13 +83,13 @@ void		valid_file(char *file);
 void		split(char *file);
 void		valid_element(char **elem);
 //scene.c
-void		object_A(char **elem, t_Vars *vars);
-void		object_C(char **elem, t_Vars *vars);
-void		object_L(char **elem, t_Vars *vars);
+void		object_a(char **elem, t_Vars *vars);
+void		object_c(char **elem, t_Vars *vars);
+void		object_l(char **elem, t_Vars *vars);
 t_Fixed		parse_light_ratio(char *elem);
 t_3dPoint	parse_coordinates(char *elem);
 t_3dPoint	parse_orientation(char *elem);
-uint8_t 	parse_FOV(char *elem);
+uint8_t 	parse_fov(char *elem);
 //utils.c
 void		free_split(char **args);
 int			range(double elem, int low, int high);

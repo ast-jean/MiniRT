@@ -23,16 +23,20 @@ uint8_t	valid_uint8(char *elem)
 
 uint32_t	rgb_to_hex(char *elem)
 {
-	char **colors = ft_split(elem, ',');
-	int i = 0;
-	int bytes = 32;
-	uint32_t rgb = 0;
-	
+	char		**colors;
+	int			i;
+	int			bytes;
+	uint32_t	rgb;
+
+	colors = ft_split(elem, ',');
+	i = 0;
+	bytes = 32;
+	rgb = 0;
 	while (colors && colors[i])
 		rgb += (valid_uint8(colors[i++]) << (bytes -= 8));
 	rgb += 255;
 	if (!colors || i != 3)
 		error_exit(5, ft_strjoin("Invalid RGB -> ", elem));
 	free_split(colors);
-	return(rgb);
+	return (rgb);
 }
