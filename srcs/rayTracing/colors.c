@@ -53,6 +53,7 @@ t_rgba	rgba_add(t_rgba a, t_rgba b)
 	return (result);
 }
 
+
 t_rgba	mix_colors_light(t_Ray_hit hit, t_Ray ray, t_shape shape, double coeff)
 {
 	(void)ray;
@@ -63,8 +64,8 @@ t_rgba	mix_colors_light(t_Ray_hit hit, t_Ray ray, t_shape shape, double coeff)
 	t_rgba	light_color = separate_color_rgba(init_vars()->light->color); //was lcolor
 	object_color = separate_color_rgba(shape.color);
 	t_rgba res1 = mix_colors(light_color, object_color, l_r);
-	if(hit.hit)
-		coeff = 0;
+	// if(hit.hit)
+	// 	coeff = 0;
 
 	if(coeff > 0)
 	{

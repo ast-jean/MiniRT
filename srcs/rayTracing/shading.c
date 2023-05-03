@@ -6,9 +6,7 @@
 /// @param hit 
 /// @param shape 
 /// @return 
-
-
-t_Vector3d	find_normal_pl(t_Vector3d hit_coords, t_Vector3d orientation, t_shape shape)
+t_Vector3d	plane_normal(t_Vector3d hit_coords, t_Vector3d orientation, t_shape shape)
 {
 	t_Vector3d light_dir;
 	light_dir = find_normal(hit_coords, Point3d_to_Vector3d(init_vars()->light->coord), shape, 1);
@@ -25,11 +23,11 @@ t_Vector3d	find_normal(t_Vector3d coords, t_Vector3d obj_coord, t_shape shape, b
 	else if (ft_strcmp(shape.id, "sp"))
 		return (Vector3d_norm(Vector3d_sub(coords, obj_coord)));
 	else if (ft_strcmp(shape.id, "pl"))
-		return (find_normal_pl(coords, Point3d_to_Vector3d(shape.orientation), shape));
+		return (plane_normal(coords, Point3d_to_Vector3d(shape.orientation), shape));
+	else if (ft_strcmp(shape.id, "cy"))
+		return (cylinder_normal(coords, Point3d_to_Vector3d(shape.coord), Point3d_to_Vector3d(shape.orientation)));
 	else
-	// 	if (ft_strcmp(hit.shape->id, "cy"))
-	// 		return (/*cylinder normal*/);
-	return(Vector3d_init(0,0,0));
+		return(Vector3d_init(0,0,0));
 }
 
 double	find_angle_normals(t_Vector3d Norm1, t_Vector3d Norm2)
@@ -60,7 +58,7 @@ t_rgba shading_obj(t_Ray ray, t_Ray_hit *hit_light, t_shape shape, t_Ray_hit *fi
 
 	light_dir = find_normal(first_hit->coord, l_c, shape, 1);
 	obj_normal = find_normal(first_hit->coord, Point3d_to_Vector3d(shape.coord), shape, 0);
-	coeff = find_angle_normals(light_dir, obj_normal); //asign var
+	coeff = find_angle_normals(light_dir, obj_normal);
 	color_to_add = mix_colors_light(*hit_light, ray, shape, coeff);	
 	color = rgba_add(color, color_to_add);
 	

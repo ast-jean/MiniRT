@@ -6,13 +6,15 @@ void	parse(int argc, char **argv)
 		error_exit(1, "Wrong number of arguments\n");
 	valid_file(argv[1]);
 	split(argv[1]);
+	valid_scene();
 }
 
 void	valid_file(char *file)
 {
-	int		fd =  open(file, O_RDONLY);
+	int		fd;
 	char	c;
 
+	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		error_exit(1, "File do not exist\n");
 	if (read(fd, &c, 1) == -1)
@@ -27,11 +29,14 @@ void	valid_file(char *file)
 
 void	split(char *file)
 {
-	t_Vars *vars = init_vars();
-	int	fd = open(file, O_RDONLY);
-	char *str = ft_gnl(fd);
-	char **args;
+	t_Vars	*vars;
+	int		fd;
+	char	*str;
+	char	**args;
 
+	vars = init_vars();
+	fd = open(file, O_RDONLY);
+	str = ft_gnl(fd);
 	while (str && !vars->error_message)
 	{
 		args = ft_split(str, ' ');
@@ -43,26 +48,17 @@ void	split(char *file)
 	close(fd);
 }
 
-// void	free_split(char **args)
-// {
-// 	int	i = 0;
-
-// 	if (args)
-// 	while (args[i])
-// 		free(args[i++]);
-// 	if (args)
-// 		free(args);
-// }
-
 void	valid_element(char **elem)
 {
-	t_Vars *vars = init_vars();
+	t_Vars	*vars;
+
+	vars = init_vars();
 	if (ft_strcmp(elem[0], "A"))
-		object_A(elem, vars);
+		object_a(elem, vars);
 	else if (ft_strcmp(elem[0], "C"))
-		object_C(elem, vars);
+		object_c(elem, vars);
 	else if (ft_strcmp(elem[0], "L"))
-		object_L(elem, vars);
+		object_l(elem, vars);
 	else if (ft_strcmp(elem[0], "sp"))
 		dlist_add_back(vars->objs, object_sp(elem, vars));
 	else if (ft_strcmp(elem[0], "pl"))
@@ -70,30 +66,6 @@ void	valid_element(char **elem)
 	else if (ft_strcmp(elem[0], "cy"))
 		dlist_add_back(vars->objs, object_cy(elem, vars));
 	else if (!ft_strcmp(elem[0], "#"))
-		error_exit(4, elem[0]);
+		error_exit(5, ft_strjoin("Invalid element: ", elem[0]));
 	free_split(elem);
 }
-
-// t_Fixed	str_to_fixed(char *elem)
-// {
-// 	t_Fixed f;
-// 	// char **part = ft_split(elem, '.');
-// 	// f.entier = ft_atoi(part[0]);
-// 	// if (part[1])
-// 	// 	f.decimal = ft_atoi(part[1]);
-// 	// else
-// 	// 	f.decimal = 0;
-// 	set_value(&f, atof(elem));
-// 	return (f);
-// }
-
-// t_3dPoint str_to_3D(char *elem)
-// {
-// 	t_3dPoint p;
-// 	char **coord = ft_split(elem, ',');
-// 	p.x = str_to_fixed(coord[0]);
-// 	p.y = str_to_fixed(coord[1]);
-// 	p.z = str_to_fixed(coord[2]);
-// 	free_split(coord);
-// 	return (p);
-// }

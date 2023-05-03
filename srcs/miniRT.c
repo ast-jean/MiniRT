@@ -274,6 +274,79 @@ void shape_modifier(mlx_key_data_t keydata, void *param)
 
 }
 
+// t_3dPoint *cy_rotation(t_shape *cy)
+// {
+// 	int num_points;
+// 	double angle;
+// 	int index;
+// 	num_points = 12;
+
+
+// 	t_3dPoint points[num_points];
+
+	
+
+
+// 	index = 0;
+
+// 	// t_Vars vars = init_vars();
+
+
+// 	while(index < num_points)
+// 	{
+// 		angle = 2 * M_PI * index/num_points;
+
+// 		points[index].x = fp_init(to_double(cy->radius) * cos(angle));
+// 		points[index].y = fp_init(to_double(cy->radius) * sin(angle));
+
+// 		index++;
+// 	}
+
+// 	index = 0;
+
+// 	while(index < num_points)
+// 	{
+// 		points[index].x = fp_init(to_double(points[index].x) + to_double(cy->coord.x));
+// 		points[index].y = fp_init(to_double(points[index].y) + to_double(cy->coord.y));
+// 		points[index].z = fp_init(0.0 + to_double(cy->coord.z));
+
+// 		index++;
+// 	}
+
+// 	t_rotation rotation = vector_to_rotation_angles(Point3d_to_Vector3d(cy->orientation));
+
+
+// 	t_matrice3x3 rx = matrice_rotation_x(rotation.phi);
+// 	t_matrice3x3 ry = matrice_rotation_y(rotation.theta);
+// 	t_matrice3x3 rz = matrice_rotation_z(rotation.psi);
+
+// 	t_matrice3x3 combined_matrix = combine_matrice(rx,ry,rz);
+
+// 	index = 0;
+
+// 	while(index < num_points)
+// 	{
+// 		t_Vector3d vec = Point3d_to_Vector3d(points[index]);
+// 		t_Vector3d rotated_point; 
+		
+
+// 		rotated_point = Point3d_to_Vector3d(rotation_point(combined_matrix, Vec3D_to_point3D(vec)));
+
+// 		points[index] = Vec3D_to_point3D(rotated_point);
+// 		index++;
+// 	}
+
+// 	index = 0;
+
+// 	return (points);
+// }
+
+
+
+
+
+
+
 int	main(int argc, char **argv)
 {
 	t_Vars	*vars = init_vars();
@@ -296,8 +369,9 @@ int	main(int argc, char **argv)
 	if (!vars->error_message)
 		printf("\n\nGOOD\n\n");
 	else
-		printf("%s\n", vars->error_message);
+		printf("Error\n%s\n", vars->error_message);
 
 	free_vars(vars);
 	return (EXIT_SUCCESS);
 }
+

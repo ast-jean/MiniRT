@@ -22,7 +22,9 @@ SRCS_FILES 		=	miniRT.c \
 					math/vectors/Vectors.c \
 					math/vectors/ray.c \
 					math/vectors/Vectors_ops.c \
-					math/math_other.c
+					math/vectors/matrice.c \
+					math/math_other.c 
+
 
 INCLUDE_FILES	= 	miniRT.h \
 					objects.h \
@@ -34,6 +36,9 @@ LIBS = include/libft/libft.a \
 
 ifeq ($(UNAME), Darwin)
 LIBS += -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+	ifeq (,$(wildcard /usr/local/Cellar/glfw))
+		# $(error GLFW not found. Please install it via Homebrew using: brew install glfw)
+	endif
 else ifeq ($(UNAME), Linux)
 LIBS +=	-Iinclude -lglfw -lm -ldl -pthread
 ifeq (,$(shell pkg-config --exists glfw3 && echo "found"))
