@@ -45,6 +45,11 @@ typedef struct s_Vars	// all of our values needed throught the program
 	t_shape		*ambient_light;
 	t_shape		*light;
 	mlx_image_t	*img;
+	bool		orientation_trigger;
+	bool 		x_trigger;
+	bool		y_trigger;
+	bool		z_trigger;
+	bool		camera_trigger;
 	double		distance_to_screen;
 	int 		mouse_x;
 	int 		mouse_y;
