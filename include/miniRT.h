@@ -137,7 +137,7 @@ bool	check_dot_sign(t_Vector3d shape_pos, t_Vector3d Vec1, t_Vector3d Vec2);
 
 /*---------------------------Shading-------------------------*/
 t_rgba		shading(t_Ray_hit *hit, t_rgba color);
-t_Vector3d	find_normal(t_Vector3d coords, t_Vector3d obj_coord, t_shape shape, bool is_light);
+t_Vector3d	find_normal(t_Vector3d coords, t_Vector3d obj_coord, t_shape shape);
 // t_rgba		shading_sp(t_Ray ray, t_Ray_hit *hit);
 /*---------------------------colors-------------------------*/
 t_rgba		brightness(t_rgba color, double scale);

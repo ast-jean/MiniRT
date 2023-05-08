@@ -57,6 +57,7 @@ t_rgba	rgba_add(t_rgba a, t_rgba b)
 t_rgba	mix_colors_light(t_Ray_hit hit, t_Ray ray, t_shape shape, double coeff)
 {
 	(void)ray;
+	(void)hit;
 	t_rgba	result = rgba_init(0,0,0);
 
 	double	l_r = to_double(init_vars()->light->light_ratio);

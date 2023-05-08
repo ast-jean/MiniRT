@@ -1,29 +1,33 @@
 #include "../../include/miniRT.h"
 #include <math.h>
 
+t_Vector3d	light_normal(t_Vector3d coords, t_Vector3d obj_coord)
+{
+	return (Vector3d_mult(Vector3d_norm(Vector3d_sub(coords, obj_coord)),-1));
+}
 
 /// @brief Find the shape normal from the shape origin and a coordinates
 /// @param hit 
 /// @param shape 
 /// @return 
-t_Vector3d	plane_normal(t_Vector3d hit_coords, t_Vector3d orientation, t_shape shape)
+t_Vector3d	plane_normal(t_Vector3d hit_coords, t_Vector3d orientation)
 {
 	t_Vector3d light_dir;
-	light_dir = find_normal(hit_coords, Point3d_to_Vector3d(init_vars()->light->coord), shape, 1);
+	light_dir = light_normal(hit_coords, Point3d_to_Vector3d(init_vars()->light->coord));
 	if (Vector3d_dot(orientation, light_dir) < 0)
 		return (Vector3d_mult(orientation, -1));
 	else
 		return (orientation);
 }
 
-t_Vector3d	find_normal(t_Vector3d coords, t_Vector3d obj_coord, t_shape shape, bool is_light)
+
+
+t_Vector3d	find_normal(t_Vector3d coords, t_Vector3d obj_coord, t_shape shape)
 {
-	if (is_light)
-		return (Vector3d_mult(Vector3d_norm(Vector3d_sub(coords, obj_coord)),-1));
-	else if (ft_strcmp(shape.id, "sp"))
+	if (ft_strcmp(shape.id, "sp"))
 		return (Vector3d_norm(Vector3d_sub(coords, obj_coord)));
 	else if (ft_strcmp(shape.id, "pl"))
-		return (plane_normal(coords, Point3d_to_Vector3d(shape.orientation), shape));
+		return (plane_normal(coords, Point3d_to_Vector3d(shape.orientation)));
 	else if (ft_strcmp(shape.id, "cy"))
 		return (cylinder_normal(coords, Point3d_to_Vector3d(shape.coord), Point3d_to_Vector3d(shape.orientation)));
 	else
@@ -56,12 +60,15 @@ t_rgba shading_obj(t_Ray ray, t_Ray_hit *hit_light, t_shape shape, t_Ray_hit *fi
 	t_Vector3d obj_normal;
 	double coeff;
 
-	light_dir = find_normal(first_hit->coord, l_c, shape, 1);
-	obj_normal = find_normal(first_hit->coord, Point3d_to_Vector3d(shape.coord), shape, 0);
+	light_dir = light_normal(first_hit->coord, l_c);
+	obj_normal = find_normal(first_hit->coord, Point3d_to_Vector3d(shape.coord), shape);
 	coeff = find_angle_normals(light_dir, obj_normal);
-	color_to_add = mix_colors_light(*hit_light, ray, shape, coeff);	
-	color = rgba_add(color, color_to_add);
-	
+
+	// if (!hit_light->hit)
+	// {
+		color_to_add = mix_colors_light(*hit_light, ray, shape, coeff);	
+		color = rgba_add(color, color_to_add);
+	// }
 	return (color);
 }
 
@@ -70,16 +77,21 @@ t_rgba shading_obj(t_Ray ray, t_Ray_hit *hit_light, t_shape shape, t_Ray_hit *fi
 /// @return 	:Color in rgba form
 t_rgba	shading(t_Ray_hit *hit, t_rgba color)
 {
+	(void)color;
+
+
 	t_rgba		rgba = rgba_init(0,0,0);
 	t_Vector3d	lc;
 	t_Ray		ray_s2l;	// Ray from shape to the light
 	double		distance;	// Distance from hit point to light
+	t_Ray_hit	bounce;		//Ray hit info for the light bounce
 	
 	lc = Point3d_to_Vector3d(init_vars()->light->coord);
 	ray_s2l = ray_init(hit->coord, Vector3d_norm(Vector3d_sub(hit->coord, lc))); //from shape to light
 	distance = find_distance(hit->coord, lc); 
 
-	t_Ray_hit	bounce = ray_trace(ray_s2l, distance, hit->shape);
+	bounce = ray_trace(ray_s2l, distance, hit->shape);
+	ray_s2l.o = lc;
 	rgba = shading_obj(ray_s2l, &bounce, *hit->shape, hit, lc);
 	return (rgba);
 }

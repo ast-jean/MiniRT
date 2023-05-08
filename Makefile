@@ -83,7 +83,7 @@ WHITE		= \033[37m
 
 ### Compilations et archivage ###
 CC 			= gcc
-CFLAGS 		= -Wall -Wextra -g -Wno-error=misleading-indentation
+CFLAGS 		= -Wall -Wextra -g -Werror -Wno-error=misleading-indentation
 
 ###--------------------------## REGLES ##--------------------------###
 all: mlx_glfw $(NAME)
