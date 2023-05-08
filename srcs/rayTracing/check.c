@@ -5,7 +5,7 @@
 /// @param Vec1 position vector of the vec1.
 /// @param Vec2 position vector of the vec2.
 /// @return true if same sign and false if not
-bool	check_dot_sign(t_Vector3d shape_pos, t_Vector3d Vec1, t_Vector3d Vec2) //TODO: This shit broken
+bool	check_dot_sign(t_Vector3d shape_pos, t_Vector3d Vec1, t_Vector3d Vec2)
 {
 	double dot1 = Vector3d_dot(shape_pos, Vec1);
 	double dot2 = Vector3d_dot(shape_pos, Vec2);
@@ -23,39 +23,43 @@ bool	check_dot_sign(t_Vector3d shape_pos, t_Vector3d Vec1, t_Vector3d Vec2) //TO
 /// @param ray.o is the light coords and ray.d is the light direction to the hit coords.
 /// @param shape the object to locate side
 /// @return return true if the object is the same side and false if on the other side
-bool	check_side(t_Ray ray, t_shape shape)
+double	check_side(t_Ray ray, t_shape shape)
 {
+	t_Ray ray_tmp;
 	t_Vector3d s_coord = Point3d_to_Vector3d(shape.coord);
-	ray.d = Vector3d_mult(ray.d, -1);
-	// ray.o
+	ray_tmp.d = Vector3d_mult(ray.d, -1);
+	ray_tmp.o = Point3d_to_Vector3d(init_vars()->light->coord);
 	return (check_dot_sign(s_coord, ray.d, ray_direction(ray.o, s_coord)));
 }
 
 double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist)
 {
-	t_Vector3d ro_sc = Vector3d_sub(ray.o, Point3d_to_Vector3d(s->coord));
+	t_Vector3d ro_sc;
 	t_Vector3d abc;
 	t_Vector2d t;
+	double disc; //Put in solveQuadratic()?
+	double distance;
 
-
-	abc.x =  Vector3d_dot(ray.d, ray.d);
+	ro_sc = Vector3d_sub(ray.o, Point3d_to_Vector3d(s->coord));
+	abc.x = Vector3d_dot(ray.d, ray.d);
 	abc.y = 2.0 * Vector3d_dot(ray.d, ro_sc);
 	abc.z = Vector3d_dot(ro_sc, ro_sc) - pow(to_double(s->radius), 2.0);
 
-	// printf("A = %f, B = %f, C = %f\n", abc.x, abc.y, abc.z);
-	// printf("A = %f, B = %f, C = %f\n", abc.x, abc.y, abc.z);
-	double disc;
-	double distance;
 	if (!solveQuadratic(abc, &t, &disc))
 		return (dist);
+	if (t.x > 0)
 	distance = t.x;
-	// if (dist >= distance && check_side(ray, *s)) //distance comparaison
-	if (dist >= distance) //distance comparaison
+	else
+	distance = t.y;
+	if (distance < 0)
+		distance *= -1;
+	if (distance < dist) //distance comparaison
 	{
 		rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, distance));
 		rh->color = s->color;
 		rh->shape = (t_shape*)s;
 		rh->distance = distance;
+		rh->hit = true;
 		return (distance);
 	}
 	return (dist);
@@ -69,8 +73,8 @@ double	check_pl(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double dist)
 	double denom = Vector3d_dot(so, ray.d);
 	if (fabs(denom) > 0)
 	{
-		double t = Vector3d_dot(Vector3d_sub(sc, ray.o), so) / denom;	
-		if(dist >= t) //distance comparaison
+		double t = Vector3d_dot(Vector3d_sub(sc, ray.o), so) / denom;
+		if(t < dist) //distance comparaison
 		{
 			if (t > 0) //only if t is positive
 			{
@@ -78,10 +82,8 @@ double	check_pl(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double dist)
 				rh->shape = (t_shape*)s;
 				rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, t));
 				rh->distance = t;
-				return t;
+				return (t);
 			}
-			else
-				return (dist);
 		}
 	}
 	return (dist);
@@ -240,81 +242,6 @@ double	check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
 	return *dist;
 }
 
-// double check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
-// {
-//     // Paramètres du cylindre
-//     t_Vector3d C = Point3d_to_Vector3d(s->coord);      // point de départ de l'axe du cylindre
-//     t_Vector3d V = Point3d_to_Vector3d(s->orientation); // orientation du cylindre (vecteur unitaire)
-//     double r = to_double(s->radius);                 // rayon du cylindre
-//     double maxm = to_double(s->height);              // longueur de l'axe du cylindre
-
-//     t_Vector3d X = Vector3d_sub(ray.o, C);
-//     t_Vector3d abc;
-
-//     // Coefficients de l'équation quadratique
-//     abc.x = ray.d.x * ray.d.x - pow(ray.d.x * V.x, 2) + ray.d.y * ray.d.y - pow(ray.d.y * V.y, 2) + ray.d.z * ray.d.z - pow(ray.d.z * V.z, 2);
-//     abc.y = 2 * (X.x * ray.d.x - X.x * V.x * ray.d.x * V.x + X.y * ray.d.y - X.y * V.y * ray.d.y * V.y + X.z * ray.d.z - X.z * V.z * ray.d.z * V.z);
-//     abc.z = X.x * X.x - pow(X.x * V.x, 2) + X.y * X.y - pow(X.y * V.y, 2) + X.z * X.z - pow(X.z * V.z, 2) - r * r;
-
-//     double discriminant;
-//     t_Vector2d t;
-//     if (!solveQuadratic(abc, &t, &discriminant))
-//         return *dist;
-
-//     // Vérifier les intersections avec le cylindre et ses extrémités
-//     double min_distance = INFINITY;
-//     for (int i = 0; i < 2; ++i)
-//     {
-//         double curr_t = (i == 0) ? t.x : t.y;
-//         if (curr_t > 0)
-//         {
-//             double m = ray.d.x * V.x * curr_t + X.x * V.x + ray.d.y * V.y * curr_t + X.y * V.y + ray.d.z * V.z * curr_t + X.z * V.z;
-//             if (m >= 0 && m <= maxm)
-//             {
-//                 if (curr_t < min_distance)
-//                 {
-//                     min_distance = curr_t;
-//                     rh->distance = min_distance;
-//                     rh->color = s->color;
-//                     rh->shape = (t_shape *)s;
-//                     rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, min_distance));
-//                     *dist = min_distance;
-//                 }
-//             }
-//         }
-//     }
-
-    // // Vérifier les intersections avec les extrémités du cylindre
-    // t_Vector3d base_point = C;
-    // t_Vector3d top_point = Vector3d_add(C, Vector3d_mult(V, maxm));
-    // double t_plane;
-
-    // for (int i = 0; i < 2; ++i)
-    // {
-    //     t_Vector3d plane_point = (i == 0) ? base_point : top_point;
-    //     if (intersectRayPlane(ray.o, ray.d, plane_point, V, &t_plane))
-    //     {
-    //         t_Vector3d intersection_point = Vector3d_add(ray.o, Vector3d_mult(ray.d, t_plane));
-    //         t_Vector3d vec_from_center = Vector3d_sub(intersection_point, plane_point);
-
-    //         if (Vector3d_length(vec_from_center) <= r)
-    //         {
-    //             if (t_plane < min_distance)
-    //             {
-    //                 min_distance = t_plane;
-    //                 rh->distance = min_distance;
-    //                 rh->color = s->color;
-    //                 rh->shape = (t_shape *)s;
-    //                 rh->coord = intersection_point;
-    //                 *dist = min_distance;
-    //             }
-    //         }
-    //     }
-//     // }
-
-//     return *dist;
-// }
-
 t_matrice3x3 create_matrice(t_shape *s)
 {
 	t_matrice3x3 rx;
@@ -331,10 +258,15 @@ t_matrice3x3 create_matrice(t_shape *s)
 	return(combine_matrice(rx, ry, rz));
 }
 
-bool ray_checkhit(t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o)
+/// @brief 			:Check for the intersection of each object with the provided t_Ray
+/// @param ray		:The ray
+/// @param rh		:The t_Ray_hit containing intersection information
+/// @param distance :The distance to compare if dist == old_dist nothing is intersected
+/// @param shape_o	:The object(self) it needs to ignore
+/// @return			:Returns a bool if the ray hit(True) or not(false) an object
+void ray_checkhit(t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o)
 {
     t_node *aff = init_vars()->objs->first;
-    double old_dist = *distance;
 
     while (aff)
     {
@@ -346,14 +278,14 @@ bool ray_checkhit(t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o)
             else if (ft_strcmp(s->id, "pl"))
                 *distance = check_pl(s, ray, rh, *distance);
             else if (ft_strcmp(s->id, "sp"))
+			{
+				// printf("\nDistance bef: %f\n", *distance);
                 *distance = check_sp(s, ray, rh, *distance);
+				// printf("Distance after: %f\n", *distance);
+			}
         }
         aff = aff->next;
     }
-    if (*distance == old_dist)
-        return (false); //if the distance is the same it has touch nothing
-    else
-        return (true);
 }
 
 
@@ -362,12 +294,6 @@ bool ray_checkhit(t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o)
 
 
 
-// /// @brief 			:Check for the intersection of each object with the provided t_Ray
-// /// @param ray		:The ray
-// /// @param rh		:The t_Ray_hit containing intersection information
-// /// @param distance :The distance to compare if dist == old_dist nothing is intersected
-// /// @param shape_o	:The object(self) it needs to ignore
-// /// @return			:Returns a bool if the ray hit(True) or not(false) an object
 // bool	ray_checkhit(t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o)
 // {
 // 	t_node *aff = init_vars()->objs->first;

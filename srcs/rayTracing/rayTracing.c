@@ -48,21 +48,21 @@ t_Ray_hit init_Ray_hit()
 t_Ray_hit ray_trace(const t_Ray ray, double dist_bef, t_shape *shape)
 {
 	t_Ray_hit light_ray_hit = init_Ray_hit();
-	double distance = 0;
-	light_ray_hit.hit = true;
+	double distance = dist_bef;
 
-	distance = dist_bef;
 	if (!shape)
 	{	
-		light_ray_hit.bounced =  false;
-		if(ray_checkhit(ray, &light_ray_hit, &distance, NULL))
-			light_ray_hit.hit = true;	//initialise rayhit Null
+		// light_ray_hit.bounced =  false;
+		ray_checkhit(ray, &light_ray_hit, &distance, NULL);
+		// if(ray_checkhit(ray, &light_ray_hit, &distance, NULL))
+			// light_ray_hit.hit = true;	//initialise rayhit Null
 	}
 	else
 	{
-		light_ray_hit.bounced = true;
-		if(!ray_checkhit(ray, &light_ray_hit, &distance, shape))//if it hits 
-			light_ray_hit.hit = false;
+		// light_ray_hit.bounced = true;
+		ray_checkhit(ray, &light_ray_hit, &distance, shape);
+		// if(!ray_checkhit(ray, &light_ray_hit, &distance, shape))//if it hits 
+			// light_ray_hit.hit = true;
 	}
 	return (light_ray_hit);
 }

@@ -20,8 +20,6 @@ t_Vector3d	plane_normal(t_Vector3d hit_coords, t_Vector3d orientation)
 		return (orientation);
 }
 
-
-
 t_Vector3d	find_normal(t_Vector3d coords, t_Vector3d obj_coord, t_shape shape)
 {
 	if (ft_strcmp(shape.id, "sp"))
@@ -64,11 +62,12 @@ t_rgba shading_obj(t_Ray ray, t_Ray_hit *hit_light, t_shape shape, t_Ray_hit *fi
 	obj_normal = find_normal(first_hit->coord, Point3d_to_Vector3d(shape.coord), shape);
 	coeff = find_angle_normals(light_dir, obj_normal);
 
-	// if (!hit_light->hit)
-	// {
+	if(hit_light->hit)
+	{
+		coeff *= 0.2;
+	}
 		color_to_add = mix_colors_light(*hit_light, ray, shape, coeff);	
 		color = rgba_add(color, color_to_add);
-	// }
 	return (color);
 }
 
@@ -91,7 +90,7 @@ t_rgba	shading(t_Ray_hit *hit, t_rgba color)
 	distance = find_distance(hit->coord, lc); 
 
 	bounce = ray_trace(ray_s2l, distance, hit->shape);
-	ray_s2l.o = lc;
+	// ray_s2l.o = lc;
 	rgba = shading_obj(ray_s2l, &bounce, *hit->shape, hit, lc);
 	return (rgba);
 }
