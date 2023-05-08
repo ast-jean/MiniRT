@@ -44,7 +44,7 @@ t_shape	*object_cy(char **elem, t_Vars *vars)
 {
 	t_shape		*s = NULL;
 
-	if (info_count(elem) != 3)
+	if (info_count(elem) != 6)
 		error_exit(3, "Invalid number of information");
 	else
 	{

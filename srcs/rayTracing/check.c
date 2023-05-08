@@ -1,5 +1,36 @@
 #include "../../include/miniRT.h"
 
+/// @brief Checks if the dot product of both normal vectors created from the sphere is the same sign
+/// @param shape_pos position vector of the shape.
+/// @param Vec1 position vector of the vec1.
+/// @param Vec2 position vector of the vec2.
+/// @return true if same sign and false if not
+bool	check_dot_sign(t_Vector3d shape_pos, t_Vector3d Vec1, t_Vector3d Vec2) //TODO: This shit broken
+{
+	double dot1 = Vector3d_dot(shape_pos, Vec1);
+	double dot2 = Vector3d_dot(shape_pos, Vec2);
+
+	if (dot1 >= 0 && dot2 >= 0)
+		return (true);
+	else if (dot1 >= 0 && dot2 >= 0)
+		return (true);
+	else
+		return (false);
+}
+
+/// @brief :Checking in which side the object is from the ray used for lighting since the object
+/// 		the other side of the camera are not visible.
+/// @param ray.o is the light coords and ray.d is the light direction to the hit coords.
+/// @param shape the object to locate side
+/// @return return true if the object is the same side and false if on the other side
+bool	check_side(t_Ray ray, t_shape shape)
+{
+	t_Vector3d s_coord = Point3d_to_Vector3d(shape.coord);
+	ray.d = Vector3d_mult(ray.d, -1);
+	// ray.o
+	return (check_dot_sign(s_coord, ray.d, ray_direction(ray.o, s_coord)));
+}
+
 double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist)
 {
 	t_Vector3d ro_sc = Vector3d_sub(ray.o, Point3d_to_Vector3d(s->coord));
@@ -18,6 +49,7 @@ double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist)
 	if (!solveQuadratic(abc, &t, &disc))
 		return (dist);
 	distance = t.x;
+	// if (dist >= distance && check_side(ray, *s)) //distance comparaison
 	if (dist >= distance) //distance comparaison
 	{
 		rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, distance));
@@ -158,24 +190,6 @@ t_rgba calculate_lighting(t_Ray_hit *rh, const t_Vector3d *normal)
 	final_color.b = clamp(final_color.b + ambient_color.b, 0, 255);
 
 	return final_color;
-}
-
-/// @brief Checks if the dot product of both vectors created from the sphere is the same sign
-/// @param shape_pos position vector of the shape.
-/// @param Vec1 position vector of the vec1.
-/// @param Vec2 position vector of the vec2.
-/// @return 
-bool	check_dot_sign(t_Vector3d shape_pos, t_Vector3d Vec1, t_Vector3d Vec2)
-{
-	double dot1 = Vector3d_dot(shape_pos, Vec1);
-	double dot2 = Vector3d_dot(shape_pos, Vec2);
-
-	if (dot1 >= 0 && dot2 >= 0)
-		return (true);
-	else if (dot1 >= 0 && dot2 >= 0)
-		return (true);
-	else
-		return (false);
 }
 
 
@@ -328,33 +342,7 @@ bool ray_checkhit(t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o)
         if (!shape_o || s->index != shape_o->index) //if the object is not itself
         {
             if (ft_strcmp(s->id, "cy"))
-            {
                 *distance = check_cy(s, ray, rh, distance);
-
-
-
-
-
-                // // t_Ray transformed_ray = ray; // Create a copy of the ray for transformation
-
-                // t_rotation rotation = vector_to_rotation_angles(Point3d_to_Vector3d(s->orientation));
-                // t_matrice3x3 inv_m = combine_matrice(matrice_rotation_x(-rotation.phi), matrice_rotation_y(-rotation.theta), matrice_rotation_z(-rotation.psi));
-
-                // // t_3dPoint tranformed_o = rotation_point(inv_m, Vec3D_to_point3D(ray.o));
-                // // transformed_ray.o = Point3d_to_Vector3d(tranformed_o);
-                // // t_3dPoint tranformed_d = rotation_point(inv_m, Vec3D_to_point3D(ray.d));
-                // // transformed_ray.d = Point3d_to_Vector3d(tranformed_d);
-
-                // if (new_distance < *distance) // Only update if the new distance is smaller
-                // {
-                //     *distance = new_distance;
-
-                //     t_matrice3x3 m = create_matrice(s);
-                //     t_3dPoint rotated_intersection = rotation_point(m, Vec3D_to_point3D(rh->coord));
-                //     rh->coord = Point3d_to_Vector3d(rotated_intersection);
-                //     rh->normal = Point3d_to_Vector3d(rotation_point(m, Vec3D_to_point3D(rh->normal)));
-                // }
-            }
             else if (ft_strcmp(s->id, "pl"))
                 *distance = check_pl(s, ray, rh, *distance);
             else if (ft_strcmp(s->id, "sp"))
