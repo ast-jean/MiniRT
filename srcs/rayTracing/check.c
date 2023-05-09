@@ -68,7 +68,7 @@ double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist)
 double	check_pl(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double dist)
 {
 	t_Vector3d sc = Point3d_to_Vector3d(s->coord);
-	t_Vector3d so = Point3d_to_Vector3d(s->orientation);
+	t_Vector3d so = Vector3d_norm(Point3d_to_Vector3d(s->orientation));
 
 	double denom = Vector3d_dot(so, ray.d);
 	if (fabs(denom) > 0)
@@ -88,6 +88,30 @@ double	check_pl(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double dist)
 	}
 	return (dist);
 }
+
+// double	check_pl(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double dist)
+// {
+// 	t_Vector3d sc = Point3d_to_Vector3d(s->coord);
+// 	t_Vector3d so = Point3d_to_Vector3d(s->orientation);
+
+// 	double denom = Vector3d_dot(so, ray.d);
+// 	if (fabs(denom) > 0)
+// 	{
+// 		double t = Vector3d_dot(Vector3d_sub(sc, ray.o), so) / denom;
+// 		if(t < dist) //distance comparaison
+// 		{
+// 			if (t > 0) //only if t is positive
+// 			{
+// 				rh->color = s->color;
+// 				rh->shape = (t_shape*)s;
+// 				rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, t));
+// 				rh->distance = t;
+// 				return (t);
+// 			}
+// 		}
+// 	}
+// 	return (dist);
+// }
 
 t_matrice3x3 inverse_matrice3x3(t_matrice3x3 m)
 {
@@ -198,15 +222,18 @@ t_rgba calculate_lighting(t_Ray_hit *rh, const t_Vector3d *normal)
 double check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
 {
     t_Vector3d C = Point3d_to_Vector3d(s->coord);
-    t_Vector3d V = Point3d_to_Vector3d(s->orientation);
+    t_Vector3d V = Vector3d_norm(Point3d_to_Vector3d(s->orientation));
+	t_Vector3d ray_d_norm = Vector3d_norm(ray.d);
+
+;
     double r = to_double(s->radius);
     double maxm = to_double(s->height);
 
     t_Vector3d X = Vector3d_sub(ray.o, C);
     t_Vector3d abc;
 
-    abc.x = ray.d.x * ray.d.x - pow(ray.d.x * V.x, 2) + ray.d.y * ray.d.y - pow(ray.d.y * V.y, 2) + ray.d.z * ray.d.z - pow(ray.d.z * V.z, 2);
-    abc.y = 2 * (X.x * ray.d.x - X.x * V.x * ray.d.x * V.x + X.y * ray.d.y - X.y * V.y * ray.d.y * V.y + X.z * ray.d.z - X.z * V.z * ray.d.z * V.z);
+    abc.x = ray_d_norm.x * ray_d_norm.x - pow(ray_d_norm.x * V.x, 2) + ray_d_norm.y * ray_d_norm.y - pow(ray_d_norm.y * V.y, 2) + ray_d_norm.z * ray_d_norm.z - pow(ray_d_norm.z * V.z, 2);
+    abc.y = 2 * (X.x * ray_d_norm.x - X.x * V.x * ray_d_norm.x * V.x + X.y * ray_d_norm.y - X.y * V.y * ray_d_norm.y * V.y + X.z * ray_d_norm.z - X.z * V.z * ray_d_norm.z * V.z);
     abc.z = X.x * X.x - pow(X.x * V.x, 2) + X.y * X.y - pow(X.y * V.y, 2) + X.z * X.z - pow(X.z * V.z, 2) - r * r;
 
     double discriminant;
@@ -221,7 +248,7 @@ double check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
         double curr_t = (i == 0) ? t.x : t.y;
         if (curr_t > 0)
         {
-            double m = ray.d.x * V.x * curr_t + X.x * V.x + ray.d.y * V.y * curr_t + X.y * V.y + ray.d.z * V.z * curr_t + X.z * V.z;
+            double m = ray_d_norm.x * V.x * curr_t + X.x * V.x + ray_d_norm.y * V.y * curr_t + X.y * V.y + ray_d_norm.z * V.z * curr_t + X.z * V.z;
             if (m >= 0 && m <= maxm)
             {
                 if (curr_t < min_distance)
@@ -230,7 +257,7 @@ double check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
                     rh->distance = min_distance;
                     rh->color = s->color;
                     rh->shape = (t_shape *)s;
-                    rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, min_distance));
+                    rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray_d_norm, min_distance));
                     *dist = min_distance;
                     return (*dist);
                 }
@@ -292,7 +319,8 @@ double check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
 // {
 //     // Paramètres du cylindre
 //     t_Vector3d C = Point3d_to_Vector3d(s->coord);      // point de départ de l'axe du cylindre
-//     t_Vector3d V = Point3d_to_Vector3d(s->orientation); // orientation du cylindre (vecteur unitaire)
+//     t_Vector3d V = Vector3d_norm(Point3d_to_Vector3d(s->orientation));
+// 	t_Vector3d ray_d_norm = Vector3d_norm(ray.d);
 //     double r = to_double(s->radius);                 // rayon du cylindre
 //     double maxm = to_double(s->height);              // longueur de l'axe du cylindre
 
@@ -300,8 +328,8 @@ double check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
 //     t_Vector3d abc;
 
 //     // Coefficients de l'équation quadratique
-//     abc.x = ray.d.x * ray.d.x - pow(ray.d.x * V.x, 2) + ray.d.y * ray.d.y - pow(ray.d.y * V.y, 2) + ray.d.z * ray.d.z - pow(ray.d.z * V.z, 2);
-//     abc.y = 2 * (X.x * ray.d.x - X.x * V.x * ray.d.x * V.x + X.y * ray.d.y - X.y * V.y * ray.d.y * V.y + X.z * ray.d.z - X.z * V.z * ray.d.z * V.z);
+//     abc.x = ray_d_norm.x * ray_d_norm.x - pow(ray_d_norm.x * V.x, 2) + ray_d_norm.y * ray_d_norm.y - pow(ray_d_norm.y * V.y, 2) + ray_d_norm.z * ray_d_norm.z - pow(ray_d_norm.z * V.z, 2);
+//     abc.y = 2 * (X.x * ray_d_norm.x - X.x * V.x * ray_d_norm.x * V.x + X.y * ray_d_norm.y - X.y * V.y * ray_d_norm.y * V.y + X.z * ray_d_norm.z - X.z * V.z * ray_d_norm.z * V.z);
 //     abc.z = X.x * X.x - pow(X.x * V.x, 2) + X.y * X.y - pow(X.y * V.y, 2) + X.z * X.z - pow(X.z * V.z, 2) - r * r;
 
 //     double discriminant;
@@ -316,7 +344,7 @@ double check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
 //         double curr_t = (i == 0) ? t.x : t.y;
 //         if (curr_t > 0)
 //         {
-//             double m = ray.d.x * V.x * curr_t + X.x * V.x + ray.d.y * V.y * curr_t + X.y * V.y + ray.d.z * V.z * curr_t + X.z * V.z;
+//             double m = ray_d_norm.x * V.x * curr_t + X.x * V.x + ray_d_norm.y * V.y * curr_t + X.y * V.y + ray_d_norm.z * V.z * curr_t + X.z * V.z;
 //             if (m >= 0 && m <= maxm)
 //             {
 //                 if (curr_t < min_distance)
@@ -325,7 +353,7 @@ double check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
 //                     rh->distance = min_distance;
 //                     rh->color = s->color;
 //                     rh->shape = (t_shape *)s;
-//                     rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, min_distance));
+//                     rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray_d_norm, min_distance));
 //                     *dist = min_distance;
 //                 }
 //             }
@@ -340,9 +368,9 @@ double check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
 //     for (int i = 0; i < 2; ++i)
 //     {
 //         t_Vector3d plane_point = (i == 0) ? base_point : top_point;
-//         if (intersectRayPlane(ray.o, ray.d, plane_point, V, &t_plane))
+//         if (intersectRayPlane(ray.o, ray_d_norm, plane_point, V, &t_plane))
 //         {
-//             t_Vector3d intersection_point = Vector3d_add(ray.o, Vector3d_mult(ray.d, t_plane));
+//             t_Vector3d intersection_point = Vector3d_add(ray.o, Vector3d_mult(ray_d_norm, t_plane));
 //             t_Vector3d vec_from_center = Vector3d_sub(intersection_point, plane_point);
 
 //             if (Vector3d_length(vec_from_center) <= r)

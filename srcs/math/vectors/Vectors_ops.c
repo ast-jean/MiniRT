@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Vectors_ops.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:32:54 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/04/13 16:22:08 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/05/08 22:52:53 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,19 @@ t_Vector3d  Vector3d_div(t_Vector3d v, double b)
     return (Vector3d_mult(v, 1.0 / b));
 }
 
-t_Vector3d  Vector3d_unit(t_Vector3d v)
+// t_Vector3d  Vector3d_unit(t_Vector3d v)
+// {
+//     double is = sqrt(pow(v.x,2) + pow(v.y,2) + pow(v.z,2));
+//     if (!is)
+//         is = 1;
+//     return (Vector3d_mult(v, is));
+// }
+
+t_Vector3d Vector3d_unit(t_Vector3d v)
 {
-    double is = sqrt(pow(v.x,2) + pow(v.y,2) + pow(v.z,2));
-    if (!is)
-        is = 1;
-    return (Vector3d_mult(v, is));
+    double length = sqrt(pow(v.x,2) + pow(v.y,2) + pow(v.z,2));
+    if (length == 0)
+        return v;
+    return (Vector3d_mult(v, 1.0 / length));
 }
 
