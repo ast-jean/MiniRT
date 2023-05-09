@@ -50,6 +50,10 @@ typedef struct s_Vars	// all of our values needed throught the program
 	bool		y_trigger;
 	bool		z_trigger;
 	bool		camera_trigger;
+	bool		radius_trigger;
+	bool		height_trigger;
+	bool		FOV_trigger;
+	bool	    light_trigger;
 	double		distance_to_screen;
 	int 		mouse_x;
 	int 		mouse_y;
