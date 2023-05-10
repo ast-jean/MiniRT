@@ -77,6 +77,7 @@ t_rgba shading_obj(t_Ray ray, t_Ray_hit *hit_light, t_shape shape, t_Ray_hit *fi
 t_rgba	shading(t_Ray_hit *hit, t_rgba color)
 {
 	(void)color;
+	(void)hit;
 
 
 	t_rgba		rgba = rgba_init(0,0,0);
@@ -90,7 +91,7 @@ t_rgba	shading(t_Ray_hit *hit, t_rgba color)
 	distance = find_distance(hit->coord, lc); 
 
 	bounce = ray_trace(ray_s2l, distance, hit->shape);
-	// ray_s2l.o = lc;
+	ray_s2l.o = lc;
 	rgba = shading_obj(ray_s2l, &bounce, *hit->shape, hit, lc);
 	return (rgba);
 }

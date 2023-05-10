@@ -1,4 +1,5 @@
 #include "../../include/miniRT.h"
+// #pragma once
 
 void	error_exit(int code, char *str)
 {

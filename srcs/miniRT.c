@@ -198,12 +198,15 @@ void check_trigger_xyz()
 			vars->selected->radius.value += 50;
 		if (vars->selected && vars->height_trigger)
 			vars->selected->height.value += 50;
-		if (vars->selected && vars->x_trigger)
-			set_value(&vars->selected->coord.x, to_double(vars->selected->coord.x) + 1);
-		if (vars->selected && vars->y_trigger)
-			set_value(&vars->selected->coord.y, to_double(vars->selected->coord.y) + 1);
-		if (vars->selected && vars->z_trigger)
-			set_value(&vars->selected->coord.z, to_double(vars->selected->coord.z) + 1);
+		if (!vars->orientation_trigger)
+		{
+			if (vars->selected && vars->x_trigger)
+				set_value(&vars->selected->coord.x, to_double(vars->selected->coord.x) + 1);
+			if (vars->selected && vars->y_trigger)
+				set_value(&vars->selected->coord.y, to_double(vars->selected->coord.y) + 1);
+			if (vars->selected && vars->z_trigger)
+				set_value(&vars->selected->coord.z, to_double(vars->selected->coord.z) + 1);
+		}
 	}
 	if (mlx_is_key_down(vars->mlx, 45) || mlx_is_key_down(vars->mlx, 333))
 	{
@@ -223,6 +226,13 @@ void check_trigger_xyz()
 	}
 
 }
+void reset_position(t_Fixed *point)
+{
+	if (to_double(*point) > 1)
+		set_value(point, -1);
+	if (to_double(*point) < -1)
+		set_value(point, 1);
+}
 
 void check_trigger_orientation()
 {
@@ -237,11 +247,21 @@ void check_trigger_orientation()
 		if (vars->orientation_trigger && vars->selected)
 		{
 			if (vars->x_trigger)
+			{
 				set_value(&vars->selected->orientation.x, to_double(vars->selected->orientation.x) + 0.1);
+				reset_position(&vars->selected->orientation.x);
+
+			}
 			if (vars->y_trigger)
+			{
 				set_value(&vars->selected->orientation.y, to_double(vars->selected->orientation.y) + 0.1);
+				reset_position(&vars->selected->orientation.y);	
+			}
 			if (vars->z_trigger)
+			{
 				set_value(&vars->selected->orientation.z, to_double(vars->selected->orientation.z) + 0.1);
+				reset_position(&vars->selected->orientation.z);
+			}
 		}
 	}
 	if (mlx_is_key_down(vars->mlx, 45) || mlx_is_key_down(vars->mlx, 333))
@@ -250,11 +270,23 @@ void check_trigger_orientation()
 		if (vars->orientation_trigger && vars->selected)
 		{
 			if (vars->x_trigger)
+			{
 				set_value(&vars->selected->orientation.x, to_double(vars->selected->orientation.x) - 0.1);
+				reset_position(&vars->selected->orientation.x);
+
+			}
 			if (vars->y_trigger)
+			{
 				set_value(&vars->selected->orientation.y, to_double(vars->selected->orientation.y) - 0.1);
+				reset_position(&vars->selected->orientation.y);
+			
+			}
 			if (vars->z_trigger)
+			{
 				set_value(&vars->selected->orientation.z, to_double(vars->selected->orientation.z) - 0.1);
+				reset_position(&vars->selected->orientation.z);
+
+			}
 		}
 	}
 	if (vars->selected)
@@ -319,6 +351,7 @@ void camera_position()
 
 
 }
+
 
 void orient_camera()
 {
