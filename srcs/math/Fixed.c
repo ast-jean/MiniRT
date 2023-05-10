@@ -6,13 +6,13 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:25:43 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/03 16:33:48 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/05/10 14:46:56 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/miniRT.h"
 
-t_Vector3d Point3d_to_Vector3d(t_3dPoint point)
+t_Vector3d	Point3d_to_Vector3d(t_3dPoint point)
 {
 	t_Vector3d	vec;
 
@@ -22,15 +22,14 @@ t_Vector3d Point3d_to_Vector3d(t_3dPoint point)
 	return (vec);
 }
 
-t_3dPoint Vec3D_to_point3D(t_Vector3d vec)
+t_3dPoint	Vec3D_to_point3D(t_Vector3d vec)
 {
-	t_3dPoint point;
+	t_3dPoint	point;
 
 	point.x = fp_init(vec.x);
 	point.x = fp_init(vec.y);
 	point.x = fp_init(vec.z);
-
-	return(point);
+	return (point);
 }
 
 t_Fixed fp_init(double value)

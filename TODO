@@ -1,19 +1,4 @@
 TODO: 
-Parsing: (mtrembla)
-	[X] Read only .rt file
-		↳[X] Error handling
-	[X] Parse objects in file
-		↳[ ] Error handling
-	[X] Create objects in chained list
-		[X] A Ambient lightning
-		[X] C Camera
-		[X] L Light
-		[X] sp sphere
-		[X] pl plane
-		[X] cy cylinder
-		[ ]( co Cone - for bonus)
-[X] Handle t_Fixed
-[] handle t_3dPoint
 Ray Tracing and math:
 	[X] Implement Fixed number (slavoie)
 	[ ] Function to shoot rays from camera to screen and catching objects behind
@@ -24,44 +9,16 @@ Controls:
 
 			 screen(2D)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			 00.
-			    _        object(3D)
-  camera 	   | |  →      OO
-	OO     ➚   |O|  →     OOOO
-	[]< →  →   OOO  →    OOOOOO
-		   ➘   |O|  →     OOOO
-               |_|  →      OO
-
 Les contraintes sont les suivantes :
-[ ]	La gestion des fenêtres doit être propre : pas de soucis lorsqu’on passe une autre
+[X]	La gestion des fenêtres doit être propre : pas de soucis lorsqu’on passe une autre
 	fenêtre dessus, lorsqu’on la minimise, etc.
-[ ]	Vous devez implémenter au moins 3 objets géométriques simples : plan, sphère,
+[X]	Vous devez implémenter au moins 3 objets géométriques simples : plan, sphère,
 	Cylindre
-[ ]	Si applicable, toutes les intersections possibles et l’intérieur de l’objet doivent être
+[X]	Si applicable, toutes les intersections possibles et l’intérieur de l’objet doivent être
 	gérés correctement.
-[ ]	Votre programme doit être capable de changer la taille de la propriété unique d’un
+[X]	Votre programme doit être capable de changer la taille de la propriété unique d’un
 	objet : diamètre pour une sphère, et la hauteur et longueur pour un cylindre.
-[ ]	Votre programme doit pouvoir appliquer des transformations aux objets, lumières
+[X]	Votre programme doit pouvoir appliquer des transformations aux objets, lumières
 	et caméra : translation et rotation (excepté pour les sphères et lumières qui ne
 	peuvent pas être tournées).
 [ ]	Gestion de la lumière : luminosité, ombres, lumière d’ambiance (les objets ne sont

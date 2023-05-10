@@ -99,6 +99,10 @@ t_rgba	mix_colors_light(t_Ray_hit hit, t_Ray ray, t_shape shape, double coeff)
 	object_color = separate_color_rgba(shape.color);
 	t_rgba res1 = mix_colors(light_color, object_color, l_r);
 
+	// if (check_side(ray, shape))
+	// 	hit.hit = false;
+	// printf("%d\n", check_side(ray, shape));
+
 	if (coeff > 0 && !hit.hit) //specular
 		result = rgba_add(brightness(res1, coeff), specular(object_color, pow(coeff,100), to_double(init_vars()->light->light_ratio))); //phong specular
 	if (hit.hit) //shadow

@@ -49,10 +49,14 @@ t_Ray_hit ray_trace(const t_Ray ray, double dist_bef, t_shape *shape)
 	t_Ray_hit light_ray_hit = init_Ray_hit();
 	double distance = dist_bef;
 
+	light_ray_hit.bounced = false;
 	if (!shape)
 		ray_checkhit(ray, &light_ray_hit, &distance, NULL);
 	else
+	{
+		light_ray_hit.bounced = true;
 		ray_checkhit(ray, &light_ray_hit, &distance, shape);
+	}
 	return (light_ray_hit);
 }
 
@@ -63,11 +67,7 @@ uint32_t ray_tracing(const t_Ray ray) //returns a color
 	t_Ray_hit hit = ray_trace(ray, INFINITY, NULL); //first draw shape
 	if (!hit.color) 
 		return BLACK;
-	else
-		color = hit.color;
-//add shading
-	color = rgba_to_int32_t(shading(&hit, separate_color_rgba(color)));
-//add reflection
-	//color = mixcolor (color, other object, reflection_intensity)
+	color = 0;
+	color = rgba_to_int32_t(shading(&hit));
 	return (color);
 }
