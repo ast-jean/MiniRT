@@ -410,7 +410,7 @@ void light_x()
 {
 	t_Vars *vars = init_vars();
 
-	if(vars->light_trigger)
+	if(vars->light_trigger && !vars->radius_trigger)
 	{
 		if (mlx_is_key_down(vars->mlx, 61) ||  mlx_is_key_down(vars->mlx, 334))
 			set_value(&vars->light->coord.x, to_double(vars->light->coord.x) + 5);
@@ -431,8 +431,6 @@ void update_ambient_light()
 		if ((mlx_is_key_down(vars->mlx, 45) ||  mlx_is_key_down(vars->mlx, 333)) && (to_double(vars->ambient_light->light_ratio) - 0.1) > 0)
 			set_value(&vars->ambient_light->light_ratio, to_double(vars->ambient_light->light_ratio) - 0.1);
 	}
-
-
 }
 
 void preset_ambient(t_Vars *vars)
@@ -448,6 +446,19 @@ void preset_ambient(t_Vars *vars)
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_5))
 		vars->ambient_light->color = WHITE;
 	// if (mlx_is_key_down(vars->mlx, MLX_KEY_6))
+
+}
+
+void update_intensity(t_Vars *vars)
+{
+	if (vars->light_trigger && vars->radius_trigger)	
+	{
+		if ((mlx_is_key_down(vars->mlx, 61) ||  mlx_is_key_down(vars->mlx, 334)) && (to_double(vars->light->light_ratio) + 0.1) < 1)
+			set_value(&vars->light->light_ratio, to_double(vars->light->light_ratio) + 0.1);
+
+		if ((mlx_is_key_down(vars->mlx, 45) ||  mlx_is_key_down(vars->mlx, 333)) && (to_double(vars->light->light_ratio) - 0.1) > 0)
+			set_value(&vars->light->light_ratio, to_double(vars->light->light_ratio) - 0.1);
+	}
 
 }
 
@@ -475,6 +486,7 @@ void process_key_actions(mlx_key_data_t keydata, void *param)
         orient_camera();
 		light_x();
         update_ambient_light();
+		update_intensity(vars);
 	    ray_to_screen();
     }
 

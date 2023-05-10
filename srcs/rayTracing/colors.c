@@ -53,34 +53,34 @@ t_rgba	rgba_add(t_rgba a, t_rgba b)
 	return (result);
 }
 
-t_rgba add_ambient(t_rgba base_color, t_Vars *vars)
-{
-    t_rgba final_color;
-	t_rgba ambient = separate_color_rgba(vars->ambient_light->color);
-	
-
-    final_color.r = clamp(base_color.r + (int)(to_double(vars->ambient_light->light_ratio) * ambient.r), 0, 255);
-    final_color.g = clamp(base_color.g + (int)(to_double(vars->ambient_light->light_ratio) * ambient.g), 0, 255);
-    final_color.b = clamp(base_color.b + (int)(to_double(vars->ambient_light->light_ratio) * ambient.b), 0, 255);
-    final_color.a = base_color.a; // La composante alpha n'est généralement pas affectée par l'éclairage
-
-    return final_color;
-}
-
 // t_rgba add_ambient(t_rgba base_color, t_Vars *vars)
 // {
 //     t_rgba final_color;
-//     t_rgba ambient = separate_color_rgba(vars->ambient_light->color);
+// 	t_rgba ambient = separate_color_rgba(vars->ambient_light->color);
+	
 
-//     float ambient_ratio = to_double(vars->ambient_light->light_ratio);
-
-//     final_color.r = clamp((int)(base_color.r * (1.0 - ambient_ratio) + ambient.r * ambient_ratio), 0, 255);
-//     final_color.g = clamp((int)(base_color.g * (1.0 - ambient_ratio) + ambient.g * ambient_ratio), 0, 255);
-//     final_color.b = clamp((int)(base_color.b * (1.0 - ambient_ratio) + ambient.b * ambient_ratio), 0, 255);
+//     final_color.r = clamp(base_color.r + (int)(to_double(vars->ambient_light->light_ratio) * ambient.r), 0, 255);
+//     final_color.g = clamp(base_color.g + (int)(to_double(vars->ambient_light->light_ratio) * ambient.g), 0, 255);
+//     final_color.b = clamp(base_color.b + (int)(to_double(vars->ambient_light->light_ratio) * ambient.b), 0, 255);
 //     final_color.a = base_color.a; // La composante alpha n'est généralement pas affectée par l'éclairage
 
 //     return final_color;
 // }
+
+t_rgba add_ambient(t_rgba base_color, t_Vars *vars)
+{
+    t_rgba final_color;
+    t_rgba ambient = separate_color_rgba(vars->ambient_light->color);
+    double light_ratio = to_double(vars->ambient_light->light_ratio);
+
+    final_color.r = (uint8_t)(base_color.r * (1.0 - light_ratio) + ambient.r * light_ratio);
+    final_color.g = (uint8_t)(base_color.g * (1.0 - light_ratio) + ambient.g * light_ratio);
+    final_color.b = (uint8_t)(base_color.b * (1.0 - light_ratio) + ambient.b * light_ratio);
+    final_color.a = base_color.a;
+
+    return final_color;
+}
+
 
 
 
