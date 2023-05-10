@@ -67,13 +67,49 @@ t_rgba add_ambient(t_rgba base_color, t_Vars *vars)
     return final_color;
 }
 
+// t_rgba add_ambient(t_rgba base_color, t_Vars *vars)
+// {
+//     t_rgba final_color;
+//     t_rgba ambient = separate_color_rgba(vars->ambient_light->color);
+
+//     float ambient_ratio = to_double(vars->ambient_light->light_ratio);
+
+//     final_color.r = clamp((int)(base_color.r * (1.0 - ambient_ratio) + ambient.r * ambient_ratio), 0, 255);
+//     final_color.g = clamp((int)(base_color.g * (1.0 - ambient_ratio) + ambient.g * ambient_ratio), 0, 255);
+//     final_color.b = clamp((int)(base_color.b * (1.0 - ambient_ratio) + ambient.b * ambient_ratio), 0, 255);
+//     final_color.a = base_color.a; // La composante alpha n'est généralement pas affectée par l'éclairage
+
+//     return final_color;
+// }
+
+
+
+
+t_rgba ambient(t_rgba color)
+{
+	double intensity = to_double(init_vars()->ambient_light->light_ratio);
+	t_rgba ac;
+	ac = separate_color_rgba(init_vars()->ambient_light->color);
+	// t_rgba color_add = rgba_init(0,0,0);
+
+//if intensity == 1; color should mix 50/50
+	
+	// ac = remove_excess(ac);
+	// color = rgba_add(remove_excess(color_add), brightness(ac, intensity));
+	// color = mix_colors(color, ac, intensity);
+	color = brightness(color, intensity);
+
+	(void)intensity;
+	
+	return (color);
+}
 
 t_rgba	mix_colors_light(t_Ray_hit hit, t_Ray ray, t_shape shape, double coeff)
 {
 	(void)ray;
 	(void)hit;
 	t_rgba	result = rgba_init(0,0,0);
-	// t_rgba	ambient = rgba_init(100,100,100);
+	// t_rgba	ambien = rgba_init(100,100,100);
 
 	double	l_r = to_double(init_vars()->light->light_ratio);
 	t_rgba	object_color = rgba_init(0,0,0);
@@ -88,8 +124,9 @@ t_rgba	mix_colors_light(t_Ray_hit hit, t_Ray ray, t_shape shape, double coeff)
 		result = rgba_add(brightness(res1, coeff), specular(object_color, pow(coeff,100), to_double(init_vars()->light->light_ratio))); //phong specular
 	}
 //add ambient somewhere here
-	result = add_ambient(result, init_vars());
-	// light_color = brightness(lcolor, l_r);
+	// result = add_ambient(result, init_vars());
+	// light_color = brightness(ambient, l_r);
+	result = ambient(result);
 	return (result);
 }
 
@@ -106,19 +143,31 @@ t_rgba brightness(t_rgba color, double mix_factor)
 }
 
 
-
 t_rgba mix_colors(t_rgba color1, t_rgba color2, double mix_factor)
 {
-	(void)mix_factor;
     t_rgba result;
+	(void)mix_factor;
 
-    result.r = (uint8_t)((color1.r * color2.r) / 255);
-    result.g = (uint8_t)((color1.g * color2.g) / 255);
-    result.b = (uint8_t)((color1.b * color2.b) / 255);
+    result.r = clamp((int)(color1.r * color2.r / 255.0), 0, 255);
+    result.g = clamp((int)(color1.g * color2.g / 255.0), 0, 255);
+    result.b = clamp((int)(color1.b * color2.b / 255.0), 0, 255);
     result.a = 255;
 
-    return (result);
+    return result;
 }
+
+// t_rgba mix_colors(t_rgba color1, t_rgba color2, double mix_factor)
+// {
+// 	(void)mix_factor;
+//     t_rgba result;
+
+//     result.r = (uint8_t)((color1.r * color2.r) / 255);
+//     result.g = (uint8_t)((color1.g * color2.g) / 255);
+//     result.b = (uint8_t)((color1.b * color2.b) / 255);
+//     result.a = 255;
+
+//     return (result);
+// }
 
 // t_rgba mix_colors(t_rgba color1, t_rgba color2, double mix_factor)
 // {
@@ -163,21 +212,3 @@ t_rgba remove_excess(t_rgba c)
 	return (c);
 }
 
-t_rgba ambient(t_rgba color)
-{
-	double intensity = to_double(init_vars()->ambient_light->light_ratio);
-	t_rgba ac;
-	ac = separate_color_rgba(init_vars()->ambient_light->color);
-	// t_rgba color_add = rgba_init(0,0,0);
-
-//if intensity == 1; color should mix 50/50
-	
-	// ac = remove_excess(ac);
-	// color = rgba_add(remove_excess(color_add), brightness(ac, intensity));
-	// color = mix_colors(color, ac, intensity);
-	color = brightness(color, intensity);
-
-	(void)intensity;
-	
-	return (color);
-}

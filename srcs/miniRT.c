@@ -56,6 +56,7 @@ void init_trigger(t_Vars *vars)
 	vars->height_trigger = 0;
 	vars->FOV_trigger = 0;
 	vars->light_trigger = 0;
+	vars->ambient_light = 0;
 }
 
 t_Vars	*init_vars()
@@ -139,6 +140,7 @@ void  mouse_hook(mouse_key_t button, action_t action, modifier_key_t mods, void*
 		set_value(&vars->selected->coord.z, hit.coord.z);
 		set_value(&vars->selected->coord.y, hit.coord.y);
 		ray_to_screen();
+		// print_objects();
 	}
 
 }
@@ -151,9 +153,9 @@ void print_trigger_state()
 	printf("\033[32m");
 	printf("--------------------\n");
 	printf("|Active trigger     |\n");
-	printf("|R=%d, H=%d, O=%d, F=%d |\n|C=%d, X=%d, Y=%d, Z=%d |\n|L=%d		    |\n", \
+	printf("|R=%d, H=%d, O=%d, F=%d |\n|C=%d, X=%d, Y=%d, Z=%d |\n|L=%d A=%d		    |\n", \
 	vars->radius_trigger, vars->height_trigger, vars->orientation_trigger, \
-	vars->FOV_trigger, vars->camera_trigger, vars->x_trigger,vars->y_trigger, vars->z_trigger, vars->light_trigger);
+	vars->FOV_trigger, vars->camera_trigger, vars->x_trigger,vars->y_trigger, vars->z_trigger, vars->light_trigger, vars->ambient_trigger);
 	printf("--------------------\n");
 	printf("\033[0m\n");
 
@@ -183,6 +185,8 @@ void update_trigger()
 		vars->FOV_trigger = !vars->FOV_trigger;
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_L))
 		vars->light_trigger = !vars->light_trigger;
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
+		vars->ambient_trigger = !vars->ambient_trigger;
 	print_trigger_state();
 }
 
@@ -386,8 +390,8 @@ void orient_camera()
  int are_useful_keys_down(t_Vars *vars)
 {
 	int useful_keys[] = {61, 334, 333, 45, MLX_KEY_PAGE_UP, MLX_KEY_PAGE_DOWN, MLX_KEY_UP, MLX_KEY_DOWN,
-	                     MLX_KEY_LEFT, MLX_KEY_RIGHT, MLX_KEY_ESCAPE, MLX_KEY_A, MLX_KEY_W, MLX_KEY_D,
-	                     MLX_KEY_S, MLX_KEY_Q, MLX_KEY_E, MLX_KEY_7, MLX_KEY_8, MLX_KEY_O, MLX_KEY_X,
+	                     MLX_KEY_LEFT, MLX_KEY_RIGHT, MLX_KEY_ESCAPE, MLX_KEY_1, MLX_KEY_2, MLX_KEY_3,
+	                     MLX_KEY_4, MLX_KEY_5, MLX_KEY_6, MLX_KEY_7, MLX_KEY_8, MLX_KEY_O, MLX_KEY_X,
 	                     MLX_KEY_Y, MLX_KEY_Z, MLX_KEY_C, MLX_KEY_R, MLX_KEY_H, MLX_KEY_F, MLX_KEY_L};
 	int num_keys = sizeof(useful_keys) / sizeof(int);
 	int i = 0;
@@ -415,6 +419,38 @@ void light_x()
 	}
 }
 
+void update_ambient_light()
+{
+	t_Vars *vars = init_vars();
+
+	if (vars->ambient_trigger)
+	{
+		if ((mlx_is_key_down(vars->mlx, 61) ||  mlx_is_key_down(vars->mlx, 334)) && (to_double(vars->ambient_light->light_ratio) + 0.1) < 1)
+			set_value(&vars->ambient_light->light_ratio, to_double(vars->ambient_light->light_ratio) + 0.1);
+
+		if ((mlx_is_key_down(vars->mlx, 45) ||  mlx_is_key_down(vars->mlx, 333)) && (to_double(vars->ambient_light->light_ratio) - 0.1) > 0)
+			set_value(&vars->ambient_light->light_ratio, to_double(vars->ambient_light->light_ratio) - 0.1);
+	}
+
+
+}
+
+void preset_ambient(t_Vars *vars)
+{
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_1))
+		vars->ambient_light->color = GREEN;
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_2))
+		vars->ambient_light->color = RED;	
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_3))
+		vars->ambient_light->color = BLUE;
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_4))
+		vars->ambient_light->color = GRAY;
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_5))
+		vars->ambient_light->color = WHITE;
+	// if (mlx_is_key_down(vars->mlx, MLX_KEY_6))
+
+}
+
 void process_key_actions(mlx_key_data_t keydata, void *param)
 {
     t_Vars *vars = param;
@@ -428,6 +464,7 @@ void process_key_actions(mlx_key_data_t keydata, void *param)
     }
 
     update_trigger();
+	preset_ambient(vars);
 
     if (are_useful_keys_down(vars))
     {
@@ -437,7 +474,7 @@ void process_key_actions(mlx_key_data_t keydata, void *param)
         camera_position();
         orient_camera();
 		light_x();
-        // update_ambient_light();
+        update_ambient_light();
 	    ray_to_screen();
     }
 
