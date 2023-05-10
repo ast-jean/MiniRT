@@ -218,16 +218,16 @@ t_rgba calculate_lighting(t_Ray_hit *rh, const t_Vector3d *normal)
 	return final_color;
 }
 
-
 double check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
 {
-    t_Vector3d C = Point3d_to_Vector3d(s->coord);
+    t_Vector3d center = Point3d_to_Vector3d(s->coord);
     t_Vector3d V = Vector3d_norm(Point3d_to_Vector3d(s->orientation));
-	t_Vector3d ray_d_norm = Vector3d_norm(ray.d);
+    t_Vector3d ray_d_norm = Vector3d_norm(ray.d);
 
-;
     double r = to_double(s->radius);
-    double maxm = to_double(s->height);
+    double half_height = 0.5 * to_double(s->height);
+
+    t_Vector3d C = Vector3d_sub(center, Vector3d_mult(V, half_height));
 
     t_Vector3d X = Vector3d_sub(ray.o, C);
     t_Vector3d abc;
@@ -249,7 +249,7 @@ double check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
         if (curr_t > 0)
         {
             double m = ray_d_norm.x * V.x * curr_t + X.x * V.x + ray_d_norm.y * V.y * curr_t + X.y * V.y + ray_d_norm.z * V.z * curr_t + X.z * V.z;
-            if (m >= 0 && m <= maxm)
+            if (m >= 0 && m <= 2 * half_height)
             {
                 if (curr_t < min_distance)
                 {
@@ -268,128 +268,8 @@ double check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
     return *dist;
 }
 
-// double	check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
-// {
-// 	// Paramètres du cylindre
-// 	t_Vector3d C = Point3d_to_Vector3d(s->coord); // point de départ de l'axe du cylindre
-// 	t_Vector3d V = Point3d_to_Vector3d(s->orientation); // orientation du cylindre (vecteur unitaire)
-// 	double r = to_double(s->radius); // rayon du cylindre
-// 	double maxm = to_double(s->height); // longueur de l'axe du cylindre
 
-// 	// Variables intermédiaires
-// 	t_Vector3d X = Vector3d_sub(ray.o, C);
-// 	// t_Vector3d DV = Vector3d_mult(ray.d, V);
-// 	// t_Vector3d XV = Vector3d_mult(X, V);
-//     t_Vector3d abc;
 
-// 	// Coefficients de l'équation quadratique
-// 	abc.x = ray.d.x * ray.d.x - pow(ray.d.x * V.x, 2) + ray.d.y * ray.d.y - pow(ray.d.y * V.y, 2) + ray.d.z * ray.d.z - pow(ray.d.z * V.z, 2);
-// 	abc.y = 2 * (X.x * ray.d.x - X.x * V.x * ray.d.x * V.x + X.y * ray.d.y - X.y * V.y * ray.d.y * V.y + X.z * ray.d.z - X.z * V.z * ray.d.z * V.z);
-// 	abc.z = X.x * X.x - pow(X.x * V.x, 2) + X.y * X.y - pow(X.y * V.y, 2) + X.z * X.z - pow(X.z * V.z, 2) - r * r;
-
-// 	// Résoudre l'équation quadratique
-// 	double discriminant;
-// 	t_Vector2d t;
-// 	if (!solveQuadratic(abc, &t, &discriminant))
-// 		return *dist;
-
-// 	// Vérifier les intersections avec le cylindre et ses extrémités
-// 	double min_distance = INFINITY;
-// 	for (int i = 0; i < 2; ++i) {
-// 		double curr_t = (i == 0) ? t.x : t.y;
-// 		if (curr_t > 0) {
-// 			double m = ray.d.x * V.x * curr_t + X.x * V.x + ray.d.y * V.y * curr_t + X.y * V.y + ray.d.z * V.z * curr_t + X.z * V.z;
-// 			if (m >= 0 && m <= maxm) {
-// 				if (curr_t < min_distance) {
-// 					min_distance = curr_t;
-// 					rh->distance = min_distance;
-// 					rh->color = s->color;
-// 					rh->shape = (t_shape*)s;
-// 					rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, min_distance));
-// 					*dist = min_distance;
-// 					return (*dist);
-// 				}
-// 			}
-// 		}
-// 	}
-// 	return *dist;
-// }
-
-// double check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
-// {
-//     // Paramètres du cylindre
-//     t_Vector3d C = Point3d_to_Vector3d(s->coord);      // point de départ de l'axe du cylindre
-//     t_Vector3d V = Vector3d_norm(Point3d_to_Vector3d(s->orientation));
-// 	t_Vector3d ray_d_norm = Vector3d_norm(ray.d);
-//     double r = to_double(s->radius);                 // rayon du cylindre
-//     double maxm = to_double(s->height);              // longueur de l'axe du cylindre
-
-//     t_Vector3d X = Vector3d_sub(ray.o, C);
-//     t_Vector3d abc;
-
-//     // Coefficients de l'équation quadratique
-//     abc.x = ray_d_norm.x * ray_d_norm.x - pow(ray_d_norm.x * V.x, 2) + ray_d_norm.y * ray_d_norm.y - pow(ray_d_norm.y * V.y, 2) + ray_d_norm.z * ray_d_norm.z - pow(ray_d_norm.z * V.z, 2);
-//     abc.y = 2 * (X.x * ray_d_norm.x - X.x * V.x * ray_d_norm.x * V.x + X.y * ray_d_norm.y - X.y * V.y * ray_d_norm.y * V.y + X.z * ray_d_norm.z - X.z * V.z * ray_d_norm.z * V.z);
-//     abc.z = X.x * X.x - pow(X.x * V.x, 2) + X.y * X.y - pow(X.y * V.y, 2) + X.z * X.z - pow(X.z * V.z, 2) - r * r;
-
-//     double discriminant;
-//     t_Vector2d t;
-//     if (!solveQuadratic(abc, &t, &discriminant))
-//         return *dist;
-
-//     // Vérifier les intersections avec le cylindre et ses extrémités
-//     double min_distance = INFINITY;
-//     for (int i = 0; i < 2; ++i)
-//     {
-//         double curr_t = (i == 0) ? t.x : t.y;
-//         if (curr_t > 0)
-//         {
-//             double m = ray_d_norm.x * V.x * curr_t + X.x * V.x + ray_d_norm.y * V.y * curr_t + X.y * V.y + ray_d_norm.z * V.z * curr_t + X.z * V.z;
-//             if (m >= 0 && m <= maxm)
-//             {
-//                 if (curr_t < min_distance)
-//                 {
-//                     min_distance = curr_t;
-//                     rh->distance = min_distance;
-//                     rh->color = s->color;
-//                     rh->shape = (t_shape *)s;
-//                     rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray_d_norm, min_distance));
-//                     *dist = min_distance;
-//                 }
-//             }
-//         }
-//     }
-
-//     // Vérifier les intersections avec les extrémités du cylindre
-//     t_Vector3d base_point = C;
-//     t_Vector3d top_point = Vector3d_add(C, Vector3d_mult(V, maxm));
-//     double t_plane;
-
-//     for (int i = 0; i < 2; ++i)
-//     {
-//         t_Vector3d plane_point = (i == 0) ? base_point : top_point;
-//         if (intersectRayPlane(ray.o, ray_d_norm, plane_point, V, &t_plane))
-//         {
-//             t_Vector3d intersection_point = Vector3d_add(ray.o, Vector3d_mult(ray_d_norm, t_plane));
-//             t_Vector3d vec_from_center = Vector3d_sub(intersection_point, plane_point);
-
-//             if (Vector3d_length(vec_from_center) <= r)
-//             {
-//                 if (t_plane < min_distance)
-//                 {
-//                     min_distance = t_plane;
-//                     rh->distance = min_distance;
-//                     rh->color = s->color;
-//                     rh->shape = (t_shape *)s;
-//                     rh->coord = intersection_point;
-//                     *dist = min_distance;
-//                 }
-//             }
-//         }
-//     }
-
-//     return *dist;
-// }
 
 t_matrice3x3 create_matrice(t_shape *s)
 {
