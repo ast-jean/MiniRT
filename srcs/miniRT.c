@@ -330,7 +330,7 @@ void camera_position()
 	vars = init_vars();
 	if (mlx_is_key_down(vars->mlx, 61) ||  mlx_is_key_down(vars->mlx, 334))
 	{
-		if (vars->camera_trigger)
+		if (vars->camera_trigger && !vars->orientation_trigger)
 		{
 			if (vars->x_trigger)
 				set_value(&vars->camera->coord.x, to_double(vars->camera->coord.x) + 100);

@@ -62,10 +62,10 @@ t_rgba shading_obj(t_Ray ray, t_Ray_hit *hit_light, t_shape shape, t_Ray_hit *fi
 	obj_normal = find_normal(first_hit->coord, Point3d_to_Vector3d(shape.coord), shape);
 	coeff = find_angle_normals(light_dir, obj_normal);
 
-	// if(hit_light->hit)
-	// {
-	// 	coeff *= 0.2;
-	// }
+	if(hit_light->hit)
+	{
+		coeff *= 0.2;
+	}
 		color_to_add = mix_colors_light(*hit_light, ray, shape, coeff);	
 		color = rgba_add(color, color_to_add);
 	return (color);
