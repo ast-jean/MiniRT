@@ -139,14 +139,20 @@ void		ray_to_screen();
 uint32_t	ray_tracing(const t_Ray ray);
 t_Ray_hit	ray_trace(t_Ray ray, double dist, t_shape *shape);
 // check.c
+bool	check_side(const t_Ray ray, const t_shape shape);
 void	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o);
 int	check_cy(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double *dist);
 double	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
 double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
 bool	check_dot_sign(t_Vector3d shape_pos, t_Vector3d Vec1, t_Vector3d Vec2);
-
+/*---------------------------Normal-------------------------*/
+t_Vector3d	light_normal(t_Vector3d coords, t_Vector3d obj_coord);
+t_Vector3d	cylinder_normal(t_Vector3d intersection, t_Vector3d C, t_Vector3d V);
+t_Vector3d	plane_normal(t_Vector3d hit_coords, t_Vector3d orientation);
+t_Vector3d	find_normal(t_Vector3d coords, t_Vector3d obj_coord, t_shape shape);
+double		find_angle_normals(t_Vector3d Norm1, t_Vector3d Norm2);
 /*---------------------------Shading-------------------------*/
-t_rgba		shading(t_Ray_hit *hit, t_rgba color);
+t_rgba		shading(t_Ray_hit *hit);
 t_Vector3d	find_normal(t_Vector3d coords, t_Vector3d obj_coord, t_shape shape);
 // t_rgba		shading_sp(t_Ray ray, t_Ray_hit *hit);
 /*---------------------------colors-------------------------*/

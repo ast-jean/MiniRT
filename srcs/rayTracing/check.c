@@ -18,18 +18,17 @@ bool	check_dot_sign(t_Vector3d shape_pos, t_Vector3d Vec1, t_Vector3d Vec2)
 		return (false);
 }
 
-/// @brief :Checking in which side the object is from the ray used for lighting since the object
+/// @brief Checking in which side the object is from the ray used for lighting since the object
 /// 		the other side of the camera are not visible.
-/// @param ray.o is the light coords and ray.d is the light direction to the hit coords.
+/// @param ray.o is the light coords
+/// @param ray.d is the light direction to the hit coords.
 /// @param shape the object to locate side
 /// @return return true if the object is the same side and false if on the other side
-double	check_side(t_Ray ray, t_shape shape)
+bool	check_side(const t_Ray ray, const t_shape shape)
 {
-	t_Ray ray_tmp;
+	t_Ray ray_tmp = ray_init(Point3d_to_Vector3d(init_vars()->light->coord), Vector3d_mult(ray.d, -1));
 	t_Vector3d s_coord = Point3d_to_Vector3d(shape.coord);
-	ray_tmp.d = Vector3d_mult(ray.d, -1);
-	ray_tmp.o = Point3d_to_Vector3d(init_vars()->light->coord);
-	return (check_dot_sign(s_coord, ray.d, ray_direction(ray.o, s_coord)));
+	return (check_dot_sign(s_coord, ray_tmp.d, ray_direction(ray_tmp.o, s_coord)));
 }
 
 double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist)
@@ -58,7 +57,9 @@ double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist)
 		rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, distance));
 		rh->color = s->color;
 		rh->shape = (t_shape*)s;
-		rh->distance = distance;
+		// rh->distance = distance;
+		rh->distance = find_distance(ray.o, rh->coord);
+		// if (rh->distance == distance)
 		rh->hit = true;
 		return (distance);
 	}
@@ -88,30 +89,6 @@ double	check_pl(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double dist)
 	}
 	return (dist);
 }
-
-// double	check_pl(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double dist)
-// {
-// 	t_Vector3d sc = Point3d_to_Vector3d(s->coord);
-// 	t_Vector3d so = Point3d_to_Vector3d(s->orientation);
-
-// 	double denom = Vector3d_dot(so, ray.d);
-// 	if (fabs(denom) > 0)
-// 	{
-// 		double t = Vector3d_dot(Vector3d_sub(sc, ray.o), so) / denom;
-// 		if(t < dist) //distance comparaison
-// 		{
-// 			if (t > 0) //only if t is positive
-// 			{
-// 				rh->color = s->color;
-// 				rh->shape = (t_shape*)s;
-// 				rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, t));
-// 				rh->distance = t;
-// 				return (t);
-// 			}
-// 		}
-// 	}
-// 	return (dist);
-// }
 
 t_matrice3x3 inverse_matrice3x3(t_matrice3x3 m)
 {
@@ -163,32 +140,15 @@ t_Ray inverse_transform_ray(const t_Ray ray, const t_matrice3x3 transformation_m
     return transformed_ray;
 }
 
-
-
 bool intersectRayPlane(t_Vector3d ray_origin, t_Vector3d ray_direction, t_Vector3d plane_point, t_Vector3d plane_normal, double *t)
 {
 	double denom = Vector3d_dot(plane_normal, ray_direction);
 	if (fabs(denom) < 1e-6)
-		return false; // Le rayon est parallèle au plan
+		return false;
 
 	*t = Vector3d_dot(Vector3d_sub(plane_point, ray_origin), plane_normal) / denom;
 
 	return (*t >= 0);
-}
-t_Vector3d cylinder_normal(t_Vector3d intersection, t_Vector3d C, t_Vector3d V)
-{
-    // Calculer le vecteur temporaire
-    t_Vector3d temp_vec = Vector3d_sub(intersection, C);
-
-    // Projeter temp_vec sur le plan perpendiculaire à l'axe du cylindre (V)
-    double scalar_proj = Vector3d_dot(temp_vec, V);
-    t_Vector3d proj_V = Vector3d_mult(V, scalar_proj);
-    t_Vector3d proj_vec = Vector3d_sub(temp_vec, proj_V);
-
-    // Normaliser le vecteur proj_vec pour obtenir la normale
-    t_Vector3d normal_vec = Vector3d_norm(proj_vec);
-
-    return normal_vec;
 }
 
 t_rgba calculate_lighting(t_Ray_hit *rh, const t_Vector3d *normal)
@@ -373,7 +333,6 @@ void ray_checkhit(t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o)
                 *distance = check_pl(s, ray, rh, *distance);
             else if (ft_strcmp(s->id, "sp"))
 			{
-				// printf("\nDistance bef: %f\n", *distance);
                 *distance = check_sp(s, ray, rh, *distance);
 				// printf("Distance after: %f\n", *distance);
 			}
@@ -383,6 +342,7 @@ void ray_checkhit(t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o)
         aff = aff->next;
     }
 }
+
 
 
 // double check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
@@ -459,6 +419,7 @@ void ray_checkhit(t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o)
 
 //     return *dist;
 // }
+
 
 
 

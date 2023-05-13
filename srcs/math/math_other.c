@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:33:32 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/05/08 14:36:25 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/05/13 13:16:40 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,11 @@ bool solveQuadratic(t_Vector3d abc, t_Vector2d *t, double *discr)
 		t->x = t->y = - 0.5 * abc.y / abc.x;
 	else 
 	{
-		// double q = -0.5 * (abc.y + sqrt(*discr));
 		double q = (abc.y > 0) ?
 			-0.5 * (abc.y + sqrt(*discr)):
 			-0.5 * (abc.y - sqrt(*discr));
-		// if (q < 0)
-		//     return false;
+		if (q < 0)
+		    return false;
 		t->x = q / abc.x;
 		t->y = abc.z / q;
 	}
