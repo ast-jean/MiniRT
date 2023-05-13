@@ -11,6 +11,7 @@ SRCS_FILES 		=	miniRT.c \
 					rayTracing/check.c \
 					rayTracing/colors.c \
 					rayTracing/shading.c \
+					rayTracing/normal.c \
 					parsing/parsing.c \
 					parsing/objects.c \
 					parsing/colors.c \
@@ -23,7 +24,7 @@ SRCS_FILES 		=	miniRT.c \
 					math/vectors/ray.c \
 					math/vectors/Vectors_ops.c \
 					math/vectors/matrice.c \
-					math/math_other.c 
+					math/math_other.c
 
 
 INCLUDE_FILES	= 	miniRT.h \
