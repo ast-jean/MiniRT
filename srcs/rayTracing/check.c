@@ -179,11 +179,13 @@ t_rgba calculate_lighting(t_Ray_hit *rh, const t_Vector3d *normal)
 }
 // double check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
 
+
 int check_cy(const t_shape *c, const t_Ray r, t_Ray_hit *rh, double *dist)
 {
     t_Vector3d dp = Vector3d_sub(r.o, Point3d_to_Vector3d(c->coord));
-    t_Vector3d d = Vector3d_sub(r.d, Vector3d_mult(Point3d_to_Vector3d(c->orientation), Vector3d_dot(r.d, Point3d_to_Vector3d(c->orientation))));
-    t_Vector3d e = Vector3d_sub(dp, Vector3d_mult(Point3d_to_Vector3d(c->orientation), Vector3d_dot(dp, Point3d_to_Vector3d(c->orientation))));
+    t_Vector3d normalized_orientation = Vector3d_norm(Point3d_to_Vector3d(c->orientation));
+    t_Vector3d d = Vector3d_sub(r.d, Vector3d_mult(normalized_orientation, Vector3d_dot(r.d, normalized_orientation)));
+    t_Vector3d e = Vector3d_sub(dp, Vector3d_mult(normalized_orientation, Vector3d_dot(dp, normalized_orientation)));
 
     double A = Vector3d_dot(d, d);
     double B = 2 * Vector3d_dot(d, e);
@@ -206,42 +208,38 @@ int check_cy(const t_shape *c, const t_Ray r, t_Ray_hit *rh, double *dist)
     t_Vector3d P0 = Vector3d_add(r.o, Vector3d_mult(r.d, t0));
     t_Vector3d P1 = Vector3d_add(r.o, Vector3d_mult(r.d, t1));
 
-    double h0 = Vector3d_dot(Vector3d_sub(P0, Point3d_to_Vector3d(c->coord)), Point3d_to_Vector3d(c->orientation));
-    double h1 = Vector3d_dot(Vector3d_sub(P1, Point3d_to_Vector3d(c->coord)), Point3d_to_Vector3d(c->orientation));
+    t_Vector3d c1 = Vector3d_sub(Point3d_to_Vector3d(c->coord), Vector3d_mult(normalized_orientation, to_double(c->height) / 2.0));
+    t_Vector3d c2 = Vector3d_add(Point3d_to_Vector3d(c->coord), Vector3d_mult(normalized_orientation, to_double(c->height) / 2.0));
 
-    if (h0 < 0 || h0 > to_double(c->height)) {
-        if (h1 < 0 || h1 > to_double(c->height)) {
-            return 0; // No intersection
+    double h0 = Vector3d_dot(Vector3d_sub(P0, c1), Vector3d_sub(c2, c1));
+    double h1 = Vector3d_dot(Vector3d_sub(P1, c1), Vector3d_sub(c2, c1));
+
+    if (h0 < 0 || h0 > to_double(c->height) * to_double(c->height)) {
+        if (h1 < 0 || h1 > to_double(c->height) * to_double(c->height)) {
+            return 0; // no intersection
         } else {
             *dist = t1;
             rh->distance = *dist;
             rh->color = c->color;
             rh->shape = (t_shape *)c;
             rh->coord = Vector3d_add(r.o, Vector3d_mult(r.d, *dist));
-            return 1; // Intersection at P1
+            return 1; // intersection at P1
         }
     } else {
         if (h1 < 0) {
-            if (h0 < 0 || h0 > to_double(c->height)) {
-                return 0; // No intersection
-            } else {
-                *dist = t0;
-                rh->distance = *dist;
-                rh->color = c->color;
-                rh->shape = (t_shape *)c;
-                rh->coord = Vector3d_add(r.o, Vector3d_mult(r.d, *dist));
-                return 1; // Intersection at P0
-            }
+            return 0; // no intersection
         } else {
             *dist = t0;
             rh->distance = *dist;
             rh->color = c->color;
             rh->shape = (t_shape *)c;
             rh->coord = Vector3d_add(r.o, Vector3d_mult(r.d, *dist));
-            return 1; // Intersection at P0
+			return 1; // intersection at P0
         }
     }
 }
+
+
 
 
 
