@@ -41,9 +41,10 @@ t_rgba	shading(t_Ray_hit *hit)
 	double distance = find_distance(hit->coord, lc); //can be put in bounce
 	
 	ray_s2l.o = lc;
-	ray_s2l.d = Vector3d_mult(ray_s2l.d, -1);
+	// ray_s2l.d = Vector3d_mult(ray_s2l.d, -1);
 
 	t_Ray_hit bounce = ray_trace(ray_s2l, distance, hit->shape); //can be put in rgba
+
 	rgba = shading_obj(ray_s2l, bounce, *hit->shape, hit, lc);
 	return (rgba);
 }
