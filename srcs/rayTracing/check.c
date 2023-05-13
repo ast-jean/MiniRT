@@ -217,56 +217,123 @@ t_rgba calculate_lighting(t_Ray_hit *rh, const t_Vector3d *normal)
 
 	return final_color;
 }
+// double check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
 
-double check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
+int check_cy(const t_shape *c, const t_Ray r, t_Ray_hit *rh, double *dist)
 {
-    t_Vector3d center = Point3d_to_Vector3d(s->coord);
-    t_Vector3d V = Vector3d_norm(Point3d_to_Vector3d(s->orientation));
-    t_Vector3d ray_d_norm = Vector3d_norm(ray.d);
+    t_Vector3d dp = Vector3d_sub(r.o, Point3d_to_Vector3d(c->coord));
+    t_Vector3d d = Vector3d_sub(r.d, Vector3d_mult(Point3d_to_Vector3d(c->orientation), Vector3d_dot(r.d, Point3d_to_Vector3d(c->orientation))));
+    t_Vector3d e = Vector3d_sub(dp, Vector3d_mult(Point3d_to_Vector3d(c->orientation), Vector3d_dot(dp, Point3d_to_Vector3d(c->orientation))));
 
-    double r = to_double(s->radius);
-    double half_height = 0.5 * to_double(s->height);
+    double A = Vector3d_dot(d, d);
+    double B = 2 * Vector3d_dot(d, e);
+    double C = Vector3d_dot(e, e) - to_double(c->radius) * to_double(c->radius);
 
-    t_Vector3d C = Vector3d_sub(center, Vector3d_mult(V, half_height));
-
-    t_Vector3d X = Vector3d_sub(ray.o, C);
-    t_Vector3d abc;
-
-    abc.x = ray_d_norm.x * ray_d_norm.x - pow(ray_d_norm.x * V.x, 2) + ray_d_norm.y * ray_d_norm.y - pow(ray_d_norm.y * V.y, 2) + ray_d_norm.z * ray_d_norm.z - pow(ray_d_norm.z * V.z, 2);
-    abc.y = 2 * (X.x * ray_d_norm.x - X.x * V.x * ray_d_norm.x * V.x + X.y * ray_d_norm.y - X.y * V.y * ray_d_norm.y * V.y + X.z * ray_d_norm.z - X.z * V.z * ray_d_norm.z * V.z);
-    abc.z = X.x * X.x - pow(X.x * V.x, 2) + X.y * X.y - pow(X.y * V.y, 2) + X.z * X.z - pow(X.z * V.z, 2) - r * r;
-
-    double discriminant;
-    t_Vector2d t;
-    if (!solveQuadratic(abc, &t, &discriminant))
-        return *dist;
-
-    double min_distance = INFINITY;
-    int i = 0;
-    while (i < 2)
-    {
-        double curr_t = (i == 0) ? t.x : t.y;
-        if (curr_t > 0)
-        {
-            double m = ray_d_norm.x * V.x * curr_t + X.x * V.x + ray_d_norm.y * V.y * curr_t + X.y * V.y + ray_d_norm.z * V.z * curr_t + X.z * V.z;
-            if (m >= 0 && m <= 2 * half_height)
-            {
-                if (curr_t < min_distance)
-                {
-                    min_distance = curr_t;
-                    rh->distance = min_distance;
-                    rh->color = s->color;
-                    rh->shape = (t_shape *)s;
-                    rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray_d_norm, min_distance));
-                    *dist = min_distance;
-                    return (*dist);
-                }
-            }
-        }
-        i++;
+    double discr = B * B - 4 * A * C;
+    if (discr < 0) {
+        return 0; // no intersection
     }
-    return *dist;
+
+    double sqrt_discr = sqrt(discr);
+    double t0 = (-B - sqrt_discr) / (2 * A);
+    double t1 = (-B + sqrt_discr) / (2 * A);
+
+    if (t0 > t1) {
+        double temp = t0;
+        t0 = t1;
+        t1 = temp;
+    }
+    t_Vector3d P0 = Vector3d_add(r.o, Vector3d_mult(r.d, t0));
+    t_Vector3d P1 = Vector3d_add(r.o, Vector3d_mult(r.d, t1));
+
+    double h0 = Vector3d_dot(Vector3d_sub(P0, Point3d_to_Vector3d(c->coord)), Point3d_to_Vector3d(c->orientation));
+    double h1 = Vector3d_dot(Vector3d_sub(P1, Point3d_to_Vector3d(c->coord)), Point3d_to_Vector3d(c->orientation));
+
+    if (h0 < 0 || h0 > to_double(c->height)) {
+        if (h1 < 0 || h1 > to_double(c->height)) {
+            return 0; // No intersection
+        } else {
+            *dist = t1;
+            rh->distance = *dist;
+            rh->color = c->color;
+            rh->shape = (t_shape *)c;
+            rh->coord = Vector3d_add(r.o, Vector3d_mult(r.d, *dist));
+            return 1; // Intersection at P1
+        }
+    } else {
+        if (h1 < 0) {
+            if (h0 < 0 || h0 > to_double(c->height)) {
+                return 0; // No intersection
+            } else {
+                *dist = t0;
+                rh->distance = *dist;
+                rh->color = c->color;
+                rh->shape = (t_shape *)c;
+                rh->coord = Vector3d_add(r.o, Vector3d_mult(r.d, *dist));
+                return 1; // Intersection at P0
+            }
+        } else {
+            *dist = t0;
+            rh->distance = *dist;
+            rh->color = c->color;
+            rh->shape = (t_shape *)c;
+            rh->coord = Vector3d_add(r.o, Vector3d_mult(r.d, *dist));
+            return 1; // Intersection at P0
+        }
+    }
 }
+
+
+
+// double check_cy(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
+// {
+//     t_Vector3d center = Point3d_to_Vector3d(s->coord);
+//     t_Vector3d V = Vector3d_norm(Point3d_to_Vector3d(s->orientation));
+//     t_Vector3d ray_d_norm = Vector3d_norm(ray.d);
+
+//     double r = to_double(s->radius);
+//     double half_height = 0.5 * to_double(s->height);
+
+//     t_Vector3d C = Vector3d_sub(center, Vector3d_mult(V, half_height));
+
+//     t_Vector3d X = Vector3d_sub(ray.o, C);
+//     t_Vector3d abc;
+
+//     abc.x = ray_d_norm.x * ray_d_norm.x - pow(ray_d_norm.x * V.x, 2) + ray_d_norm.y * ray_d_norm.y - pow(ray_d_norm.y * V.y, 2) + ray_d_norm.z * ray_d_norm.z - pow(ray_d_norm.z * V.z, 2);
+//     abc.y = 2 * (X.x * ray_d_norm.x - X.x * V.x * ray_d_norm.x * V.x + X.y * ray_d_norm.y - X.y * V.y * ray_d_norm.y * V.y + X.z * ray_d_norm.z - X.z * V.z * ray_d_norm.z * V.z);
+//     abc.z = X.x * X.x - pow(X.x * V.x, 2) + X.y * X.y - pow(X.y * V.y, 2) + X.z * X.z - pow(X.z * V.z, 2) - r * r;
+
+//     double discriminant;
+//     t_Vector2d t;
+//     if (!solveQuadratic(abc, &t, &discriminant))
+//         return *dist;
+
+//     double min_distance = INFINITY;
+//     int i = 0;
+//     while (i < 2)
+//     {
+//         double curr_t = (i == 0) ? t.x : t.y;
+//         if (curr_t > 0)
+//         {
+//             double m = ray_d_norm.x * V.x * curr_t + X.x * V.x + ray_d_norm.y * V.y * curr_t + X.y * V.y + ray_d_norm.z * V.z * curr_t + X.z * V.z;
+//             if (m >= 0 && m <= 2 * half_height)
+//             {
+//                 if (curr_t < min_distance)
+//                 {
+//                     min_distance = curr_t;
+//                     rh->distance = min_distance;
+//                     rh->color = s->color;
+//                     rh->shape = (t_shape *)s;
+//                     rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray_d_norm, min_distance));
+//                     *dist = min_distance;
+//                     return (*dist);
+//                 }
+//             }
+//         }
+//         i++;
+//     }
+//     return *dist;
+// }
 
 
 
@@ -302,9 +369,7 @@ void ray_checkhit(t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o)
         t_shape *s = aff->content;
         if (!shape_o || s->index != shape_o->index) //if the object is not itself
         {
-            if (ft_strcmp(s->id, "cy"))
-                *distance = check_cy(s, ray, rh, distance);
-            else if (ft_strcmp(s->id, "pl"))
+            if (ft_strcmp(s->id, "pl"))
                 *distance = check_pl(s, ray, rh, *distance);
             else if (ft_strcmp(s->id, "sp"))
 			{
@@ -312,6 +377,8 @@ void ray_checkhit(t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o)
                 *distance = check_sp(s, ray, rh, *distance);
 				// printf("Distance after: %f\n", *distance);
 			}
+            else if (ft_strcmp(s->id, "cy"))
+                check_cy(s, ray, rh, distance);
         }
         aff = aff->next;
     }

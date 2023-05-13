@@ -140,7 +140,7 @@ uint32_t	ray_tracing(const t_Ray ray);
 t_Ray_hit	ray_trace(t_Ray ray, double dist, t_shape *shape);
 // check.c
 void	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o);
-double	check_cy(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double *dist);
+int	check_cy(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double *dist);
 double	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
 double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
 bool	check_dot_sign(t_Vector3d shape_pos, t_Vector3d Vec1, t_Vector3d Vec2);

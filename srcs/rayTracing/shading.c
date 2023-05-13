@@ -22,10 +22,10 @@ t_Vector3d	plane_normal(t_Vector3d hit_coords, t_Vector3d orientation)
 
 t_Vector3d	find_normal(t_Vector3d coords, t_Vector3d obj_coord, t_shape shape)
 {
-	if (ft_strcmp(shape.id, "sp"))
-		return (Vector3d_norm(Vector3d_sub(coords, obj_coord)));
-	else if (ft_strcmp(shape.id, "pl"))
+	if (ft_strcmp(shape.id, "pl"))
 		return (plane_normal(coords, Point3d_to_Vector3d(shape.orientation)));
+	else if (ft_strcmp(shape.id, "sp"))
+		return (Vector3d_norm(Vector3d_sub(coords, obj_coord)));
 	else if (ft_strcmp(shape.id, "cy"))
 		return (cylinder_normal(coords, Point3d_to_Vector3d(shape.coord), Point3d_to_Vector3d(shape.orientation)));
 	else
