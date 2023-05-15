@@ -46,9 +46,9 @@ t_Vector3d	find_normal(t_Vector3d coords, t_Vector3d obj_coord, t_shape shape)
 
 double	find_angle_normals(t_Vector3d Norm1, t_Vector3d Norm2)
 {
-	double mag1;
-	double mag2;
-	double dot;
+	double	mag1;
+	double	mag2;
+	double	dot;
 
 	dot = Vector3d_dot(Norm1, Norm2);
 	mag1 = sqrt((Norm1.x * Norm1.x) + (Norm1.y * Norm1.y) + (Norm1.z * Norm1.z));
