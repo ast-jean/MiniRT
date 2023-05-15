@@ -57,9 +57,7 @@ double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist)
 		rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, distance));
 		rh->color = s->color;
 		rh->shape = (t_shape*)s;
-		// rh->distance = distance;
 		rh->distance = find_distance(ray.o, rh->coord);
-		// if (rh->distance == distance)
 		rh->hit = true;
 		return (distance);
 	}
@@ -83,6 +81,7 @@ double	check_pl(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double dist)
 				rh->shape = (t_shape*)s;
 				rh->coord = Vector3d_add(ray.o, Vector3d_mult(ray.d, t));
 				rh->distance = t;
+				rh->hit = true;
 				return (t);
 			}
 		}

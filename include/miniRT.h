@@ -156,15 +156,17 @@ t_rgba		shading(t_Ray_hit *hit);
 t_Vector3d	find_normal(t_Vector3d coords, t_Vector3d obj_coord, t_shape shape);
 // t_rgba		shading_sp(t_Ray ray, t_Ray_hit *hit);
 /*---------------------------colors-------------------------*/
+//colors.c
 t_rgba		brightness(t_rgba color, double scale);
-t_rgba		separate_color_rgba(uint32_t color);
 t_rgba		mix_colors(t_rgba colorA, t_rgba colorB, double mix_factor);
 t_rgba		ambient(t_rgba color);
-t_rgba		mix_colors_light(t_Ray_hit hit, t_Ray ray, t_shape shape, double coeff);
+t_rgba		mix_colors_light(t_Ray_hit hit, t_shape shape, double coeff);
+//colors_utils.c
 int32_t		rgba_to_int32_t(t_rgba rgba);
-t_rgba		rgba_add(t_rgba a, t_rgba b);
 t_rgba		rgba_init(int r, int g, int b);
-
+t_rgba		separate_color_rgba(uint32_t color);
+t_rgba		rgba_add(t_rgba a, t_rgba b);
+t_rgba		remove_excess(t_rgba c);
 
 /*--------------------------Math-------------------------*/
 //math_other.c
