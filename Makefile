@@ -10,6 +10,7 @@ SRCS_FILES 		=	miniRT.c \
 					rayTracing/rayTracing.c \
 					rayTracing/check.c \
 					rayTracing/colors.c \
+					rayTracing/colors_utils.c \
 					rayTracing/shading.c \
 					rayTracing/normal.c \
 					parsing/parsing.c \
