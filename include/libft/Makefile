@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+         #
+#    By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 16:04:57 by ast-jean          #+#    #+#              #
-#    Updated: 2022/07/19 10:38:15 by ast-jean         ###   ########.fr        #
+#    Updated: 2023/05/13 11:40:13 by slavoie          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ SRC = ft_atoi.c	\
 
 NAME = libft.a
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 HEADER = -I libft
 
 ### Repertoires ###
