@@ -35,6 +35,8 @@ int	is_number(char *str)
 		return (0);
 	if (*str == '-')
 		str++;
+	if (!*str)
+		return (0);
 	while (str && *str)
 	{
 		if (!char_isdigit(*str))
