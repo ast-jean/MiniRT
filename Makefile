@@ -7,6 +7,11 @@ UNAME :=$(shell uname)
 ARCH  :=$(shell uname -m)
 
 SRCS_FILES 		=	miniRT.c \
+					update.c \
+					camera.c \
+					keybinding.c \
+					init.c \
+					trigger.c \
 					rayTracing/rayTracing.c \
 					rayTracing/check.c \
 					rayTracing/colors.c \
@@ -20,11 +25,11 @@ SRCS_FILES 		=	miniRT.c \
 					parsing/scene.c \
 					parsing/debug.c \
 					parsing/utils.c \
+					parsing/parse.c \
 					math/Fixed.c \
 					math/vectors/Vectors.c \
 					math/vectors/ray.c \
 					math/vectors/Vectors_ops.c \
-					math/vectors/matrice.c \
 					math/math_other.c
 
 

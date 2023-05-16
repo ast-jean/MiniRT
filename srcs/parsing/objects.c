@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   objects.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/15 21:44:05 by slavoie           #+#    #+#             */
+/*   Updated: 2023/05/15 21:45:30 by slavoie          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/miniRT.h"
 
 t_shape	*object_sp(char **elem, t_Vars *vars)
 {
-	t_shape		*s = NULL;
+	t_shape		*s;
 
+	s = NULL;
 	if (info_count(elem) != 4)
 		error_exit(3, "Invalid number of information");
 	else
@@ -22,8 +35,9 @@ t_shape	*object_sp(char **elem, t_Vars *vars)
 
 t_shape	*object_pl(char **elem, t_Vars *vars)
 {
-	t_shape		*s = NULL;
+	t_shape		*s;
 
+	s = NULL;
 	if (info_count(elem) != 4)
 		error_exit(3, "Invalid number of information");
 	else
@@ -42,8 +56,9 @@ t_shape	*object_pl(char **elem, t_Vars *vars)
 
 t_shape	*object_cy(char **elem, t_Vars *vars)
 {
-	t_shape		*s = NULL;
+	t_shape		*s;
 
+	s = NULL;
 	if (info_count(elem) != 6)
 		error_exit(3, "Invalid number of information");
 	else

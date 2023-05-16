@@ -1,5 +1,5 @@
+
 #include "../../include/miniRT.h"
-// #pragma once
 
 void	error_exit(int code, char *str)
 {
@@ -44,7 +44,7 @@ int	info_count(char **elem)
 	return (i);
 }
 
-void	print_objects()
+void	print_objects(void)
 {
 	t_Vars *vars = init_vars();
 	t_node *aff = vars->objs->first;
