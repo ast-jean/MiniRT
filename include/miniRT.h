@@ -36,7 +36,6 @@ typedef struct s_Vector2d t_Vector2d;
 typedef struct s_Ray_hit t_Ray_hit;
 typedef struct s_Ray t_Ray;
 
-
 typedef struct s_Vars	// all of our values needed throught the program
 {
 	mlx_t		*mlx;
@@ -64,27 +63,11 @@ typedef struct s_Vars	// all of our values needed throught the program
 	int			nbr_obj;
 } t_Vars;
 
-typedef struct s_matrice3x3
-{
-	double m[3][3];
-} t_matrice3x3;
-
-typedef struct s_matrice4x4
-{
-	double m[4][4];
-} t_matrice4x4;
-
-typedef struct s_rotation
-{
-	double phi;
-	double theta;
-	double psi;
-}	t_rotation;
-
 /*-------------------------Initialisation-------------------------*/
 //miniRT.c
-t_Vars	*init_vars();
+void	print_trigger_state(t_Vars *vars);
 void	free_vars(t_Vars *vars);
+void	light_x(t_Vars *vars);
 /*----------------------------parsing----------------------------*/
 //colors.c
 int			str_is_digit(char *color);
@@ -128,18 +111,15 @@ void		valid_scene();
 /*----------------------------fixed------------------------------*/
 void		set_value(t_Fixed *fp, double value);
 double		to_double(t_Fixed fp);
-int			to_int(t_Fixed fp);
 t_Fixed		fp_init(double value);
-t_Vector3d	Point3d_to_Vector3d(t_3dPoint point);
-t_3dPoint Vec3D_to_point3D(t_Vector3d vec); //use?
-double		fp_cal(char operand, int num_args, ...);
+t_Vector3d	point3d_to_vector3d(t_3dPoint point);
 /*-------------------------ray_tracing-------------------------*/
 // ray_tracing.c
 void		ray_to_screen();
 uint32_t	ray_tracing(const t_Ray ray);
 t_Ray_hit	ray_trace(t_Ray ray, double dist, t_shape *shape);
 // check.c
-bool	check_side(const t_Ray ray, const t_shape shape);
+
 void	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o);
 int	check_cy(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double *dist);
 double	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
@@ -172,22 +152,35 @@ t_rgba		remove_excess(t_rgba c);
 //math_other.c
 double		deg2grad(double deg);
 uint32_t	clamp(uint32_t value, uint32_t min, uint32_t max);
-double		clampd(double value, double min, double max);
 double		find_distance(t_Vector3d A, t_Vector3d B);
-bool		solveQuadratic(t_Vector3d abc, t_Vector2d *t, double *disc);
-double		max(double value1, double value2);
+bool		solve_quadratic(t_Vector3d abc, t_Vector2d *t, double *disc);
 
-//matrice.c
-t_matrice3x3 matrice_rotation_x(double alpha);
-t_matrice3x3 matrice_rotation_y(double beta);
-t_matrice3x3 matrice_rotation_z(double gamma);
-t_matrice3x3 multiplier_matrices(t_matrice3x3 A, t_matrice3x3 B);
-t_3dPoint rotation_point(t_matrice3x3 M, t_3dPoint P);
-t_rotation vector_to_rotation_angles(t_Vector3d orientation);
-t_matrice3x3 combine_matrice(t_matrice3x3 rx, t_matrice3x3 ry, t_matrice3x3 rz);
-
-t_rgba calculate_lighting(t_Ray_hit *rh, const t_Vector3d *normal);
 t_Vector3d cylinder_normal(t_Vector3d intersection, t_Vector3d C, t_Vector3d V);
 
+//update.c
+void	update_trigger(t_Vars *vars);
+void	update_ambient_light(t_Vars *vars);
+void	update_intensity(t_Vars *vars);
+void	preset_ambient(t_Vars *vars);
+void	reset_position(t_Fixed *point);
+
+//camera.c
+void	change_fov(t_Vars *vars);
+void	camera_position(t_Vars *vars);
+void	orient_camera(t_Vars *vars);
+
+//init.c
+void	init_trigger(t_Vars *vars);
+t_Vars	*init_vars();
+
+//keybinding.c
+void	preset_ambient(t_Vars *vars);
+void	mouse_hook(mouse_key_t button, action_t action, modifier_key_t mods, void *param);
+void	process_key_actions(mlx_key_data_t keydata, void *param);
+int	are_useful_keys_down(t_Vars *vars);
+
+//trigger.c
+void	check_trigger_xyz(t_Vars *vars);
+void	check_trigger_orientation(t_Vars *vars);
 
 #endif
