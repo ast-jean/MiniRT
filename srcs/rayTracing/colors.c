@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:56:37 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/05/17 13:55:23 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/05/17 14:46:19 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ t_rgba	brightness(t_rgba color, double mix_factor)
 t_rgba	mix_colors(t_rgba color1, t_rgba color2, double mix_factor)
 {
 	t_rgba	result;
-
-	static int g = 0;
 
 color2.r=(255 - color2.r);
 color2.g=(255 - color2.g);
