@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   keybinding.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:33:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/15 23:39:41 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/16 13:45:26 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/miniRT.h"
+#include "../../include/miniRT.h"
 
 int	are_useful_keys_down(t_Vars *vars)
 {
@@ -107,9 +107,9 @@ modifier_key_t mods, void *param)
 void	preset_ambient(t_Vars *vars)
 {
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_1))
-		vars->ambient_light->color = GREEN;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_2))
 		vars->ambient_light->color = RED;
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_2))
+		vars->ambient_light->color = GREEN;
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_3))
 		vars->ambient_light->color = BLUE;
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_4))
