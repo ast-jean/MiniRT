@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 20:24:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/19 11:22:15 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/19 13:43:39 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,11 @@ bool	check_pl(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
 
 
 // Calcule les vecteurs d et e
-void calculate_vectors(const t_Ray r, const t_shape *c, t_Vector3d *d, t_Vector3d *e) {
-    t_Vector3d dp = vector3d_sub(r.o, point3d_to_vector3d(c->coord));
-    t_Vector3d normalized_orientation = vector3d_norm(point3d_to_vector3d(c->orientation));
-    *d = vector3d_sub(r.d, vector3d_mult(normalized_orientation, vector3d_dot(r.d, normalized_orientation)));
+void calculate_vectors(const t_Ray r, const t_shape *cy, t_Vector3d *dir, t_Vector3d *e
+) {
+    t_Vector3d dp = vector3d_sub(r.o, point3d_to_vector3d(cy->coord));
+    t_Vector3d normalized_orientation = vector3d_norm(point3d_to_vector3d(cy->orientation));
+    *dir = vector3d_sub(r.d, vector3d_mult(normalized_orientation, vector3d_dot(r.d, normalized_orientation)));
     *e = vector3d_sub(dp, vector3d_mult(normalized_orientation, vector3d_dot(dp, normalized_orientation)));
 }
 
@@ -126,21 +127,21 @@ void calculate_intersection_points(const t_Ray r, double t0, double t1, t_Vector
 }
 
 // Calcule les hauteurs h0 et h1
-void calculate_heights(const t_shape *c, t_Vector3d P0, t_Vector3d P1, double *h0, double *h1) {
-    t_Vector3d normalized_orientation = vector3d_norm(point3d_to_vector3d(c->orientation));
-    t_Vector3d c1 = vector3d_sub(point3d_to_vector3d(c->coord), vector3d_mult(normalized_orientation, to_double(c->height) / 2.0));
-    t_Vector3d c2 = vector3d_add(point3d_to_vector3d(c->coord), vector3d_mult(normalized_orientation, to_double(c->height) / 2.0));
+void calculate_heights(const t_shape *cy, t_Vector3d P0, t_Vector3d P1, double *h0, double *h1) {
+    t_Vector3d normalized_orientation = vector3d_norm(point3d_to_vector3d(cy->orientation));
+    t_Vector3d c1 = vector3d_sub(point3d_to_vector3d(cy->coord), vector3d_mult(normalized_orientation, to_double(cy->height) / 2.0));
+    t_Vector3d c2 = vector3d_add(point3d_to_vector3d(cy->coord), vector3d_mult(normalized_orientation, to_double(cy->height) / 2.0));
     *h0 = vector3d_dot(vector3d_sub(P0, c1), vector3d_sub(c2, c1));
     *h1 = vector3d_dot(vector3d_sub(P1, c1), vector3d_sub(c2, c1));
 }
 
 // Vérifie si une intersection est valide et met à jour rh et dist
-bool check_and_update_intersection(t_shape *c, const t_Ray r, t_Ray_hit *rh, double *dist, double t, bool hit) {
+bool check_and_update_intersection(t_shape *cy, const t_Ray r, t_Ray_hit *rh, double *dist, double t, bool hit) {
     if (hit) {
         *dist = t;
         rh->distance = *dist;
-        rh->color = c->color;
-        rh->shape = (t_shape *)c;
+        rh->color = cy->color;
+        rh->shape = (t_shape *)cy;
         rh->hit = true;
         rh->coord = vector3d_add(r.o, vector3d_mult(r.d, *dist));
         return true;
@@ -148,12 +149,12 @@ bool check_and_update_intersection(t_shape *c, const t_Ray r, t_Ray_hit *rh, dou
     return false;
 }
 
-bool check_cy(const t_shape *c, const t_Ray r, t_Ray_hit *rh, double *dist)
+bool check_cy(const t_shape *cy, const t_Ray r, t_Ray_hit *rh, double *dist)
 {
     t_Vector3d d, e;
-    calculate_vectors(r, c, &d, &e);
+    calculate_vectors(r, cy, &d, &e);
 	
-    t_Vector3d abc = {vector3d_dot(d, d), 2 * vector3d_dot(d, e), vector3d_dot(e, e) - to_double(c->radius) * to_double(c->radius)};
+    t_Vector3d abc = {vector3d_dot(d, d), 2 * vector3d_dot(d, e), vector3d_dot(e, e) - to_double(cy->radius) * to_double(cy->radius)};
     double discr = calculate_discriminant(abc);
     if (discr < 0) return false; // no intersection
 
@@ -161,29 +162,30 @@ bool check_cy(const t_shape *c, const t_Ray r, t_Ray_hit *rh, double *dist)
     double t0 = (-abc.y - sqrt_discr) / (2 * abc.x);
     double t1 = (-abc.y + sqrt_discr) / (2 * abc.x);
     swap_t_values(&t0, &t1);
-
+	if (t0 < 0 || t1 < 0)
+		return (false);
     t_Vector3d P0, P1;
     calculate_intersection_points(r, t0, t1, &P0, &P1);
 
     double h0, h1;
-    calculate_heights(c, P0, P1, &h0, &h1);
+    calculate_heights(cy, P0, P1, &h0, &h1);
 
-    if (h0 < 0 || h0 > to_double(c->height) * to_double(c->height)) {
-        return check_and_update_intersection((t_shape *)c, r, rh, dist, t1, (h1 >= 0 && h1 <= to_double(c->height) * to_double(c->height) && *dist >= t1));
+    if (h0 < 0 || h0 > to_double(cy->height) * to_double(cy->height)) {
+        return check_and_update_intersection((t_shape *)cy, r, rh, dist, t1, (h1 >= 0 && h1 <= to_double(cy->height) * to_double(cy->height) && *dist >= t1));
     } else {
-        return check_and_update_intersection((t_shape *)c, r, rh, dist, t0, (h1 >= 0 && *dist >= t1));
+        return check_and_update_intersection((t_shape *)cy, r, rh, dist, t0, (h0 >= 0 && *dist >= t0));
     }
 }
 
 
-// bool check_cy(const t_shape *c, const t_Ray r, t_Ray_hit *rh, double *dist)
+// bool check_cy(const t_shape *cy, const t_Ray r, t_Ray_hit *rh, double *dist)
 // {
-//     t_Vector3d dp = vector3d_sub(r.o, point3d_to_vector3d(c->coord));
-//     t_Vector3d normalized_orientation = vector3d_norm(point3d_to_vector3d(c->orientation));
+//     t_Vector3d dp = vector3d_sub(r.o, point3d_to_vector3d(cy->coord));
+//     t_Vector3d normalized_orientation = vector3d_norm(point3d_to_vector3d(cy->orientation));
 //     t_Vector3d d = vector3d_sub(r.d, vector3d_mult(normalized_orientation, vector3d_dot(r.d, normalized_orientation)));
 //     t_Vector3d e = vector3d_sub(dp, vector3d_mult(normalized_orientation, vector3d_dot(dp, normalized_orientation)));
 
-// 	t_Vector3d abc = {vector3d_dot(d, d), 2 * vector3d_dot(d, e), vector3d_dot(e, e) - to_double(c->radius) * to_double(c->radius)};
+// 	t_Vector3d abc = {vector3d_dot(d, d), 2 * vector3d_dot(d, e), vector3d_dot(e, e) - to_double(cy->radius) * to_double(cy->radius)};
 
 //     double discr = abc.y * abc.y - 4 * abc.x * abc.z;
 //     if (discr < 0) {
@@ -202,20 +204,20 @@ bool check_cy(const t_shape *c, const t_Ray r, t_Ray_hit *rh, double *dist)
 //     t_Vector3d P0 = vector3d_add(r.o, vector3d_mult(r.d, t0));
 //     t_Vector3d P1 = vector3d_add(r.o, vector3d_mult(r.d, t1));
 
-//     t_Vector3d c1 = vector3d_sub(point3d_to_vector3d(c->coord), vector3d_mult(normalized_orientation, to_double(c->height) / 2.0));
-//     t_Vector3d c2 = vector3d_add(point3d_to_vector3d(c->coord), vector3d_mult(normalized_orientation, to_double(c->height) / 2.0));
+//     t_Vector3d c1 = vector3d_sub(point3d_to_vector3d(cy->coord), vector3d_mult(normalized_orientation, to_double(cy->height) / 2.0));
+//     t_Vector3d c2 = vector3d_add(point3d_to_vector3d(cy->coord), vector3d_mult(normalized_orientation, to_double(cy->height) / 2.0));
 
 //     double h0 = vector3d_dot(vector3d_sub(P0, c1), vector3d_sub(c2, c1));
 //     double h1 = vector3d_dot(vector3d_sub(P1, c1), vector3d_sub(c2, c1));
 
-//     if (h0 < 0 || h0 > to_double(c->height) * to_double(c->height)) {
-//         if (h1 < 0 || h1 > to_double(c->height) * to_double(c->height) || *dist < t1) {
+//     if (h0 < 0 || h0 > to_double(cy->height) * to_double(cy->height)) {
+//         if (h1 < 0 || h1 > to_double(cy->height) * to_double(cy->height) || *dist < t1) {
 //             return (false); // no intersection
 //         } else {
 //             *dist = t1;
 //             rh->distance = *dist;
-//             rh->color = c->color;
-//             rh->shape = (t_shape *)c;
+//             rh->color = cy->color;
+//             rh->shape = (t_shape *)cy;
 // 			rh->hit = true;
 //             rh->coord = vector3d_add(r.o, vector3d_mult(r.d, *dist));
 //             return (true); // intersection at P1
@@ -226,8 +228,8 @@ bool check_cy(const t_shape *c, const t_Ray r, t_Ray_hit *rh, double *dist)
 //         } else {
 //             *dist = t0;
 //             rh->distance = *dist;
-//             rh->color = c->color;
-//             rh->shape = (t_shape *)c;
+//             rh->color = cy->color;
+//             rh->shape = (t_shape *)cy;
 // 			rh->hit = true;
 //             rh->coord = vector3d_add(r.o, vector3d_mult(r.d, *dist));
 // 			return (true); // intersection at P0

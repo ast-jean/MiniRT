@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:29:02 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/19 11:13:34 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/19 13:49:02 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,39 +71,12 @@ void	update_intensity(t_Vars *vars)
 	}
 }
 
-
-
-// void reset_position(t_Fixed *point)
-// {
-// 	double d = to_double(*point);
-	
-// 	if (d > 1)
-// 		set_value(point, d - 2);
-// 	else if (d < -1)
-// 		set_value(point, d + 2);
-// }
-
-
-
 void	reset_position(t_Vector3d *point)
 {
-	// if (to_double(*point) > 1)
-	// {
-	// 	set_value(point, 1);
-	// 	printf("%c = MAX", c);
-	// }
-
 	if (point->x < 0)
 	{
-		// double temp = point->x;
 		point->x = -point->x;
 		point->y = -point->y;
 		point->z = -point->z;
 	}
-
-	// if (to_double(*point) < 0)
-	// {
-	// 	set_value(point, to_double(*point) * -1);
-	// 	printf("%c = %f\n", c, to_double(*point));
-	// }
 }
