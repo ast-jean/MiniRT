@@ -6,11 +6,11 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:40:12 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/18 20:25:52 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/19 11:13:27 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/miniRT.h"
+#include "../../include/miniRT.h"
 
 void	change_fov(t_Vars *vars)
 {

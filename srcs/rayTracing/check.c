@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 20:24:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/18 20:31:30 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/19 11:22:15 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,8 +243,7 @@ bool check_cy(const t_shape *c, const t_Ray r, t_Ray_hit *rh, double *dist)
 ///						if dist == old_dist nothing is intersected
 /// @param shape_o	:The object(self) it needs to ignore
 /// @return			:Returns a bool if the ray hit(True) or not(false) an object
-void	ray_checkhit(t_Ray ray, t_Ray_hit *rh, \
-						double *distance, t_shape *shape_o)
+void	ray_checkhit(t_Ray ray, t_Ray_hit *rh, double *d, t_shape *o)
 {
 	t_node	*aff;
 	t_shape	*s;
@@ -253,14 +252,14 @@ void	ray_checkhit(t_Ray ray, t_Ray_hit *rh, \
 	while (aff)
 	{
 		s = aff->content;
-		if (!shape_o || s->index != shape_o->index)
+		if (!o || s->index != o->index)
 		{
 			if (ft_strcmp(s->id, "pl"))
-				check_pl(s, ray, rh, distance);
+				check_pl(s, ray, rh, d);
 			else if (ft_strcmp(s->id, "sp"))
-				check_sp(s, ray, rh, distance);
+				check_sp(s, ray, rh, d);
 			else if (ft_strcmp(s->id, "cy"))
-				check_cy(s, ray, rh, distance);
+				check_cy(s, ray, rh, d);
 		}
 		aff = aff->next;
 	}

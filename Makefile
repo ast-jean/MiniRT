@@ -7,11 +7,11 @@ UNAME :=$(shell uname)
 ARCH  :=$(shell uname -m)
 
 SRCS_FILES 		=	miniRT.c \
-					update.c \
-					camera.c \
-					keybinding.c \
-					init.c \
-					trigger.c \
+					controls/update.c \
+					controls/camera.c \
+					controls/keybinding.c \
+					controls/init.c \
+					controls/trigger.c \
 					rayTracing/rayTracing.c \
 					rayTracing/check.c \
 					rayTracing/colors.c \
@@ -118,7 +118,7 @@ $(BONUS): $(OBJS)
 	@echo "${GREEN}${BOLD}Compilation done:${END}\n"
 
 $(OBJS_DIR)%.o : $(SRCS_DIR)%.c
-	@mkdir -p $(OBJS_DIR)parsing $(OBJS_DIR)rayTracing $(OBJS_DIR)math/vectors 
+	@mkdir -p $(OBJS_DIR)parsing $(OBJS_DIR)rayTracing $(OBJS_DIR)math/vectors $(OBJS_DIR)/controls
 	@echo "$(BLUE)Compiling object $@ ..$(END)"
 	@$(CC) $(CFLAGS) -Imlx -c $< -o $@
 
