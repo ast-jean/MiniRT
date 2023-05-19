@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:29:02 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/19 11:57:15 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/05/19 15:43:11 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,20 +73,6 @@ void	update_intensity(t_Vars *vars)
 			printf("Light intensity: %f\n",round(to_double(vars->light->light_ratio)*10)/10);
 	}
 }
-
-
-
-// void reset_position(t_Fixed *point)
-// {
-// 	double d = to_double(*point);
-	
-// 	if (d > 1)
-// 		set_value(point, d - 2);
-// 	else if (d < -1)
-// 		set_value(point, d + 2);
-// }
-
-
 
 void	reset_position(t_Vector3d *point)
 {
