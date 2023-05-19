@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:33:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/17 19:18:35 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/05/19 11:29:21 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,11 @@ modifier_key_t mods, void *param)
 		ray = ray_init_to_screen(vars, vars->mouse_x, vars->mouse_y);
 		hit = ray_trace(ray, 999999.9, NULL);
 		if (hit.shape)
+		{
 			vars->selected = hit.shape;
+			printf("%s selected\n", hit.shape->id);	
+		}
+
 		if (vars->light_trigger)
 		{
 			set_value(&vars->light->coord.z, hit.coord.z);

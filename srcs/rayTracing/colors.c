@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:56:37 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/05/17 14:46:19 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/05/19 11:14:21 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,18 @@ t_rgba	mix_colors_light(t_Ray_hit hit, t_shape shape, double coeff)
 {
 	double	specular_coeff;
 	t_rgba	result;
+	t_rgba	obj;
 	double	l_r;
 	double	a_r;
 
 	specular_coeff = coeff;
 	result = separate_color_rgba(shape.color);
+	obj = separate_color_rgba(shape.color);
 	l_r = to_double(init_vars()->light->light_ratio);
 	a_r = to_double(init_vars()->ambient_light->light_ratio);
+
+	result = mix_colors(result, remove_excess(separate_color_rgba(init_vars()->ambient_light->color)), a_r);
+	
 	if (hit.hit)
 		coeff = a_r;
 	else
@@ -45,7 +50,6 @@ t_rgba	mix_colors_light(t_Ray_hit hit, t_shape shape, double coeff)
 	
 		// printf("After=r.%d, g.%d, b.%d \n", result.r, result.g, result.b);
 	}
-	result = mix_colors(result, (separate_color_rgba(init_vars()->ambient_light->color)), a_r);
 	result = brightness(result, coeff);
 
 	if (specular_coeff > 0 && !hit.hit)

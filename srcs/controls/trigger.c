@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:35:27 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/16 11:32:07 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/05/19 11:53:40 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,29 +54,80 @@ void	check_trigger_xyz(t_Vars *vars)
 	}
 }
 
+void rotate_vector(t_Vector3d *vec, double angle, char axis) {
+    // Convert the angle to radians
+    angle = angle * (M_PI / 180.0);
+
+    // Temp variables to hold the original components of the vector
+    double orig_x = vec->x;
+    double orig_y = vec->y;
+    double orig_z = vec->z;
+
+    // Depending on the axis, rotate the vector accordingly
+    switch(axis) {
+        case 'x':
+        case 'X':
+            vec->y = orig_y * cos(angle) - orig_z * sin(angle);
+            vec->z = orig_y * sin(angle) + orig_z * cos(angle);
+            break;
+        case 'y':
+        case 'Y':
+            vec->z = orig_z * cos(angle) - orig_x * sin(angle);
+            vec->x = orig_z * sin(angle) + orig_x * cos(angle);
+            break;
+        case 'z':
+        case 'Z':
+            vec->x = orig_x * cos(angle) - orig_y * sin(angle);
+            vec->y = orig_x * sin(angle) + orig_y * cos(angle);
+            break;
+        default:
+            printf("Invalid rotation axis. Use 'x', 'y', or 'z'.\n");
+    }
+}
+
 void	check_trigger_orientation(t_Vars *vars)
 {
+	t_Vector3d	orientation;
+
+	orientation = point3d_to_vector3d(vars->selected->orientation);
+
 	if (mlx_is_key_down(vars->mlx, 61) || mlx_is_key_down(vars->mlx, 334))
 	{
 		if (vars->orientation_trigger && vars->selected)
 		{
 			if (vars->x_trigger)
 			{
-				set_value(&vars->selected->orientation.x, \
-				to_double(vars->selected->orientation.x) + 0.1);
-				reset_position(&vars->selected->orientation.x);
+				rotate_vector(&orientation, 10, 'x');
+				reset_position(&orientation);
+				// vars->selected->orientation = Vec3D_to_point3D(orientation);
+				// set_value(&vars->selected->orientation.x, \
+				// to_double(vars->selected->orientation.x) + 0.2);
+				// reset_position(&vars->selected->orientation.x, 'x');
+				// vars->selected->orientation = Vec3D_to_point3D(vector3d_norm(point3d_to_vector3d(vars->selected->orientation)));
 			}
 			if (vars->y_trigger)
 			{
-				set_value(&vars->selected->orientation.y, \
-				to_double(vars->selected->orientation.y) + 0.1);
-				reset_position(&vars->selected->orientation.y);
+				rotate_vector(&orientation, 10,  'y');
+				reset_position(&orientation);
+
+				// vars->selected->orientation = Vec3D_to_point3D(orientation);
+				// set_value(&vars->selected->orientation.y, \
+				// to_double(vars->selected->orientation.y) + 0.2);
+				// reset_position(&vars->selected->orientation.y, 'y');
+				// vars->selected->orientation = Vec3D_to_point3D(vector3d_norm(point3d_to_vector3d(vars->selected->orientation)));
+
 			}
 			if (vars->z_trigger)
 			{
-				set_value(&vars->selected->orientation.z, \
-				to_double(vars->selected->orientation.z) + 0.1);
-				reset_position(&vars->selected->orientation.z);
+				rotate_vector(&orientation, 10,  'z');
+				reset_position(&orientation);
+
+				// vars->selected->orientation = Vec3D_to_point3D(orientation);
+				// set_value(&vars->selected->orientation.z, \
+				// to_double(vars->selected->orientation.z) + 0.2);
+				// reset_position(&vars->selected->orientation.z, 'z');
+				// vars->selected->orientation = Vec3D_to_point3D(vector3d_norm(point3d_to_vector3d(vars->selected->orientation)));
+
 			}
 		}
 	}
@@ -86,22 +137,42 @@ void	check_trigger_orientation(t_Vars *vars)
 		{
 			if (vars->x_trigger)
 			{
-				set_value(&vars->selected->orientation.x, \
-				to_double(vars->selected->orientation.x) - 0.1);
-				reset_position(&vars->selected->orientation.x);
+				rotate_vector(&orientation, -10,  'x');
+				reset_position(&orientation);
+
+				// set_value(&vars->selected->orientation.x, \
+				// to_double(vars->selected->orientation.x) - 0.2);
+				// reset_position(&vars->selected->orientation.x, 'x');
+				// vars->selected->orientation = Vec3D_to_point3D(vector3d_norm(point3d_to_vector3d(vars->selected->orientation)));
+
 			}
 			if (vars->y_trigger)
 			{
-				set_value(&vars->selected->orientation.y, \
-				to_double(vars->selected->orientation.y) - 0.1);
-				reset_position(&vars->selected->orientation.y);
+				rotate_vector(&orientation, -10,  'y');
+				reset_position(&orientation);
+
+				// vars->selected->orientation = Vec3D_to_point3D(orientation);
+				// set_value(&vars->selected->orientation.y, \
+				// to_double(vars->selected->orientation.y) - 0.2);
+				// reset_position(&vars->selected->orientation.y, 'y');
+				// vars->selected->orientation = Vec3D_to_point3D(vector3d_norm(point3d_to_vector3d(vars->selected->orientation)));
+
 			}
 			if (vars->z_trigger)
 			{
-				set_value(&vars->selected->orientation.z, \
-				to_double(vars->selected->orientation.z) - 0.1);
-				reset_position(&vars->selected->orientation.z);
+				rotate_vector(&orientation, -10,  'z');
+				reset_position(&orientation);
+
+				// vars->selected->orientation = Vec3D_to_point3D(orientation);
+				// set_value(&vars->selected->orientation.z, \
+				// to_double(vars->selected->orientation.z) - 0.2);
+				// reset_position(&vars->selected->orientation.z, 'z');
+				// vars->selected->orientation = Vec3D_to_point3D(vector3d_norm(point3d_to_vector3d(vars->selected->orientation)));
+
 			}
 		}
 	}
+
+	vars->selected->orientation = Vec3D_to_point3D(orientation);
+	printf("x = %f, y = %f, z = %f\n", to_double(vars->selected->orientation.x), to_double(vars->selected->orientation.y), to_double(vars->selected->orientation.z) );
 }

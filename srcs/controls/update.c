@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:29:02 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/17 15:08:53 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/05/19 11:57:15 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,24 @@ void	update_intensity(t_Vars *vars)
 
 
 
-void	reset_position(t_Fixed *point)
+// void reset_position(t_Fixed *point)
+// {
+// 	double d = to_double(*point);
+	
+// 	if (d > 1)
+// 		set_value(point, d - 2);
+// 	else if (d < -1)
+// 		set_value(point, d + 2);
+// }
+
+
+
+void	reset_position(t_Vector3d *point)
 {
-	if (to_double(*point) > 1)
-		set_value(point, -1);
-	if (to_double(*point) < -1)
-		set_value(point, 1);
+	if (point->x < 0)
+	{
+		point->x = -point->x;
+		point->y = -point->y;
+		point->z = -point->z;
+	}
 }

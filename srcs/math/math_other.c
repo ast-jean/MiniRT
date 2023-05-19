@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:33:32 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/05/15 22:21:32 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/17 11:00:18 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,22 @@ double	find_distance(t_Vector3d A, t_Vector3d B)
 	return (sqrt((dx * dx) + (dy * dy) + (dz * dz)));
 }
 
-bool	solve_quadratic(t_Vector3d abc, t_Vector2d *t, double *discr)
+bool	solve_quadratic(t_Vector3d abc, t_Vector2d *t)
 {
 	double	tmp;
 	double	q;
+	double discr;
 
-	*discr = pow(abc.y, 2) - 4 * abc.x * abc.z;
-	if (*discr < 0)
+	discr = pow(abc.y, 2) - 4 * abc.x * abc.z;
+	if (discr < 0)
 		return (false);
 	else if (discr == 0)
 		t->x = t->y = - 0.5 * abc.y / abc.x;
 	else
 	{
 		q = (abc.y > 0) ?
-			-0.5 * (abc.y + sqrt(*discr)):
-			-0.5 * (abc.y - sqrt(*discr));
+			-0.5 * (abc.y + sqrt(discr)):
+			-0.5 * (abc.y - sqrt(discr));
 		if (q < 0)
 			return (false);
 		t->x = q / abc.x;

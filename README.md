@@ -16,7 +16,15 @@ Made for UNIX systems, Linux and MacOs
 ---
 ##Controls
  - Drag and drop to move an object.
- - 
+ - Toggle: appuyer sur la touche pour activer l'option correspondante et incrémenter avec + et -
+        a = ambient +- pour modifier l'intensité
+        l = light cliquer pour déplacer la lumière au curseur et +- pour avancer et reculer la lumière
+        x,y et z pour activer l'axe
+        o = orientation cela remplace la translation et effectue la rotation sur les axes selectionnées
+        r = modifier le diamètre avec +-
+        h = modifier la hauteur avec +-, valable seulement pour les cylindres
+        c = caméra déplace sur l'axe x,y,z selon l'axe selection ou change l'orientation si "o" est activer
+        
 
 ### With Graphic libraries GLFW and MLX42 from [Codam](https://github.com/codam-coding-college/MLX42)
 ### Made by :
