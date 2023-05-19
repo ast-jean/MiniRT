@@ -113,6 +113,7 @@ void		set_value(t_Fixed *fp, double value);
 double		to_double(t_Fixed fp);
 t_Fixed		fp_init(double value);
 t_Vector3d	point3d_to_vector3d(t_3dPoint point);
+t_3dPoint	Vec3D_to_point3D(t_Vector3d vec);
 /*-------------------------ray_tracing-------------------------*/
 // ray_tracing.c
 void		ray_to_screen();
@@ -162,7 +163,7 @@ void	update_trigger(t_Vars *vars);
 void	update_ambient_light(t_Vars *vars);
 void	update_intensity(t_Vars *vars);
 void	preset_ambient(t_Vars *vars);
-void	reset_position(t_Fixed *point);
+void	reset_position(t_Fixed *point, char c);
 
 //camera.c
 void	change_fov(t_Vars *vars);

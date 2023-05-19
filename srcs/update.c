@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:29:02 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/15 23:39:32 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/18 21:03:09 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,28 @@ void	update_intensity(t_Vars *vars)
 
 
 
-void	reset_position(t_Fixed *point)
+// void reset_position(t_Fixed *point)
+// {
+// 	double d = to_double(*point);
+	
+// 	if (d > 1)
+// 		set_value(point, d - 2);
+// 	else if (d < -1)
+// 		set_value(point, d + 2);
+// }
+
+
+
+void	reset_position(t_Fixed *point, char c)
 {
-	if (to_double(*point) > 1)
-		set_value(point, -1);
-	if (to_double(*point) < -1)
-		set_value(point, 1);
+	// if (to_double(*point) > 1)
+	// {
+	// 	set_value(point, 1);
+	// 	printf("%c = MAX", c);
+	// }
+	if (to_double(*point) < 0)
+	{
+		set_value(point, to_double(*point) * -1);
+		printf("%c = %f\n", c, to_double(*point));
+	}
 }
