@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:56:37 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/05/19 15:05:05 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/19 15:45:43 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_rgba	mix_colors_light(t_Ray_hit hit, t_shape shape, double coeff)
 	else
 	{
 		result = mix_colors(result, (separate_color_rgba(init_vars()->light->color)), l_r);
-		coeff = (coeff * l_r) + a_r;
+		coeff = (coeff * l_r) + a_r * 2;
 	}
 	result = mix_colors(result, (separate_color_rgba(init_vars()->ambient_light->color)), a_r);
 	result = brightness(result, coeff);

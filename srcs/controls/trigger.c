@@ -6,11 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:35:27 by slavoie           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/05/19 15:07:31 by slavoie          ###   ########.fr       */
-=======
-/*   Updated: 2023/05/19 15:40:53 by slavoie          ###   ########.fr       */
->>>>>>> old
+/*   Updated: 2023/05/19 15:46:16 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +88,6 @@ void	check_trigger_orientation(t_Vars *vars)
 {
 	t_Vector3d	orientation;
 
-<<<<<<< HEAD
-	orientation = point3d_to_vector3d(vars->selected->orientation);
-=======
-
->>>>>>> old
 	if (mlx_is_key_down(vars->mlx, 61) || mlx_is_key_down(vars->mlx, 334))
 	{
 		if (vars->orientation_trigger && vars->selected)
