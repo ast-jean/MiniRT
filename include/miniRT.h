@@ -113,6 +113,7 @@ void		set_value(t_Fixed *fp, double value);
 double		to_double(t_Fixed fp);
 t_Fixed		fp_init(double value);
 t_Vector3d	point3d_to_vector3d(t_3dPoint point);
+t_3dPoint	Vec3D_to_point3D(t_Vector3d vec);
 /*-------------------------ray_tracing-------------------------*/
 // ray_tracing.c
 void		ray_to_screen();
@@ -121,9 +122,9 @@ t_Ray_hit	ray_trace(t_Ray ray, double dist, t_shape *shape);
 // check.c
 
 void	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o);
-int	check_cy(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double *dist);
-double	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
-double	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double dist);
+bool	check_cy(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double *dist);
+bool	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double *dist);
+bool	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double *dist);
 bool	check_dot_sign(t_Vector3d shape_pos, t_Vector3d Vec1, t_Vector3d Vec2);
 /*---------------------------Normal-------------------------*/
 t_Vector3d	light_normal(t_Vector3d coords, t_Vector3d obj_coord);
@@ -153,7 +154,7 @@ t_rgba		remove_excess(t_rgba c);
 double		deg2grad(double deg);
 uint32_t	clamp(uint32_t value, uint32_t min, uint32_t max);
 double		find_distance(t_Vector3d A, t_Vector3d B);
-bool		solve_quadratic(t_Vector3d abc, t_Vector2d *t, double *disc);
+bool		solve_quadratic(t_Vector3d abc, t_Vector2d *t);
 
 t_Vector3d cylinder_normal(t_Vector3d intersection, t_Vector3d C, t_Vector3d V);
 
@@ -162,7 +163,7 @@ void	update_trigger(t_Vars *vars);
 void	update_ambient_light(t_Vars *vars);
 void	update_intensity(t_Vars *vars);
 void	preset_ambient(t_Vars *vars);
-void	reset_position(t_Fixed *point);
+void	reset_position(t_Vector3d *point);
 
 //camera.c
 void	change_fov(t_Vars *vars);
