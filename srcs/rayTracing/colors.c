@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:56:37 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/05/19 11:14:21 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/05/19 14:31:25 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,15 @@ t_rgba	mix_colors_light(t_Ray_hit hit, t_shape shape, double coeff)
 	l_r = to_double(init_vars()->light->light_ratio);
 	a_r = to_double(init_vars()->ambient_light->light_ratio);
 
-	result = mix_colors(result, remove_excess(separate_color_rgba(init_vars()->ambient_light->color)), a_r);
 	
 	if (hit.hit)
 		coeff = a_r;
 	else
 	{
-		// printf("Bef=r.%d, g.%d, b.%d \n", result.r, result.g, result.b);
-		
-		result = mix_colors(result, remove_excess(separate_color_rgba(init_vars()->light->color)), l_r);
-		coeff = coeff * l_r + a_r;
-	
-		// printf("After=r.%d, g.%d, b.%d \n", result.r, result.g, result.b);
+		result = mix_colors(result, (separate_color_rgba(init_vars()->light->color)), l_r);
+		coeff = (coeff * l_r) + a_r * 2;
 	}
+	result = mix_colors(result, (separate_color_rgba(init_vars()->ambient_light->color)), a_r);
 	result = brightness(result, coeff);
 
 	if (specular_coeff > 0 && !hit.hit)
@@ -74,15 +70,17 @@ t_rgba	mix_colors(t_rgba color1, t_rgba color2, double mix_factor)
 {
 	t_rgba	result;
 
-color2.r=(255 - color2.r);
-color2.g=(255 - color2.g);
-color2.b=(255 - color2.b);
-
-color2 = remove_excess(color2);
+	color2 = remove_excess(color2);
 	mix_factor = fmax(0.0, fmin(1.0f, mix_factor));
-	result.r = (uint8_t)((color1.r) + ((color2.r)  * mix_factor));
-	result.g = (uint8_t)((color1.g) + ((color2.g)  * mix_factor));
-	result.b = (uint8_t)((color1.b) + ((color2.b)  * mix_factor));
+	
+	double p0;
+	double p1;
+	p0 = 1 / (mix_factor + 1);
+	p1 = mix_factor / (mix_factor + 1);
+
+	result.r = (uint8_t)((color1.r * (p0)) + ((color2.r) * (p1)));
+	result.g = (uint8_t)((color1.g * (p0)) + ((color2.g) * (p1)));
+	result.b = (uint8_t)((color1.b * (p0)) + ((color2.b) * (p1)));
 	result.a = 255;
 	return (result);
 }
