@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 20:24:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/19 13:43:39 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/19 15:04:43 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ bool	check_sp(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
 	abc.z = vector3d_dot(ro_sc, ro_sc) - pow(to_double(s->radius), 2.0);
 	if (!solve_quadratic(abc, &t))
 		return (false);
-	if (t.x > 0)
+	if (t.x > 0) //t0
 		distance = t.x;
-	else if (t.y > 0)
+	else if (t.y > 0) //t1
 		distance = t.y;
 	else
 		return (false);
@@ -98,8 +98,8 @@ bool	check_pl(const t_shape *s, const t_Ray ray, t_Ray_hit *rh, double *dist)
 
 
 // Calcule les vecteurs d et e
-void calculate_vectors(const t_Ray r, const t_shape *cy, t_Vector3d *dir, t_Vector3d *e
-) {
+void calculate_vectors(const t_Ray r, const t_shape *cy, t_Vector3d *dir, t_Vector3d *e)
+ {
     t_Vector3d dp = vector3d_sub(r.o, point3d_to_vector3d(cy->coord));
     t_Vector3d normalized_orientation = vector3d_norm(point3d_to_vector3d(cy->orientation));
     *dir = vector3d_sub(r.d, vector3d_mult(normalized_orientation, vector3d_dot(r.d, normalized_orientation)));
@@ -108,22 +108,27 @@ void calculate_vectors(const t_Ray r, const t_shape *cy, t_Vector3d *dir, t_Vect
 
 // Calcule le discriminant
 double calculate_discriminant(const t_Vector3d abc) {
-    return abc.y * abc.y - 4 * abc.x * abc.z;
+	return abc.y * abc.y - 4 * abc.x * abc.z;
 }
 
 // Échange t0 et t1 si t0 > t1
-void swap_t_values(double *t0, double *t1) {
-    if (*t0 > *t1) {
-        double temp = *t0;
-        *t0 = *t1;
-        *t1 = temp;
-    }
+void swap_t_values(double *t0, double *t1)
+{
+	double temp;
+
+	if (*t0 > *t1)
+	{
+		temp = *t0;
+		*t0 = *t1;
+		*t1 = temp;
+	}
 }
 
 // Calcule les points d'intersection P0 et P1
-void calculate_intersection_points(const t_Ray r, double t0, double t1, t_Vector3d *P0, t_Vector3d *P1) {
-    *P0 = vector3d_add(r.o, vector3d_mult(r.d, t0));
-    *P1 = vector3d_add(r.o, vector3d_mult(r.d, t1));
+void calculate_intersection_points(const t_Ray r, double t0, double t1, t_Vector3d *P0, t_Vector3d *P1)
+{
+	*P0 = vector3d_add(r.o, vector3d_mult(r.d, t0));
+	*P1 = vector3d_add(r.o, vector3d_mult(r.d, t1));
 }
 
 // Calcule les hauteurs h0 et h1
@@ -161,7 +166,7 @@ bool check_cy(const t_shape *cy, const t_Ray r, t_Ray_hit *rh, double *dist)
     double sqrt_discr = sqrt(discr);
     double t0 = (-abc.y - sqrt_discr) / (2 * abc.x);
     double t1 = (-abc.y + sqrt_discr) / (2 * abc.x);
-    swap_t_values(&t0, &t1);
+    // swap_t_values(&t0, &t1);
 	if (t0 < 0 || t1 < 0)
 		return (false);
     t_Vector3d P0, P1;
@@ -170,11 +175,10 @@ bool check_cy(const t_shape *cy, const t_Ray r, t_Ray_hit *rh, double *dist)
     double h0, h1;
     calculate_heights(cy, P0, P1, &h0, &h1);
 
-    if (h0 < 0 || h0 > to_double(cy->height) * to_double(cy->height)) {
+    if (h0 < 0 || h0 > to_double(cy->height) * to_double(cy->height))
         return check_and_update_intersection((t_shape *)cy, r, rh, dist, t1, (h1 >= 0 && h1 <= to_double(cy->height) * to_double(cy->height) && *dist >= t1));
-    } else {
+    else
         return check_and_update_intersection((t_shape *)cy, r, rh, dist, t0, (h0 >= 0 && *dist >= t0));
-    }
 }
 
 

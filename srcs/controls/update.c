@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:29:02 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/19 13:49:02 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/19 14:52:43 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	update_ambient_light(t_Vars *vars)
 		(to_double(vars->ambient_light->light_ratio) - 0.1) > 0)
 			set_value(&vars->ambient_light->light_ratio, \
 			to_double(vars->ambient_light->light_ratio) - 0.1);
+		printf("Ambient light ratio: %f\n",round(to_double(vars->ambient_light->light_ratio)*10)/10);
+		printf("Ambient Color = %X\n", vars->ambient_light->color);
 	}
 }
 
@@ -68,6 +70,7 @@ void	update_intensity(t_Vars *vars)
 		(to_double(vars->light->light_ratio) - 0.1) > 0)
 			set_value(&vars->light->light_ratio, \
 			to_double(vars->light->light_ratio) - 0.1);
+			printf("Light intensity: %f\n",round(to_double(vars->light->light_ratio)*10)/10);
 	}
 }
 
