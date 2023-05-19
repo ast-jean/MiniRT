@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:35:27 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/19 11:13:31 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/19 15:40:53 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,12 @@ void	check_trigger_orientation(t_Vars *vars)
 {
 	t_Vector3d	orientation;
 
-	orientation = point3d_to_vector3d(vars->selected->orientation);
 
 	if (mlx_is_key_down(vars->mlx, 61) || mlx_is_key_down(vars->mlx, 334))
 	{
 		if (vars->orientation_trigger && vars->selected)
 		{
+			orientation = point3d_to_vector3d(vars->selected->orientation);
 			if (vars->x_trigger)
 			{
 				rotate_vector(&orientation, 10, 'x');
@@ -172,7 +172,7 @@ void	check_trigger_orientation(t_Vars *vars)
 			}
 		}
 	}
-
-	vars->selected->orientation = Vec3D_to_point3D(orientation);
-	printf("x = %f, y = %f, z = %f\n", to_double(vars->selected->orientation.x), to_double(vars->selected->orientation.y), to_double(vars->selected->orientation.z) );
+	if (vars->selected)
+		vars->selected->orientation = Vec3D_to_point3D(orientation);
+	// printf("x = %f, y = %f, z = %f\n", to_double(vars->selected->orientation.x), to_double(vars->selected->orientation.y), to_double(vars->selected->orientation.z) );
 }
