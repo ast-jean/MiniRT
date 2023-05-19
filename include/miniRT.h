@@ -163,7 +163,7 @@ void	update_trigger(t_Vars *vars);
 void	update_ambient_light(t_Vars *vars);
 void	update_intensity(t_Vars *vars);
 void	preset_ambient(t_Vars *vars);
-void	reset_position(t_Fixed *point, char c);
+void	reset_position(t_Vector3d *point);
 
 //camera.c
 void	change_fov(t_Vars *vars);

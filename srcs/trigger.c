@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:35:27 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/18 20:47:28 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/19 09:38:12 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ void	check_trigger_orientation(t_Vars *vars)
 			if (vars->x_trigger)
 			{
 				rotate_vector(&orientation, 10, 'x');
-				vars->selected->orientation = Vec3D_to_point3D(orientation);
+				reset_position(&orientation);
+				// vars->selected->orientation = Vec3D_to_point3D(orientation);
 				// set_value(&vars->selected->orientation.x, \
 				// to_double(vars->selected->orientation.x) + 0.2);
 				// reset_position(&vars->selected->orientation.x, 'x');
@@ -107,7 +108,9 @@ void	check_trigger_orientation(t_Vars *vars)
 			if (vars->y_trigger)
 			{
 				rotate_vector(&orientation, 10,  'y');
-				vars->selected->orientation = Vec3D_to_point3D(orientation);
+				reset_position(&orientation);
+
+				// vars->selected->orientation = Vec3D_to_point3D(orientation);
 				// set_value(&vars->selected->orientation.y, \
 				// to_double(vars->selected->orientation.y) + 0.2);
 				// reset_position(&vars->selected->orientation.y, 'y');
@@ -117,7 +120,9 @@ void	check_trigger_orientation(t_Vars *vars)
 			if (vars->z_trigger)
 			{
 				rotate_vector(&orientation, 10,  'z');
-				vars->selected->orientation = Vec3D_to_point3D(orientation);
+				reset_position(&orientation);
+
+				// vars->selected->orientation = Vec3D_to_point3D(orientation);
 				// set_value(&vars->selected->orientation.z, \
 				// to_double(vars->selected->orientation.z) + 0.2);
 				// reset_position(&vars->selected->orientation.z, 'z');
@@ -133,7 +138,8 @@ void	check_trigger_orientation(t_Vars *vars)
 			if (vars->x_trigger)
 			{
 				rotate_vector(&orientation, -10,  'x');
-				vars->selected->orientation = Vec3D_to_point3D(orientation);
+				reset_position(&orientation);
+
 				// set_value(&vars->selected->orientation.x, \
 				// to_double(vars->selected->orientation.x) - 0.2);
 				// reset_position(&vars->selected->orientation.x, 'x');
@@ -143,7 +149,9 @@ void	check_trigger_orientation(t_Vars *vars)
 			if (vars->y_trigger)
 			{
 				rotate_vector(&orientation, -10,  'y');
-				vars->selected->orientation = Vec3D_to_point3D(orientation);
+				reset_position(&orientation);
+
+				// vars->selected->orientation = Vec3D_to_point3D(orientation);
 				// set_value(&vars->selected->orientation.y, \
 				// to_double(vars->selected->orientation.y) - 0.2);
 				// reset_position(&vars->selected->orientation.y, 'y');
@@ -153,7 +161,9 @@ void	check_trigger_orientation(t_Vars *vars)
 			if (vars->z_trigger)
 			{
 				rotate_vector(&orientation, -10,  'z');
-				vars->selected->orientation = Vec3D_to_point3D(orientation);
+				reset_position(&orientation);
+
+				// vars->selected->orientation = Vec3D_to_point3D(orientation);
 				// set_value(&vars->selected->orientation.z, \
 				// to_double(vars->selected->orientation.z) - 0.2);
 				// reset_position(&vars->selected->orientation.z, 'z');
@@ -162,7 +172,7 @@ void	check_trigger_orientation(t_Vars *vars)
 			}
 		}
 	}
-	reset_position(&vars->selected->orientation.x, 'x');
 
+	vars->selected->orientation = Vec3D_to_point3D(orientation);
 	printf("x = %f, y = %f, z = %f\n", to_double(vars->selected->orientation.x), to_double(vars->selected->orientation.y), to_double(vars->selected->orientation.z) );
 }
