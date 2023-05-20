@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:35:27 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/19 11:13:31 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/19 18:08:30 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,46 +89,20 @@ void	check_trigger_orientation(t_Vars *vars)
 {
 	t_Vector3d	orientation;
 
-	orientation = point3d_to_vector3d(vars->selected->orientation);
-
+	if (vars->selected)
+		orientation = point3d_to_vector3d(vars->selected->orientation);
+	else
+		return ;
 	if (mlx_is_key_down(vars->mlx, 61) || mlx_is_key_down(vars->mlx, 334))
 	{
 		if (vars->orientation_trigger && vars->selected)
 		{
 			if (vars->x_trigger)
-			{
 				rotate_vector(&orientation, 10, 'x');
-				reset_position(&orientation);
-				// vars->selected->orientation = Vec3D_to_point3D(orientation);
-				// set_value(&vars->selected->orientation.x, \
-				// to_double(vars->selected->orientation.x) + 0.2);
-				// reset_position(&vars->selected->orientation.x, 'x');
-				// vars->selected->orientation = Vec3D_to_point3D(vector3d_norm(point3d_to_vector3d(vars->selected->orientation)));
-			}
 			if (vars->y_trigger)
-			{
 				rotate_vector(&orientation, 10,  'y');
-				reset_position(&orientation);
-
-				// vars->selected->orientation = Vec3D_to_point3D(orientation);
-				// set_value(&vars->selected->orientation.y, \
-				// to_double(vars->selected->orientation.y) + 0.2);
-				// reset_position(&vars->selected->orientation.y, 'y');
-				// vars->selected->orientation = Vec3D_to_point3D(vector3d_norm(point3d_to_vector3d(vars->selected->orientation)));
-
-			}
 			if (vars->z_trigger)
-			{
 				rotate_vector(&orientation, 10,  'z');
-				reset_position(&orientation);
-
-				// vars->selected->orientation = Vec3D_to_point3D(orientation);
-				// set_value(&vars->selected->orientation.z, \
-				// to_double(vars->selected->orientation.z) + 0.2);
-				// reset_position(&vars->selected->orientation.z, 'z');
-				// vars->selected->orientation = Vec3D_to_point3D(vector3d_norm(point3d_to_vector3d(vars->selected->orientation)));
-
-			}
 		}
 	}
 	if (mlx_is_key_down(vars->mlx, 45) || mlx_is_key_down(vars->mlx, 333))
@@ -136,43 +110,15 @@ void	check_trigger_orientation(t_Vars *vars)
 		if (vars->orientation_trigger && vars->selected)
 		{
 			if (vars->x_trigger)
-			{
 				rotate_vector(&orientation, -10,  'x');
-				reset_position(&orientation);
-
-				// set_value(&vars->selected->orientation.x, \
-				// to_double(vars->selected->orientation.x) - 0.2);
-				// reset_position(&vars->selected->orientation.x, 'x');
-				// vars->selected->orientation = Vec3D_to_point3D(vector3d_norm(point3d_to_vector3d(vars->selected->orientation)));
-
-			}
 			if (vars->y_trigger)
-			{
 				rotate_vector(&orientation, -10,  'y');
-				reset_position(&orientation);
-
-				// vars->selected->orientation = Vec3D_to_point3D(orientation);
-				// set_value(&vars->selected->orientation.y, \
-				// to_double(vars->selected->orientation.y) - 0.2);
-				// reset_position(&vars->selected->orientation.y, 'y');
-				// vars->selected->orientation = Vec3D_to_point3D(vector3d_norm(point3d_to_vector3d(vars->selected->orientation)));
-
-			}
 			if (vars->z_trigger)
-			{
 				rotate_vector(&orientation, -10,  'z');
-				reset_position(&orientation);
-
-				// vars->selected->orientation = Vec3D_to_point3D(orientation);
-				// set_value(&vars->selected->orientation.z, \
-				// to_double(vars->selected->orientation.z) - 0.2);
-				// reset_position(&vars->selected->orientation.z, 'z');
-				// vars->selected->orientation = Vec3D_to_point3D(vector3d_norm(point3d_to_vector3d(vars->selected->orientation)));
-
-			}
 		}
 	}
 
+	reset_position(&orientation);
 	vars->selected->orientation = Vec3D_to_point3D(orientation);
 	printf("x = %f, y = %f, z = %f\n", to_double(vars->selected->orientation.x), to_double(vars->selected->orientation.y), to_double(vars->selected->orientation.z) );
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:53:59 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/16 14:56:49 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/05/19 20:10:03 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ t_Ray_hit *first_hit, t_Vector3d l_c)
 	color = rgba_init(0, 0, 0);
 	light_dir = light_normal(first_hit->coord, l_c);
 	obj_normal = find_normal(first_hit->coord, \
-	point3d_to_vector3d(shape.coord), shape);
+	point3d_to_vector3d(shape.coord), shape, *first_hit);
 	coeff = fmax(0, find_angle_normals(light_dir, obj_normal));
 	color = rgba_add(color, mix_colors_light(hit_light, shape, coeff));
 	return (color);
 }
+
 
 /// @brief 		:Returns the color of the 
 ///				pixel depending on object and light position
