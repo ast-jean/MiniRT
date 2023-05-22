@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keybinding.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:33:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/19 11:29:21 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/05/19 15:43:38 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,4 +121,3 @@ void	preset_ambient(t_Vars *vars)
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_5))
 		vars->ambient_light->color = WHITE;
 }
-
