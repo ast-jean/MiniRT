@@ -27,6 +27,12 @@ typedef struct s_rgba{
   uint8_t a;
 } t_rgba;
 
+typedef struct s_rgba_unit{
+  double r;
+  double g;
+  double b;
+} t_rgba_unit;
+
 typedef struct s_shape
 {
 	char 		*id;
