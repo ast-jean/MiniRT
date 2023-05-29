@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:44:05 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/19 11:55:23 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/05/29 10:25:12 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_shape	*object_cy(char **elem, t_Vars *vars)
 		s->color = rgb_to_hex(elem[5]);
 		orientation = point3d_to_vector3d(s->orientation);
 		reset_position(&orientation);
-		s->orientation = Vec3D_to_point3D(orientation);
+		s->orientation = vec3d_to_point3d(orientation);
 	}
 	if (vars->error_message)
 		error_exit(2, "Cylinder (cy): ");

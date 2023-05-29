@@ -1,8 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   miniRT.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/29 10:06:21 by ast-jean          #+#    #+#             */
+/*   Updated: 2023/05/29 10:22:48 by ast-jean         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#pragma once
 #ifndef _MINI_RT_H_
 # define _MINI_RT_H_
-
 # include <unistd.h>
 # include <signal.h>
 # include <stdlib.h>
@@ -18,18 +27,15 @@
 # include "objects.h"
 # include "Vectors.h"
 
-#define BLACK	0x000000FF
-#define WHITE	0xFFFFFFFF
-#define GRAY	0x888888FF
-#define RED		0xFF0000FF
-#define GREEN	0x00FF00FF
-#define BLUE	0x0000FFFF
-
+#define BLACK 0x000000FF
+#define WHITE 0xFFFFFFFF
+#define GRAY 0x888888FF
+#define RED	 0xFF0000FF
+#define GREEN 0x00FF00FF
+#define BLUE 0x0000FFFF
 #define fp_scale 256 //fixed number definition: now at 0.00
 #define WIDTH	500 //Width of screen
 #define HEIGHT	500 //Height of screen
-
-
 
 typedef struct s_Vector3d t_Vector3d;
 typedef struct s_Vector2d t_Vector2d;
@@ -52,7 +58,7 @@ typedef struct s_Vars	// all of our values needed throught the program
 	bool		radius_trigger;
 	bool		height_trigger;
 	bool		FOV_trigger;
-	bool	    light_trigger;
+	bool		light_trigger;
 	bool		ambient_trigger;
 	double		distance_to_screen;
 	int 		mouse_x;
@@ -113,7 +119,7 @@ void		set_value(t_Fixed *fp, double value);
 double		to_double(t_Fixed fp);
 t_Fixed		fp_init(double value);
 t_Vector3d	point3d_to_vector3d(t_3dPoint point);
-t_3dPoint	Vec3D_to_point3D(t_Vector3d vec);
+t_3dPoint	vec3d_to_point3d(t_Vector3d vec);
 /*-------------------------ray_tracing-------------------------*/
 // ray_tracing.c
 void		ray_to_screen();
@@ -152,8 +158,6 @@ t_rgba		rgba_init(int r, int g, int b);
 t_rgba		separate_color_rgba(uint32_t color);
 t_rgba		rgba_add(t_rgba a, t_rgba b);
 t_rgba		remove_excess(t_rgba c);
-t_rgba	rgba_mult(t_rgba a, t_rgba b);
-t_rgba_unit rgba_unit_init(double r,double g, double b);
 
 /*--------------------------Math-------------------------*/
 //math_other.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Fixed.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:25:43 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/17 19:22:48 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/29 10:20:31 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_Vector3d	point3d_to_vector3d(t_3dPoint point)
 	return (vec);
 }
 
-t_3dPoint	Vec3D_to_point3D(t_Vector3d vec)
+t_3dPoint	vec3d_to_point3d(t_Vector3d vec)
 {
 	t_3dPoint	point;
 
