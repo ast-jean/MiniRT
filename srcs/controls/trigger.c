@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trigger.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:35:27 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/19 15:46:16 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/29 09:14:45 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,4 @@ void	check_trigger_orientation(t_Vars *vars)
 	}
 	if (vars->selected)
 		vars->selected->orientation = Vec3D_to_point3D(orientation);
-	// printf("x = %f, y = %f, z = %f\n", to_double(vars->selected->orientation.x), to_double(vars->selected->orientation.y), to_double(vars->selected->orientation.z) );
 }

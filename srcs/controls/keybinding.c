@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keybinding.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:33:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/19 15:43:38 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/29 09:35:02 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	are_useful_keys_down(t_Vars *vars)
 {
-	int	useful_keys[] =
+	int	useful_keys[] = 
 	{
 		61, 334, 333, 45,
 		MLX_KEY_PAGE_UP, MLX_KEY_PAGE_DOWN,
@@ -88,9 +88,8 @@ modifier_key_t mods, void *param)
 		if (hit.shape)
 		{
 			vars->selected = hit.shape;
-			printf("%s selected\n", hit.shape->id);	
+			printf("%s selected\n", hit.shape->id);
 		}
-
 		if (vars->light_trigger)
 		{
 			set_value(&vars->light->coord.z, hit.coord.z);

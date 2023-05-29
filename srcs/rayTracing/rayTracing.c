@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rayTracing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:54:19 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/15 22:27:52 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/26 17:21:05 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,6 @@ t_Ray_hit	init_ray_hit(void)
 	return (rh);
 }
 
-/// @brief Initialize the information of the intersected point
-/// @param ray		:The ray it initialized from
-/// @param dist_bef	:The distance from the hit coordinate 
-///					to the other intersection, 
-///					 if non INFINITY it is the distance to the light.
-///					 if the distance < dist_bef it means an object 
-///						was caught inbetween
-/// @param shape 	:The object the ray originated from. 
-///						If non Null it -> Light or reflection
-/// @return 		:The Ray_hit struct 
 t_Ray_hit	ray_trace(const t_Ray ray, double dist_bef, t_shape *shape)
 {
 	t_Ray_hit	light_ray_hit;

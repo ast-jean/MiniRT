@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:56:37 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/05/22 13:35:01 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/05/26 13:43:48 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,28 +27,24 @@ t_rgba	mix_colors_light(t_Ray_hit hit, t_shape shape, double coeff)
 {
 	double	specular_coeff;
 	t_rgba	result;
-	t_rgba	obj;
 	double	l_r;
 	double	a_r;
 
 	specular_coeff = coeff;
 	result = separate_color_rgba(shape.color);
-	obj = separate_color_rgba(shape.color);
 	l_r = to_double(init_vars()->light->light_ratio);
 	a_r = to_double(init_vars()->ambient_light->light_ratio);
-
-	// t_rgba ambient_color = mix_colors(result, (separate_color_rgba(init_vars()->ambient_light->color)), a_r);
-	
-	result = mix_colors(result, (separate_color_rgba(init_vars()->ambient_light->color)), a_r);
+	result = mix_colors(result, \
+	(separate_color_rgba(init_vars()->ambient_light->color)), a_r);
 	if (hit.hit)
 		coeff = a_r;
 	else
 	{
-		result = mix_colors(result, (separate_color_rgba(init_vars()->light->color)), l_r);
+		result = mix_colors(result, \
+		(separate_color_rgba(init_vars()->light->color)), l_r);
 		coeff = (coeff * l_r) + a_r;
 	}
 	result = brightness(result, coeff);
-
 	if (specular_coeff > 0 && !hit.hit)
 		result = rgba_add(result, \
 		specular(result, pow(specular_coeff, 100), l_r));
@@ -70,14 +66,14 @@ t_rgba	brightness(t_rgba color, double mix_factor)
 t_rgba	mix_colors(t_rgba color1, t_rgba color2, double mix_factor)
 {
 	t_rgba	result;
-	double p0;
-	double p1;
+	double	p0;
+	double	p1;
 
 	color2 = remove_excess(color2);
 	mix_factor = fmax(0.0, fmin(1.0, mix_factor));
 	p0 = 1 / (mix_factor + 1);
 	p1 = mix_factor / (mix_factor + 1);
-	if(color2.r == 0 && color2.g == 0 && color2.b == 0)
+	if (color2.r == 0 && color2.g == 0 && color2.b == 0)
 		return (color1);
 	result.r = (uint8_t)((color1.r * (p0)) + ((color2.r) * (p1)));
 	result.g = (uint8_t)((color1.g * (p0)) + ((color2.g) * (p1)));
@@ -85,4 +81,3 @@ t_rgba	mix_colors(t_rgba color1, t_rgba color2, double mix_factor)
 	result.a = 255;
 	return (result);
 }
-

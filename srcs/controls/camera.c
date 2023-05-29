@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:40:12 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/19 14:02:12 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/29 09:09:04 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	change_fov(t_Vars *vars)
 	}
 }
 
-void	camera_position(t_Vars *vars)
+void	camera_position_plus(t_Vars *vars)
 {
 	if (mlx_is_key_down(vars->mlx, 61) || mlx_is_key_down(vars->mlx, 334))
 	{
@@ -54,6 +54,11 @@ void	camera_position(t_Vars *vars)
 				to_double(vars->camera->coord.z) + 10);
 		}
 	}
+}
+
+void	camera_position(t_Vars *vars)
+{
+	camera_position_plus(vars);
 	if (mlx_is_key_down(vars->mlx, 45) || mlx_is_key_down(vars->mlx, 333))
 	{
 		if (vars->camera_trigger && !vars->orientation_trigger)
@@ -71,38 +76,41 @@ void	camera_position(t_Vars *vars)
 	}
 }
 
+void	orient_camera_plus(t_Vars *vars)
+{
+	if (mlx_is_key_down(vars->mlx, 61) || mlx_is_key_down(vars->mlx, 334))
+	{
+		if (vars->camera_trigger && vars->orientation_trigger)
+		{
+			if (vars->x_trigger)
+				set_value(&vars->camera->orientation.x, \
+				to_double(vars->camera->orientation.x) + 0.007);
+			if (vars->y_trigger)
+				set_value(&vars->camera->orientation.y, \
+				to_double(vars->camera->orientation.y) + 0.007);
+			if (vars->z_trigger)
+				set_value(&vars->camera->orientation.z, \
+				to_double(vars->camera->orientation.z) + 0.007);
+		}
+	}
+}
+
 void	orient_camera(t_Vars *vars)
 {
-	(void) vars;
-
-// 	if (mlx_is_key_down(vars->mlx, 61) || mlx_is_key_down(vars->mlx, 334))
-// 	{
-// 		if (vars->camera_trigger && vars->orientation_trigger)
-// 		{
-// 			if (vars->x_trigger)
-// 				set_value(&vars->camera->orientation.x, \
-// 				to_double(vars->camera->orientation.x) + 0.007);
-// 			if (vars->y_trigger)
-// 				set_value(&vars->camera->orientation.y, \
-// 				to_double(vars->camera->orientation.y) + 0.007);
-// 			if (vars->z_trigger)
-// 				set_value(&vars->camera->orientation.z, \
-// 				to_double(vars->camera->orientation.z) + 0.007);
-// 		}
-// 	}
-// 	if (mlx_is_key_down(vars->mlx, 45) || mlx_is_key_down(vars->mlx, 333))
-// 	{
-// 		if (vars->camera_trigger && vars->orientation_trigger)
-// 		{
-// 			if (vars->x_trigger)
-// 				set_value(&vars->camera->orientation.x, \
-// 				to_double(vars->camera->orientation.x) - 0.007);
-// 			if (vars->y_trigger)
-// 				set_value(&vars->camera->orientation.y, \
-// 				to_double(vars->camera->orientation.y) - 0.007);
-// 			if (vars->z_trigger)
-// 				set_value(&vars->camera->orientation.z, \
-// 				to_double(vars->camera->orientation.z) - 0.007);
-// 		}
-// 	}
+	orient_camera_plus(vars);
+	if (mlx_is_key_down(vars->mlx, 45) || mlx_is_key_down(vars->mlx, 333))
+	{
+		if (vars->camera_trigger && vars->orientation_trigger)
+		{
+			if (vars->x_trigger)
+				set_value(&vars->camera->orientation.x, \
+				to_double(vars->camera->orientation.x) - 0.007);
+			if (vars->y_trigger)
+				set_value(&vars->camera->orientation.y, \
+				to_double(vars->camera->orientation.y) - 0.007);
+			if (vars->z_trigger)
+				set_value(&vars->camera->orientation.z, \
+				to_double(vars->camera->orientation.z) - 0.007);
+		}
+	}
 }

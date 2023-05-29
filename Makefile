@@ -14,6 +14,7 @@ SRCS_FILES 		=	miniRT.c \
 					controls/trigger.c \
 					rayTracing/rayTracing.c \
 					rayTracing/check.c \
+					rayTracing/check_cy.c \
 					rayTracing/colors.c \
 					rayTracing/colors_utils.c \
 					rayTracing/shading.c \
@@ -30,7 +31,8 @@ SRCS_FILES 		=	miniRT.c \
 					math/vectors/Vectors.c \
 					math/vectors/ray.c \
 					math/vectors/Vectors_ops.c \
-					math/math_other.c
+					math/math_other.c \
+					math/quadratic.c
 
 
 INCLUDE_FILES	= 	miniRT.h \

@@ -120,12 +120,17 @@ void		ray_to_screen();
 uint32_t	ray_tracing(const t_Ray ray);
 t_Ray_hit	ray_trace(t_Ray ray, double dist, t_shape *shape);
 // check.c
-
 void	ray_checkhit(const t_Ray ray, t_Ray_hit *rh, double *distance, t_shape *shape_o);
 bool	check_cy(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double *dist);
 bool	check_pl(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double *dist);
 bool	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double *dist);
-bool	check_dot_sign(t_Vector3d shape_pos, t_Vector3d Vec1, t_Vector3d Vec2);
+
+//check_cy.c
+void calculate_vectors(const t_Ray r, const t_shape *c, t_Vector3d *d, t_Vector3d *e);
+void swap_t_values(double *t0, double *t1);
+bool check_and_update_intersection(t_shape *c, const t_Ray r, t_Ray_hit *rh, double *dist, double t, bool hit);
+void calculate_intersection_points(const t_Ray r,t_Vector2d, t_Vector3d *P0, t_Vector3d *P1);
+void calculate_heights(const t_shape *c, t_Vector3d P0, t_Vector3d P1, t_Vector2d *h);
 /*---------------------------Normal-------------------------*/
 t_Vector3d	light_normal(t_Vector3d coords, t_Vector3d obj_coord);
 t_Vector3d	cylinder_normal(t_Vector3d intersection, t_Vector3d C, t_Vector3d V);
@@ -155,9 +160,10 @@ t_rgba_unit rgba_unit_init(double r,double g, double b);
 double		deg2grad(double deg);
 uint32_t	clamp(uint32_t value, uint32_t min, uint32_t max);
 double		find_distance(t_Vector3d A, t_Vector3d B);
-bool		solve_quadratic(t_Vector3d abc, t_Vector2d *t);
 
-t_Vector3d cylinder_normal(t_Vector3d intersection, t_Vector3d C, t_Vector3d V);
+//quadratic.c
+bool		solve_quadratic(t_Vector3d abc, t_Vector2d *t);
+t_Vector3d	assign_var_quad(t_Vector3d d, t_Vector3d e, const t_shape *c);
 
 //update.c
 void	update_trigger(t_Vars *vars);
@@ -179,7 +185,7 @@ t_Vars	*init_vars();
 void	preset_ambient(t_Vars *vars);
 void	mouse_hook(mouse_key_t button, action_t action, modifier_key_t mods, void *param);
 void	process_key_actions(mlx_key_data_t keydata, void *param);
-int	are_useful_keys_down(t_Vars *vars);
+int		are_useful_keys_down(t_Vars *vars);
 
 //trigger.c
 void	check_trigger_xyz(t_Vars *vars);
