@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:35:27 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/19 15:46:16 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/19 18:08:30 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,10 @@ void	check_trigger_orientation(t_Vars *vars)
 {
 	t_Vector3d	orientation;
 
+	if (vars->selected)
+		orientation = point3d_to_vector3d(vars->selected->orientation);
+	else
+		return ;
 	if (mlx_is_key_down(vars->mlx, 61) || mlx_is_key_down(vars->mlx, 334))
 	{
 		if (vars->orientation_trigger && vars->selected)
@@ -96,9 +100,10 @@ void	check_trigger_orientation(t_Vars *vars)
 			if (vars->x_trigger)
 				rotate_vector(&orientation, 10, 'x');
 			if (vars->y_trigger)
-				rotate_vector(&orientation, 10, 'y');
+				rotate_vector(&orientation, 10,  'y');
 			if (vars->z_trigger)
-				rotate_vector(&orientation, 10, 'z');
+				rotate_vector(&orientation, 10,  'z');
+
 		}
 	}
 	if (mlx_is_key_down(vars->mlx, 45) || mlx_is_key_down(vars->mlx, 333))
@@ -106,6 +111,7 @@ void	check_trigger_orientation(t_Vars *vars)
 		if (vars->orientation_trigger && vars->selected)
 		{
 			if (vars->x_trigger)
+
 				rotate_vector(&orientation, -10, 'x');
 			if (vars->y_trigger)
 				rotate_vector(&orientation, -10, 'y');

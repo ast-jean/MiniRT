@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 20:24:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/19 15:46:02 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/19 20:02:44 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,65 +180,6 @@ bool check_cy(const t_shape *c, const t_Ray r, t_Ray_hit *rh, double *dist)
 	}
 }
 
-
-// bool check_cy(const t_shape *cy, const t_Ray r, t_Ray_hit *rh, double *dist)
-// {
-//     t_Vector3d dp = vector3d_sub(r.o, point3d_to_vector3d(cy->coord));
-//     t_Vector3d normalized_orientation = vector3d_norm(point3d_to_vector3d(cy->orientation));
-//     t_Vector3d d = vector3d_sub(r.d, vector3d_mult(normalized_orientation, vector3d_dot(r.d, normalized_orientation)));
-//     t_Vector3d e = vector3d_sub(dp, vector3d_mult(normalized_orientation, vector3d_dot(dp, normalized_orientation)));
-
-// 	t_Vector3d abc = {vector3d_dot(d, d), 2 * vector3d_dot(d, e), vector3d_dot(e, e) - to_double(cy->radius) * to_double(cy->radius)};
-
-//     double discr = abc.y * abc.y - 4 * abc.x * abc.z;
-//     if (discr < 0) {
-//         return (false); // no intersection
-//     }
-
-//     double sqrt_discr = sqrt(discr);
-//     double t0 = (-abc.y - sqrt_discr) / (2 * abc.x);
-//     double t1 = (-abc.y + sqrt_discr) / (2 * abc.x);
-
-//     if (t0 > t1) {
-//         double temp = t0;
-//         t0 = t1;
-//         t1 = temp;
-//     }
-//     t_Vector3d P0 = vector3d_add(r.o, vector3d_mult(r.d, t0));
-//     t_Vector3d P1 = vector3d_add(r.o, vector3d_mult(r.d, t1));
-
-//     t_Vector3d c1 = vector3d_sub(point3d_to_vector3d(cy->coord), vector3d_mult(normalized_orientation, to_double(cy->height) / 2.0));
-//     t_Vector3d c2 = vector3d_add(point3d_to_vector3d(cy->coord), vector3d_mult(normalized_orientation, to_double(cy->height) / 2.0));
-
-//     double h0 = vector3d_dot(vector3d_sub(P0, c1), vector3d_sub(c2, c1));
-//     double h1 = vector3d_dot(vector3d_sub(P1, c1), vector3d_sub(c2, c1));
-
-//     if (h0 < 0 || h0 > to_double(cy->height) * to_double(cy->height)) {
-//         if (h1 < 0 || h1 > to_double(cy->height) * to_double(cy->height) || *dist < t1) {
-//             return (false); // no intersection
-//         } else {
-//             *dist = t1;
-//             rh->distance = *dist;
-//             rh->color = cy->color;
-//             rh->shape = (t_shape *)cy;
-// 			rh->hit = true;
-//             rh->coord = vector3d_add(r.o, vector3d_mult(r.d, *dist));
-//             return (true); // intersection at P1
-//         }
-//     } else {
-//         if (h1 < 0 || *dist < t1) {
-//             return (false); // no intersection
-//         } else {
-//             *dist = t0;
-//             rh->distance = *dist;
-//             rh->color = cy->color;
-//             rh->shape = (t_shape *)cy;
-// 			rh->hit = true;
-//             rh->coord = vector3d_add(r.o, vector3d_mult(r.d, *dist));
-// 			return (true); // intersection at P0
-//         }
-//     }
-// }
 
 /// @brief 			:Check for the intersection
 ///						 of each object with the provided t_Ray
