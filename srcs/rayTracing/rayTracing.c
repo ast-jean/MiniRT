@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:54:19 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/15 22:27:52 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/26 17:18:05 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,6 @@ uint32_t	ray_tracing(const t_Ray ray)
 	if (!hit.color)
 		return (BLACK);
 	color = 0;
-	color = rgba_to_int32_t(shading(&hit));
+	color = rgba_to_int32_t(shading(&hit, ray));
 	return (color);
 }

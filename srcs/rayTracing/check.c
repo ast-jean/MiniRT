@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 20:24:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/19 20:02:44 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/19 20:25:10 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,8 @@ bool check_and_update_intersection(t_shape *c, const t_Ray r, t_Ray_hit *rh, dou
     }
     return false;
 }
+
+
 
 bool check_cy(const t_shape *c, const t_Ray r, t_Ray_hit *rh, double *dist)
 {

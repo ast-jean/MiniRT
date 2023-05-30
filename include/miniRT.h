@@ -128,14 +128,15 @@ bool	check_sp(const t_shape *s,const t_Ray ray, t_Ray_hit *rh, double *dist);
 bool	check_dot_sign(t_Vector3d shape_pos, t_Vector3d Vec1, t_Vector3d Vec2);
 /*---------------------------Normal-------------------------*/
 t_Vector3d	light_normal(t_Vector3d coords, t_Vector3d obj_coord);
-t_Vector3d cylinder_normal(t_Vector3d intersection, t_Vector3d C, t_Vector3d V, t_Vector3d L);
+t_Vector3d cylinder_normal(t_Vector3d intersection, t_Vector3d C, t_Vector3d V, t_Vector3d D, t_Ray ray);
+// t_Vector3d cylinder_normal(t_Vector3d intersection, t_Vector3d C, t_Vector3d V);
 // t_Vector3d cylinder_normal(t_Vector3d intersection, t_Vector3d C, t_Vector3d V, t_Ray_hit hit);
 t_Vector3d	plane_normal(t_Vector3d hit_coords, t_Vector3d orientation);
 // t_Vector3d	find_normal(t_Vector3d coords, t_Vector3d obj_coord, t_shape shape, t_Vector3d L);
-t_Vector3d	find_normal(t_Vector3d coords, t_Vector3d obj_coord, t_shape shape, t_Ray_hit hit);
+t_Vector3d	find_normal(t_Vector3d coords, t_Vector3d obj_coord, t_shape shape, t_Ray_hit hit, t_Ray ray);
 double		find_angle_normals(t_Vector3d Norm1, t_Vector3d Norm2);
 /*---------------------------Shading-------------------------*/
-t_rgba		shading(t_Ray_hit *hit);
+t_rgba		shading(t_Ray_hit *hit, t_Ray ray);
 
 // t_rgba		shading_sp(t_Ray ray, t_Ray_hit *hit);
 /*---------------------------colors-------------------------*/
