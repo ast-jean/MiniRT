@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:55:10 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/26 18:50:24 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/05/30 14:14:08 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ t_Vector3d cylinder_normal(t_Vector3d intersection, t_Vector3d C, t_Vector3d V, 
 	t_Vector3d	perpendicular_vec;
 	t_Vector3d	norm_vec;
 	double		scalar_proj;
-	bool		is_ray_inside;
+	(void)D;
+	(void)ray;
+	// bool		is_ray_inside;
 
 	intersection_to_center = vector3d_sub(intersection, C);
 	scalar_proj = vector3d_dot(intersection_to_center, V);
@@ -60,12 +62,12 @@ t_Vector3d cylinder_normal(t_Vector3d intersection, t_Vector3d C, t_Vector3d V, 
 	perpendicular_vec = vector3d_sub(intersection_to_center, proj_axis_vec);
 
 	norm_vec = vector3d_norm(perpendicular_vec);
-	is_ray_inside = vector3d_dot(D, norm_vec) < 0;
+	// is_ray_inside = vector3d_dot(D, norm_vec) < 0;
 
-	if (is_ray_inside)
-		norm_vec = vector3d_mult(norm_vec, -1);
-	if (vector3d_dot(ray.d, norm_vec) >= 0)
-		norm_vec = vector3d_mult(norm_vec, -1);
+	// if (is_ray_inside)
+		// norm_vec = vector3d_mult(norm_vec, -1);
+	// if (vector3d_dot(ray.d, norm_vec) < 0)
+		// norm_vec = vector3d_mult(norm_vec, -1);
 
 	return norm_vec;
 }
