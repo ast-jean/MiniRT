@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:33:32 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/05/29 10:31:18 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/04 15:36:38 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ uint32_t	clamp(uint32_t value, uint32_t min, uint32_t max)
 	return (value);
 }
 
-double	find_distance(t_Vector3d A, t_Vector3d B)
+double	find_distance(t_vector3d A, t_vector3d B)
 {
 	double	dx;
 	double	dy;

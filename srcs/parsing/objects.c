@@ -6,13 +6,13 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:44:05 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/29 10:25:12 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/04 15:50:29 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/miniRT.h"
 
-t_shape	*object_sp(char **elem, t_Vars *vars)
+t_shape	*object_sp(char **elem, t_vars *vars)
 {
 	t_shape		*s;
 
@@ -33,7 +33,7 @@ t_shape	*object_sp(char **elem, t_Vars *vars)
 	return (s);
 }
 
-t_shape	*object_pl(char **elem, t_Vars *vars)
+t_shape	*object_pl(char **elem, t_vars *vars)
 {
 	t_shape		*s;
 
@@ -54,10 +54,10 @@ t_shape	*object_pl(char **elem, t_Vars *vars)
 	return (s);
 }
 
-t_shape	*object_cy(char **elem, t_Vars *vars)
+t_shape	*object_cy(char **elem, t_vars *vars)
 {
 	t_shape		*s;
-	t_Vector3d	orientation;
+	t_vector3d	orientation;
 
 	s = NULL;
 	if (info_count(elem) != 6)

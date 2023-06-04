@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:37:03 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/19 13:55:52 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/04 15:50:29 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/miniRT.h"
 
-void	init_trigger(t_Vars *vars)
+void	init_trigger(t_vars *vars)
 {
 	vars->x_trigger = 0;
 	vars->y_trigger = 0;
@@ -21,18 +21,18 @@ void	init_trigger(t_Vars *vars)
 	vars->camera_trigger = 0;
 	vars->orientation_trigger = 0;
 	vars->height_trigger = 0;
-	vars->FOV_trigger = 0;
+	vars->fov_trigger = 0;
 	vars->light_trigger = 0;
 	vars->ambient_light = 0;
 }
 
-t_Vars	*init_vars(void)
+t_vars	*init_vars(void)
 {
-	static t_Vars	*vars;
+	static t_vars	*vars;
 
 	if (!vars)
 	{
-		vars = malloc(sizeof(t_Vars));
+		vars = malloc(sizeof(t_vars));
 		vars->camera = NULL;
 		vars->light = NULL;
 		vars->ambient_light = NULL;

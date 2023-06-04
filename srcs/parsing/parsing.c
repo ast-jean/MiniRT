@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:57:17 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/15 21:57:22 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/04 15:50:29 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	valid_file(char *file)
 
 void	split(char *file)
 {
-	t_Vars	*vars;
+	t_vars	*vars;
 	int		fd;
 	char	*str;
 	char	**args;
@@ -62,7 +62,7 @@ void	split(char *file)
 
 void	valid_element(char **elem)
 {
-	t_Vars	*vars;
+	t_vars	*vars;
 
 	vars = init_vars();
 	if (ft_strcmp(elem[0], "A"))

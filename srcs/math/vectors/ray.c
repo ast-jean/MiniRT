@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 22:53:50 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/15 23:27:32 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/04 15:50:29 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/Vectors.h"
 
-t_Ray	ray_init(t_Vector3d o, t_Vector3d d)
+t_ray	ray_init(t_vector3d o, t_vector3d d)
 {
-	t_Ray	ray;
+	t_ray	ray;
 
 	ray.o = o;
 	ray.d = d;
@@ -22,19 +22,19 @@ t_Ray	ray_init(t_Vector3d o, t_Vector3d d)
 }
 
 //gives the normalized ray direction from Vec_from to Vec_to
-t_Vector3d	ray_direction(t_Vector3d from, t_Vector3d to)
+t_vector3d	ray_direction(t_vector3d from, t_vector3d to)
 {
-	t_Vector3d	dir;
+	t_vector3d	dir;
 
 	dir = vector3d_sub(to, from);
 	return (vector3d_norm(dir));
 }
 
-t_Vector3d	screen(t_Vector3d c_coords, t_Vector3d c_dir, double px, double py)
+t_vector3d	screen(t_vector3d c_coords, t_vector3d c_dir, double px, double py)
 {
-	t_Vector3d	up;
-	t_Vector3d	right;
-	t_Vector3d	screen_position;
+	t_vector3d	up;
+	t_vector3d	right;
+	t_vector3d	screen_position;
 
 	up = vector3d_unit(vector3d_cross \
 	(vector3d_cross(c_dir, vector3d_init(0, 1, 0)), c_dir));
@@ -45,13 +45,13 @@ t_Vector3d	screen(t_Vector3d c_coords, t_Vector3d c_dir, double px, double py)
 	return (screen_position);
 }
 
-t_Ray	ray_init_to_screen(t_Vars *v, int x, int y)
+t_ray	ray_init_to_screen(t_vars *v, int x, int y)
 {
-	t_Vector3d	c_coords;
-	t_Vector3d	c_dir;
+	t_vector3d	c_coords;
+	t_vector3d	c_dir;
 	double		px;
 	double		py;
-	t_Vector3d	ray_dir;
+	t_vector3d	ray_dir;
 
 	c_coords = point3d_to_vector3d(v->camera->coord);
 	c_dir = point3d_to_vector3d(v->camera->orientation);

@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:56:37 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/05/26 13:43:48 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/04 15:39:35 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_rgba	specular(t_rgba obj_color, double coefficient, double shine)
 	return (brightness(specular, coefficient));
 }
 
-t_rgba	mix_colors_light(t_Ray_hit hit, t_shape shape, double coeff)
+t_rgba	mix_colors_light(t_ray_hit hit, t_shape shape, double coeff)
 {
 	double	specular_coeff;
 	t_rgba	result;

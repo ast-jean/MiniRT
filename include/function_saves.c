@@ -1,4 +1,4 @@
-bool intersectRayPlane(t_Vector3d ray_origin, t_Vector3d ray_direction, t_Vector3d plane_point, t_Vector3d plane_normal, double *t)
+bool intersectRayPlane(t_vector3d ray_origin, t_vector3d ray_direction, t_vector3d plane_point, t_vector3d plane_normal, double *t)
 {
 	double	denom;
 

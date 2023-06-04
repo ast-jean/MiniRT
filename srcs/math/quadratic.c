@@ -6,15 +6,15 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:33:32 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/05/29 10:34:36 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/04 15:37:08 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/miniRT.h"
 
-t_Vector3d	assign_var_quad(t_Vector3d d, t_Vector3d e, const t_shape *c)
+t_vector3d	assign_var_quad(t_vector3d d, t_vector3d e, const t_shape *c)
 {
-	t_Vector3d	abc;
+	t_vector3d	abc;
 
 	abc.x = vector3d_dot(d, d);
 	abc.y = 2.0 * vector3d_dot(d, e);
@@ -22,7 +22,7 @@ t_Vector3d	assign_var_quad(t_Vector3d d, t_Vector3d e, const t_shape *c)
 	return (abc);
 }
 
-void	swap_quad(t_Vector2d *t)
+void	swap_quad(t_vector2d *t)
 {
 	double	tmp;
 
@@ -34,7 +34,7 @@ void	swap_quad(t_Vector2d *t)
 	}
 }
 
-bool	solve_quadratic(t_Vector3d abc, t_Vector2d *t)
+bool	solve_quadratic(t_vector3d abc, t_vector2d *t)
 {
 	double	q;
 	double	discr;
