@@ -29,6 +29,7 @@ SRCS_FILES 		=	miniRT.c \
 					parsing/debug.c \
 					parsing/utils.c \
 					parsing/parse.c \
+					parsing/split_whitespace.c \
 					math/Fixed.c \
 					math/vectors/Vectors.c \
 					math/vectors/ray.c \

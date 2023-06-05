@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: mtrembla <mtrembla@student.42quebec>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 10:06:21 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/04 15:52:38 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/05 18:25:04 by mtrembla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,8 @@ int			range(double elem, int low, int high);
 int			char_isdigit(char c);
 int			is_number(char *str);
 void		valid_scene(void);
-
+//split_whitespace.c
+char		**split_on_space(char const *str);
 /*----------------------------fixed------------------------------*/
 void		set_value(t_Fixed *fp, double value);
 double		to_double(t_Fixed fp);
