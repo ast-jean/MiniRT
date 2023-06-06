@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   shading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:53:59 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/04 15:39:45 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/06 18:59:55 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/miniRT.h"
 
 t_rgba	shading_obj(t_ray_hit hit_light, t_shape shape, \
-t_ray_hit *first_hit, t_vector3d l_c)
+t_ray_hit *first_hit, t_vector3d l_c, t_ray ray)
 {
 	t_rgba		color;	
 	t_vector3d	light_dir;
@@ -23,13 +23,18 @@ t_ray_hit *first_hit, t_vector3d l_c)
 	color = rgba_init(0, 0, 0);
 	light_dir = light_normal(first_hit->coord, l_c);
 	obj_normal = find_normal(first_hit->coord, \
-	point3d_to_vector3d(shape.coord), shape, *first_hit);
+	point3d_to_vector3d(shape.coord), shape, *first_hit, ray);
 	coeff = fmax(0, find_angle_normals(light_dir, obj_normal));
 	color = rgba_add(color, mix_colors_light(hit_light, shape, coeff));
 	return (color);
 }
 
-t_rgba	shading(t_ray_hit *hit)
+
+/// @brief 		:Returns the color of the 
+///				pixel depending on object and light position
+/// @param hit 	:Information on the intersected point
+/// @return 	:Color in rgba form
+t_rgba	shading(t_ray_hit *hit, t_ray ray)
 {
 	t_vector3d	lc;
 	t_ray		ray_s2l;
@@ -42,5 +47,5 @@ t_rgba	shading(t_ray_hit *hit)
 	distance = find_distance(hit->coord, lc);
 	ray_s2l.o = lc;
 	bounce = ray_trace(ray_s2l, distance, hit->shape);
-	return (shading_obj(bounce, *hit->shape, hit, lc));
+	return (shading_obj(bounce, *hit->shape, hit, lc, ray));
 }

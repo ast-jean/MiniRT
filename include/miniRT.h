@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtrembla <mtrembla@student.42quebec>       +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 10:06:21 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/05 18:25:04 by mtrembla         ###   ########.fr       */
+/*   Updated: 2023/06/06 18:45:28 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,14 +146,17 @@ void		calculate_heights(const t_shape *c, t_vector3d P0,
 				t_vector3d P1, t_vector2d *h);
 /*---------------------------Normal-------------------------*/
 t_vector3d	light_normal(t_vector3d coords, t_vector3d obj_coord);
-t_vector3d	cylinder_normal(t_vector3d intersection, t_vector3d C,
-				t_vector3d V, t_vector3d L);
+t_vector3d cylinder_normal(t_vector3d intersection, t_vector3d C, t_vector3d V, t_vector3d D, t_ray ray);
+// t_vector3d cylinder_normal(t_vector3d intersection, t_vector3d C, t_vector3d V);
+// t_vector3d cylinder_normal(t_vector3d intersection, t_vector3d C, t_vector3d V, t_ray_hit hit);
 t_vector3d	plane_normal(t_vector3d hit_coords, t_vector3d orientation);
-t_vector3d	find_normal(t_vector3d coords, t_vector3d obj_coord,
-				t_shape shape, t_ray_hit hit);
+// t_vector3d	find_normal(t_vector3d coords, t_vector3d obj_coord, t_shape shape, t_vector3d L);
+t_vector3d	find_normal(t_vector3d coords, t_vector3d obj_coord, t_shape shape, t_ray_hit hit, t_ray ray);
 double		find_angle_normals(t_vector3d Norm1, t_vector3d Norm2);
 /*---------------------------Shading-------------------------*/
-t_rgba		shading(t_ray_hit *hit);
+t_rgba		shading(t_ray_hit *hit, t_ray ray);
+
+// t_rgba		shading_sp(t_Ray ray, t_Ray_hit *hit);
 /*---------------------------colors-------------------------*/
 //colors.c
 t_rgba		brightness(t_rgba color, double scale);
