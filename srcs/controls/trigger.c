@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   trigger.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:35:27 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/19 18:08:30 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/04 15:50:29 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/miniRT.h"
 
-void	check_trigger_xyz(t_Vars *vars)
+void	check_trigger_xyz_plus(t_vars *vars)
 {
 	if (mlx_is_key_down(vars->mlx, 61) || mlx_is_key_down(vars->mlx, 334))
 	{
@@ -33,6 +33,11 @@ void	check_trigger_xyz(t_Vars *vars)
 				to_double(vars->selected->coord.z) + 1);
 		}
 	}
+}
+
+void	check_trigger_xyz(t_vars *vars)
+{
+	check_trigger_xyz_plus(vars);
 	if (mlx_is_key_down(vars->mlx, 45) || mlx_is_key_down(vars->mlx, 333))
 	{
 		if (vars->selected && vars->radius_trigger)
@@ -54,7 +59,7 @@ void	check_trigger_xyz(t_Vars *vars)
 	}
 }
 
-void	rotate_vector(t_Vector3d *vec, double angle, char axis)
+void	rotate_vector(t_vector3d *vec, double angle, char axis)
 {
 	double	orig_x;
 	double	orig_y;
@@ -83,43 +88,28 @@ void	rotate_vector(t_Vector3d *vec, double angle, char axis)
 		printf("Invalid rotation axis. Use 'x', 'y', or 'z'.\n");
 }
 
-
-void	check_trigger_orientation(t_Vars *vars)
+void	check_trigger_orientation(t_vars *vars)
 {
-	t_Vector3d	orientation;
+	t_vector3d	orientation;
+	int			value;
 
 	if (vars->selected)
 		orientation = point3d_to_vector3d(vars->selected->orientation);
 	else
 		return ;
 	if (mlx_is_key_down(vars->mlx, 61) || mlx_is_key_down(vars->mlx, 334))
-	{
-		if (vars->orientation_trigger && vars->selected)
-		{
-			orientation = point3d_to_vector3d(vars->selected->orientation);
-			if (vars->x_trigger)
-				rotate_vector(&orientation, 10, 'x');
-			if (vars->y_trigger)
-				rotate_vector(&orientation, 10,  'y');
-			if (vars->z_trigger)
-				rotate_vector(&orientation, 10,  'z');
-
-		}
-	}
+		value = 10;
 	if (mlx_is_key_down(vars->mlx, 45) || mlx_is_key_down(vars->mlx, 333))
+		value = -10;
+	if (vars->orientation_trigger && vars->selected)
 	{
-		if (vars->orientation_trigger && vars->selected)
-		{
-			if (vars->x_trigger)
-
-				rotate_vector(&orientation, -10, 'x');
-			if (vars->y_trigger)
-				rotate_vector(&orientation, -10, 'y');
-			if (vars->z_trigger)
-				rotate_vector(&orientation, -10, 'z');
-		}
+		if (vars->x_trigger)
+			rotate_vector(&orientation, value, 'x');
+		if (vars->y_trigger)
+			rotate_vector(&orientation, value, 'y');
+		if (vars->z_trigger)
+			rotate_vector(&orientation, value, 'z');
 	}
 	if (vars->selected)
-		vars->selected->orientation = Vec3D_to_point3D(orientation);
-	// printf("x = %f, y = %f, z = %f\n", to_double(vars->selected->orientation.x), to_double(vars->selected->orientation.y), to_double(vars->selected->orientation.z) );
+		vars->selected->orientation = vec3d_to_point3d(orientation);
 }

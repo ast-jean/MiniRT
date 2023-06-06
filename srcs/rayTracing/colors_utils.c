@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:55:18 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/05/16 13:24:12 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/05/26 13:46:48 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ t_rgba	rgba_add(t_rgba a, t_rgba b)
 
 t_rgba	remove_excess(t_rgba c)
 {
-	t_rgba result;
-	int	min;
+	t_rgba	result;
+	int		min;
 
 	min = c.r;
 	if (c.g < min)

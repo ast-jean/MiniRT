@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   update.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:29:02 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/19 15:43:11 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/06 15:26:43 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/miniRT.h"
 
-void	update_trigger(t_Vars *vars)
+void	update_trigger(t_vars *vars)
 {
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_O))
 		vars->orientation_trigger = !vars->orientation_trigger;
@@ -29,15 +29,18 @@ void	update_trigger(t_Vars *vars)
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_H))
 		vars->height_trigger = !vars->height_trigger;
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_F))
-		vars->FOV_trigger = !vars->FOV_trigger;
+		vars->fov_trigger = !vars->fov_trigger;
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_L))
+	{
 		vars->light_trigger = !vars->light_trigger;
+		vars->selected = NULL;
+	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
 		vars->ambient_trigger = !vars->ambient_trigger;
 	print_trigger_state(vars);
 }
 
-void	update_ambient_light(t_Vars *vars)
+void	update_ambient_light(t_vars *vars)
 {
 	if (vars->ambient_trigger)
 	{
@@ -51,12 +54,13 @@ void	update_ambient_light(t_Vars *vars)
 		(to_double(vars->ambient_light->light_ratio) - 0.1) > 0)
 			set_value(&vars->ambient_light->light_ratio, \
 			to_double(vars->ambient_light->light_ratio) - 0.1);
-		printf("Ambient light ratio: %f\n",round(to_double(vars->ambient_light->light_ratio)*10)/10);
+		printf("Ambient light ratio: %f\n", \
+		round(to_double(vars->ambient_light->light_ratio) * 10) / 10);
 		printf("Ambient Color = %X\n", vars->ambient_light->color);
 	}
 }
 
-void	update_intensity(t_Vars *vars)
+void	update_intensity(t_vars *vars)
 {
 	if (vars->light_trigger && vars->radius_trigger)
 	{
@@ -70,11 +74,12 @@ void	update_intensity(t_Vars *vars)
 		(to_double(vars->light->light_ratio) - 0.1) > 0)
 			set_value(&vars->light->light_ratio, \
 			to_double(vars->light->light_ratio) - 0.1);
-			printf("Light intensity: %f\n",round(to_double(vars->light->light_ratio)*10)/10);
+		printf("Light intensity: %f\n", \
+			round(to_double(vars->light->light_ratio) * 10) / 10);
 	}
 }
 
-void	reset_position(t_Vector3d *point)
+void	reset_position(t_vector3d *point)
 {
 	if (point->x < 0)
 	{

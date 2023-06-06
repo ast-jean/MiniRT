@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:45:50 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/15 21:57:32 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/04 15:50:29 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/miniRT.h"
 
-void	object_a(char **elem, t_Vars *vars)
+void	object_a(char **elem, t_vars *vars)
 {
 	if (vars->ambient_light)
 		error_exit(3, "Can only be declared once");
@@ -29,7 +29,7 @@ void	object_a(char **elem, t_Vars *vars)
 		error_exit(2, "Ambient Light (A): ");
 }
 
-void	object_c(char **elem, t_Vars *vars)
+void	object_c(char **elem, t_vars *vars)
 {
 	if (vars->camera)
 		error_exit(3, "Can only be declared once");
@@ -49,7 +49,7 @@ void	object_c(char **elem, t_Vars *vars)
 		error_exit(2, "Camera (C): ");
 }
 
-void	object_l(char **elem, t_Vars *vars)
+void	object_l(char **elem, t_vars *vars)
 {
 	if (vars->light)
 		error_exit(3, "Can only be declared once");

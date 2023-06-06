@@ -9,11 +9,14 @@ ARCH  :=$(shell uname -m)
 SRCS_FILES 		=	miniRT.c \
 					controls/update.c \
 					controls/camera.c \
+					controls/norm_and_arrays.c \
 					controls/keybinding.c \
 					controls/init.c \
 					controls/trigger.c \
 					rayTracing/rayTracing.c \
 					rayTracing/check.c \
+					rayTracing/check_cy.c \
+					rayTracing/check_pl.c \
 					rayTracing/colors.c \
 					rayTracing/colors_utils.c \
 					rayTracing/shading.c \
@@ -26,11 +29,13 @@ SRCS_FILES 		=	miniRT.c \
 					parsing/debug.c \
 					parsing/utils.c \
 					parsing/parse.c \
+					parsing/split_whitespace.c \
 					math/Fixed.c \
 					math/vectors/Vectors.c \
 					math/vectors/ray.c \
 					math/vectors/Vectors_ops.c \
-					math/math_other.c
+					math/math_other.c \
+					math/quadratic.c
 
 
 INCLUDE_FILES	= 	miniRT.h \

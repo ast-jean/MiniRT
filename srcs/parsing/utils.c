@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 20:25:26 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/15 22:25:15 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/04 15:50:29 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	is_number(char *str)
 
 void	valid_scene(void)
 {
-	t_Vars	*vars;
+	t_vars	*vars;
 
 	vars = init_vars();
 	if (!vars->camera || !vars->ambient_light || !vars->light)

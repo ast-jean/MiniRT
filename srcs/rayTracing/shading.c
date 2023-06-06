@@ -6,25 +6,18 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:53:59 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/26 17:19:04 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/06 18:59:55 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/miniRT.h"
 
-
-/// @brief 
-/// @param ray = the ray from the hit coord to the light
-/// @param hit_light = Info of the object hit from the bounce.
-/// @param first_hit = Info of the first object hit.
-/// @param shape = the source shape
-/// @return 
-t_rgba	shading_obj(t_Ray_hit hit_light, t_shape shape, \
-t_Ray_hit *first_hit, t_Vector3d l_c, t_Ray ray)
+t_rgba	shading_obj(t_ray_hit hit_light, t_shape shape, \
+t_ray_hit *first_hit, t_vector3d l_c, t_ray ray)
 {
 	t_rgba		color;	
-	t_Vector3d	light_dir;
-	t_Vector3d	obj_normal;
+	t_vector3d	light_dir;
+	t_vector3d	obj_normal;
 	double		coeff;
 
 	color = rgba_init(0, 0, 0);
@@ -41,12 +34,12 @@ t_Ray_hit *first_hit, t_Vector3d l_c, t_Ray ray)
 ///				pixel depending on object and light position
 /// @param hit 	:Information on the intersected point
 /// @return 	:Color in rgba form
-t_rgba	shading(t_Ray_hit *hit, t_Ray ray)
+t_rgba	shading(t_ray_hit *hit, t_ray ray)
 {
-	t_Vector3d	lc;
-	t_Ray		ray_s2l;
+	t_vector3d	lc;
+	t_ray		ray_s2l;
 	double		distance;
-	t_Ray_hit	bounce;
+	t_ray_hit	bounce;
 
 	lc = point3d_to_vector3d(init_vars()->light->coord);
 	ray_s2l = ray_init(hit->coord, \
