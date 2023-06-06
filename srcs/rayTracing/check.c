@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: mtrembla <mtrembla@student.42quebec>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 20:24:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/04 15:39:45 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/05 18:18:11 by mtrembla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ bool	check_sp(const t_shape *s, const t_ray ray, t_ray_hit *rh, double *dist)
 	{
 		*dist = distance;
 		rh->coord = vector3d_add(ray.o, vector3d_mult(ray.d, distance));
+		rh->color = s->color;
 		rh->shape = (t_shape *) s;
 		rh->distance = find_distance(ray.o, rh->coord);
 		rh->hit = true;

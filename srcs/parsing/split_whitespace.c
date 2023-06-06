@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/05 16:39:39 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/05 17:14:53 by ast-jean         ###   ########.fr       */
+/*   Created: 2023/06/05 18:28:22 by mtrembla          #+#    #+#             */
+/*   Updated: 2023/06/06 11:55:50 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	nbr_of_strs(char const *str)
 	int	word_count;
 	int	in_word;
 
-	in_word = 0;
 	word_count = 0;
+	in_word = 0;
 	while (*str)
 	{
 		if (!ft_isspace(*str) && !in_word)
@@ -42,13 +42,13 @@ int	nbr_of_strs(char const *str)
 
 char	**create_tab(char **tab, const char *str)
 {
-	int		i;
-	int		start;
-	int		j;
+	int	start;
+	int	i;
+	int	j;
 
 	start = 0;
-	j = 0;
 	i = 0;
+	j = 0;
 	while (str && str[i])
 	{
 		if (!ft_isspace(str[i]))
@@ -69,12 +69,10 @@ char	**create_tab(char **tab, const char *str)
 char	**split_on_space(char const *str)
 {
 	char	**tab;
-	int		strs;
 
 	if (!str)
 		return (NULL);
-	strs = nbr_of_strs(str);
-	tab = malloc(sizeof(char *) * (strs + 1));
+	tab = malloc(sizeof(char *) * ((nbr_of_strs(str)) + 1));
 	if (!tab)
 		return (NULL);
 	tab = create_tab(tab, str);

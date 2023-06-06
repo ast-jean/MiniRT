@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:29:02 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/04 15:50:29 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/06 15:26:43 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	update_trigger(t_vars *vars)
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_F))
 		vars->fov_trigger = !vars->fov_trigger;
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_L))
+	{
 		vars->light_trigger = !vars->light_trigger;
+		vars->selected = NULL;
+	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
 		vars->ambient_trigger = !vars->ambient_trigger;
 	print_trigger_state(vars);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: mtrembla <mtrembla@student.42quebec>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:57:17 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/04 15:50:29 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/05 18:25:17 by mtrembla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	split(char *file)
 	str = ft_gnl(fd);
 	while (str && !vars->error_message)
 	{
-		args = ft_split(str, ' ');
+		args = split_on_space(str);
 		valid_element(args);
 		str = ft_gnl(fd);
 		if (vars->error_message)
