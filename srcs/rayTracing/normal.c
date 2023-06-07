@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:55:10 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/06 23:54:07 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/07 11:50:31 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_vector3d C, t_vector3d V, t_vector3d L, t_ray ray)
 	proj_axis_vec = vector3d_mult(V, scalar_proj);
 	perpendicular_vec = vector3d_sub(intersection_to_center, proj_axis_vec);
 
-	if (vector3d_dot(C, perpendicular_vec) <= 0)
+	if (vector3d_dot(C, perpendicular_vec) < 0)
 		perpendicular_vec = vector3d_mult(perpendicular_vec, -1);
 
 	return (vector3d_norm(perpendicular_vec));
