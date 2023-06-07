@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:33:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/06 14:03:02 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/07 16:44:10 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,17 @@ void	process_key_actions(mlx_key_data_t keydata, void *param)
 void	mouse_hook(mouse_key_t button, action_t action, \
 modifier_key_t mods, void *param)
 {
-	t_vars		*vars;
-	t_ray		ray;
-	t_ray_hit	hit;
+	t_vars				*vars;
+	t_ray				ray;
+	static t_ray_hit	hit;
 
 	vars = param;
 	mlx_get_mouse_pos(vars->mlx, &vars->mouse_x, &vars->mouse_y);
-	ray = ray_init_to_screen(vars, vars->mouse_x, vars->mouse_y);
-	hit = ray_trace(ray, 999999.9, NULL);
 	if ((void)action, (void)mods, mlx_is_mouse_down(vars->mlx, button))
 	{
-		if (hit.shape)
-			vars->selected = hit.shape;
+		ray = ray_init_to_screen(vars, vars->mouse_x, vars->mouse_y);
+		hit = ray_trace(ray, 999999.9, NULL);
+		if (hit.shape) vars->selected = hit.shape;
 		if (vars->light_trigger)
 		{
 			set_value(&vars->light->coord.z, hit.coord.z);
@@ -81,8 +80,11 @@ modifier_key_t mods, void *param)
 	}
 	else
 	{
-		set_value(&vars->selected->coord.z, hit.coord.z);
-		set_value(&vars->selected->coord.y, hit.coord.y);
+		ray = ray_init_to_screen(vars, vars->mouse_x, vars->mouse_y);
+		set_value(&vars->selected->coord.z, ray.o.y + \
+		((hit.coord.x - ray.o.x) / ray.d.x) * ray.d.y);
+		set_value(&vars->selected->coord.y, ray.o.z + \
+		((hit.coord.x - ray.o.x) / ray.d.x) * ray.d.z);
 		ray_to_screen();
 	}
 }
