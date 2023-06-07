@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keybinding.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:33:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/06 14:03:02 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/07 16:24:34 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,12 @@ modifier_key_t mods, void *param)
 	}
 	else
 	{
-		set_value(&vars->selected->coord.z, hit.coord.z);
-		set_value(&vars->selected->coord.y, hit.coord.y);
-		ray_to_screen();
+		if (vars->selected)
+		{
+			set_value(&vars->selected->coord.z, hit.coord.z / 3);
+			set_value(&vars->selected->coord.y, hit.coord.y / 3);
+			ray_to_screen();
+		}
 	}
 }
 
