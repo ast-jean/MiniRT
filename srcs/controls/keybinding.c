@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:33:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/07 17:24:02 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/07 17:48:38 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,25 @@ void	process_key_actions(mlx_key_data_t keydata, void *param)
 	}
 }
 
+void	release_mouse_click(t_vars *vars, t_ray *ray, t_ray_hit hit)
+{
+	t_vector3d	new_coord;
+	t_vector3d	hit1;
+	t_vector3d	diff;
+	double		t;
+
+	*ray = ray_init_to_screen(vars, vars->mouse_x, vars->mouse_y);
+	hit1 = hit.coord;
+	diff = vector3d_sub(point3d_to_vector3d(hit.shape->coord), hit1);
+	hit = ray_trace(*ray, 999999.9, NULL);
+	t = ((hit1.x - ray->o.x) / ray->d.x);
+	new_coord.y = (ray->o.y + t * ray->d.y);
+	new_coord.z = (ray->o.z + t * ray->d.z);
+	new_coord.x = (ray->o.x + t * ray->d.x);
+	set_value(&vars->selected->coord.y, new_coord.y + diff.y);
+	set_value(&vars->selected->coord.z, new_coord.z + diff.z);
+}
+
 void	mouse_hook(mouse_key_t button, action_t action, \
 modifier_key_t mods, void *param)
 {
@@ -71,7 +90,8 @@ modifier_key_t mods, void *param)
 	{
 		ray = ray_init_to_screen(vars, vars->mouse_x, vars->mouse_y);
 		hit = ray_trace(ray, 999999.9, NULL);
-		if (hit.shape) vars->selected = hit.shape;
+		if (hit.shape)
+			vars->selected = hit.shape;
 		if (vars->light_trigger)
 		{
 			set_value(&vars->light->coord.z, hit.coord.z);
@@ -80,20 +100,7 @@ modifier_key_t mods, void *param)
 	}
 	else
 	{
-		ray = ray_init_to_screen(vars, vars->mouse_x, vars->mouse_y);
-		t_vector3d hit1 = hit.coord;
-		hit = ray_trace(ray, 999999.9, NULL);
-
-// Should save new coord of sphere before diff cause it taking the coords of plane intersection
-		t_vector3d new_coord;
-		double t = ((hit1.x - ray.o.x) / ray.d.x);
-		new_coord.y = (ray.o.y + t * ray.d.y);
-		new_coord.z = (ray.o.z + t * ray.d.z);
-		new_coord.x = (ray.o.x + t * ray.d.x);
-		// t_vector3d diff = vector3d_sub(point3d_to_vector3d(hit.shape->coord), new_coord);
-		// printf("diff.y:%f, .z: %f\n", diff.y, diff.z);
-		set_value(&vars->selected->coord.y, new_coord.y );
-		set_value(&vars->selected->coord.z, new_coord.z );
+		release_mouse_click(vars, &ray, hit);
 		ray_to_screen();
 	}
 }
