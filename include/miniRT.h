@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 10:06:21 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/07 11:44:04 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/07 17:20:01 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,32 +137,21 @@ bool		check_sp(const t_shape *s, const t_ray ray,
 //check_cy.c
 void		calculate_vectors(const t_ray r, const t_shape *c,
 				t_vector3d *d, t_vector3d *e);
-void		swap_t_values(double *t0, double *t1);
-/// Version 1
-bool check_and_update_intersection(t_shape *c, const t_ray r, t_ray_hit *rh, double *dist, double t, bool hit);
-void calculate_intersection_points(const t_ray r, double t0, double t1, t_vector3d *P0, t_vector3d *P1);
-void calculate_heights(const t_shape *c, t_vector3d P0, t_vector3d P1, double *h0, double *h1);
 
-/// Version 2
-// bool		check_and_update_intersection(t_shape *c, const t_ray r,
-// 				t_ray_hit *rh, double dist);
-// void		calculate_intersection_points(const t_ray r, t_vector2d,
-// 				t_vector3d *P0, t_vector3d *P1);
-// void		calculate_heights(const t_shape *c, t_vector3d P0,
-// 				t_vector3d P1, t_vector2d *h);
+bool		check_and_update_intersection(t_shape *c, const t_ray r,
+				t_ray_hit *rh, double dist);
+void		calculate_intersection_points(const t_ray r, t_vector2d,
+				t_vector3d *P0, t_vector3d *P1);
+void		calculate_heights(const t_shape *c, t_vector3d P0,
+				t_vector3d P1, t_vector2d *h);
 /*---------------------------Normal-------------------------*/
 t_vector3d	light_normal(t_vector3d coords, t_vector3d obj_coord);
 t_vector3d cylinder_normal(t_vector3d intersection, t_vector3d C, t_vector3d V, t_vector3d D, t_ray ray);
-// t_vector3d cylinder_normal(t_vector3d intersection, t_vector3d C, t_vector3d V);
-// t_vector3d cylinder_normal(t_vector3d intersection, t_vector3d C, t_vector3d V, t_ray_hit hit);
 t_vector3d	plane_normal(t_vector3d hit_coords, t_vector3d orientation);
-// t_vector3d	find_normal(t_vector3d coords, t_vector3d obj_coord, t_shape shape, t_vector3d L);
 t_vector3d	find_normal(t_vector3d coords, t_vector3d obj_coord, t_shape shape, t_ray_hit hit, t_ray ray);
 double		find_angle_normals(t_vector3d Norm1, t_vector3d Norm2);
 /*---------------------------Shading-------------------------*/
 t_rgba		shading(t_ray_hit *hit, t_ray ray);
-
-// t_rgba		shading_sp(t_Ray ray, t_Ray_hit *hit);
 /*---------------------------colors-------------------------*/
 //colors.c
 t_rgba		brightness(t_rgba color, double scale);
