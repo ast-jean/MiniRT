@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 10:06:21 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/06 18:45:28 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/06 23:56:31 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,12 +138,18 @@ bool		check_sp(const t_shape *s, const t_ray ray,
 void		calculate_vectors(const t_ray r, const t_shape *c,
 				t_vector3d *d, t_vector3d *e);
 void		swap_t_values(double *t0, double *t1);
-bool		check_and_update_intersection(t_shape *c, const t_ray r,
-				t_ray_hit *rh, double dist);
-void		calculate_intersection_points(const t_ray r, t_vector2d,
-				t_vector3d *P0, t_vector3d *P1);
-void		calculate_heights(const t_shape *c, t_vector3d P0,
-				t_vector3d P1, t_vector2d *h);
+/// Version 1
+bool check_and_update_intersection(t_shape *c, const t_ray r, t_ray_hit *rh, double *dist, double t, bool hit);
+void calculate_intersection_points(const t_ray r, double t0, double t1, t_vector3d *P0, t_vector3d *P1);
+void calculate_heights(const t_shape *c, t_vector3d P0, t_vector3d P1, double *h0, double *h1);
+
+/// Version 2
+// bool		check_and_update_intersection(t_shape *c, const t_ray r,
+// 				t_ray_hit *rh, double dist);
+// void		calculate_intersection_points(const t_ray r, t_vector2d,
+// 				t_vector3d *P0, t_vector3d *P1);
+// void		calculate_heights(const t_shape *c, t_vector3d P0,
+// 				t_vector3d P1, t_vector2d *h);
 /*---------------------------Normal-------------------------*/
 t_vector3d	light_normal(t_vector3d coords, t_vector3d obj_coord);
 t_vector3d cylinder_normal(t_vector3d intersection, t_vector3d C, t_vector3d V, t_vector3d D, t_ray ray);
@@ -175,6 +181,7 @@ uint32_t	clamp(uint32_t value, uint32_t min, uint32_t max);
 double		find_distance(t_vector3d A, t_vector3d B);
 //quadratic.c
 bool		solve_quadratic(t_vector3d abc, t_vector2d *t);
+void	swap_quad(t_vector2d *t);
 t_vector3d	assign_var_quad(t_vector3d d, t_vector3d e, const t_shape *c);
 //update.c
 void		update_trigger(t_vars *vars);

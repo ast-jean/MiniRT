@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:55:10 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/06 19:06:27 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/06 23:54:07 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,16 @@ t_vector3d C, t_vector3d V, t_vector3d L, t_ray ray)
 	// bool		is_light_inside;
 
 	(void)L;
+	(void)C;
 	(void)ray;
 	intersection_to_center = vector3d_sub(intersection, C);
 	scalar_proj = vector3d_dot(intersection_to_center, V);
 	proj_axis_vec = vector3d_mult(V, scalar_proj);
 	perpendicular_vec = vector3d_sub(intersection_to_center, proj_axis_vec);
-	// is_light_inside = vector3d_dot(L, perpendicular_vec) < 0;
-	// if (is_light_inside)
-		// perpendicular_vec = vector3d_mult(perpendicular_vec, -1);
+
+	if (vector3d_dot(C, perpendicular_vec) <= 0)
+		perpendicular_vec = vector3d_mult(perpendicular_vec, -1);
+
 	return (vector3d_norm(perpendicular_vec));
 }
 
@@ -56,13 +58,14 @@ t_vector3d	find_normal(t_vector3d coords, \
 t_vector3d obj_coord, t_shape shape, t_ray_hit hit,t_ray ray)
 {
 	(void)hit;
+	// (void)ray;
 
 	if (ft_strcmp(shape.id, "sp"))
 		return (vector3d_norm(vector3d_sub(coords, obj_coord)));
 	else if (ft_strcmp(shape.id, "pl"))
 		return (plane_normal(coords, point3d_to_vector3d(shape.orientation)));
 	else if (ft_strcmp(shape.id, "cy"))
-			return (cylinder_normal(coords, point3d_to_vector3d(shape.coord),
+			return (cylinder_normal(coords, obj_coord,
                         point3d_to_vector3d(shape.orientation), vector3d_norm(vector3d_sub(coords, obj_coord)), ray));
 
 	else
