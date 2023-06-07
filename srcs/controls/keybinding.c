@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keybinding.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:33:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/07 16:24:34 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/07 17:48:38 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,38 @@ void	process_key_actions(mlx_key_data_t keydata, void *param)
 	}
 }
 
+void	release_mouse_click(t_vars *vars, t_ray *ray, t_ray_hit hit)
+{
+	t_vector3d	new_coord;
+	t_vector3d	hit1;
+	t_vector3d	diff;
+	double		t;
+
+	*ray = ray_init_to_screen(vars, vars->mouse_x, vars->mouse_y);
+	hit1 = hit.coord;
+	diff = vector3d_sub(point3d_to_vector3d(hit.shape->coord), hit1);
+	hit = ray_trace(*ray, 999999.9, NULL);
+	t = ((hit1.x - ray->o.x) / ray->d.x);
+	new_coord.y = (ray->o.y + t * ray->d.y);
+	new_coord.z = (ray->o.z + t * ray->d.z);
+	new_coord.x = (ray->o.x + t * ray->d.x);
+	set_value(&vars->selected->coord.y, new_coord.y + diff.y);
+	set_value(&vars->selected->coord.z, new_coord.z + diff.z);
+}
+
 void	mouse_hook(mouse_key_t button, action_t action, \
 modifier_key_t mods, void *param)
 {
-	t_vars		*vars;
-	t_ray		ray;
-	t_ray_hit	hit;
+	t_vars				*vars;
+	t_ray				ray;
+	static t_ray_hit	hit;
 
 	vars = param;
 	mlx_get_mouse_pos(vars->mlx, &vars->mouse_x, &vars->mouse_y);
-	ray = ray_init_to_screen(vars, vars->mouse_x, vars->mouse_y);
-	hit = ray_trace(ray, 999999.9, NULL);
 	if ((void)action, (void)mods, mlx_is_mouse_down(vars->mlx, button))
 	{
+		ray = ray_init_to_screen(vars, vars->mouse_x, vars->mouse_y);
+		hit = ray_trace(ray, 999999.9, NULL);
 		if (hit.shape)
 			vars->selected = hit.shape;
 		if (vars->light_trigger)
@@ -81,12 +100,8 @@ modifier_key_t mods, void *param)
 	}
 	else
 	{
-		if (vars->selected)
-		{
-			set_value(&vars->selected->coord.z, hit.coord.z / 3);
-			set_value(&vars->selected->coord.y, hit.coord.y / 3);
-			ray_to_screen();
-		}
+		release_mouse_click(vars, &ray, hit);
+		ray_to_screen();
 	}
 }
 
