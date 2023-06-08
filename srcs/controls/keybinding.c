@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keybinding.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:33:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/07 20:09:31 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/08 13:40:27 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void print_info_scene()
 	vars = init_vars();
 	if (vars->selected)
 	{
-
 		printf("OBJECT x = %f y = %f z = %f\n",to_double(vars->selected->coord.x),to_double(vars->selected->coord.y), to_double(vars->selected->coord.z));
 		printf("OBJECT_ORIENTATION x = %f y = %f z = %f\n",to_double(vars->selected->orientation.x),to_double(vars->selected->orientation.y), to_double(vars->selected->orientation.z));
 	}
@@ -83,18 +82,19 @@ void	release_mouse_click(t_vars *vars, t_ray *ray, t_ray_hit hit)
 	t_vector3d	diff;
 	double		t;
 
-	*ray = ray_init_to_screen(vars, vars->mouse_x, vars->mouse_y);
-	hit1 = hit.coord;
-	diff = vector3d_sub(point3d_to_vector3d(hit.shape->coord), hit1);
-	hit = ray_trace(*ray, 999999.9, NULL);
-	t = ((hit1.x - ray->o.x) / ray->d.x);
-	new_coord.y = (ray->o.y + t * ray->d.y);
-	new_coord.z = (ray->o.z + t * ray->d.z);
-	new_coord.x = (ray->o.x + t * ray->d.x);
-	set_value(&vars->selected->coord.y, new_coord.y + diff.y);
-	set_value(&vars->selected->coord.z, new_coord.z + diff.z);
-	
-
+	if (hit.shape)
+	{
+		*ray = ray_init_to_screen(vars, vars->mouse_x, vars->mouse_y);
+		hit1 = hit.coord;
+		diff = vector3d_sub(point3d_to_vector3d(hit.shape->coord), hit1);
+		hit = ray_trace(*ray, 999999.9, NULL);
+		t = ((hit1.x - ray->o.x) / ray->d.x);
+		new_coord.y = (ray->o.y + t * ray->d.y);
+		new_coord.z = (ray->o.z + t * ray->d.z);
+		new_coord.x = (ray->o.x + t * ray->d.x);
+		set_value(&vars->selected->coord.y, new_coord.y + diff.y);
+		set_value(&vars->selected->coord.z, new_coord.z + diff.z);
+	}
 }
 
 void	mouse_hook(mouse_key_t button, action_t action, \
@@ -120,7 +120,8 @@ modifier_key_t mods, void *param)
 	}
 	else
 	{
-		release_mouse_click(vars, &ray, hit);
+		if(vars->selected)
+				release_mouse_click(vars, &ray, hit);
 		ray_to_screen();
 	}
 	print_info_scene();
