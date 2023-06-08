@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:55:10 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/07 11:50:31 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/07 18:01:39 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,22 @@ t_vector3d	plane_normal(t_vector3d hit_coords, t_vector3d orientation)
 		return (orientation);
 }
 
+t_vector3d sphere_normal(t_vector3d point_coords, t_vector3d sphere_center, t_ray ray)
+{
+    // Calculate the vector from the center of the sphere to the point
+    t_vector3d vec = vector3d_sub(point_coords, sphere_center);
+
+    // Normalize the vector to get the normal
+    t_vector3d normal = vector3d_norm(vec);
+
+    // If the light is inside the sphere, invert the normal
+    if (vector3d_dot(normal, ray.d) > 0)
+        normal = vector3d_mult(normal, -1);
+
+    return normal;
+}
+
+
 t_vector3d	find_normal(t_vector3d coords, \
 t_vector3d obj_coord, t_shape shape, t_ray_hit hit,t_ray ray)
 {
@@ -61,7 +77,7 @@ t_vector3d obj_coord, t_shape shape, t_ray_hit hit,t_ray ray)
 	// (void)ray;
 
 	if (ft_strcmp(shape.id, "sp"))
-		return (vector3d_norm(vector3d_sub(coords, obj_coord)));
+		return sphere_normal(coords, obj_coord, ray);
 	else if (ft_strcmp(shape.id, "pl"))
 		return (plane_normal(coords, point3d_to_vector3d(shape.orientation)));
 	else if (ft_strcmp(shape.id, "cy"))

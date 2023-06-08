@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 20:24:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/07 17:20:16 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/07 17:54:11 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	check_sp(const t_shape *s, const t_ray ray, t_ray_hit *rh, double *dist)
 		distance = t.x;
 	else if (t.y > 0)
 		distance = t.y;
-	else
+	else 
 		return (false);
 	if (distance < *dist)
 	{
@@ -35,8 +35,7 @@ bool	check_sp(const t_shape *s, const t_ray ray, t_ray_hit *rh, double *dist)
 		rh->color = s->color;
 		rh->shape = (t_shape *) s;
 		rh->distance = find_distance(ray.o, rh->coord);
-		rh->hit = true;
-		return (true);
+		return (rh->hit = true);
 	}
 	return (false);
 }
@@ -47,8 +46,7 @@ t_vector2d	find_intersection_dists(t_vector3d abc, double sqrt_discr)
 
 	ts.x = (-abc.y - sqrt_discr) / (2 * abc.x);
 	ts.y = (-abc.y + sqrt_discr) / (2 * abc.x);
-    swap_quad(&ts);
-
+	swap_quad(&ts);
 	return (ts);
 }
 
@@ -65,26 +63,27 @@ t_vector2d	calculate_t(const t_shape *c, const t_ray r)
 	return (find_intersection_dists(abc, sqrt(discr)));
 }
 
-bool check_cy(const t_shape *c, const t_ray r, t_ray_hit *rh, double *dist)
+bool	check_cy(const t_shape *c, const t_ray r, t_ray_hit *rh, double *dist)
 {
-    t_vector2d t;
-    t_vector2d h;
-    t_vector3d p0, p1;
+	t_vector2d t;
+	t_vector2d h;
+	t_vector3d p0;
+	t_vector3d p1;
 
-    t = calculate_t(c, r);
-    calculate_intersection_points(r, t, &p0, &p1);
+	t = calculate_t(c, r);
+	calculate_intersection_points(r, t, &p0, &p1);
 	calculate_heights(c, p0, p1, &h);
 
-    if (h.x < 0 || h.x > to_double(c->height) * to_double(c->height)) {
-        if (h.y >= 0 && h.y <= to_double(c->height) * to_double(c->height) && *dist >= t.y)
-            return check_and_update_intersection((t_shape *)c, r, rh, (*dist = t.y));
-        return (false);
-        
-    } else {
-        if ((h.x >= 0 && *dist >= t.x))
-            return check_and_update_intersection((t_shape *)c, r, rh, (*dist = t.x));
-        return (false);
-    }
+	if (h.x < 0 || h.x > to_double(c->height) * to_double(c->height)) {
+		if (h.y >= 0 && h.y <= to_double(c->height) * to_double(c->height) && *dist >= t.y)
+			return check_and_update_intersection((t_shape *)c, r, rh, (*dist = t.y));
+		return (false);
+		
+	} else {
+		if ((h.x >= 0 && *dist >= t.x))
+			return check_and_update_intersection((t_shape *)c, r, rh, (*dist = t.x));
+		return (false);
+	}
 }
 
 void	ray_checkhit(t_ray ray, t_ray_hit *rh, double *d, t_shape *o)
