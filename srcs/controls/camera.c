@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:40:12 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/07 19:21:12 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/08 14:19:27 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	camera_position_plus(t_vars *vars)
 		{
 			if (vars->x_trigger)
 				set_value(&vars->camera->coord.x, \
-				to_double(vars->camera->coord.x) + 100);
+				to_double(vars->camera->coord.x) + 10);
 			if (vars->y_trigger)
 				set_value(&vars->camera->coord.y, \
 				to_double(vars->camera->coord.y) + 10);
@@ -66,7 +66,7 @@ void	camera_position(t_vars *vars)
 		{
 			if (vars->x_trigger)
 				set_value(&vars->camera->coord.x, \
-				to_double(vars->camera->coord.x) - 100);
+				to_double(vars->camera->coord.x) - 10);
 			if (vars->y_trigger)
 				set_value(&vars->camera->coord.y, \
 				to_double(vars->camera->coord.y) - 10);

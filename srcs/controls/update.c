@@ -12,35 +12,43 @@
 
 #include "../../include/miniRT.h"
 
-void	update_trigger(t_vars *vars)
+void	update_trigger_unselect(t_vars *vars)
 {
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_O))
-		vars->orientation_trigger = !vars->orientation_trigger;
-	else if (mlx_is_key_down(vars->mlx, MLX_KEY_C))
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_C))
+	{
 		vars->camera_trigger = !vars->camera_trigger;
-	else if (mlx_is_key_down(vars->mlx, MLX_KEY_X))
-		vars->x_trigger = !vars->x_trigger;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_Y))
-		vars->y_trigger = !vars->y_trigger;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_Z))
-		vars->z_trigger = !vars->z_trigger;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_R))
-		vars->radius_trigger = !vars->radius_trigger;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_H))
-		vars->height_trigger = !vars->height_trigger;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_F))
-		vars->fov_trigger = !vars->fov_trigger;
+		vars->selected = NULL;
+	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_L))
 	{
 		vars->light_trigger = !vars->light_trigger;
 		vars->selected = NULL;
 	}
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
+}
+
+void	update_trigger(t_vars *vars)
+{
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_O))
+		vars->orientation_trigger = !vars->orientation_trigger;
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_X))
+		vars->x_trigger = !vars->x_trigger;
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_Y))
+		vars->y_trigger = !vars->y_trigger;
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_Z))
+		vars->z_trigger = !vars->z_trigger;
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_R))
+		vars->radius_trigger = !vars->radius_trigger;
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_H))
+		vars->height_trigger = !vars->height_trigger;
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_F))
+		vars->fov_trigger = !vars->fov_trigger;
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
 		vars->ambient_trigger = !vars->ambient_trigger;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_I))
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_I))
 		vars->interface_trigger = !vars->interface_trigger;
-	// print_trigger_state(vars);
 	print_trigger_UI();
+	update_trigger_unselect(vars);
+	print_trigger_state(vars);
 }
 
 void	update_ambient_light(t_vars *vars)
