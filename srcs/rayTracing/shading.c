@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:53:59 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/06 18:59:55 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/08 14:06:05 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,6 @@ t_ray_hit *first_hit, t_vector3d l_c, t_ray ray)
 	return (color);
 }
 
-
-/// @brief 		:Returns the color of the 
-///				pixel depending on object and light position
-/// @param hit 	:Information on the intersected point
-/// @return 	:Color in rgba form
 t_rgba	shading(t_ray_hit *hit, t_ray ray)
 {
 	t_vector3d	lc;
