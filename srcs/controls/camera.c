@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:40:12 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/07 18:25:36 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/07 19:21:12 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	change_fov(t_vars *vars)
 				(0.5 * WIDTH) / tan(deg2grad(vars->camera->FOV) * 0.5);
 			}
 		}
+		
 	}
 }
 
@@ -74,6 +75,7 @@ void	camera_position(t_vars *vars)
 				to_double(vars->camera->coord.z) - 10);
 		}
 	}
+	
 }
 
 void	orient_camera_plus(t_vars *vars)

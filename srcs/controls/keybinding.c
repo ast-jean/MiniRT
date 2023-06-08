@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keybinding.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:33:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/07 17:48:38 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/07 20:09:31 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,23 @@ int	are_useful_keys_down(t_vars *vars)
 		i++;
 	}
 	return (0);
+}
+
+void print_info_scene()
+{
+	t_vars *vars;
+
+	vars = init_vars();
+	if (vars->selected)
+	{
+
+		printf("OBJECT x = %f y = %f z = %f\n",to_double(vars->selected->coord.x),to_double(vars->selected->coord.y), to_double(vars->selected->coord.z));
+		printf("OBJECT_ORIENTATION x = %f y = %f z = %f\n",to_double(vars->selected->orientation.x),to_double(vars->selected->orientation.y), to_double(vars->selected->orientation.z));
+	}
+	printf("CAMERA x = %f y = %f z = %f\n",to_double(vars->camera->coord.x),to_double(vars->camera->coord.y), to_double(vars->camera->coord.z));
+	printf("LIGHT x = %f y = %f z = %f\n",to_double(vars->light->coord.x),to_double(vars->light->coord.y), to_double(vars->light->coord.z));
+
+
 }
 
 void	process_key_actions(mlx_key_data_t keydata, void *param)
@@ -55,6 +72,7 @@ void	process_key_actions(mlx_key_data_t keydata, void *param)
 		update_ambient_light(vars);
 		update_intensity(vars);
 		ray_to_screen();
+		print_info_scene();
 	}
 }
 
@@ -75,6 +93,8 @@ void	release_mouse_click(t_vars *vars, t_ray *ray, t_ray_hit hit)
 	new_coord.x = (ray->o.x + t * ray->d.x);
 	set_value(&vars->selected->coord.y, new_coord.y + diff.y);
 	set_value(&vars->selected->coord.z, new_coord.z + diff.z);
+	
+
 }
 
 void	mouse_hook(mouse_key_t button, action_t action, \
@@ -103,6 +123,7 @@ modifier_key_t mods, void *param)
 		release_mouse_click(vars, &ray, hit);
 		ray_to_screen();
 	}
+	print_info_scene();
 }
 
 void	preset_ambient(t_vars *vars)
