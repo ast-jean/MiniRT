@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 10:06:21 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/07 18:28:59 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/08 14:37:25 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_vars
 	bool		x_trigger;
 	bool		y_trigger;
 	bool		z_trigger;
+	bool		interface_trigger;
 	bool		camera_trigger;
 	bool		radius_trigger;
 	bool		height_trigger;
@@ -197,4 +198,6 @@ void		check_trigger_orientation(t_vars *vars);
 //norm_and_arrays
 void		assign_keys_according_to_norm_a(int *useful_keys);
 void		assign_keys_according_to_norm_b(int *useful_keys);
+
+void print_trigger_UI();
 #endif
