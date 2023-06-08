@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 09:05:28 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/08 14:42:57 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/08 15:12:38 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,10 @@ void	print_trigger_state(t_vars *vars)
 	printf("\033[32m");
 	printf("--------------------\n");
 	printf("|Active trigger     |\n");
-	printf("|R=%d, H=%d, O=%d, F=%d |\n|C=%d, X=%d, Y=%d, Z=%d |\n|L=%d A=%d I=%d|\n", \
+	printf("|R=%d, H=%d, O=%d, F=%d |\n|C=%d, X=%d, Y=%d, Z=%d |\n|L=%d A=%d|\n", \
 	vars->radius_trigger, vars->height_trigger, vars->orientation_trigger, \
 	vars->fov_trigger, vars->camera_trigger, vars->x_trigger, \
-	vars->y_trigger, vars->z_trigger, vars->light_trigger, \
-	vars->ambient_trigger, vars->interface_trigger);
+	vars->y_trigger, vars->z_trigger, vars->light_trigger, vars->ambient_trigger);
 	printf("--------------------\n");
 	printf("\033[0m\n");
 }

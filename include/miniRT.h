@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 10:06:21 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/08 14:37:25 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/08 16:42:57 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ typedef struct s_vars
 	bool		x_trigger;
 	bool		y_trigger;
 	bool		z_trigger;
-	bool		interface_trigger;
 	bool		camera_trigger;
 	bool		radius_trigger;
 	bool		height_trigger;
@@ -147,12 +146,12 @@ void		calculate_heights(const t_shape *c, t_vector3d P0,
 				t_vector3d P1, t_vector2d *h);
 /*---------------------------Normal-------------------------*/
 t_vector3d	light_normal(t_vector3d coords, t_vector3d obj_coord);
-t_vector3d cylinder_normal(t_vector3d intersection, t_vector3d C, t_vector3d V, t_vector3d D, t_ray ray);
+t_vector3d cylinder_normal(t_vector3d intersection, t_vector3d C, t_vector3d V, t_vector3d D, t_vector3d light_ray);
 t_vector3d	plane_normal(t_vector3d hit_coords, t_vector3d orientation);
-t_vector3d	find_normal(t_vector3d coords, t_vector3d obj_coord, t_shape shape, t_ray_hit hit, t_ray ray);
+t_vector3d	find_normal(t_vector3d coords, t_vector3d obj_coord, t_shape shape, t_ray_hit hit, t_vector3d light_ray);
 double		find_angle_normals(t_vector3d Norm1, t_vector3d Norm2);
 /*---------------------------Shading-------------------------*/
-t_rgba		shading(t_ray_hit *hit, t_ray ray);
+t_rgba		shading(t_ray_hit *hit);
 /*---------------------------colors-------------------------*/
 //colors.c
 t_rgba		brightness(t_rgba color, double scale);

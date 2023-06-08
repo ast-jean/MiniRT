@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:29:02 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/08 14:57:40 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/08 15:30:14 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ void	update_trigger(t_vars *vars)
 		vars->fov_trigger = !vars->fov_trigger;
 	else if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
 		vars->ambient_trigger = !vars->ambient_trigger;
-	else if (mlx_is_key_down(vars->mlx, MLX_KEY_I))
-		vars->interface_trigger = !vars->interface_trigger;
 	print_trigger_UI();
 	update_trigger_unselect(vars);
 	print_trigger_state(vars);
