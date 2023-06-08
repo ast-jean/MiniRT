@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 10:06:21 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/08 14:37:25 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/08 15:02:11 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ typedef struct s_vars
 	bool		x_trigger;
 	bool		y_trigger;
 	bool		z_trigger;
-	bool		interface_trigger;
 	bool		camera_trigger;
 	bool		radius_trigger;
 	bool		height_trigger;

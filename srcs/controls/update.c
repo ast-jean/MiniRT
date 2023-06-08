@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:29:02 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/08 14:57:40 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/08 15:14:37 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,23 @@ void	update_trigger(t_vars *vars)
 		vars->camera_trigger = !vars->camera_trigger;
 	else if (mlx_is_key_down(vars->mlx, MLX_KEY_X))
 		vars->x_trigger = !vars->x_trigger;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_Y))
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_Y))
 		vars->y_trigger = !vars->y_trigger;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_Z))
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_Z))
 		vars->z_trigger = !vars->z_trigger;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_R))
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_R))
 		vars->radius_trigger = !vars->radius_trigger;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_H))
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_H))
 		vars->height_trigger = !vars->height_trigger;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_F))
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_F))
 		vars->fov_trigger = !vars->fov_trigger;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_L))
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_L))
 	{
 		vars->light_trigger = !vars->light_trigger;
 		vars->selected = NULL;
 	}
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
 		vars->ambient_trigger = !vars->ambient_trigger;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_I))
-		vars->interface_trigger = !vars->interface_trigger;
 	// print_trigger_state(vars);
 	print_trigger_UI();
 }

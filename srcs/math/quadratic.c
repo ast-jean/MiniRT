@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quadratic.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:33:32 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/04 15:37:08 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:11:05 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ bool	solve_quadratic(t_vector3d abc, t_vector2d *t)
 			q = -0.5 * (abc.y + sqrt(discr));
 		else
 			q = -0.5 * (abc.y - sqrt(discr));
-		if (q < 0)
-			return (false);
+		// if (q < 0)
+		// 	return (false);
 		t->x = q / abc.x;
 		t->y = abc.z / q;
 	}
