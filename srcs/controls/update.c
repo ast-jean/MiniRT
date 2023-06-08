@@ -6,18 +6,30 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:29:02 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/08 15:14:37 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/08 15:30:14 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/miniRT.h"
 
+void	update_trigger_unselect(t_vars *vars)
+{
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_C))
+	{
+		vars->camera_trigger = !vars->camera_trigger;
+		vars->selected = NULL;
+	}
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_L))
+	{
+		vars->light_trigger = !vars->light_trigger;
+		vars->selected = NULL;
+	}
+}
+
 void	update_trigger(t_vars *vars)
 {
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_O))
 		vars->orientation_trigger = !vars->orientation_trigger;
-	else if (mlx_is_key_down(vars->mlx, MLX_KEY_C))
-		vars->camera_trigger = !vars->camera_trigger;
 	else if (mlx_is_key_down(vars->mlx, MLX_KEY_X))
 		vars->x_trigger = !vars->x_trigger;
 	else if (mlx_is_key_down(vars->mlx, MLX_KEY_Y))
@@ -30,15 +42,11 @@ void	update_trigger(t_vars *vars)
 		vars->height_trigger = !vars->height_trigger;
 	else if (mlx_is_key_down(vars->mlx, MLX_KEY_F))
 		vars->fov_trigger = !vars->fov_trigger;
-	else if (mlx_is_key_down(vars->mlx, MLX_KEY_L))
-	{
-		vars->light_trigger = !vars->light_trigger;
-		vars->selected = NULL;
-	}
 	else if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
 		vars->ambient_trigger = !vars->ambient_trigger;
-	// print_trigger_state(vars);
 	print_trigger_UI();
+	update_trigger_unselect(vars);
+	print_trigger_state(vars);
 }
 
 void	update_ambient_light(t_vars *vars)
