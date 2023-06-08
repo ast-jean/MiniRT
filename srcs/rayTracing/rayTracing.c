@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:54:19 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/06 18:59:07 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/08 14:53:27 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ray_to_screen(void)
 			mlx_put_pixel((init_vars()->img), x, y, ray_tracing(ray));
 		}
 	}
+	print_trigger_UI();
 }
 
 t_ray_hit	init_ray_hit(void)

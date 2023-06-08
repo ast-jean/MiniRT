@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:33:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/07 20:09:31 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/08 14:51:39 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	are_useful_keys_down(t_vars *vars)
 {
-	int	useful_keys[28];
+	int	useful_keys[29];
 	int	num_keys;
 	int	i;
 
@@ -72,7 +72,7 @@ void	process_key_actions(mlx_key_data_t keydata, void *param)
 		update_ambient_light(vars);
 		update_intensity(vars);
 		ray_to_screen();
-		print_info_scene();
+		// print_info_scene();
 	}
 }
 
@@ -123,7 +123,7 @@ modifier_key_t mods, void *param)
 		release_mouse_click(vars, &ray, hit);
 		ray_to_screen();
 	}
-	print_info_scene();
+	// print_info_scene();
 }
 
 void	preset_ambient(t_vars *vars)

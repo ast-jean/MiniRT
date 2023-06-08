@@ -15,6 +15,7 @@ SRCS_FILES 		=	miniRT.c \
 					controls/trigger.c \
 					rayTracing/rayTracing.c \
 					rayTracing/check.c \
+					rayTracing/UI.c \
 					rayTracing/check_cy.c \
 					rayTracing/check_pl.c \
 					rayTracing/colors.c \
