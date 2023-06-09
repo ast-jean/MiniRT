@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 12:01:37 by W2Wizard          #+#    #+#             */
-/*   Updated: 2023/06/09 11:44:50 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/09 15:46:35 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,22 @@
 //= Private =//
 static void mlx_img_draw_char(mlx_image_t* image, uint32_t yoffset, int32_t texoffset, int32_t imgoffset)
 {
-	if (texoffset < 0)
-		return;
+    if (texoffset < 0)
+        return;
 
-	uint8_t* pixelx;
-	uint8_t* pixeli;
-	for (uint32_t y = 0; y < FONT_HEIGHT; y++)
-	{
-		pixelx = &font_atlas.pixels[((y) * font_atlas.width + texoffset) * BPP];
-		pixeli = image->pixels + (((y + yoffset) * (image->width) + imgoffset) * BPP);
-		memcpy(pixeli, pixelx, FONT_WIDTH * BPP);
-	}
+    uint8_t* pixelx;
+    uint8_t* pixeli;
+    for (uint32_t y = 0; y < FONT_HEIGHT; y++)
+    {
+        for (uint32_t x = 0; x < FONT_WIDTH; x++)
+        {
+            pixelx = &font_atlas.pixels[((y) * font_atlas.width + texoffset + x) * BPP];
+            pixeli = image->pixels + (((y + yoffset) * (image->width) + imgoffset + x) * BPP);
+            if (pixelx[3] > 0)
+                memcpy(pixeli, pixelx, BPP);
+        }
+    }
 }
-
 /**
  * Does the actual copying of pixels form the atlas buffer to the
  * image buffer.
@@ -86,7 +89,10 @@ mlx_image_t* mlx_img_put_string(mlx_image_t* img, const char* str, int32_t x, in
 	// Draw the text itself
 	int32_t imgoffset = 0;
 	for (size_t i = 0; i < len; i++, imgoffset += FONT_WIDTH)
-		mlx_img_draw_char(img, y, mlx_get_texoffset(str[i]), imgoffset);
+	{
+		if(str[i] != ' ')
+			mlx_img_draw_char(img, y, mlx_get_texoffset(str[i]), imgoffset);
+	}
 	// if (mlx_image_to_window(mlx, strimage, x, y) == -1)
 	// 	return (mlx_delete_image(mlx, strimage), NULL);
 	return (img);

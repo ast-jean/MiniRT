@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 12:01:31 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/09 12:51:25 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/09 14:46:49 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ void	ui_enabled(t_vars *vars, char *str, mlx_image_t *img)
 {
 	printf("UI \033[32mEnable\033[0m\n");
 	img->enabled = true;
-	img = mlx_img_put_string(img, "ACTIVE TRIGGER", 0, 0);
+	img = mlx_img_put_string(img, "ACTIVE TRIGGERS", 0, 0);
 	sprintf(str, "R=%d, H=%d, O=%d, F=%d, L=%d\n", \
 	vars->radius_trigger, vars->height_trigger, \
 	vars->orientation_trigger, vars->fov_trigger, vars->light_trigger);
-	img = mlx_img_put_string(img, str, 0, 15);
+	img = mlx_img_put_string(img, str, 0, 25);
 	sprintf(str, "C=%d, X=%d, Y=%d, Z=%d, A=%d\n", \
 	vars->camera_trigger, vars->x_trigger, vars->y_trigger, \
 	vars->z_trigger, vars->ambient_trigger);
-	img = mlx_img_put_string(img, str, 0, 30);
+	img = mlx_img_put_string(img, str, 0, 50);
 }
 
 void	print_trigger_ui(void)
@@ -41,7 +41,7 @@ void	print_trigger_ui(void)
 		tx = mlx_load_png("srcs/rayTracing/black_UI.png");
 		img = mlx_texture_to_image(vars->mlx, tx);
 	}
-	if (img && mlx_is_key_down(vars->mlx, MLX_KEY_I))
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_I))
 	{
 		if (vars->interface_trigger)
 			ui_enabled(vars, str, img);
