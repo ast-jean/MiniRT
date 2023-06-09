@@ -149,6 +149,10 @@ valgrind:
 #	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
 re: fclean all
 
+re_mlx:
+	rm include/MLX42/build/libmlx42.a
+	$(MAKE) re
+
 rew: 
 	@rm -rf $(NAME)
 	@rm -f *.o

@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 20:24:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/08 14:10:18 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/09 12:49:55 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	check_sp(const t_shape *s, const t_ray ray, t_ray_hit *rh, double *dist)
 		distance = t.x;
 	else if (t.y > 0)
 		distance = t.y;
-	else 
+	else
 		return (false);
 	if (distance < *dist)
 	{
@@ -65,25 +65,28 @@ t_vector2d	calculate_t(const t_shape *c, const t_ray r)
 
 bool	check_cy(const t_shape *c, const t_ray r, t_ray_hit *rh, double *dist)
 {
-	t_vector2d t;
-	t_vector2d h;
-	t_vector3d p0;
-	t_vector3d p1;
+	t_vector2d	t;
+	t_vector2d	h;
+	t_vector3d	p0;
+	t_vector3d	p1;
 
 	t = calculate_t(c, r);
 	if (t.x < 0 && t.y < 0)
 		return (false);
 	calculate_intersection_points(r, t, &p0, &p1);
 	calculate_heights(c, p0, p1, &h);
-
-	if (h.x < 0 || h.x > to_double(c->height) * to_double(c->height)) {
-		if (h.y >= 0 && h.y <= to_double(c->height) * to_double(c->height) && *dist >= t.y)
-			return check_and_update_intersection((t_shape *)c, r, rh, (*dist = t.y));
+	if (h.x < 0 || h.x > to_double(c->height) * to_double(c->height))
+	{
+		if (h.y >= 0 && h.y <= to_double(c->height) * \
+		to_double(c->height) && *dist >= t.y)
+			return (check_and_update_intersection((t_shape *)c, r, rh, \
+			(*dist = t.y)));
 		return (false);
-		
-	} else {
+	}
+	else
+	{
 		if ((h.x >= 0 && *dist >= t.x))
-			return check_and_update_intersection((t_shape *)c, r, rh, (*dist = t.x));
+			return (check_and_update_intersection((t_shape *)c, r, rh, (*dist = t.x)));
 		return (false);
 	}
 }

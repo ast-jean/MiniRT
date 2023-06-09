@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keybinding.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:33:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/08 14:58:38 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/09 12:46:50 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,28 @@ int	are_useful_keys_down(t_vars *vars)
 	return (0);
 }
 
-void print_info_scene()
+void	print_info_scene(void)
 {
-	t_vars *vars;
+	t_vars	*vars;
 
 	vars = init_vars();
 	if (vars->selected)
 	{
-		printf("OBJECT x = %f y = %f z = %f\n",to_double(vars->selected->coord.x),to_double(vars->selected->coord.y), to_double(vars->selected->coord.z));
-		printf("OBJECT_ORIENTATION x = %f y = %f z = %f\n",to_double(vars->selected->orientation.x),to_double(vars->selected->orientation.y), to_double(vars->selected->orientation.z));
+		printf("OBJECT x = %f y = %f z = %f\n", \
+		to_double(vars->selected->coord.x), \
+		to_double(vars->selected->coord.y), \
+		to_double(vars->selected->coord.z));
+		printf("OBJECT_ORIENTATION x = %f y = %f z = %f\n", \
+		to_double(vars->selected->orientation.x), \
+		to_double(vars->selected->orientation.y), \
+		to_double(vars->selected->orientation.z));
 	}
-	printf("CAMERA x = %f y = %f z = %f\n",to_double(vars->camera->coord.x),to_double(vars->camera->coord.y), to_double(vars->camera->coord.z));
-	printf("LIGHT x = %f y = %f z = %f\n",to_double(vars->light->coord.x),to_double(vars->light->coord.y), to_double(vars->light->coord.z));
-
-
+	printf("CAMERA x = %f y = %f z = %f\n", \
+	to_double(vars->camera->coord.x), \
+	to_double(vars->camera->coord.y), to_double(vars->camera->coord.z));
+	printf("LIGHT x = %f y = %f z = %f\n", \
+	to_double(vars->light->coord.x), \
+	to_double(vars->light->coord.y), to_double(vars->light->coord.z));
 }
 
 void	process_key_actions(mlx_key_data_t keydata, void *param)
@@ -71,7 +79,6 @@ void	process_key_actions(mlx_key_data_t keydata, void *param)
 		update_ambient_light(vars);
 		update_intensity(vars);
 		ray_to_screen();
-		// print_info_scene();
 	}
 }
 
@@ -120,23 +127,8 @@ modifier_key_t mods, void *param)
 	}
 	else
 	{
-		if(vars->selected)
-				release_mouse_click(vars, &ray, hit);
+		if (vars->selected)
+			release_mouse_click(vars, &ray, hit);
 		ray_to_screen();
 	}
-	// print_info_scene();
-}
-
-void	preset_ambient(t_vars *vars)
-{
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_1))
-		vars->ambient_light->color = RED;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_2))
-		vars->ambient_light->color = GREEN;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_3))
-		vars->ambient_light->color = BLUE;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_4))
-		vars->ambient_light->color = GRAY;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_5))
-		vars->ambient_light->color = WHITE;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trigger.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:35:27 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/06 23:56:50 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/09 12:13:11 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,18 @@ void	check_trigger_orientation(t_vars *vars)
 	}
 	if (vars->selected)
 		vars->selected->orientation = vec3d_to_point3d(orientation);
+}
+
+void	preset_ambient(t_vars *vars)
+{
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_1))
+		vars->ambient_light->color = RED;
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_2))
+		vars->ambient_light->color = GREEN;
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_3))
+		vars->ambient_light->color = BLUE;
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_4))
+		vars->ambient_light->color = GRAY;
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_5))
+		vars->ambient_light->color = WHITE;
 }

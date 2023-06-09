@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rayTracing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:54:19 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/08 14:53:27 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/09 12:07:07 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	ray_to_screen(void)
 			mlx_put_pixel((init_vars()->img), x, y, ray_tracing(ray));
 		}
 	}
-	print_trigger_UI();
+	print_trigger_ui();
+	print_trigger_state(init_vars());
 }
 
 t_ray_hit	init_ray_hit(void)

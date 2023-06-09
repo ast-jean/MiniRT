@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 10:06:21 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/08 14:37:25 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/09 12:13:33 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,6 @@ void		orient_camera(t_vars *vars);
 void		init_trigger(t_vars *vars);
 t_vars		*init_vars(void);
 //keybinding.c
-void		preset_ambient(t_vars *vars);
 void		mouse_hook(mouse_key_t button, action_t action,
 				modifier_key_t mods, void *param);
 void		process_key_actions(mlx_key_data_t keydata, void *param);
@@ -195,9 +194,10 @@ int			are_useful_keys_down(t_vars *vars);
 //trigger.c
 void		check_trigger_xyz(t_vars *vars);
 void		check_trigger_orientation(t_vars *vars);
+void		preset_ambient(t_vars *vars);
+
 //norm_and_arrays
 void		assign_keys_according_to_norm_a(int *useful_keys);
 void		assign_keys_according_to_norm_b(int *useful_keys);
-
-void print_trigger_UI();
+void		print_trigger_ui();
 #endif

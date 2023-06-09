@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:37:03 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/04 15:50:29 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:56:21 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	init_trigger(t_vars *vars)
 	vars->radius_trigger = 0;
 	vars->camera_trigger = 0;
 	vars->orientation_trigger = 0;
+	vars->interface_trigger = 0;
 	vars->height_trigger = 0;
 	vars->fov_trigger = 0;
 	vars->light_trigger = 0;
