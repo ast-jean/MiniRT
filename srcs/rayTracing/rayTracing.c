@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:54:19 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/09 12:07:07 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/09 12:51:11 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ uint32_t	ray_tracing(const t_ray ray)
 	if (!hit.color)
 		return (BLACK);
 	color = 0;
-	color = rgba_to_int32_t(shading(&hit, ray));
+	color = rgba_to_int32_t(shading(&hit));
 	return (color);
 }

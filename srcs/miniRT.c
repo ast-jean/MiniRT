@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 09:05:28 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/09 12:09:24 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/09 12:51:39 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ void	print_trigger_state(t_vars *vars)
 	X=%d, Y=%d, Z=%d |\n|L=%d A=%d I=%d|\n", \
 	vars->radius_trigger, vars->height_trigger, vars->orientation_trigger, \
 	vars->fov_trigger, vars->camera_trigger, vars->x_trigger, \
-	vars->y_trigger, vars->z_trigger, vars->light_trigger, \
-	vars->ambient_trigger, vars->interface_trigger);
+	vars->y_trigger, vars->z_trigger, vars->light_trigger, vars->ambient_trigger);
 	printf("--------------------\n");
 	printf("\033[0m\n");
 }
