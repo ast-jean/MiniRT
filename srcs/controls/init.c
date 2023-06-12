@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:37:03 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/12 11:59:15 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:08:51 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,5 @@ void	reinit_triggers(t_vars *vars, t_ray_hit hit)
 {
 	vars->ambient_trigger = false;
 	vars->camera_trigger = false;
-	vars->light_trigger = false;
 	vars->selected = hit.shape;
 }
