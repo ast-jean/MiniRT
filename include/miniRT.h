@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 10:06:21 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/09 12:52:41 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/12 11:58:54 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ void		orient_camera(t_vars *vars);
 //init.c
 void		init_trigger(t_vars *vars);
 t_vars		*init_vars(void);
+void		reinit_triggers(t_vars *vars, t_ray_hit hit);
 //keybinding.c
 void		mouse_hook(mouse_key_t button, action_t action,
 				modifier_key_t mods, void *param);

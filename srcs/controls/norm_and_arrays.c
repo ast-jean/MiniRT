@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   norm_and_arrays.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:33:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/08 14:39:29 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/12 11:41:41 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,5 @@ void	assign_keys_according_to_norm_b(int *useful_keys)
 	useful_keys[26] = MLX_KEY_F;
 	useful_keys[27] = MLX_KEY_L;
 	useful_keys[28] = MLX_KEY_I;
+	useful_keys[29] = MLX_KEY_A;
 }

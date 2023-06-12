@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:37:03 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/08 15:56:21 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/12 11:59:15 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,12 @@ t_vars	*init_vars(void)
 		init_trigger(vars);
 	}
 	return (vars);
+}
+
+void	reinit_triggers(t_vars *vars, t_ray_hit hit)
+{
+	vars->ambient_trigger = false;
+	vars->camera_trigger = false;
+	vars->light_trigger = false;
+	vars->selected = hit.shape;
 }

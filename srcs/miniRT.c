@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 09:05:28 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/09 14:20:05 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/12 11:43:48 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	print_trigger_state(t_vars *vars)
  X=%d, Y=%d, Z=%d |\n|L=%d, A=%d, I=%d	    |\n", \
 	vars->radius_trigger, vars->height_trigger, vars->orientation_trigger, \
 	vars->fov_trigger, vars->camera_trigger, vars->x_trigger, \
-	vars->y_trigger, vars->z_trigger, vars->light_trigger, vars->ambient_trigger, vars->interface_trigger);
+	vars->y_trigger, vars->z_trigger, vars->light_trigger, \
+	vars->ambient_trigger, vars->interface_trigger);
 	printf(" -------------------\n");
 	printf("\033[0m\n");
 }
@@ -72,7 +73,6 @@ int	main(int argc, char **argv)
 		vars->mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
 		vars->img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
 		ray_to_screen();
-		mlx_image_to_window(vars->mlx, vars->img, 0, 0);
 		mlx_mouse_hook(vars->mlx, mouse_hook, vars);
 		mlx_key_hook(vars->mlx, process_key_actions, vars);
 		mlx_loop_hook(vars->mlx, &hook, vars);

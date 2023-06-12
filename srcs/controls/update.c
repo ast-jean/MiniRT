@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:29:02 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/09 14:28:02 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/12 12:08:26 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ void	update_trigger_unselect(t_vars *vars)
 	{
 		vars->light_trigger = !vars->light_trigger;
 		vars->selected = NULL;
+	}
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
+	{
+		vars->selected = NULL;
+		vars->ambient_trigger = !vars->ambient_trigger;
 	}
 }
 
@@ -42,8 +47,6 @@ void	update_trigger(t_vars *vars)
 		vars->height_trigger = !vars->height_trigger;
 	else if (mlx_is_key_down(vars->mlx, MLX_KEY_F))
 		vars->fov_trigger = !vars->fov_trigger;
-	else if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
-		vars->ambient_trigger = !vars->ambient_trigger;
 	else if (mlx_is_key_down(vars->mlx, MLX_KEY_I))
 		vars->interface_trigger = !vars->interface_trigger;
 	update_trigger_unselect(vars);
@@ -60,12 +63,12 @@ void	update_ambient_light(t_vars *vars)
 			to_double(vars->ambient_light->light_ratio) + 0.1);
 		if ((mlx_is_key_down(vars->mlx, 45) || \
 		mlx_is_key_down(vars->mlx, 333)) && \
-		(to_double(vars->ambient_light->light_ratio) - 0.1) > 0)
+		(to_double(vars->ambient_light->light_ratio) - 0.1) > -0.01)
 			set_value(&vars->ambient_light->light_ratio, \
 			to_double(vars->ambient_light->light_ratio) - 0.1);
-		// printf("Ambient light ratio: %f\n", \
-		// round(to_double(vars->ambient_light->light_ratio) * 10) / 10);
-		// printf("Ambient Color = %X\n", vars->ambient_light->color);
+		printf("Ambient light ratio: %f\n", \
+		round(to_double(vars->ambient_light->light_ratio) * 10) / 10);
+		printf("Ambient Color = %X\n", vars->ambient_light->color);
 	}
 }
 
@@ -80,11 +83,11 @@ void	update_intensity(t_vars *vars)
 			to_double(vars->light->light_ratio) + 0.1);
 		if ((mlx_is_key_down(vars->mlx, 45) || \
 		mlx_is_key_down(vars->mlx, 333)) && \
-		(to_double(vars->light->light_ratio) - 0.1) > 0)
+		(to_double(vars->light->light_ratio) - 0.1) > -0.1)
 			set_value(&vars->light->light_ratio, \
 			to_double(vars->light->light_ratio) - 0.1);
-		// printf("Light intensity: %f\n", \
-			// round(to_double(vars->light->light_ratio) * 10) / 10);
+		printf("Light intensity: %f\n", \
+			round(to_double(vars->light->light_ratio) * 10) / 10);
 	}
 }
 

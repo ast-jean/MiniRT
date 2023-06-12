@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:33:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/09 12:46:50 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/12 11:58:09 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	are_useful_keys_down(t_vars *vars)
 {
-	int	useful_keys[29];
+	int	useful_keys[30];
 	int	num_keys;
 	int	i;
 
@@ -118,7 +118,7 @@ modifier_key_t mods, void *param)
 		ray = ray_init_to_screen(vars, vars->mouse_x, vars->mouse_y);
 		hit = ray_trace(ray, 999999.9, NULL);
 		if (hit.shape)
-			vars->selected = hit.shape;
+			reinit_triggers(vars, hit);
 		if (vars->light_trigger)
 		{
 			set_value(&vars->light->coord.z, hit.coord.z);

@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 20:24:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/09 16:34:32 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/12 14:30:46 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ bool	check_cy(const t_shape *c, const t_ray r, t_ray_hit *rh, double *dist)
 	else
 	{
 		if ((h.x >= 0 && *dist >= t.x))
-			return (check_and_update_intersection((t_shape *)c, r, rh, (*dist = t.x)));
+			return (check_and_update_intersection((t_shape *)c, \
+			r, rh, (*dist = t.x)));
 		return (false);
 	}
 }
