@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 20:24:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/09 17:21:51 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/12 14:42:06 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,7 @@ t_ray_hit *rh, double dist)
 	rh->distance = dist;
 	rh->color = c->color;
 	rh->shape = (t_shape *)c;
-	if (vector3d_dot(V, light_ray) > 0)
-		rh->hit = true;
-	else
-		rh->hit = false;
+	rh->hit = true;
 	rh->coord = vector3d_add(r.o, vector3d_mult(r.d, dist));
 	return (true);
 }

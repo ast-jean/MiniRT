@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:29:02 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/12 12:08:26 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:38:59 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,30 @@ void	update_trigger_unselect(t_vars *vars)
 	}
 }
 
+void	print_info_scene(void)
+{
+	t_vars	*vars;
+
+	vars = init_vars();
+	if (vars->selected)
+	{
+		printf("OBJECT x = %f y = %f z = %f\n", \
+		to_double(vars->selected->coord.x), \
+		to_double(vars->selected->coord.y), \
+		to_double(vars->selected->coord.z));
+		printf("OBJECT_ORIENTATION x = %f y = %f z = %f\n", \
+		to_double(vars->selected->orientation.x), \
+		to_double(vars->selected->orientation.y), \
+		to_double(vars->selected->orientation.z));
+	}
+	printf("CAMERA x = %f y = %f z = %f\n", \
+	to_double(vars->camera->coord.x), \
+	to_double(vars->camera->coord.y), to_double(vars->camera->coord.z));
+	printf("LIGHT x = %f y = %f z = %f\n", \
+	to_double(vars->light->coord.x), \
+	to_double(vars->light->coord.y), to_double(vars->light->coord.z));
+}
+
 void	update_trigger(t_vars *vars)
 {
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_O))
@@ -49,6 +73,8 @@ void	update_trigger(t_vars *vars)
 		vars->fov_trigger = !vars->fov_trigger;
 	else if (mlx_is_key_down(vars->mlx, MLX_KEY_I))
 		vars->interface_trigger = !vars->interface_trigger;
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_P))
+		print_info_scene();
 	update_trigger_unselect(vars);
 }
 

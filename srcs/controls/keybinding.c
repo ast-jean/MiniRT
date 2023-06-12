@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keybinding.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:33:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/12 11:58:09 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:38:46 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	are_useful_keys_down(t_vars *vars)
 {
-	int	useful_keys[30];
+	int	useful_keys[31];
 	int	num_keys;
 	int	i;
 
@@ -31,29 +31,7 @@ int	are_useful_keys_down(t_vars *vars)
 	return (0);
 }
 
-void	print_info_scene(void)
-{
-	t_vars	*vars;
 
-	vars = init_vars();
-	if (vars->selected)
-	{
-		printf("OBJECT x = %f y = %f z = %f\n", \
-		to_double(vars->selected->coord.x), \
-		to_double(vars->selected->coord.y), \
-		to_double(vars->selected->coord.z));
-		printf("OBJECT_ORIENTATION x = %f y = %f z = %f\n", \
-		to_double(vars->selected->orientation.x), \
-		to_double(vars->selected->orientation.y), \
-		to_double(vars->selected->orientation.z));
-	}
-	printf("CAMERA x = %f y = %f z = %f\n", \
-	to_double(vars->camera->coord.x), \
-	to_double(vars->camera->coord.y), to_double(vars->camera->coord.z));
-	printf("LIGHT x = %f y = %f z = %f\n", \
-	to_double(vars->light->coord.x), \
-	to_double(vars->light->coord.y), to_double(vars->light->coord.z));
-}
 
 void	process_key_actions(mlx_key_data_t keydata, void *param)
 {
