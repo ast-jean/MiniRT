@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:55:10 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/09 12:51:07 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/12 12:57:59 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,17 @@ t_vector3d	plane_normal(t_vector3d hit_coords, t_vector3d orientation)
 
 t_vector3d sphere_normal(t_vector3d point_coords, t_vector3d sphere_center, t_vector3d light_ray)
 {
-    t_vector3d vec = vector3d_sub(point_coords, sphere_center);
-
-    t_vector3d normal = vector3d_norm(vec);
-
-    // If the light is inside the sphere, invert the normal
-    if (vector3d_dot(normal, light_ray) < 0) // new
+    t_vector3d vec;
+	t_vector3d	light_coord;
+    t_vector3d normal;
+	
+	light_coord = point3d_to_vector3d(init_vars()->light->coord);
+	vec = vector3d_sub(point_coords, sphere_center);
+	normal = vector3d_norm(vec);
+    if (vector3d_dot(normal, light_ray) <  0 && \
+	(find_distance(point_coords, sphere_center) > \
+	find_distance(sphere_center, light_coord)))
         normal = vector3d_mult(normal, -1);
-
     return normal;
 }
 
@@ -72,8 +75,6 @@ t_vector3d	find_normal(t_vector3d coords, \
 t_vector3d obj_coord, t_shape shape, t_ray_hit hit, t_vector3d light_ray)
 {
 	(void)hit;
-	// (void)ray;
-
 	if (ft_strcmp(shape.id, "sp"))
 		return sphere_normal(coords, obj_coord, light_ray);
 	else if (ft_strcmp(shape.id, "pl"))
@@ -81,7 +82,6 @@ t_vector3d obj_coord, t_shape shape, t_ray_hit hit, t_vector3d light_ray)
 	else if (ft_strcmp(shape.id, "cy"))
 			return (cylinder_normal(coords, obj_coord,
                         point3d_to_vector3d(shape.orientation), vector3d_norm(vector3d_sub(coords, obj_coord)), light_ray));
-
 	else
 		return (vector3d_init(0, 0, 0));
 }

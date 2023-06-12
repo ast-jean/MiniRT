@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 12:01:37 by W2Wizard          #+#    #+#             */
-/*   Updated: 2023/06/09 15:46:35 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/09 16:09:43 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,23 +78,15 @@ mlx_image_t* mlx_img_put_string(mlx_image_t* img, const char* str, int32_t x, in
 	MLX_NONNULL(img);
 	MLX_NONNULL(str);
 
-	// mlx_image_t* strimage = img;
-
 	const size_t len = strlen(str);
 	if (len > MLX_MAX_STRING)
 		return ((void*)mlx_error(MLX_STRTOOBIG));	
-	// if (!(img = mlx_new_image(mlx, len * FONT_WIDTH, FONT_HEIGHT)))
-	// 	return (NULL);
-
-	// Draw the text itself
 	int32_t imgoffset = 0;
 	for (size_t i = 0; i < len; i++, imgoffset += FONT_WIDTH)
 	{
 		if(str[i] != ' ')
 			mlx_img_draw_char(img, y, mlx_get_texoffset(str[i]), imgoffset);
 	}
-	// if (mlx_image_to_window(mlx, strimage, x, y) == -1)
-	// 	return (mlx_delete_image(mlx, strimage), NULL);
 	return (img);
 }
 

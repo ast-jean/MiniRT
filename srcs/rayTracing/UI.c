@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 12:01:31 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/09 14:46:49 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/12 12:07:30 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,19 @@
 
 void	ui_enabled(t_vars *vars, char *str, mlx_image_t *img)
 {
-	printf("UI \033[32mEnable\033[0m\n");
+	char	*obj;
+	if (vars->selected)
+		obj = vars->selected->id;
+	else
+		obj = "null";
 	img->enabled = true;
-	img = mlx_img_put_string(img, "ACTIVE TRIGGERS", 0, 0);
+	// img = mlx_img_put_string(img, "ACTIVE TRIGGERS", 0, 0);
+
+	sprintf(str, "ACTIVE TRIGGERS  Obj=%s\n", obj);
+	img = mlx_img_put_string(img, str, 0, 0);
+
+
+
 	sprintf(str, "R=%d, H=%d, O=%d, F=%d, L=%d\n", \
 	vars->radius_trigger, vars->height_trigger, \
 	vars->orientation_trigger, vars->fov_trigger, vars->light_trigger);
@@ -29,27 +39,16 @@ void	ui_enabled(t_vars *vars, char *str, mlx_image_t *img)
 
 void	print_trigger_ui(void)
 {
-	static t_vars			*vars;
-	static mlx_texture_t	*tx;
-	static mlx_image_t		*img;
-	static int				init;
-	char					str[30];
+	mlx_texture_t	*tx;
+	mlx_image_t		*img;
+	char			str[30];
 
-	if (!init++)
+	tx = mlx_load_png("srcs/rayTracing/black_UI.png");
+	img = mlx_texture_to_image(init_vars()->mlx, tx);
+	if (init_vars()->interface_trigger)
 	{
-		vars = init_vars();
-		tx = mlx_load_png("srcs/rayTracing/black_UI.png");
-		img = mlx_texture_to_image(vars->mlx, tx);
-	}
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_I))
-	{
-		if (vars->interface_trigger)
-			ui_enabled(vars, str, img);
-		else
-		{
-			printf("UI \033[31mDisable\033[0m\n");
-			img->enabled = false;
-		}
-		mlx_image_to_window(vars->mlx, img, 0, 0);
+		img = mlx_texture_to_image(init_vars()->mlx, tx);
+		ui_enabled(init_vars(), str, img);
+		mlx_image_to_window(init_vars()->mlx, img, 0, 0);
 	}
 }
