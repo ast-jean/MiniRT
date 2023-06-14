@@ -6,11 +6,11 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 22:53:50 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/06 15:28:30 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/12 16:14:08 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/Vectors.h"
+#include "../../../include/miniRT.h"
 
 t_ray	ray_init(t_vector3d o, t_vector3d d)
 {

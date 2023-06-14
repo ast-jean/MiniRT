@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:55:10 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/12 12:57:59 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/14 10:52:33 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,24 @@ t_vector3d	light_normal(t_vector3d coords, t_vector3d obj_coord)
 }
 
 t_vector3d	cylinder_normal(t_vector3d intersection, \
-t_vector3d C, t_vector3d V, t_vector3d L, t_vector3d light_ray)
+t_shape shape, t_vector3d light_ray)
 {
 	t_vector3d	intersection_to_center;
 	t_vector3d	proj_axis_vec;
 	t_vector3d	perpendicular_vec;
 	double		scalar_proj;
-	// bool		is_light_inside;
 
-	(void)L;
-	(void)C;
-	(void)light_ray;
-	intersection_to_center = vector3d_sub(intersection, C);
+	t_vector3d V = point3d_to_vector3d(shape.orientation);
+	intersection_to_center = vector3d_sub(intersection, point3d_to_vector3d(shape.coord));
 	scalar_proj = vector3d_dot(intersection_to_center, V);
 	proj_axis_vec = vector3d_mult(V, scalar_proj);
 	perpendicular_vec = vector3d_sub(intersection_to_center, proj_axis_vec);
 
-	// if (vector3d_dot(light_ray, perpendicular_vec) < 0 && vector3d_dot(C, perpendicular_vec) < 0)
-	// 	perpendicular_vec = vector3d_mult(perpendicular_vec, -1);
-
+	(void)light_ray;
+	// printf("t.x = %f, t.y = %f\n", shape.ts.x, shape.ts.y);
+	if (vector3d_dot(light_ray, perpendicular_vec) < 0 && vector3d_dot(point3d_to_vector3d(shape.coord), perpendicular_vec) < 0)
+	if (shape.ts.x == 0 && shape.ts.y > 0)
+		perpendicular_vec = vector3d_mult(perpendicular_vec, -1);
 	return (vector3d_norm(perpendicular_vec));
 }
 
@@ -48,7 +47,7 @@ t_vector3d	plane_normal(t_vector3d hit_coords, t_vector3d orientation)
 	vars = init_vars();
 	light_dir = light_normal \
 	(hit_coords, point3d_to_vector3d(vars->light->coord));
-	if (vector3d_dot(orientation, light_dir) < 0) // new
+	if (vector3d_dot(orientation, light_dir) < 0)
 		return (vector3d_mult(orientation, -1));
 	else
 		return (orientation);
@@ -80,8 +79,7 @@ t_vector3d obj_coord, t_shape shape, t_ray_hit hit, t_vector3d light_ray)
 	else if (ft_strcmp(shape.id, "pl"))
 		return (plane_normal(coords, point3d_to_vector3d(shape.orientation)));
 	else if (ft_strcmp(shape.id, "cy"))
-			return (cylinder_normal(coords, obj_coord,
-                        point3d_to_vector3d(shape.orientation), vector3d_norm(vector3d_sub(coords, obj_coord)), light_ray));
+			return (cylinder_normal(coords, shape, light_ray));
 	else
 		return (vector3d_init(0, 0, 0));
 }
