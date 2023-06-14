@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objects.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:44:05 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/04 15:50:29 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:34:15 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ t_shape	*object_cy(char **elem, t_vars *vars)
 	return (s);
 }
 
-t_Fixed	parse_size(char *elem)
+t_fixed	parse_size(char *elem)
 {
-	t_Fixed	f;
+	t_fixed	f;
 	double	size;
 
 	size = atod(elem);
@@ -93,9 +93,9 @@ t_Fixed	parse_size(char *elem)
 	return (f);
 }
 
-t_Fixed	parse_radius(char *elem)
+t_fixed	parse_radius(char *elem)
 {
-	t_Fixed	f;
+	t_fixed	f;
 	double	size;
 
 	size = atod(elem);

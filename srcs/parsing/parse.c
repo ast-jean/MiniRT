@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:51:27 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/14 11:19:08 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:34:58 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/miniRT.h"
 
-t_Fixed	parse_light_ratio(char *elem)
+t_fixed	parse_light_ratio(char *elem)
 {
-	t_Fixed	f;
+	t_fixed	f;
 	double	light_ratio;
 
 	light_ratio = atod(elem);

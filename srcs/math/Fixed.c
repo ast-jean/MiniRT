@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Fixed.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:25:43 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/04 15:36:38 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:33:47 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,20 @@ t_3dPoint	vec3d_to_point3d(t_vector3d vec)
 	return (point);
 }
 
-t_Fixed	fp_init(double value)
+t_fixed	fp_init(double value)
 {
-	t_Fixed	fp;
+	t_fixed	fp;
 
 	set_value(&fp, value);
 	return (fp);
 }
 
-void	set_value(t_Fixed *fp, double value)
+void	set_value(t_fixed *fp, double value)
 {
 	fp->value = value * FP_SCALE;
 }
 
-double	to_double(t_Fixed fp)
+double	to_double(t_fixed fp)
 {
 	return ((double) fp.value / FP_SCALE);
 }
