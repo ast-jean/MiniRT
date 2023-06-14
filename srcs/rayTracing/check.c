@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 20:24:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/14 11:19:28 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:23:21 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,6 @@ bool	check_cy(t_shape *c, const t_ray r, t_ray_hit *rh, double *dist)
 	t = calculate_t(c, r);
 	if (t.x < 0 && t.y < 0)
 		return (false);
-	double heightSquared = to_double(c->height) * to_double(c->height);
-    if ((h.x < 0 || h.x > heightSquared) && (h.y < 0 || h.y > heightSquared))
-        return (false);
-	c->ts = t;
 	calculate_intersection_points(r, t, &p0, &p1);
 	calculate_heights(c, p0, p1, &h);
 	if (h.x < 0 || h.x > to_double(c->height) * to_double(c->height))
