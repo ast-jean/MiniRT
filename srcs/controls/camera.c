@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:40:12 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/09 12:09:49 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/13 13:47:10 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@ void	change_fov(t_vars *vars)
 	{
 		if (mlx_is_key_down(vars->mlx, 61) || mlx_is_key_down(vars->mlx, 334))
 		{
-			if ((int)vars->camera->FOV <= (int)180)
+			if ((int)vars->camera->fov <= (int)180)
 			{
-				vars->camera->FOV = clamp(vars->camera->FOV + 3, 0, 180);
+				vars->camera->fov = clamp(vars->camera->fov + 3, 0, 180);
 				vars->distance_to_screen = \
-				(0.5 * WIDTH) / tan(deg2grad(vars->camera->FOV) * 0.5);
+				(0.5 * WIDTH) / tan(deg2grad(vars->camera->fov) * 0.5);
 			}
 		}
 		if (mlx_is_key_down(vars->mlx, 45) || mlx_is_key_down(vars->mlx, 333))
 		{
-			if (vars->camera->FOV >= 0)
+			if (vars->camera->fov >= 0)
 			{
-				vars->camera->FOV = clamp(vars->camera->FOV - 3, 0, 180);
+				vars->camera->fov = clamp(vars->camera->fov - 3, 0, 180);
 				vars->distance_to_screen = \
-				(0.5 * WIDTH) / tan(deg2grad(vars->camera->FOV) * 0.5);
+				(0.5 * WIDTH) / tan(deg2grad(vars->camera->fov) * 0.5);
 			}
 		}
 	}

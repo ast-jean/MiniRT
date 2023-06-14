@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:33:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/12 15:38:46 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/13 13:35:54 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int	are_useful_keys_down(t_vars *vars)
 	}
 	return (0);
 }
-
-
 
 void	process_key_actions(mlx_key_data_t keydata, void *param)
 {

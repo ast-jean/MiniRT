@@ -3,24 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 09:05:28 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/12 11:43:48 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/14 09:43:21 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/miniRT.h"
 #include <errno.h>
-
-void	hook(void *param)
-{
-	t_vars	*vars;
-
-	vars = param;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(vars->mlx);
-}
 
 void	free_vars(t_vars *vars)
 {
@@ -32,21 +23,6 @@ void	free_vars(t_vars *vars)
 	if (vars->error_message)
 		free(vars->error_message);
 	free(vars);
-}
-
-void	print_trigger_state(t_vars *vars)
-{
-	printf("\033[32m");
-	printf(" -------------------\n");
-	printf("|Active trigger     |\n");
-	printf("|R=%d, H=%d, O=%d, F=%d |\n|C=%d,\
- X=%d, Y=%d, Z=%d |\n|L=%d, A=%d, I=%d	    |\n", \
-	vars->radius_trigger, vars->height_trigger, vars->orientation_trigger, \
-	vars->fov_trigger, vars->camera_trigger, vars->x_trigger, \
-	vars->y_trigger, vars->z_trigger, vars->light_trigger, \
-	vars->ambient_trigger, vars->interface_trigger);
-	printf(" -------------------\n");
-	printf("\033[0m\n");
 }
 
 void	light_x(t_vars *vars)
@@ -75,7 +51,6 @@ int	main(int argc, char **argv)
 		ray_to_screen();
 		mlx_mouse_hook(vars->mlx, mouse_hook, vars);
 		mlx_key_hook(vars->mlx, process_key_actions, vars);
-		mlx_loop_hook(vars->mlx, &hook, vars);
 		mlx_loop(vars->mlx);
 		mlx_terminate(vars->mlx);
 	}
