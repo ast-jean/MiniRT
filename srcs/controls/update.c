@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:29:02 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/12 15:38:59 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/14 09:12:49 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,6 @@ void	update_trigger_unselect(t_vars *vars)
 		vars->selected = NULL;
 		vars->ambient_trigger = !vars->ambient_trigger;
 	}
-}
-
-void	print_info_scene(void)
-{
-	t_vars	*vars;
-
-	vars = init_vars();
-	if (vars->selected)
-	{
-		printf("OBJECT x = %f y = %f z = %f\n", \
-		to_double(vars->selected->coord.x), \
-		to_double(vars->selected->coord.y), \
-		to_double(vars->selected->coord.z));
-		printf("OBJECT_ORIENTATION x = %f y = %f z = %f\n", \
-		to_double(vars->selected->orientation.x), \
-		to_double(vars->selected->orientation.y), \
-		to_double(vars->selected->orientation.z));
-	}
-	printf("CAMERA x = %f y = %f z = %f\n", \
-	to_double(vars->camera->coord.x), \
-	to_double(vars->camera->coord.y), to_double(vars->camera->coord.z));
-	printf("LIGHT x = %f y = %f z = %f\n", \
-	to_double(vars->light->coord.x), \
-	to_double(vars->light->coord.y), to_double(vars->light->coord.z));
 }
 
 void	update_trigger(t_vars *vars)

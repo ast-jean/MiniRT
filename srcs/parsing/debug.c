@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 17:33:14 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/04 15:50:29 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/14 09:12:57 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,28 @@ int	info_count(char **elem)
 		i++;
 	}		
 	return (i);
+}
+
+void	print_info_scene(void)
+{
+	t_vars	*vars;
+
+	vars = init_vars();
+	if (vars->selected)
+	{
+		printf("OBJECT x = %f y = %f z = %f\n", \
+		to_double(vars->selected->coord.x), \
+		to_double(vars->selected->coord.y), \
+		to_double(vars->selected->coord.z));
+		printf("OBJECT_ORIENTATION x = %f y = %f z = %f\n", \
+		to_double(vars->selected->orientation.x), \
+		to_double(vars->selected->orientation.y), \
+		to_double(vars->selected->orientation.z));
+	}
+	printf("CAMERA x = %f y = %f z = %f\n", \
+	to_double(vars->camera->coord.x), \
+	to_double(vars->camera->coord.y), to_double(vars->camera->coord.z));
+	printf("LIGHT x = %f y = %f z = %f\n", \
+	to_double(vars->light->coord.x), \
+	to_double(vars->light->coord.y), to_double(vars->light->coord.z));
 }
