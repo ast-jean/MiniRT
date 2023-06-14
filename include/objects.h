@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:42:55 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/13 13:46:55 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/14 16:33:35 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 
 # include "miniRT.h"
 
-typedef struct s_Fixed{
+typedef struct s_fixed{
 	int	value;
-}	t_Fixed;
+}	t_fixed;
 
 typedef struct s_2dPoint{
-	t_Fixed	x;
-	t_Fixed	y;
+	t_fixed	x;
+	t_fixed	y;
 }	t_2dPoint;
 
 typedef struct s_3dPoint{
-	t_Fixed	x;
-	t_Fixed	y;
-	t_Fixed	z;
+	t_fixed	x;
+	t_fixed	y;
+	t_fixed	z;
 }	t_3dPoint;
 
 typedef struct s_rgba{
@@ -47,13 +47,13 @@ typedef struct s_shape
 {
 	char		*id;
 	int			index;
-	t_Fixed		light_ratio;
+	t_fixed		light_ratio;
 	uint32_t	color;
 	t_3dPoint	orientation;
 	int16_t		fov;
 	t_3dPoint	coord;
-	t_Fixed		radius;
-	t_Fixed		height;
+	t_fixed		radius;
+	t_fixed		height;
 }	t_shape;
 
 #endif

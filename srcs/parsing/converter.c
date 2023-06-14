@@ -6,15 +6,15 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:39:47 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/15 21:39:47 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/14 16:33:56 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/miniRT.h"
 
-t_Fixed	str_to_fixed(char *elem)
+t_fixed	str_to_fixed(char *elem)
 {
-	t_Fixed	f;
+	t_fixed	f;
 
 	set_value(&f, atod(elem));
 	return (f);
