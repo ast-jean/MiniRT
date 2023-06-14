@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:29:02 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/12 12:08:26 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/14 09:12:49 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	update_trigger(t_vars *vars)
 		vars->fov_trigger = !vars->fov_trigger;
 	else if (mlx_is_key_down(vars->mlx, MLX_KEY_I))
 		vars->interface_trigger = !vars->interface_trigger;
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_P))
+		print_info_scene();
 	update_trigger_unselect(vars);
 }
 

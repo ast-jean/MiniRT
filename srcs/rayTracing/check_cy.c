@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 20:24:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/12 15:40:35 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/14 11:19:35 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,17 @@ t_vector3d P0, t_vector3d P1, t_vector2d *h)
 bool	check_and_update_intersection(t_shape *c, const t_ray r, \
 t_ray_hit *rh, double dist)
 {
+	t_vars		*vars;
+	t_vector3d	intersection;
+	t_vector3d	v;
+	t_vector3d	light_ray;
+
+	intersection = rh->coord;
+	v = vector3d_norm(vector3d_sub(intersection, \
+	point3d_to_vector3d(c->coord)));
+	vars = init_vars();
+	light_ray = vector3d_sub(intersection, \
+	point3d_to_vector3d(vars->light->coord));
 	rh->distance = dist;
 	rh->color = c->color;
 	rh->shape = (t_shape *)c;

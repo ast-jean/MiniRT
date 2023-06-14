@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 10:06:21 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/12 16:11:33 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/14 11:19:09 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ typedef struct s_shape
 	t_Fixed		light_ratio;
 	uint32_t	color;
 	t_3dPoint	orientation;
-	int16_t		FOV;
+	int16_t		fov;
 	t_3dPoint	coord;
 	t_Fixed		radius;
 	t_Fixed		height;
@@ -137,7 +137,6 @@ typedef struct s_vars
 
 /*-------------------------Initialisation-------------------------*/
 //miniRT.c
-void		print_trigger_state(t_vars *vars);
 void		free_vars(t_vars *vars);
 void		light_x(t_vars *vars);
 /*----------------------------parsing----------------------------*/
@@ -211,9 +210,11 @@ void		calculate_heights(const t_shape *c, t_vector3d P0,
 				t_vector3d P1, t_vector2d *h);
 /*---------------------------Normal-------------------------*/
 t_vector3d	light_normal(t_vector3d coords, t_vector3d obj_coord);
-t_vector3d	cylinder_normal(t_vector3d intersection, t_shape shape, t_vector3d light_ray);
+t_vector3d	cylinder_normal(t_vector3d intersection, \
+t_vector3d C, t_vector3d V);
 t_vector3d	plane_normal(t_vector3d hit_coords, t_vector3d orientation);
-t_vector3d	find_normal(t_vector3d coords, t_vector3d obj_coord, t_shape shape, t_ray_hit hit, t_vector3d light_ray);
+t_vector3d	find_normal(t_vector3d coords, t_vector3d obj_coord, \
+t_shape shape, t_vector3d light_ray);
 double		find_angle_normals(t_vector3d Norm1, t_vector3d Norm2);
 /*---------------------------Shading-------------------------*/
 t_rgba		shading(t_ray_hit *hit);
@@ -235,7 +236,7 @@ uint32_t	clamp(uint32_t value, uint32_t min, uint32_t max);
 double		find_distance(t_vector3d A, t_vector3d B);
 //quadratic.c
 bool		solve_quadratic(t_vector3d abc, t_vector2d *t);
-void	swap_quad(t_vector2d *t);
+void		swap_quad(t_vector2d *t);
 t_vector3d	assign_var_quad(t_vector3d d, t_vector3d e, const t_shape *c);
 //update.c
 void		update_trigger(t_vars *vars);
@@ -281,4 +282,7 @@ t_vector3d 	vector3d_norm(const t_vector3d v);
 t_ray ray_init(t_vector3d origin, t_vector3d direction);
 t_ray ray_init_to_screen(t_vars *v, int x, int y);
 t_vector3d ray_direction(t_vector3d from, t_vector3d to);
+
+void		print_info_scene(void);
+
 #endif

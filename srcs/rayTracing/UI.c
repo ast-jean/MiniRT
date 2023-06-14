@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   UI.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 12:01:31 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/12 12:07:30 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/13 13:23:00 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,14 @@
 void	ui_enabled(t_vars *vars, char *str, mlx_image_t *img)
 {
 	char	*obj;
+
 	if (vars->selected)
 		obj = vars->selected->id;
 	else
 		obj = "null";
 	img->enabled = true;
-	// img = mlx_img_put_string(img, "ACTIVE TRIGGERS", 0, 0);
-
 	sprintf(str, "ACTIVE TRIGGERS  Obj=%s\n", obj);
 	img = mlx_img_put_string(img, str, 0, 0);
-
-
-
 	sprintf(str, "R=%d, H=%d, O=%d, F=%d, L=%d\n", \
 	vars->radius_trigger, vars->height_trigger, \
 	vars->orientation_trigger, vars->fov_trigger, vars->light_trigger);

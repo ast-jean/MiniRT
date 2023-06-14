@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:45:50 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/04 15:50:29 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/13 13:47:26 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ void	object_c(char **elem, t_vars *vars)
 		vars->camera->id = "C";
 		vars->camera->coord = parse_coordinates(elem[1]);
 		vars->camera->orientation = parse_orientation(elem[2]);
-		vars->camera->FOV = parse_fov(elem[3]);
+		vars->camera->fov = parse_fov(elem[3]);
 		vars->distance_to_screen = (0.5 * WIDTH)
-			/ tan(deg2grad(vars->camera->FOV) * 0.5);
+			/ tan(deg2grad(vars->camera->fov) * 0.5);
 	}
 	if (vars->error_message)
 		error_exit(2, "Camera (C): ");
