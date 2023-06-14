@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 09:05:28 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/14 09:43:21 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/14 11:03:01 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ int	main(int argc, char **argv)
 		mlx_loop(vars->mlx);
 		mlx_terminate(vars->mlx);
 	}
-	if (!vars->error_message)
-		printf("\n\nGOOD\n\n");
-	else
-		printf("Error\n%s\n", vars->error_message);
+	// if (!vars->error_message)
+	// 	printf("\n\nGOOD\n\n");
+	// else
+	// 	printf("Error\n%s\n", vars->error_message);
 	free_vars(vars);
 	return (EXIT_SUCCESS);
 }
