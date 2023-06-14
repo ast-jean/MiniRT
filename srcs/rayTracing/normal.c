@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   normal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:55:10 by slavoie           #+#    #+#             */
 /*   Updated: 2023/06/14 15:33:53 by slavoie          ###   ########.fr       */
@@ -43,6 +43,8 @@ t_vector3d C, t_vector3d V, double radius)
 	if (distance_to_axis < radius)
 		perpendicular_vec = vector3d_mult(perpendicular_vec, -1);
 
+	// if (vector3d_dot(perpendicular_vec, light_dir) < 0)
+	// 	perpendicular_vec = vector3d_mult(perpendicular_vec, -1);
 	return (vector3d_norm(perpendicular_vec));
 }
 
@@ -97,6 +99,8 @@ t_vector3d sphere_center, t_vector3d light_ray)
 	light_coord = point3d_to_vector3d(init_vars()->light->coord);
 	vec = vector3d_sub(point_coords, sphere_center);
 	normal = vector3d_norm(vec);
+
+	(void) light_ray;
 	if (vector3d_dot(normal, light_ray) < 0 && \
 	(find_distance(point_coords, sphere_center) > \
 	find_distance(sphere_center, light_coord)))

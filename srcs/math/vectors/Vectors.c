@@ -6,11 +6,11 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:34:27 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/06 13:11:38 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/12 16:13:53 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/Vectors.h"
+#include "../../../include/miniRT.h"
 
 t_vector3d	vector3d_init(double x, double y, double z)
 {

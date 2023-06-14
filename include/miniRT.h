@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 10:06:21 by ast-jean          #+#    #+#             */
 /*   Updated: 2023/06/14 15:34:25 by slavoie          ###   ########.fr       */
@@ -25,8 +25,6 @@
 # include "MLX42/include/MLX42/MLX42.h"
 # include "libft/libft.h"
 # include "libft_dlist/dlist.h"
-# include "objects.h"
-# include "Vectors.h"
 
 # define BLACK	0x000000FF
 # define WHITE	0xFFFFFFFF
@@ -38,10 +36,76 @@
 # define WIDTH		500
 # define HEIGHT		500
 
-typedef struct s_vector3d	t_vector3d;
-typedef struct s_vector2d	t_vector2d;
-typedef struct s_ray_hit	t_ray_hit;
-typedef struct s_ray		t_ray;
+
+typedef struct s_Fixed{
+	int	value;
+}	t_Fixed;
+
+typedef struct s_2dPoint{
+    t_Fixed x;
+	t_Fixed y;
+} t_2dPoint;
+
+typedef struct s_3dPoint{
+    t_Fixed x;
+	t_Fixed y;
+	t_Fixed z;
+} t_3dPoint;
+
+typedef struct s_rgba{
+  uint8_t r;
+  uint8_t g;
+  uint8_t b;
+  uint8_t a;
+} t_rgba;
+
+typedef struct s_rgba_unit{
+  double r;
+  double g;
+  double b;
+} t_rgba_unit;
+
+
+typedef struct s_vector2d{
+    double x;
+	double y;
+} t_vector2d;
+
+typedef struct s_vector3d{
+    double x;
+	double y;
+	double z;
+} t_vector3d;
+
+typedef struct s_ray{
+    t_vector3d o;
+	t_vector3d d;
+} t_ray;
+
+
+typedef struct s_shape
+{
+	char 		*id;
+	int			index;
+	t_Fixed		light_ratio;
+	uint32_t	color;
+	t_3dPoint	orientation;
+	int16_t		fov;
+	t_3dPoint	coord;
+	t_Fixed		radius;
+	t_Fixed		height;
+	t_vector2d	ts;
+}	t_shape;
+
+typedef struct s_ray_hit{
+    double		distance;
+	uint32_t	color;
+	t_shape		*shape;
+	t_vector3d	coord;
+	t_vector3d	normal;
+	bool		hit;
+	bool		bounced;
+} t_ray_hit;
 
 typedef struct s_vars
 {
@@ -128,7 +192,7 @@ t_ray_hit	ray_trace(t_ray ray, double dist, t_shape *shape);
 // check.c
 void		ray_checkhit(const t_ray ray, t_ray_hit *rh,
 				double *distance, t_shape *shape_o);
-bool		check_cy(const t_shape *s, const t_ray ray,
+bool		check_cy(t_shape *s, const t_ray ray,
 				t_ray_hit *rh, double *dist);
 bool		check_pl(const t_shape *s, const t_ray ray,
 				t_ray_hit *rh, double *dist);
@@ -201,7 +265,23 @@ void		preset_ambient(t_vars *vars);
 //norm_and_arrays
 void		assign_keys_according_to_norm_a(int *useful_keys);
 void		assign_keys_according_to_norm_b(int *useful_keys);
-void		print_trigger_ui(void);
+void		print_trigger_ui();
+/*-------------------------Vectors_ops.c--------------------------*/
+t_vector3d	vector3d_add(t_vector3d a, t_vector3d b);
+t_vector3d	vector3d_sub(t_vector3d a, t_vector3d b);
+t_vector3d	vector3d_mult(t_vector3d v, double b);
+t_vector3d	vector3d_mult3d(t_vector3d v, t_vector3d b);
+t_vector3d	vector3d_unit(t_vector3d v);
+/*-------------------------Vectors.c--------------------------*/
+t_vector3d	vector3d_init(double x, double y, double z);
+double		vector3d_dot(t_vector3d a, t_vector3d b);
+t_vector3d	vector3d_cross(t_vector3d a, t_vector3d b);
+double		vector3d_length(t_vector3d v);
+t_vector3d 	vector3d_norm(const t_vector3d v);
+/*-------------------------Ray.c--------------------------*/
+t_ray ray_init(t_vector3d origin, t_vector3d direction);
+t_ray ray_init_to_screen(t_vars *v, int x, int y);
+t_vector3d ray_direction(t_vector3d from, t_vector3d to);
 
 void		print_info_scene(void);
 

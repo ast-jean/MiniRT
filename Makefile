@@ -40,8 +40,6 @@ SRCS_FILES 		=	miniRT.c \
 
 
 INCLUDE_FILES	= 	miniRT.h \
-					objects.h \
-					Vectors.h \
 					MLX42/include/MLX42/MLX42.h
 LIBS = include/libft/libft.a \
 		include/libft_dlist/dlist.a \

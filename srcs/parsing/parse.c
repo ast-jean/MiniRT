@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:51:27 by slavoie           #+#    #+#             */
-/*   Updated: 2023/05/15 21:53:28 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/14 11:19:08 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ uint8_t	parse_fov(char *elem)
 
 	fov = atod(elem);
 	if (!is_number(elem) || !range(fov, 0, 180))
-		error_exit(2, ft_strjoin("Invalid FOV -> ", elem));
+		error_exit(2, ft_strjoin("Invalid fov -> ", elem));
 	fov = lround(fov);
 	return ((uint8_t)fov);
 }

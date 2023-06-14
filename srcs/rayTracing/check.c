@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 20:24:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/12 14:30:46 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/14 11:19:28 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_vector2d	calculate_t(const t_shape *c, const t_ray r)
 	return (find_intersection_dists(abc, sqrt(discr)));
 }
 
-bool	check_cy(const t_shape *c, const t_ray r, t_ray_hit *rh, double *dist)
+bool	check_cy(t_shape *c, const t_ray r, t_ray_hit *rh, double *dist)
 {
 	t_vector2d	t;
 	t_vector2d	h;
@@ -73,6 +73,10 @@ bool	check_cy(const t_shape *c, const t_ray r, t_ray_hit *rh, double *dist)
 	t = calculate_t(c, r);
 	if (t.x < 0 && t.y < 0)
 		return (false);
+	double heightSquared = to_double(c->height) * to_double(c->height);
+    if ((h.x < 0 || h.x > heightSquared) && (h.y < 0 || h.y > heightSquared))
+        return (false);
+	c->ts = t;
 	calculate_intersection_points(r, t, &p0, &p1);
 	calculate_heights(c, p0, p1, &h);
 	if (h.x < 0 || h.x > to_double(c->height) * to_double(c->height))
