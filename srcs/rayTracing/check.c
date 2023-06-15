@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 20:24:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/15 12:40:36 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/15 13:30:55 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,21 +75,21 @@ bool	check_cy(t_shape *c, const t_ray r, t_ray_hit *rh, double *dist)
 		return (false);
 	calculate_intersection_points(r, t, &p0, &p1);
 	calculate_heights(c, p0, p1, &h);
-	if (h.x < 0 || h.x > to_double(c->height) * to_double(c->height))
+	if ((t.x < 0 && t.y >= 0) || (h.x < 0 || h.x > \
+	to_double(c->height) * to_double(c->height)))
 	{
 		if (h.y >= 0 && h.y <= to_double(c->height) * \
 		to_double(c->height) && *dist >= t.y)
-			return (check_and_update_intersection((t_shape *)c, r, rh, \
-			(*dist = t.y)));
-		return (false);
+			return (check_and_update_intersection((t_shape *)c, \
+			r, rh, (*dist = t.y)));
 	}
 	else
 	{
 		if ((h.x >= 0 && *dist >= t.x))
 			return (check_and_update_intersection((t_shape *)c, \
 			r, rh, (*dist = t.x)));
-		return (false);
 	}
+	return (false);
 }
 
 void	ray_checkhit(t_ray ray, t_ray_hit *rh, double *d, t_shape *o)
