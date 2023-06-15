@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 10:06:21 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/14 16:31:44 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:21:09 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ t_fixed		str_to_fixed(char *elem);
 t_3dPoint	str_to_3d(char *elem);
 double		atod(char *str);
 //debug.c
-void		error_exit(int code, char *str);
+void		error_exit(int code, char *str, bool alloc);
 int			info_count(char **elem);
 //objects.c
 t_shape		*object_sp(char **elem, t_vars *vars);

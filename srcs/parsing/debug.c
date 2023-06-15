@@ -6,13 +6,13 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 17:33:14 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/14 09:12:57 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/15 14:38:25 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/miniRT.h"
 
-void	error_exit(int code, char *str)
+void	error_exit(int code, char *str, bool alloc)
 {
 	t_vars	*vars;
 	char	*temp;
@@ -22,6 +22,8 @@ void	error_exit(int code, char *str)
 	{
 		printf("Error\n%s", str);
 		free_vars(vars);
+		if (alloc)
+			free(str);
 		exit(0);
 	}
 	if (code == 2)
@@ -36,8 +38,9 @@ void	error_exit(int code, char *str)
 	{
 		if (!vars->error_message)
 			vars->error_message = ft_strjoin(str, vars->error_message);
-		free(str);
 	}
+	if (alloc)
+		free(str);
 }
 
 int	info_count(char **elem)

@@ -35,8 +35,21 @@
 	obj:/usr/lib
 }
 {
-   ignore_dylib_example
+   ignore_dylib
    Memcheck:Leak
    ...
    obj:/usr/lib/libobjc.A.dylib
 }
+{
+   ignore_dylib
+   Memcheck:Leak
+   ...
+   obj:/usr/lib/dyld
+}
+{
+   ignore_dylib
+   Memcheck:Leak
+   ...
+   obj:/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation
+}
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 20:25:26 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/04 15:50:29 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:24:59 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,5 @@ void	valid_scene(void)
 
 	vars = init_vars();
 	if (!vars->camera || !vars->ambient_light || !vars->light)
-		error_exit(3, "Invalid Scene");
+		error_exit(3, "Invalid Scene", false);
 }

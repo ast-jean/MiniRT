@@ -145,7 +145,7 @@ leak:
 	leaks -list -fullContent --atExit -- ./$(NAME) test2.rt
 
 valgrind:
-	valgrind --leak-check=full --suppressions=supp.txt  --show-leak-kinds=reachable -- ./$(NAME) test.rt
+	valgrind --leak-check=full --suppressions=supp.txt  --show-leak-kinds=reachable -- ./$(NAME)
 #	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
 re: fclean all
 
