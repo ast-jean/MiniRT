@@ -136,11 +136,12 @@ clean:
 fclean:	clean
 	@$(MAKE) -C include/libft fclean
 	@$(MAKE) -C include/libft_dlist fclean
+	@rm -rf include/MLX42/build/
 	@rm -rf $(NAME) $(BONUS)
 	@echo "$(GREEN)${BOLD}🚮 Exectuable deleted 🚮${END}"
 
 leak:
-	leaks -list -fullContent --atExit -- ./$(NAME) test.rt
+	leaks -list -fullContent --atExit -- ./$(NAME) test2.rt
 
 valgrind:
 	valgrind --leak-check=full --suppressions=supp.txt  --show-leak-kinds=reachable -- ./$(NAME) test.rt

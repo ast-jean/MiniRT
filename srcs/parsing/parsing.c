@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtrembla <mtrembla@student.42quebec>       +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:57:17 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/05 18:25:17 by mtrembla         ###   ########.fr       */
+/*   Updated: 2023/06/15 11:50:30 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	valid_element(char **elem)
 		dlist_add_back(vars->objs, object_pl(elem, vars));
 	else if (ft_strcmp(elem[0], "cy"))
 		dlist_add_back(vars->objs, object_cy(elem, vars));
-	else if (!ft_strcmp(elem[0], "#"))
+	else if (!ft_strncmp(elem[0], "#", 1))
 		error_exit(5, ft_strjoin("Invalid element: ", elem[0]));
 	free_split(elem);
 }

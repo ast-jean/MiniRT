@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 09:05:28 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/14 16:20:20 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/15 11:46:39 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	main(int argc, char **argv)
 		mlx_loop(vars->mlx);
 		mlx_terminate(vars->mlx);
 	}
+	if (vars->error_message)
+		printf("Error\n%s\n", vars->error_message);
 	free_vars(vars);
 	return (EXIT_SUCCESS);
 }
