@@ -5,27 +5,35 @@ The MiniRT project is a minimalist ray-tracing engine built using fixed-point ar
 ## This is a RayTracer in C
 Made for UNIX systems, Linux and MacOs
 - With implementation of fixed point numbers
-- Reflexions
-- Many shapes
+- With Phong reflexion
+- Paper style shapes with light passing through one side.
     - Spheres
     - Cylinders
     - Planes
----
 ## Compile
 `$>make` in main repo
 
----
-##Controls
- - Drag and drop to move an object.
- - Toggle: appuyer sur la touche pour activer l'option correspondante et incrémenter avec + et -
-        a = ambient +- pour modifier l'intensité
-        l = light cliquer pour déplacer la lumière au curseur et +- pour avancer et reculer la lumière
-        x,y et z pour activer l'axe
-        o = orientation cela remplace la translation et effectue la rotation sur les axes selectionnées
-        r = modifier le diamètre avec +-
-        h = modifier la hauteur avec +-, valable seulement pour les cylindres
-        c = caméra déplace sur l'axe x,y,z selon l'axe selection ou change l'orientation si "o" est activer
-        
+## Controls
+
+ - Toggle: Press a key to activate the toggled trigger, then increment with `+` or `-`.
+ - Select an object, then change its properties
+    - Click on a shape
+        - Drag and drop to move an object on the Y and Z axis.
+        - Toggle `x`, `y` and/or `z`, then `+` or `-` to change position.
+        - Toggle `o` then `x`, `y` and/or `z` then `+` or `-` to change orientation.
+        - Toggle `r` then `+` or `-` to change radius for the sphere and cylinder.
+        - Toggle `h` then `+` or `-` to change height for the cylinder.
+    - Press `a` to toggle the ambient light
+        - Change the color red(`1`), green(`2`), blue(`3`).
+        - `+` or `-` to change the light intensity.
+    - Press `l` to toggle the light
+        - Click anywhere to change its position on the Y and Z axis.
+        - Toggle `x`, `y` and/or `z`, then `+` or `-` to change position.
+        - Toggle `r` to change its radiance/brightness.
+    - Press `c` to toggle the camera
+        - Toggle `x`, `y` and/or `z`, then `+` or `-` to change position.
+        - Toggle `o` then `x`, `y` and/or `z` then `+` or `-` to change orientation.
+        - Toggle `f` then `+` or `-` to change field of view.
 
 ### With Graphic libraries GLFW and a slightly modified version of the MLX42 librairy from [Codam](https://github.com/codam-coding-college/MLX42)
 ### Made by :
