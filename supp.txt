@@ -52,4 +52,21 @@
    ...
    obj:/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation
 }
-
+{
+   ignore_dylib
+   Memcheck:Leak
+   ...
+   obj:/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation
+}
+{
+   ignore_dylib
+   Memcheck:Leak
+   ...
+   obj:/usr/lib/system/libsystem_pthread.dylib
+}
+{
+   ignore_dylib
+   Memcheck:Leak
+   ...
+   obj:/usr/lib/system/libdispatch.dylib
+}
