@@ -94,7 +94,7 @@ WHITE		= \033[37m
 
 ### Compilations et archivage ###
 CC 			= gcc
-CFLAGS 		= -Wall -Wextra -g -Werror -Wno-error=misleading-indentation
+CFLAGS 		= -Wall -Wextra -g -Werror
 
 ###--------------------------## REGLES ##--------------------------###
 all: mlx_glfw $(NAME)
@@ -145,7 +145,7 @@ leak:
 	leaks -list -fullContent --atExit -- ./$(NAME) test2.rt
 
 valgrind:
-	valgrind --leak-check=full --suppressions=supp.txt  --show-leak-kinds=reachable -- ./$(NAME)
+	valgrind --leak-check=full --suppressions=supp.txt  --show-leak-kinds=all -- ./$(NAME) ./test2.rt
 #	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
 re: fclean all
 
