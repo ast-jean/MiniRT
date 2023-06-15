@@ -49,5 +49,7 @@ ex: `./miniRT scene/columns.rt`
 - [mtrembla](https://github.com/Zelxopi)
 
 - [slavoie](https://github.com/Steven1659139)
-[^1] [Codam's MLX42: https://github.com/codam-coding-college/MLX42](https://github.com/codam-coding-college/MLX42)
-[^2] [GLFW used by Codam's MLX42: https://www.glfw.org/]https://www.glfw.org/
+
+[^1]:[Codam's MLX42: https://github.com/codam-coding-college/MLX42](https://github.com/codam-coding-college/MLX42)
+
+[^2]:[GLFW used by Codam's MLX42: https://www.glfw.org/](https://www.glfw.org/)
