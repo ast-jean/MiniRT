@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:44:05 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/14 16:34:15 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/15 14:25:50 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_shape	*object_sp(char **elem, t_vars *vars)
 
 	s = NULL;
 	if (info_count(elem) != 4)
-		error_exit(3, "Invalid number of information");
+		error_exit(3, "Invalid number of information", false);
 	else
 	{
 		s = malloc(sizeof(t_shape));
@@ -29,7 +29,7 @@ t_shape	*object_sp(char **elem, t_vars *vars)
 		s->color = rgb_to_hex(elem[3]);
 	}
 	if (vars->error_message)
-		error_exit(2, "sphere (sp): ");
+		error_exit(2, "sphere (sp): ", false);
 	return (s);
 }
 
@@ -39,7 +39,7 @@ t_shape	*object_pl(char **elem, t_vars *vars)
 
 	s = NULL;
 	if (info_count(elem) != 4)
-		error_exit(3, "Invalid number of information");
+		error_exit(3, "Invalid number of information", false);
 	else
 	{
 		s = malloc(sizeof(t_shape));
@@ -50,7 +50,7 @@ t_shape	*object_pl(char **elem, t_vars *vars)
 		s->color = rgb_to_hex(elem[3]);
 	}
 	if (vars->error_message)
-		error_exit(2, "Plan (pl): ");
+		error_exit(2, "Plan (pl): ", false);
 	return (s);
 }
 
@@ -61,7 +61,7 @@ t_shape	*object_cy(char **elem, t_vars *vars)
 
 	s = NULL;
 	if (info_count(elem) != 6)
-		error_exit(3, "Invalid number of information");
+		error_exit(3, "Invalid number of information", false);
 	else
 	{
 		s = malloc(sizeof(t_shape));
@@ -77,7 +77,7 @@ t_shape	*object_cy(char **elem, t_vars *vars)
 		s->orientation = vec3d_to_point3d(orientation);
 	}
 	if (vars->error_message)
-		error_exit(2, "Cylinder (cy): ");
+		error_exit(2, "Cylinder (cy): ", false);
 	return (s);
 }
 
@@ -88,7 +88,7 @@ t_fixed	parse_size(char *elem)
 
 	size = atod(elem);
 	if (!is_number(elem) || !range(size, INT_MIN, INT_MAX))
-		error_exit(5, ft_strjoin("Invalid size -> ", elem));
+		error_exit(5, ft_strjoin("Invalid size -> ", elem), true);
 	set_value(&f, size);
 	return (f);
 }
@@ -100,7 +100,7 @@ t_fixed	parse_radius(char *elem)
 
 	size = atod(elem);
 	if (!is_number(elem) || !range(size, INT_MIN, INT_MAX))
-		error_exit(5, ft_strjoin("Invalid size -> ", elem));
+		error_exit(5, ft_strjoin("Invalid size -> ", elem), true);
 	set_value(&f, (size * 0.5));
 	return (f);
 }

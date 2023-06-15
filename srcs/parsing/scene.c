@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:45:50 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/13 13:47:26 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/15 14:24:52 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	object_a(char **elem, t_vars *vars)
 {
 	if (vars->ambient_light)
-		error_exit(3, "Can only be declared once");
+		error_exit(3, "Can only be declared once", false);
 	else if (info_count(elem) != 3)
-		error_exit(3, "Invalid number of information");
+		error_exit(3, "Invalid number of information", false);
 	else
 	{
 		vars->ambient_light = malloc(sizeof(t_shape));
@@ -26,15 +26,15 @@ void	object_a(char **elem, t_vars *vars)
 		vars->ambient_light->color = rgb_to_hex(elem[2]);
 	}
 	if (vars->error_message)
-		error_exit(2, "Ambient Light (A): ");
+		error_exit(2, "Ambient Light (A): ", false);
 }
 
 void	object_c(char **elem, t_vars *vars)
 {
 	if (vars->camera)
-		error_exit(3, "Can only be declared once");
+		error_exit(3, "Can only be declared once", false);
 	else if (info_count(elem) != 4)
-		error_exit(3, "Invalid number of information");
+		error_exit(3, "Invalid number of information", false);
 	else
 	{
 		vars->camera = malloc(sizeof(t_shape));
@@ -46,15 +46,15 @@ void	object_c(char **elem, t_vars *vars)
 			/ tan(deg2grad(vars->camera->fov) * 0.5);
 	}
 	if (vars->error_message)
-		error_exit(2, "Camera (C): ");
+		error_exit(2, "Camera (C): ", false);
 }
 
 void	object_l(char **elem, t_vars *vars)
 {
 	if (vars->light)
-		error_exit(3, "Can only be declared once");
+		error_exit(3, "Can only be declared once", false);
 	else if (info_count(elem) != 3 && info_count(elem) != 4)
-		error_exit(3, "Invalid number of information");
+		error_exit(3, "Invalid number of information", false);
 	else
 	{
 		vars->light = malloc(sizeof(t_shape));
@@ -65,5 +65,5 @@ void	object_l(char **elem, t_vars *vars)
 			vars->light->color = rgb_to_hex(elem[3]);
 	}
 	if (vars->error_message)
-		error_exit(2, "Light (L): ");
+		error_exit(2, "Light (L): ", false);
 }

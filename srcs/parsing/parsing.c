@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:57:17 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/15 12:37:42 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:24:07 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	parse(int argc, char **argv)
 {
 	if (argc != 2)
-		error_exit(1, "Wrong number of arguments\n");
+		error_exit(1, "Wrong number of arguments\n", false);
 	valid_file(argv[1]);
 	split(argv[1]);
 	valid_scene();
@@ -28,14 +28,14 @@ void	valid_file(char *file)
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		error_exit(1, "File do not exist\n");
+		error_exit(1, "File do not exist\n", false);
 	if (read(fd, &c, 1) == -1)
-		error_exit(1, "File is a directory\n");
+		error_exit(1, "File is a directory\n", false);
 	if (!ft_gnl(fd))
-		error_exit(1, "File is empty\n");
+		error_exit(1, "File is empty\n", false);
 	file = ft_strrchr(file, '.');
 	if (ft_strncmp(file, ".rt", 4))
-		error_exit(1, "Must be a '.rt' type of file\n");
+		error_exit(1, "Must be a '.rt' type of file\n", false);
 	close(fd);
 }
 
@@ -78,6 +78,6 @@ void	valid_element(char **elem)
 	else if (ft_strcmp(elem[0], "cy"))
 		dlist_add_back(vars->objs, object_cy(elem, vars));
 	else if (ft_strncmp(elem[0], "#", 1))
-		error_exit(5, ft_strjoin("Invalid element: ", elem[0]));
+		error_exit(5, ft_strjoin("Invalid element: ", elem[0]), true);
 	free_split(elem);
 }

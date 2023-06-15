@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 09:05:28 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/15 11:46:39 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:52:14 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	main(int argc, char **argv)
 	}
 	if (vars->error_message)
 		printf("Error\n%s\n", vars->error_message);
+	mlx_delete_image(vars->mlx, vars->img);
 	free_vars(vars);
 	return (EXIT_SUCCESS);
 }
