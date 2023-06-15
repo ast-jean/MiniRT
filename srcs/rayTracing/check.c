@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 20:24:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/14 16:23:21 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/15 12:40:36 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ bool	check_cy(t_shape *c, const t_ray r, t_ray_hit *rh, double *dist)
 	t_vector3d	p1;
 
 	t = calculate_t(c, r);
-	if (t.x < 0 && t.y < 0)
+	if ((t.x < 0 && t.y < 0))
 		return (false);
 	calculate_intersection_points(r, t, &p0, &p1);
 	calculate_heights(c, p0, p1, &h);

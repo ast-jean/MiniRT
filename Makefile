@@ -101,25 +101,26 @@ all: mlx_glfw $(NAME)
 
 mlx_glfw:
 	@echo " "
-ifeq ("$(wildcard include/MLX42/build/libmlx42.a)","")
+ifeq ("$(wildcard include/MLX42/build/)","")
 	cd include/MLX42/ && cmake -B build
 	cd include/MLX42/build && make
 endif
 
-
 $(NAME) : $(INCLUDE) $(OBJS_IN_DIR)
 	@$(MAKE) -C include/libft
 	@$(MAKE) -C include/libft_dlist
+	@$(MAKE) mlx_glfw
 	@echo "$(CLEAR_LINE)$(BLUE)Compiling $(NAME)...$(END)"
 	@$(CC) $(CFLAGS) $(OBJS_IN_DIR) $(LIBS) $(MLXFLAGS) -o $(NAME)
 	@echo "$(CLEAR_LINE)${GREEN}${BOLD}Compilation done:${END}\n"
 
-$(BONUS): $(OBJS)
-	@echo "$(BLUE)Compiling $(BONUS)...$(END)"
-	@mkdir -p $(OBJS_DIR)
+$(BONUS) : $(INCLUDE) $(OBJS_IN_DIR)
+	@$(MAKE) -C include/libft
+	@$(MAKE) -C include/libft_dlist
+	@$(MAKE) mlx_glfw
+	@echo "$(CLEAR_LINE)$(BLUE)Compiling $(BONUS)...$(END)"
 	@$(CC) $(CFLAGS) $(OBJS_IN_DIR) $(LIBS) $(MLXFLAGS) -o $(BONUS)
-	@mv -f *.o $(OBJS_DIR)
-	@echo "${GREEN}${BOLD}Compilation done:${END}\n"
+	@echo "$(CLEAR_LINE)${GREEN}${BOLD}Compilation done:${END}\n"
 
 $(OBJS_DIR)%.o : $(SRCS_DIR)%.c
 	@mkdir -p $(OBJS_DIR)parsing $(OBJS_DIR)rayTracing $(OBJS_DIR)math/vectors $(OBJS_DIR)/controls
@@ -136,9 +137,9 @@ clean:
 fclean:	clean
 	@$(MAKE) -C include/libft fclean
 	@$(MAKE) -C include/libft_dlist fclean
-	@rm -rf include/MLX42/build/
+	@rm -rf include/MLX42/build
 	@rm -rf $(NAME) $(BONUS)
-	@echo "$(GREEN)${BOLD}🚮 Exectuable deleted 🚮${END}"
+	@echo "$(GREEN)${BOLD}🚮 Executable deleted 🚮${END}"
 
 leak:
 	leaks -list -fullContent --atExit -- ./$(NAME) test2.rt
@@ -147,10 +148,6 @@ valgrind:
 	valgrind --leak-check=full --suppressions=supp.txt  --show-leak-kinds=reachable -- ./$(NAME) test.rt
 #	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
 re: fclean all
-
-re_mlx:
-	rm include/MLX42/build/libmlx42.a
-	$(MAKE) re
 
 rew: 
 	@rm -rf $(NAME)
