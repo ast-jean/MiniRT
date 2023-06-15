@@ -34,3 +34,9 @@
 	...
 	obj:/usr/lib
 }
+{
+   ignore_dylib_example
+   Memcheck:Leak
+   ...
+   obj:/usr/lib/libobjc.A.dylib
+}
