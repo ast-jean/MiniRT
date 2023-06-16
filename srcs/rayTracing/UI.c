@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 12:01:31 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/16 09:44:57 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/16 18:05:33 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,4 @@ void	print_trigger_ui(void)
 		mlx_image_to_window(init_vars()->mlx, img, 0, 0);
 	}
 	mlx_delete_texture(tx);
-	mlx_delete_image(init_vars()->mlx, img);
 }
