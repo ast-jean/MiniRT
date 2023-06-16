@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:51:27 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/15 14:23:40 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/16 09:21:07 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_fixed	parse_light_ratio(char *elem)
 	return (f);
 }
 
-t_3dPoint	parse_coordinates(char *elem) 
+t_3dPoint	parse_coordinates(char *elem)
 {
 	char	**coord;
 	int		i;

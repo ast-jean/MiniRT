@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 09:05:28 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/15 14:52:14 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/16 09:46:59 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,9 @@ int	main(int argc, char **argv)
 		mlx_key_hook(vars->mlx, process_key_actions, vars);
 		mlx_loop(vars->mlx);
 		mlx_terminate(vars->mlx);
+		mlx_delete_image(vars->mlx, vars->img);
 	}
-	if (vars->error_message)
-		printf("Error\n%s\n", vars->error_message);
-	mlx_delete_image(vars->mlx, vars->img);
-	free_vars(vars);
-	return (EXIT_SUCCESS);
+	if (vars->error_message && printf("Error\n%s\n", vars->error_message))
+		return (free_vars(vars), EXIT_FAILURE);
+	return (free_vars(vars), EXIT_SUCCESS);
 }

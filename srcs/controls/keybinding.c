@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keybinding.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:33:42 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/15 14:50:18 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/16 09:21:31 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	process_key_actions(mlx_key_data_t keydata, void *param)
 	(void)keydata;
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
 	{
-
 		mlx_close_window(vars->mlx);
 		return ;
 	}

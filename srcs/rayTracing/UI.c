@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   UI.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 12:01:31 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/13 13:23:00 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/16 09:44:57 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,6 @@ void	print_trigger_ui(void)
 		ui_enabled(init_vars(), str, img);
 		mlx_image_to_window(init_vars()->mlx, img, 0, 0);
 	}
+	mlx_delete_texture(tx);
+	mlx_delete_image(init_vars()->mlx, img);
 }
