@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 17:33:14 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/16 11:22:57 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/16 12:12:33 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,15 @@ void	error_exit(int code, char *str, bool alloc)
 		exit(0);
 	}
 	if (code == 2)
+	{
+		temp = vars->error_message;
 		vars->error_message = ft_strjoin(str, vars->error_message);
+		free(temp);
+	}
 	if (code == 3 && !vars->error_message)
 		vars->error_message = ft_strjoin(str, vars->error_message);
-	if (code == 5)
-	{
-		if (!vars->error_message)
+	if (code == 5 && !vars->error_message)
 			vars->error_message = ft_strjoin(str, vars->error_message);
-	}
 	if (alloc)
 		free(str);
 }
