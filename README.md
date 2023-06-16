@@ -1,4 +1,5 @@
-# MiniRT <img src="img/grade.png" alt="grade" width="20"/>
+# MiniRT <img style="float: right;" src="img/grade.png" alt="grade" width="80"/>
+
 ![Phong demo](img/phong_demo.png)
 The MiniRT project is a minimalist ray-tracing engine built using fixed-point arithmetic in C. This compact yet powerful engine renders 3D scenes with realistic lighting and shadows, while leveraging the precision and performance benefits of fixed-point number representation. Designed with simplicity and efficiency in mind, MiniRT demonstrates the potential of ray-tracing techniques in resource-constrained environments, using the new updated Codam's version of the MLX42[^1].
 ## This is a RayTracer in C
