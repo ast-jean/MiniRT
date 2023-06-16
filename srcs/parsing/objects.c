@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objects.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:44:05 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/15 14:25:50 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/16 12:17:55 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ t_fixed	parse_size(char *elem)
 
 	size = atod(elem);
 	if (!is_number(elem) || !range(size, INT_MIN, INT_MAX))
-		error_exit(5, ft_strjoin("Invalid size -> ", elem), true);
+		error_exit(3, ft_strjoin("Invalid size -> ", elem), true);
 	set_value(&f, size);
 	return (f);
 }
@@ -100,7 +100,7 @@ t_fixed	parse_radius(char *elem)
 
 	size = atod(elem);
 	if (!is_number(elem) || !range(size, INT_MIN, INT_MAX))
-		error_exit(5, ft_strjoin("Invalid size -> ", elem), true);
+		error_exit(3, ft_strjoin("Invalid size -> ", elem), true);
 	set_value(&f, (size * 0.5));
 	return (f);
 }

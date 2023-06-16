@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:39:34 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/15 14:22:33 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/06/16 12:17:55 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ uint8_t	valid_uint8(char *elem)
 
 	nbr = ft_atoi(elem);
 	if ((nbr < 0 || nbr > 255) || is_number(elem) != 1)
-		error_exit(5, ft_strjoin("Invalid RGB -> ", elem), true);
+		error_exit(3, ft_strjoin("Invalid RGB -> ", elem), true);
 	return (nbr);
 }
 
@@ -48,7 +48,7 @@ uint32_t	rgb_to_hex(char *elem)
 		rgb += (valid_uint8(colors[i++]) << (bytes -= 8));
 	rgb += 255;
 	if (!colors || i != 3)
-		error_exit(5, ft_strjoin("Invalid RGB -> ", elem), true);
+		error_exit(3, ft_strjoin("Invalid RGB -> ", elem), true);
 	free_split(colors);
 	return (rgb);
 }

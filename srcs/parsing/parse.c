@@ -6,7 +6,7 @@
 /*   By: ast-jean <ast-jean@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:51:27 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/16 12:08:40 by ast-jean         ###   ########.fr       */
+/*   Updated: 2023/06/16 12:17:55 by ast-jean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_3dPoint	parse_coordinates(char *elem)
 		&& range(atod(coord[i]), INT_MIN, INT_MAX))
 		i++;
 	if (i != 3)
-		error_exit(5, ft_strjoin("Invalid Coordinate -> ", elem), true);
+		error_exit(3, ft_strjoin("Invalid Coordinate -> ", elem), true);
 	free_split(coord);
 	return (str_to_3d(elem));
 }
@@ -51,7 +51,7 @@ t_3dPoint	parse_orientation(char *elem)
 		&& range(atod(coord[i]), -1, 1))
 		i++;
 	if (i != 3)
-		error_exit(5, ft_strjoin("Invalid Vector -> ", elem), true);
+		error_exit(3, ft_strjoin("Invalid Vector -> ", elem), true);
 	free_split(coord);
 	return (str_to_3d(elem));
 }
@@ -62,7 +62,7 @@ uint8_t	parse_fov(char *elem)
 
 	fov = atod(elem);
 	if (!is_number(elem) || !range(fov, 0, 180))
-		error_exit(5, ft_strjoin("Invalid fov -> ", elem), true);
+		error_exit(3, ft_strjoin("Invalid fov -> ", elem), true);
 	fov = lround(fov);
 	return ((uint8_t)fov);
 }
