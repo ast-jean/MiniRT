@@ -6,6 +6,8 @@ The MiniRT project is a minimalist ray-tracing engine built using fixed-point ar
 Made for UNIX systems, Linux and MacOs
 - With implementation of fixed point numbers
 - With Phong reflexion
+- Light colors
+![color demo](img/color_demo.png)
 - Paper style shapes with light passing through one side.
     - Spheres
     - Cylinders
