@@ -82,7 +82,8 @@ Cylinder:
         - Toggle `o` then `x`, `y` and/or `z` then `+` or `-` to change orientation.
         - Toggle `r` then `+` or `-` to change radius for the sphere and cylinder.
         - Toggle `h` then `+` or `-` to change height for the cylinder.
-    - Press `i` to display the trigger UI
+    - Press `i` to display the trigger UI.
+    - Press `p` to print actual scene information and the selected object.
     - Press `a` to toggle the ambient light
         - Change the color red(`1`), green(`2`), blue(`3`).
         - `+` or `-` to change the light intensity.
