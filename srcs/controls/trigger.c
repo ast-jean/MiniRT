@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 23:35:27 by slavoie           #+#    #+#             */
-/*   Updated: 2023/06/14 13:40:14 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/07/24 09:17:59 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	preset_ambient(t_vars *vars)
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_4))
 		vars->ambient_light->color = GRAY;
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_5))
-		vars->ambient_light->color = WHITE;
+		vars->ambient_light->color = YELLOW;
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_6))
-		vars->ambient_light->color = BLACK;
+		vars->ambient_light->color = WHITE;
 }
