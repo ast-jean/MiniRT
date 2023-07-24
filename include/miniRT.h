@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 10:06:21 by ast-jean          #+#    #+#             */
-/*   Updated: 2023/06/15 14:21:09 by slavoie          ###   ########.fr       */
+/*   Updated: 2023/07/24 09:57:54 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define RED	0xFF0000FF
 # define GREEN	0x00FF00FF
 # define BLUE	0x0000FFFF
+# define YELLOW	0xFFFF00
 # define FP_SCALE	256
 # define WIDTH		500
 # define HEIGHT		500

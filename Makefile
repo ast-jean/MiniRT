@@ -94,7 +94,7 @@ WHITE		= \033[37m
 
 ### Compilations et archivage ###
 CC 			= gcc
-CFLAGS 		= -Wall -Wextra -g -Werror
+CFLAGS 		= -Wall -Wextra -Werror
 
 ###--------------------------## REGLES ##--------------------------###
 all: mlx_glfw $(NAME)
